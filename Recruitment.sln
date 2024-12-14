@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentUser", "Client\RecruitmentUser.csproj", "{3F63CE62-D1D3-4947-A991-FB8D5A1985F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentClient", "RecruitmentClient\RecruitmentClient.csproj", "{3F63CE62-D1D3-4947-A991-FB8D5A1985F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerDB", "Server\ServerDB.csproj", "{2F8907E8-2AD2-47AC-8DCB-7A2E40B824C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerDB", "RecruitmentServer\RecruitmentServer.csproj", "{2F8907E8-2AD2-47AC-8DCB-7A2E40B824C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecruitmentLibrary", "RecruitmentLibrary\RecruitmentLibrary.csproj", "{CCF5B97E-7820-4A5E-996B-AA7AEDE8261B}"
 EndProject
