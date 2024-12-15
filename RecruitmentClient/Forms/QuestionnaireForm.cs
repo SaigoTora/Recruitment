@@ -33,9 +33,10 @@ namespace RecruitmentClient.Forms
 
 		internal QuestionnaireForm(ClientAccount a, StartForm startForm)
 		{// Конструктор
+			customTitleBar = new CustomTitleBar(this, "Анкета", Properties.Resources.questionnaire, minimizeBox: false, maximizeBox: false);
+			IsResizable = true;
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Анкета", Properties.Resources.questionnaire, maximizeBox: false);
 			account = a;// Передаємо посилання на акаунт
 			SetTheme(account.Theme);
 			if (startForm == null)// Якщо форма відкрита для змін даних
@@ -388,6 +389,7 @@ namespace RecruitmentClient.Forms
 		}
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelNationality, labelCity,
 					labelChildrenAmount, labelExperience, labelReadiness, labelDriverLicense,
 					labelFamilyStatus, labelBusinessTripOpportunity, labelChronicDiseases,

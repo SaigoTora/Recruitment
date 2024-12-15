@@ -346,6 +346,7 @@ namespace RecruitmentClient.Forms
 		}
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelLogin, labelPassword, labelPassword2, labelRegister1);
 			ColorChanger.ChangeInputControlsColor(theme, textBoxLogin, textBoxPassword, textBoxPassword2);
 			ColorChanger.ChangeInputControlsForeColor(theme, checkBoxRememberMe);

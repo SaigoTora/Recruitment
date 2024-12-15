@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using UIHelpers.Forms;
+using UIHelpers.Themes;
 
 namespace UIHelpers.Controls
 {
@@ -14,22 +15,27 @@ namespace UIHelpers.Controls
 		private const int DEFAULT_PANEL_HEIGHT = 35;
 		private const string MAIN_PANEL_NAME = "panelCustomTitleBar";
 
-		private static readonly Font _formNameFont = new Font("Segoe UI", 10F);
-		private static readonly Color _defaultPanelColor = Color.FromArgb(31, 31, 31);
-		private static readonly Color _pressedPanelColor = Color.FromArgb(35, 35, 35);
-		private static readonly Color _defaultButtonColor = Color.FromArgb(200, 200, 200);
-		private static readonly Color _defaultNameColor = Color.FromArgb(255, 255, 255);
+		#region Colors
+		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultPanelColor =
+			(Color.FromArgb(235, 235, 235), Color.FromArgb(31, 31, 31));
+		private static readonly (Color WhiteTheme, Color BlackTheme) _pressedPanelColor =
+			(Color.FromArgb(225, 225, 225), Color.FromArgb(35, 35, 35));
+		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultButtonColor =
+			(Color.Black, Color.FromArgb(200, 200, 200));
+		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultNameColor =
+			(Color.Black, Color.White);
 		private static readonly Color _hoverButtonExitColor = Color.FromArgb(232, 17, 35);
+		#endregion
+		private Theme _currentTheme;
+		private static readonly Font _formNameFont = new Font("Segoe UI", 10F);
 		private readonly (bool Minimize, bool Maximize) _scalingForm;
 		private readonly bool _canFormBeClosed;
 		private readonly BaseForm _form;
-		private IconButton _buttonClose;
-
 		public Panel MainPanel { get; private set; } = new Panel();
+		private readonly Label _labelCaption;
+		private (IconButton Minimize, IconButton Maximize, IconButton Close) _button;
 
 		private int _formBorderRadius;
-
-		private readonly Label _labelCaption;
 		private bool _isFormDragging;
 		private Point _dragCursorPoint, _dragFormPoint;
 
@@ -76,25 +82,25 @@ namespace UIHelpers.Controls
 
 			if (_scalingForm.Minimize)
 			{
-				IconButton buttonMinimize = CreateIconButton(IconChar.WindowMinimize);
-				buttonMinimize.Click += ButtonMinimize_Click;
-				MainPanel.Controls.Add(buttonMinimize);
+				_button.Minimize = CreateIconButton(IconChar.WindowMinimize);
+				_button.Minimize.Click += ButtonMinimize_Click;
+				MainPanel.Controls.Add(_button.Minimize);
 			}
 
 			if (_scalingForm.Maximize)
 			{
-				IconButton buttonMaximize = CreateIconButton(IconChar.WindowRestore);
-				buttonMaximize.Click += ButtonMaximize_Click;
-				MainPanel.Controls.Add(buttonMaximize);
+				_button.Maximize = CreateIconButton(IconChar.WindowRestore);
+				_button.Maximize.Click += ButtonMaximize_Click;
+				MainPanel.Controls.Add(_button.Maximize);
 			}
 
 			if (_canFormBeClosed)
 			{
-				_buttonClose = CreateIconButton(IconChar.TimesCircle);
-				_buttonClose.Click += ButtonClose_Click;
-				_buttonClose.MouseEnter += ButtonClose_MouseEnter;
-				_buttonClose.MouseLeave += ButtonClose_MouseLeave;
-				MainPanel.Controls.Add(_buttonClose);
+				_button.Close = CreateIconButton(IconChar.TimesCircle);
+				_button.Close.Click += ButtonClose_Click;
+				_button.Close.MouseEnter += ButtonClose_MouseEnter;
+				_button.Close.MouseLeave += ButtonClose_MouseLeave;
+				MainPanel.Controls.Add(_button.Close);
 			}
 		}
 		private void InitializeMainPanel()
@@ -102,7 +108,7 @@ namespace UIHelpers.Controls
 			const int LEFT_PADDING = 6;
 
 			MainPanel.Name = MAIN_PANEL_NAME;
-			MainPanel.BackColor = _defaultPanelColor;
+			MainPanel.BackColor = _defaultPanelColor.WhiteTheme;
 			MainPanel.Dock = DockStyle.Top;
 			MainPanel.Size = new Size(0, DEFAULT_PANEL_HEIGHT);
 			MainPanel.Padding = new Padding(LEFT_PADDING, 0, 0, 0);
@@ -140,7 +146,7 @@ namespace UIHelpers.Controls
 				Dock = DockStyle.Right,
 				Size = new Size(DEFAULT_PANEL_HEIGHT + PADDING, 0),
 				IconSize = SIZE,
-				IconColor = _defaultButtonColor,
+				IconColor = _defaultButtonColor.WhiteTheme,
 				FlatStyle = FlatStyle.Flat,
 				Cursor = Cursors.Hand,
 				TabStop = false,
@@ -177,7 +183,7 @@ namespace UIHelpers.Controls
 			{
 				Anchor = AnchorStyles.Top | AnchorStyles.Left,
 				Dock = DockStyle.Fill,
-				ForeColor = _defaultNameColor,
+				ForeColor = _defaultNameColor.WhiteTheme,
 				Text = name,
 				TextAlign = ContentAlignment.MiddleLeft,
 				Font = _formNameFont,
@@ -189,6 +195,50 @@ namespace UIHelpers.Controls
 		}
 		#endregion
 
+		#region Theme
+		public void ChangeTheme(Theme theme)
+		{
+			_currentTheme = theme;
+			switch (theme)
+			{
+				case Theme.White:
+					SetWhiteTitleBar();
+					break;
+				case Theme.Black:
+					SetBlackTitleBar();
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+
+		private void SetWhiteTitleBar()
+		{
+			if (MainPanel != null)
+				MainPanel.BackColor = _defaultPanelColor.WhiteTheme;
+			if (_button.Minimize != null)
+				_button.Minimize.IconColor = _defaultButtonColor.WhiteTheme;
+			if (_button.Maximize != null)
+				_button.Maximize.IconColor = _defaultButtonColor.WhiteTheme;
+			if (_button.Close != null)
+				_button.Close.IconColor = _defaultButtonColor.WhiteTheme;
+			if (_labelCaption != null)
+				_labelCaption.ForeColor = _defaultNameColor.WhiteTheme;
+		}
+		private void SetBlackTitleBar()
+		{
+			if (MainPanel != null)
+				MainPanel.BackColor = _defaultPanelColor.BlackTheme;
+			if (_button.Minimize != null)
+				_button.Minimize.IconColor = _defaultButtonColor.BlackTheme;
+			if (_button.Maximize != null)
+				_button.Maximize.IconColor = _defaultButtonColor.BlackTheme;
+			if (_button.Close != null)
+				_button.Close.IconColor = _defaultButtonColor.BlackTheme;
+			if (_labelCaption != null)
+				_labelCaption.ForeColor = _defaultNameColor.BlackTheme;
+		}
+		#endregion
 		public void ChangeFormCaption(string newCaption) => _labelCaption.Text = newCaption;
 		public void Dispose()
 		{
@@ -207,10 +257,10 @@ namespace UIHelpers.Controls
 				else if (control is Label label)
 					ToggleEventHandlers(label, false);
 			}
-			if (_buttonClose != null)
+			if (_button.Close != null)
 			{
-				_buttonClose.MouseEnter -= ButtonClose_MouseEnter;
-				_buttonClose.MouseLeave -= ButtonClose_MouseLeave;
+				_button.Close.MouseEnter -= ButtonClose_MouseEnter;
+				_button.Close.MouseLeave -= ButtonClose_MouseLeave;
 			}
 			MainPanel.Dispose();
 		}
@@ -286,16 +336,36 @@ namespace UIHelpers.Controls
 				_form.Location = new Point(Cursor.Position.X - offsetX, Cursor.Position.Y);
 			}
 
-
 			_isFormDragging = true;
 			_dragCursorPoint = Cursor.Position;
 			_dragFormPoint = _form.Location;
-			MainPanel.BackColor = _pressedPanelColor;
+
+			switch (_currentTheme)
+			{
+				case Theme.White:
+					MainPanel.BackColor = _pressedPanelColor.WhiteTheme;
+					break;
+				case Theme.Black:
+					MainPanel.BackColor = _pressedPanelColor.BlackTheme;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {_currentTheme}");
+			}
 		}
 		private void Control_MouseUp(object sender, EventArgs e)
 		{
 			_isFormDragging = false;
-			MainPanel.BackColor = _defaultPanelColor;
+			switch (_currentTheme)
+			{
+				case Theme.White:
+					MainPanel.BackColor = _defaultPanelColor.WhiteTheme;
+					break;
+				case Theme.Black:
+					MainPanel.BackColor = _defaultPanelColor.BlackTheme;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {_currentTheme}");
+			}
 		}
 		private void Control_MouseMove(object sender, EventArgs e)
 		{

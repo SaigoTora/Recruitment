@@ -126,6 +126,7 @@ namespace RecruitmentServer.Forms
 
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelAgeUnder18,
 				labelAge18_30, labelAge30_50, labelAgeOver50, labelExpNone, labelExpUnderYear,
 				labelExp1_3, labelExpOver3, labelDiploma, labelNoChronicDiseases, labelDriverLicense,

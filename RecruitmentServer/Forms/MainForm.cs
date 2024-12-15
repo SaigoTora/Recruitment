@@ -50,7 +50,7 @@ namespace RecruitmentServer.Forms
 		internal MainForm(ServerAccount account)
 		{// Конструктор
 			_ = Server.StartAsync();
-			customTitleBar = new CustomTitleBar(this, "Головна");
+			customTitleBar = new CustomTitleBar(this, "Головна",Properties.Resources.main);
 			IsResizable = true;
 			InitializeComponent();
 
@@ -707,6 +707,7 @@ namespace RecruitmentServer.Forms
 
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelMinMax,
 					labelMinMax2, labelEmpty, labelCountV, labelFullName,
 					labelRelevance, labelScores, labelStatus, labelStatusA, labelStatusI,

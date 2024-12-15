@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using UIHelpers.Controls;
 
 namespace UIHelpers.Forms
@@ -35,7 +36,7 @@ namespace UIHelpers.Forms
 		private const int HTBOTTOMRIGHT = 17;
 
 		private const int WM_NCHITTEST = 0x84;
-		public	Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm;
+		public Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm;
 		private System.ComponentModel.IContainer components;
 		private const int RESIZE_HANDLE_SIZE = 10;
 

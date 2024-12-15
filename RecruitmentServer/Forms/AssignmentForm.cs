@@ -160,6 +160,7 @@ namespace RecruitmentServer.Forms
 
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelTitle, labelCandidate,
 				labelVacancy, labelScores, labelEmpty);
 

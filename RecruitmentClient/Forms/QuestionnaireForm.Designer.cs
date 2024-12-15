@@ -105,7 +105,7 @@
 			this.labelNationality.BackColor = System.Drawing.Color.Transparent;
 			this.labelNationality.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNationality.ForeColor = System.Drawing.Color.Black;
-			this.labelNationality.Location = new System.Drawing.Point(12, 26);
+			this.labelNationality.Location = new System.Drawing.Point(12, 61);
 			this.labelNationality.Name = "labelNationality";
 			this.labelNationality.Size = new System.Drawing.Size(218, 32);
 			this.labelNationality.TabIndex = 0;
@@ -116,7 +116,7 @@
 			// 
 			this.textBoxCity.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxCity.ForeColor = System.Drawing.Color.Black;
-			this.textBoxCity.Location = new System.Drawing.Point(464, 84);
+			this.textBoxCity.Location = new System.Drawing.Point(464, 119);
 			this.textBoxCity.MaxLength = 64;
 			this.textBoxCity.Name = "textBoxCity";
 			this.textBoxCity.Size = new System.Drawing.Size(235, 36);
@@ -129,7 +129,7 @@
 			this.labelCity.BackColor = System.Drawing.Color.Transparent;
 			this.labelCity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelCity.ForeColor = System.Drawing.Color.Black;
-			this.labelCity.Location = new System.Drawing.Point(12, 86);
+			this.labelCity.Location = new System.Drawing.Point(12, 121);
 			this.labelCity.Name = "labelCity";
 			this.labelCity.Size = new System.Drawing.Size(446, 32);
 			this.labelCity.TabIndex = 2;
@@ -142,7 +142,7 @@
 			this.labelChildrenAmount.BackColor = System.Drawing.Color.Transparent;
 			this.labelChildrenAmount.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChildrenAmount.ForeColor = System.Drawing.Color.Black;
-			this.labelChildrenAmount.Location = new System.Drawing.Point(12, 146);
+			this.labelChildrenAmount.Location = new System.Drawing.Point(12, 181);
 			this.labelChildrenAmount.Name = "labelChildrenAmount";
 			this.labelChildrenAmount.Size = new System.Drawing.Size(229, 32);
 			this.labelChildrenAmount.TabIndex = 4;
@@ -153,7 +153,7 @@
 			// 
 			this.numericUpDownChildrenAmount.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownChildrenAmount.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownChildrenAmount.Location = new System.Drawing.Point(247, 144);
+			this.numericUpDownChildrenAmount.Location = new System.Drawing.Point(247, 179);
 			this.numericUpDownChildrenAmount.Maximum = new decimal(new int[] {
             99,
             0,
@@ -169,7 +169,7 @@
 			// 
 			this.numericUpDownExperience.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownExperience.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownExperience.Location = new System.Drawing.Point(395, 204);
+			this.numericUpDownExperience.Location = new System.Drawing.Point(395, 239);
 			this.numericUpDownExperience.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -187,7 +187,7 @@
 			this.labelExperience.BackColor = System.Drawing.Color.Transparent;
 			this.labelExperience.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExperience.ForeColor = System.Drawing.Color.Black;
-			this.labelExperience.Location = new System.Drawing.Point(12, 206);
+			this.labelExperience.Location = new System.Drawing.Point(12, 241);
 			this.labelExperience.Name = "labelExperience";
 			this.labelExperience.Size = new System.Drawing.Size(377, 32);
 			this.labelExperience.TabIndex = 6;
@@ -198,7 +198,7 @@
 			// 
 			this.numericUpDownReadiness.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownReadiness.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownReadiness.Location = new System.Drawing.Point(696, 264);
+			this.numericUpDownReadiness.Location = new System.Drawing.Point(696, 299);
 			this.numericUpDownReadiness.Maximum = new decimal(new int[] {
             14,
             0,
@@ -226,7 +226,7 @@
 			this.labelReadiness.BackColor = System.Drawing.Color.Transparent;
 			this.labelReadiness.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelReadiness.ForeColor = System.Drawing.Color.Black;
-			this.labelReadiness.Location = new System.Drawing.Point(12, 266);
+			this.labelReadiness.Location = new System.Drawing.Point(12, 301);
 			this.labelReadiness.Name = "labelReadiness";
 			this.labelReadiness.Size = new System.Drawing.Size(678, 32);
 			this.labelReadiness.TabIndex = 8;
@@ -239,7 +239,7 @@
 			this.labelDriverLicense.BackColor = System.Drawing.Color.Transparent;
 			this.labelDriverLicense.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDriverLicense.ForeColor = System.Drawing.Color.Black;
-			this.labelDriverLicense.Location = new System.Drawing.Point(12, 320);
+			this.labelDriverLicense.Location = new System.Drawing.Point(12, 355);
 			this.labelDriverLicense.Name = "labelDriverLicense";
 			this.labelDriverLicense.Size = new System.Drawing.Size(458, 32);
 			this.labelDriverLicense.TabIndex = 10;
@@ -255,7 +255,7 @@
 			this.checkBoxDriverLicenseNo.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxDriverLicenseNo.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxDriverLicenseNo.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxDriverLicenseNo.Location = new System.Drawing.Point(501, 324);
+			this.checkBoxDriverLicenseNo.Location = new System.Drawing.Point(501, 359);
 			this.checkBoxDriverLicenseNo.Name = "checkBoxDriverLicenseNo";
 			this.checkBoxDriverLicenseNo.Size = new System.Drawing.Size(53, 29);
 			this.checkBoxDriverLicenseNo.TabIndex = 11;
@@ -271,7 +271,7 @@
 			this.checkBoxDriverLicenseYes.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxDriverLicenseYes.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxDriverLicenseYes.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxDriverLicenseYes.Location = new System.Drawing.Point(601, 324);
+			this.checkBoxDriverLicenseYes.Location = new System.Drawing.Point(601, 359);
 			this.checkBoxDriverLicenseYes.Name = "checkBoxDriverLicenseYes";
 			this.checkBoxDriverLicenseYes.Size = new System.Drawing.Size(69, 29);
 			this.checkBoxDriverLicenseYes.TabIndex = 12;
@@ -286,7 +286,7 @@
 			this.labelFamilyStatus.BackColor = System.Drawing.Color.Transparent;
 			this.labelFamilyStatus.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelFamilyStatus.ForeColor = System.Drawing.Color.Black;
-			this.labelFamilyStatus.Location = new System.Drawing.Point(12, 386);
+			this.labelFamilyStatus.Location = new System.Drawing.Point(12, 421);
 			this.labelFamilyStatus.Name = "labelFamilyStatus";
 			this.labelFamilyStatus.Size = new System.Drawing.Size(225, 32);
 			this.labelFamilyStatus.TabIndex = 13;
@@ -300,7 +300,7 @@
 			this.comboBoxFamilyStatus.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.comboBoxFamilyStatus.ForeColor = System.Drawing.Color.Black;
 			this.comboBoxFamilyStatus.FormattingEnabled = true;
-			this.comboBoxFamilyStatus.Location = new System.Drawing.Point(250, 384);
+			this.comboBoxFamilyStatus.Location = new System.Drawing.Point(250, 419);
 			this.comboBoxFamilyStatus.Name = "comboBoxFamilyStatus";
 			this.comboBoxFamilyStatus.Size = new System.Drawing.Size(225, 36);
 			this.comboBoxFamilyStatus.TabIndex = 14;
@@ -313,7 +313,7 @@
 			this.comboBoxBusinessTripOpportunity.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.comboBoxBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
 			this.comboBoxBusinessTripOpportunity.FormattingEnabled = true;
-			this.comboBoxBusinessTripOpportunity.Location = new System.Drawing.Point(374, 444);
+			this.comboBoxBusinessTripOpportunity.Location = new System.Drawing.Point(374, 479);
 			this.comboBoxBusinessTripOpportunity.Name = "comboBoxBusinessTripOpportunity";
 			this.comboBoxBusinessTripOpportunity.Size = new System.Drawing.Size(250, 36);
 			this.comboBoxBusinessTripOpportunity.TabIndex = 16;
@@ -325,7 +325,7 @@
 			this.labelBusinessTripOpportunity.BackColor = System.Drawing.Color.Transparent;
 			this.labelBusinessTripOpportunity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
-			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(12, 446);
+			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(12, 481);
 			this.labelBusinessTripOpportunity.Name = "labelBusinessTripOpportunity";
 			this.labelBusinessTripOpportunity.Size = new System.Drawing.Size(356, 32);
 			this.labelBusinessTripOpportunity.TabIndex = 15;
@@ -338,7 +338,7 @@
 			this.labelChronicDiseases.BackColor = System.Drawing.Color.Transparent;
 			this.labelChronicDiseases.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseases.ForeColor = System.Drawing.Color.Black;
-			this.labelChronicDiseases.Location = new System.Drawing.Point(12, 504);
+			this.labelChronicDiseases.Location = new System.Drawing.Point(12, 539);
 			this.labelChronicDiseases.Name = "labelChronicDiseases";
 			this.labelChronicDiseases.Size = new System.Drawing.Size(352, 32);
 			this.labelChronicDiseases.TabIndex = 17;
@@ -352,7 +352,7 @@
 			this.checkBoxSmokerYes.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxSmokerYes.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxSmokerYes.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxSmokerYes.Location = new System.Drawing.Point(356, 644);
+			this.checkBoxSmokerYes.Location = new System.Drawing.Point(356, 679);
 			this.checkBoxSmokerYes.Name = "checkBoxSmokerYes";
 			this.checkBoxSmokerYes.Size = new System.Drawing.Size(69, 29);
 			this.checkBoxSmokerYes.TabIndex = 22;
@@ -370,7 +370,7 @@
 			this.checkBoxSmokerNo.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxSmokerNo.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxSmokerNo.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxSmokerNo.Location = new System.Drawing.Point(256, 644);
+			this.checkBoxSmokerNo.Location = new System.Drawing.Point(256, 679);
 			this.checkBoxSmokerNo.Name = "checkBoxSmokerNo";
 			this.checkBoxSmokerNo.Size = new System.Drawing.Size(53, 29);
 			this.checkBoxSmokerNo.TabIndex = 21;
@@ -385,7 +385,7 @@
 			this.labelSmoker.BackColor = System.Drawing.Color.Transparent;
 			this.labelSmoker.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSmoker.ForeColor = System.Drawing.Color.Black;
-			this.labelSmoker.Location = new System.Drawing.Point(12, 640);
+			this.labelSmoker.Location = new System.Drawing.Point(12, 675);
 			this.labelSmoker.Name = "labelSmoker";
 			this.labelSmoker.Size = new System.Drawing.Size(213, 32);
 			this.labelSmoker.TabIndex = 20;
@@ -399,7 +399,7 @@
 			this.checkBoxDrinkAlcoholYes.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxDrinkAlcoholYes.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxDrinkAlcoholYes.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxDrinkAlcoholYes.Location = new System.Drawing.Point(635, 704);
+			this.checkBoxDrinkAlcoholYes.Location = new System.Drawing.Point(635, 739);
 			this.checkBoxDrinkAlcoholYes.Name = "checkBoxDrinkAlcoholYes";
 			this.checkBoxDrinkAlcoholYes.Size = new System.Drawing.Size(69, 29);
 			this.checkBoxDrinkAlcoholYes.TabIndex = 25;
@@ -417,7 +417,7 @@
 			this.checkBoxDrinkAlcoholNo.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxDrinkAlcoholNo.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxDrinkAlcoholNo.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxDrinkAlcoholNo.Location = new System.Drawing.Point(535, 704);
+			this.checkBoxDrinkAlcoholNo.Location = new System.Drawing.Point(535, 739);
 			this.checkBoxDrinkAlcoholNo.Name = "checkBoxDrinkAlcoholNo";
 			this.checkBoxDrinkAlcoholNo.Size = new System.Drawing.Size(53, 29);
 			this.checkBoxDrinkAlcoholNo.TabIndex = 24;
@@ -432,7 +432,7 @@
 			this.labelDrinkAlcohol.BackColor = System.Drawing.Color.Transparent;
 			this.labelDrinkAlcohol.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDrinkAlcohol.ForeColor = System.Drawing.Color.Black;
-			this.labelDrinkAlcohol.Location = new System.Drawing.Point(12, 700);
+			this.labelDrinkAlcohol.Location = new System.Drawing.Point(12, 735);
 			this.labelDrinkAlcohol.Name = "labelDrinkAlcohol";
 			this.labelDrinkAlcohol.Size = new System.Drawing.Size(492, 32);
 			this.labelDrinkAlcohol.TabIndex = 23;
@@ -445,7 +445,7 @@
 			this.labelAdditionalInfo.BackColor = System.Drawing.Color.Transparent;
 			this.labelAdditionalInfo.Font = new System.Drawing.Font("Georgia", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAdditionalInfo.ForeColor = System.Drawing.Color.Black;
-			this.labelAdditionalInfo.Location = new System.Drawing.Point(12, 1785);
+			this.labelAdditionalInfo.Location = new System.Drawing.Point(12, 1820);
 			this.labelAdditionalInfo.Name = "labelAdditionalInfo";
 			this.labelAdditionalInfo.Size = new System.Drawing.Size(589, 31);
 			this.labelAdditionalInfo.TabIndex = 31;
@@ -456,7 +456,7 @@
 			// 
 			this.richTextBoxAdditionalInfo.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxAdditionalInfo.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxAdditionalInfo.Location = new System.Drawing.Point(18, 1819);
+			this.richTextBoxAdditionalInfo.Location = new System.Drawing.Point(18, 1854);
 			this.richTextBoxAdditionalInfo.MaxLength = 2048;
 			this.richTextBoxAdditionalInfo.Name = "richTextBoxAdditionalInfo";
 			this.richTextBoxAdditionalInfo.Size = new System.Drawing.Size(700, 200);
@@ -469,7 +469,7 @@
 			this.flpLanguages.AutoScroll = true;
 			this.flpLanguages.BackColor = System.Drawing.SystemColors.ButtonShadow;
 			this.flpLanguages.Controls.Add(this.panelLanguage);
-			this.flpLanguages.Location = new System.Drawing.Point(12, 810);
+			this.flpLanguages.Location = new System.Drawing.Point(12, 845);
 			this.flpLanguages.Name = "flpLanguages";
 			this.flpLanguages.Size = new System.Drawing.Size(873, 350);
 			this.flpLanguages.TabIndex = 28;
@@ -553,7 +553,7 @@
             "Чеська",
             "Шведська",
             "Японська"});
-			this.comboBoxLanguage.Location = new System.Drawing.Point(210, 54);
+			this.comboBoxLanguage.Location = new System.Drawing.Point(210, 89);
 			this.comboBoxLanguage.MaxDropDownItems = 15;
 			this.comboBoxLanguage.Name = "comboBoxLanguage";
 			this.comboBoxLanguage.Size = new System.Drawing.Size(250, 36);
@@ -564,7 +564,7 @@
 			// 
 			this.numericUpDownLevel.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownLevel.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownLevel.Location = new System.Drawing.Point(724, 54);
+			this.numericUpDownLevel.Location = new System.Drawing.Point(724, 89);
 			this.numericUpDownLevel.Maximum = new decimal(new int[] {
             10,
             0,
@@ -592,7 +592,7 @@
 			this.labelLevel.BackColor = System.Drawing.Color.Transparent;
 			this.labelLevel.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLevel.ForeColor = System.Drawing.Color.Black;
-			this.labelLevel.Location = new System.Drawing.Point(516, 56);
+			this.labelLevel.Location = new System.Drawing.Point(516, 91);
 			this.labelLevel.Name = "labelLevel";
 			this.labelLevel.Size = new System.Drawing.Size(202, 32);
 			this.labelLevel.TabIndex = 4;
@@ -605,7 +605,7 @@
 			this.labelLanguageNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguageNumber.Font = new System.Drawing.Font("Verdana", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguageNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguageNumber.Location = new System.Drawing.Point(1, 51);
+			this.labelLanguageNumber.Location = new System.Drawing.Point(1, 86);
 			this.labelLanguageNumber.Name = "labelLanguageNumber";
 			this.labelLanguageNumber.Size = new System.Drawing.Size(40, 42);
 			this.labelLanguageNumber.TabIndex = 1;
@@ -618,7 +618,7 @@
 			this.labelLanguage.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguage.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguage.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguage.Location = new System.Drawing.Point(107, 56);
+			this.labelLanguage.Location = new System.Drawing.Point(107, 91);
 			this.labelLanguage.Name = "labelLanguage";
 			this.labelLanguage.Size = new System.Drawing.Size(97, 32);
 			this.labelLanguage.TabIndex = 2;
@@ -631,7 +631,7 @@
 			this.buttonAddLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonAddLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonAddLanguage.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonAddLanguage.Location = new System.Drawing.Point(825, 757);
+			this.buttonAddLanguage.Location = new System.Drawing.Point(825, 792);
 			this.buttonAddLanguage.Name = "buttonAddLanguage";
 			this.buttonAddLanguage.Size = new System.Drawing.Size(40, 40);
 			this.buttonAddLanguage.TabIndex = 2;
@@ -647,7 +647,7 @@
 			this.buttonRemoveLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonRemoveLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonRemoveLanguage.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRemoveLanguage.Location = new System.Drawing.Point(765, 757);
+			this.buttonRemoveLanguage.Location = new System.Drawing.Point(765, 792);
 			this.buttonRemoveLanguage.Name = "buttonRemoveLanguage";
 			this.buttonRemoveLanguage.Size = new System.Drawing.Size(40, 40);
 			this.buttonRemoveLanguage.TabIndex = 2;
@@ -662,7 +662,7 @@
 			this.flpEducations.AutoScroll = true;
 			this.flpEducations.BackColor = System.Drawing.SystemColors.ButtonShadow;
 			this.flpEducations.Controls.Add(this.panelEducation);
-			this.flpEducations.Location = new System.Drawing.Point(15, 1272);
+			this.flpEducations.Location = new System.Drawing.Point(15, 1307);
 			this.flpEducations.Name = "flpEducations";
 			this.flpEducations.Size = new System.Drawing.Size(1211, 450);
 			this.flpEducations.TabIndex = 30;
@@ -701,7 +701,7 @@
 			this.comboBoxEducationForm.Items.AddRange(new object[] {
             "Денна",
             "Заочна"});
-			this.comboBoxEducationForm.Location = new System.Drawing.Point(879, 174);
+			this.comboBoxEducationForm.Location = new System.Drawing.Point(879, 209);
 			this.comboBoxEducationForm.Name = "comboBoxEducationForm";
 			this.comboBoxEducationForm.Size = new System.Drawing.Size(250, 36);
 			this.comboBoxEducationForm.TabIndex = 12;
@@ -713,7 +713,7 @@
 			this.labelEducationForm.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationForm.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationForm.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationForm.Location = new System.Drawing.Point(616, 176);
+			this.labelEducationForm.Location = new System.Drawing.Point(616, 211);
 			this.labelEducationForm.Name = "labelEducationForm";
 			this.labelEducationForm.Size = new System.Drawing.Size(257, 32);
 			this.labelEducationForm.TabIndex = 11;
@@ -733,7 +733,7 @@
             "Спеціаліст",
             "Магістр",
             "Доктор наук"});
-			this.comboBoxEducationDegree.Location = new System.Drawing.Point(310, 174);
+			this.comboBoxEducationDegree.Location = new System.Drawing.Point(310, 209);
 			this.comboBoxEducationDegree.Name = "comboBoxEducationDegree";
 			this.comboBoxEducationDegree.Size = new System.Drawing.Size(250, 36);
 			this.comboBoxEducationDegree.TabIndex = 6;
@@ -745,7 +745,7 @@
 			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationDegree.Location = new System.Drawing.Point(81, 176);
+			this.labelEducationDegree.Location = new System.Drawing.Point(81, 211);
 			this.labelEducationDegree.Name = "labelEducationDegree";
 			this.labelEducationDegree.Size = new System.Drawing.Size(223, 32);
 			this.labelEducationDegree.TabIndex = 5;
@@ -757,7 +757,7 @@
 			this.dateTimePickerDateEnd.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dateTimePickerDateEnd.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
 			this.dateTimePickerDateEnd.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dateTimePickerDateEnd.Location = new System.Drawing.Point(879, 114);
+			this.dateTimePickerDateEnd.Location = new System.Drawing.Point(879, 149);
 			this.dateTimePickerDateEnd.MinDate = new System.DateTime(1951, 1, 1, 0, 0, 0, 0);
 			this.dateTimePickerDateEnd.Name = "dateTimePickerDateEnd";
 			this.dateTimePickerDateEnd.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -771,7 +771,7 @@
 			this.labelDateEnd.BackColor = System.Drawing.Color.Transparent;
 			this.labelDateEnd.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDateEnd.ForeColor = System.Drawing.Color.Black;
-			this.labelDateEnd.Location = new System.Drawing.Point(620, 116);
+			this.labelDateEnd.Location = new System.Drawing.Point(620, 151);
 			this.labelDateEnd.Name = "labelDateEnd";
 			this.labelDateEnd.Size = new System.Drawing.Size(253, 32);
 			this.labelDateEnd.TabIndex = 9;
@@ -782,7 +782,7 @@
 			// 
 			this.numericUpDownYearAdmission.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownYearAdmission.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownYearAdmission.Location = new System.Drawing.Point(879, 54);
+			this.numericUpDownYearAdmission.Location = new System.Drawing.Point(879, 89);
 			this.numericUpDownYearAdmission.Maximum = new decimal(new int[] {
             1950,
             0,
@@ -810,7 +810,7 @@
 			this.labelYearAdmission.BackColor = System.Drawing.Color.Transparent;
 			this.labelYearAdmission.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelYearAdmission.ForeColor = System.Drawing.Color.Black;
-			this.labelYearAdmission.Location = new System.Drawing.Point(706, 56);
+			this.labelYearAdmission.Location = new System.Drawing.Point(706, 91);
 			this.labelYearAdmission.Name = "labelYearAdmission";
 			this.labelYearAdmission.Size = new System.Drawing.Size(167, 32);
 			this.labelYearAdmission.TabIndex = 7;
@@ -821,7 +821,7 @@
 			// 
 			this.textBoxSpecialty.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxSpecialty.ForeColor = System.Drawing.Color.Black;
-			this.textBoxSpecialty.Location = new System.Drawing.Point(310, 114);
+			this.textBoxSpecialty.Location = new System.Drawing.Point(310, 149);
 			this.textBoxSpecialty.MaxLength = 64;
 			this.textBoxSpecialty.Name = "textBoxSpecialty";
 			this.textBoxSpecialty.Size = new System.Drawing.Size(250, 36);
@@ -834,7 +834,7 @@
 			this.labelSpecialty.BackColor = System.Drawing.Color.Transparent;
 			this.labelSpecialty.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSpecialty.ForeColor = System.Drawing.Color.Black;
-			this.labelSpecialty.Location = new System.Drawing.Point(95, 116);
+			this.labelSpecialty.Location = new System.Drawing.Point(95, 151);
 			this.labelSpecialty.Name = "labelSpecialty";
 			this.labelSpecialty.Size = new System.Drawing.Size(209, 32);
 			this.labelSpecialty.TabIndex = 3;
@@ -845,7 +845,7 @@
 			// 
 			this.textBoxNameInstitution.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxNameInstitution.ForeColor = System.Drawing.Color.Black;
-			this.textBoxNameInstitution.Location = new System.Drawing.Point(310, 54);
+			this.textBoxNameInstitution.Location = new System.Drawing.Point(310, 89);
 			this.textBoxNameInstitution.MaxLength = 128;
 			this.textBoxNameInstitution.Name = "textBoxNameInstitution";
 			this.textBoxNameInstitution.Size = new System.Drawing.Size(250, 36);
@@ -858,7 +858,7 @@
 			this.labelNameInstitution.BackColor = System.Drawing.Color.Transparent;
 			this.labelNameInstitution.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNameInstitution.ForeColor = System.Drawing.Color.Black;
-			this.labelNameInstitution.Location = new System.Drawing.Point(74, 56);
+			this.labelNameInstitution.Location = new System.Drawing.Point(74, 91);
 			this.labelNameInstitution.Name = "labelNameInstitution";
 			this.labelNameInstitution.Size = new System.Drawing.Size(230, 32);
 			this.labelNameInstitution.TabIndex = 1;
@@ -871,7 +871,7 @@
 			this.labelEducationNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationNumber.Font = new System.Drawing.Font("Verdana", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationNumber.Location = new System.Drawing.Point(-2, 108);
+			this.labelEducationNumber.Location = new System.Drawing.Point(-2, 143);
 			this.labelEducationNumber.Name = "labelEducationNumber";
 			this.labelEducationNumber.Size = new System.Drawing.Size(45, 48);
 			this.labelEducationNumber.TabIndex = 1;
@@ -884,7 +884,7 @@
 			this.buttonRemoveEducation.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonRemoveEducation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonRemoveEducation.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRemoveEducation.Location = new System.Drawing.Point(1106, 1217);
+			this.buttonRemoveEducation.Location = new System.Drawing.Point(1106, 1252);
 			this.buttonRemoveEducation.Name = "buttonRemoveEducation";
 			this.buttonRemoveEducation.Size = new System.Drawing.Size(40, 40);
 			this.buttonRemoveEducation.TabIndex = 1;
@@ -900,7 +900,7 @@
 			this.buttonAddEducation.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonAddEducation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonAddEducation.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonAddEducation.Location = new System.Drawing.Point(1166, 1217);
+			this.buttonAddEducation.Location = new System.Drawing.Point(1166, 1252);
 			this.buttonAddEducation.Name = "buttonAddEducation";
 			this.buttonAddEducation.Size = new System.Drawing.Size(40, 40);
 			this.buttonAddEducation.TabIndex = 2;
@@ -1109,7 +1109,7 @@
             "Шрі-Ланка",
             "Ямайка",
             "Японія"});
-			this.comboBoxNationality.Location = new System.Drawing.Point(236, 24);
+			this.comboBoxNationality.Location = new System.Drawing.Point(236, 59);
 			this.comboBoxNationality.MaxDropDownItems = 15;
 			this.comboBoxNationality.MaxLength = 64;
 			this.comboBoxNationality.Name = "comboBoxNationality";
@@ -1122,7 +1122,7 @@
 			this.richTextBoxChronicDiseases.DetectUrls = false;
 			this.richTextBoxChronicDiseases.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxChronicDiseases.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxChronicDiseases.Location = new System.Drawing.Point(370, 504);
+			this.richTextBoxChronicDiseases.Location = new System.Drawing.Point(370, 539);
 			this.richTextBoxChronicDiseases.MaxLength = 256;
 			this.richTextBoxChronicDiseases.Name = "richTextBoxChronicDiseases";
 			this.richTextBoxChronicDiseases.Size = new System.Drawing.Size(400, 115);
@@ -1136,7 +1136,7 @@
 			this.labelChronicDiseasesInfo.BackColor = System.Drawing.Color.Transparent;
 			this.labelChronicDiseasesInfo.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseasesInfo.ForeColor = System.Drawing.Color.Black;
-			this.labelChronicDiseasesInfo.Location = new System.Drawing.Point(54, 535);
+			this.labelChronicDiseasesInfo.Location = new System.Drawing.Point(54, 570);
 			this.labelChronicDiseasesInfo.Name = "labelChronicDiseasesInfo";
 			this.labelChronicDiseasesInfo.Size = new System.Drawing.Size(306, 23);
 			this.labelChronicDiseasesInfo.TabIndex = 18;
@@ -1151,7 +1151,7 @@
 			this.buttonLanguageHelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
 			this.buttonLanguageHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonLanguageHelp.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonLanguageHelp.Location = new System.Drawing.Point(12, 767);
+			this.buttonLanguageHelp.Location = new System.Drawing.Point(12, 802);
 			this.buttonLanguageHelp.Name = "buttonLanguageHelp";
 			this.buttonLanguageHelp.Size = new System.Drawing.Size(30, 30);
 			this.buttonLanguageHelp.TabIndex = 26;
@@ -1169,7 +1169,7 @@
 			this.buttonApply.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonApply.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonApply.Location = new System.Drawing.Point(1051, 1973);
+			this.buttonApply.Location = new System.Drawing.Point(1041, 2008);
 			this.buttonApply.Name = "buttonApply";
 			this.buttonApply.Size = new System.Drawing.Size(175, 40);
 			this.buttonApply.TabIndex = 1;
@@ -1185,7 +1185,7 @@
 			this.labelEducation.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducation.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducation.ForeColor = System.Drawing.Color.Black;
-			this.labelEducation.Location = new System.Drawing.Point(8, 1228);
+			this.labelEducation.Location = new System.Drawing.Point(8, 1263);
 			this.labelEducation.Name = "labelEducation";
 			this.labelEducation.Size = new System.Drawing.Size(122, 38);
 			this.labelEducation.TabIndex = 38;
@@ -1194,6 +1194,9 @@
 			// 
 			// panelMain
 			// 
+			this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelMain.AutoScroll = true;
 			this.panelMain.BackColor = System.Drawing.Color.Transparent;
 			this.panelMain.Controls.Add(this.buttonApply);
@@ -1234,20 +1237,19 @@
 			this.panelMain.Controls.Add(this.textBoxCity);
 			this.panelMain.Controls.Add(this.labelCity);
 			this.panelMain.Controls.Add(this.labelNationality);
-			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMain.Location = new System.Drawing.Point(0, 0);
+			this.panelMain.Location = new System.Drawing.Point(5, 0);
 			this.panelMain.Name = "panelMain";
-			this.panelMain.Size = new System.Drawing.Size(1375, 611);
-			this.panelMain.TabIndex = 39;
+			this.panelMain.Size = new System.Drawing.Size(1365, 606);
+			this.panelMain.TabIndex = 0;
 			this.panelMain.Tag = "";
 			// 
 			// panelDown
 			// 
 			this.panelDown.BackColor = System.Drawing.Color.Transparent;
 			this.panelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panelDown.Location = new System.Drawing.Point(0, 2019);
+			this.panelDown.Location = new System.Drawing.Point(0, 2054);
 			this.panelDown.Name = "panelDown";
-			this.panelDown.Size = new System.Drawing.Size(1358, 25);
+			this.panelDown.Size = new System.Drawing.Size(1348, 25);
 			this.panelDown.TabIndex = 37;
 			this.panelDown.Tag = "fixedPosition";
 			// 

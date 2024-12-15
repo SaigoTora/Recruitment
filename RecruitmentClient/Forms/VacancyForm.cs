@@ -85,6 +85,7 @@ namespace RecruitmentClient.Forms
 
 		public void SetTheme(Theme theme)
 		{// Метод задає формі потрібну тему
+			customTitleBar.ChangeTheme(theme);
 			ColorChanger.ChangeLabelsForeColor(theme, labelPosition,
 					labelDatePublication, labelSalaryTitle, labelPositionDescriptionTitle,
 					labelAdditionalInfoTitle, labelRequirementTitle, labelAdditionalTitle);
