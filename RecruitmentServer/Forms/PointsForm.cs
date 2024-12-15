@@ -6,10 +6,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class PointsForm : Form, IThemeChange
+	internal partial class PointsForm : BaseForm, IThemeChange
 	{// Форма балів
 		private readonly Points points;// Об'єкт, який зберігає інформацію про кількість балів
 		private PointDegree[] degrees;// Масив, який зберігає інформацію про кількість балів для ступенів освіти
@@ -18,6 +20,7 @@ namespace RecruitmentServer.Forms
 		{// Конструктор форми
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Бали", minimizeBox: false, maximizeBox: false);
 			this.points = points;
 
 			if (isForView)// Якщо форма відкрита для перегляду

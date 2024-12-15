@@ -268,7 +268,7 @@
 			this.panelVacancy.Name = "panelVacancy";
 			this.panelVacancy.Size = new System.Drawing.Size(1134, 168);
 			this.panelVacancy.TabIndex = 12;
-			this.panelVacancy.Tag = "needToMoveParentDown";
+			this.panelVacancy.Tag = "";
 			this.panelVacancy.Visible = false;
 			// 
 			// buttonVacancy
@@ -359,7 +359,7 @@
 			this.panelApplication.Name = "panelApplication";
 			this.panelApplication.Size = new System.Drawing.Size(1134, 107);
 			this.panelApplication.TabIndex = 13;
-			this.panelApplication.Tag = "needToMoveParentDown";
+			this.panelApplication.Tag = "";
 			this.panelApplication.Visible = false;
 			// 
 			// pictureBoxApplication
@@ -442,7 +442,7 @@
 			this.panelInterview.Name = "panelInterview";
 			this.panelInterview.Size = new System.Drawing.Size(1134, 107);
 			this.panelInterview.TabIndex = 14;
-			this.panelInterview.Tag = "needToMoveParentDown";
+			this.panelInterview.Tag = "";
 			this.panelInterview.Visible = false;
 			// 
 			// pictureBoxInterview

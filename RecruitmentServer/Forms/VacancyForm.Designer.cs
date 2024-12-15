@@ -286,7 +286,6 @@
 			this.Controls.Add(this.richTextBoxSalary);
 			this.Controls.Add(this.labelSalaryTitle);
 			this.Controls.Add(this.buttonCreate);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "VacancyForm";

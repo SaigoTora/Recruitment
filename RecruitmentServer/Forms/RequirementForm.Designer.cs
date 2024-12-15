@@ -633,7 +633,6 @@
 			this.Controls.Add(this.labelAgeMin);
 			this.Controls.Add(this.textBoxCity);
 			this.Controls.Add(this.labelCity);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "RequirementForm";

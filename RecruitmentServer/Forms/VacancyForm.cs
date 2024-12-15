@@ -6,10 +6,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class VacancyForm : Form, IThemeChange
+	internal partial class VacancyForm : BaseForm, IThemeChange
 	{// Форма вакансії
 		private const int DECREASE_FORM_HEIGHT = 130;
 		private readonly FullRequirement requirement = new FullRequirement();// Вимоги
@@ -19,9 +21,15 @@ namespace RecruitmentServer.Forms
 		private FullVacancy vacancy;// Вакансія
 		private Points points = new Points();// Бали
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		internal VacancyForm(ServerAccount account, Action<EventArgs> refresh)
-		{// Конструктор форми створення вакансії
+
+		private VacancyForm()
+		{
 			InitializeComponent();
+			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false, maximizeBox: false);
+		}
+		internal VacancyForm(ServerAccount account, Action<EventArgs> refresh)
+			: this()
+		{// Конструктор форми створення вакансії
 
 			// Зменшуємо розмір форми
 			Size = new System.Drawing.Size(Width, Height - DECREASE_FORM_HEIGHT);
@@ -49,9 +57,8 @@ namespace RecruitmentServer.Forms
 			SetTheme(account.Theme);
 		}
 		internal VacancyForm(FullVacancy vacancy, ServerAccount account, Action<EventArgs> refresh = null, bool isDeleteButtonVisible = true)
+			: this()
 		{// Конструктор форми перегляду вакансії
-			InitializeComponent();
-
 			this.refresh = refresh;
 			buttonCreate.Visible = false;// Встановлюємо значення для перегляду вакансії
 			this.vacancy = vacancy;

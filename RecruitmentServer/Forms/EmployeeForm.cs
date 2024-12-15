@@ -4,10 +4,12 @@ using System.Windows.Forms;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class EmployeeForm : Form, IThemeChange
+	internal partial class EmployeeForm : BaseForm, IThemeChange
 	{// Форма співробітника
 		private readonly Employee employee;// Співробітник
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
@@ -16,6 +18,8 @@ namespace RecruitmentServer.Forms
 		internal EmployeeForm(Employee employee, Action<EventArgs> refresh, ServerAccount account)
 		{// Конструктор форми
 			InitializeComponent();
+
+			customTitleBar = new CustomTitleBar(this, "Співробітник", minimizeBox: false, maximizeBox: false);
 			this.employee = employee;
 			this.refresh = refresh;
 

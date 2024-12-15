@@ -7,10 +7,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class RequirementForm : Form, IThemeChange
+	internal partial class RequirementForm : BaseForm, IThemeChange
 	{// Форма вакансій
 		private readonly FullRequirement requirement;// Вимоги
 		private readonly ServerAccount account;// Акаунт
@@ -18,9 +20,11 @@ namespace RecruitmentServer.Forms
 		internal RequirementForm(FullRequirement requirement, ServerAccount account)
 		{// Конструктор форми створення вакансії
 			InitializeComponent();
-			education_DegreeTableAdapter.Fill(recruitmentDBDataSet.Education_Degree);
 
+			customTitleBar = new CustomTitleBar(this, "Вимоги", minimizeBox: false, maximizeBox: false);
+			education_DegreeTableAdapter.Fill(recruitmentDBDataSet.Education_Degree);
 			this.requirement = requirement;
+
 			if (requirement.City != null)
 			{// Якщо вимоги були вказані, то заповнюємо елементи форми
 				textBoxCity.Text = requirement.City;

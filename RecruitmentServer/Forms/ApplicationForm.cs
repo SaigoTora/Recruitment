@@ -5,10 +5,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class ApplicationForm : Form, IThemeChange
+	internal partial class ApplicationForm : BaseForm, IThemeChange
 	{// Форма заявки
 		private const int MIN_HOURS_WAIT_TO_EVENT = 12;// Через скільки годин можна буде запланувати співбесіду
 
@@ -20,11 +22,12 @@ namespace RecruitmentServer.Forms
 		internal ApplicationForm(FullApplication application, Action<EventArgs> refresh, ServerAccount account)
 		{// Конструктор форми створення вакансії
 			InitializeComponent();
+			customTitleBar = new CustomTitleBar(this, $"Заявка ({application.Status})", minimizeBox: false, maximizeBox: false);
 			application_StatusTableAdapter.Fill(recruitmentDBDataSet.Application_Status);
 
 			this.application = application;
 			this.refresh = refresh;
-			Text = $"Заявка ({application.Status})";
+
 			richTextBoxPosition.Text = application.Position.Name;
 			labelScores.Text = "Балів: " + application.Scores;
 			labelDatePublication.Text = "Дата і час подачі: " + application.DateSubmission.ToString("d MMMM yyyy HH:mm");

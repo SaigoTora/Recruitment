@@ -47,7 +47,7 @@ namespace RecruitmentClient.Forms
 		{// Конструктор
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main, maximizeBox: false);
+			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			account = a;
 			comboBoxSortCount = comboBoxSort.Items.Count;
 			flpMain.MouseWheel += FlpMain_MouseWheel;

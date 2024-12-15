@@ -229,7 +229,6 @@
 			this.Controls.Add(this.richTextBoxContact);
 			this.Controls.Add(this.labelContact);
 			this.Controls.Add(this.labelSalaryTitle);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "EmployeeForm";

@@ -53,6 +53,7 @@
 			this.buttonApplication.Name = "buttonApplication";
 			this.buttonApplication.Size = new System.Drawing.Size(175, 35);
 			this.buttonApplication.TabIndex = 2;
+			this.buttonApplication.Tag = "fixedPosition";
 			this.buttonApplication.Text = "Заявка";
 			this.buttonApplication.UseVisualStyleBackColor = false;
 			// 
@@ -68,6 +69,7 @@
 			this.flpMain.Name = "flpMain";
 			this.flpMain.Size = new System.Drawing.Size(1264, 540);
 			this.flpMain.TabIndex = 3;
+			this.flpMain.Tag = "";
 			// 
 			// panelAssignment
 			// 
@@ -86,6 +88,7 @@
 			this.panelAssignment.Name = "panelAssignment";
 			this.panelAssignment.Size = new System.Drawing.Size(1254, 165);
 			this.panelAssignment.TabIndex = 0;
+			this.panelAssignment.Tag = "";
 			this.panelAssignment.Visible = false;
 			// 
 			// labelScores
@@ -99,6 +102,7 @@
 			this.labelScores.Name = "labelScores";
 			this.labelScores.Size = new System.Drawing.Size(425, 32);
 			this.labelScores.TabIndex = 5;
+			this.labelScores.Tag = "fixedPosition";
 			this.labelScores.Text = "Балів:";
 			this.labelScores.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -113,6 +117,7 @@
 			this.labelVacancy.Name = "labelVacancy";
 			this.labelVacancy.Size = new System.Drawing.Size(135, 32);
 			this.labelVacancy.TabIndex = 2;
+			this.labelVacancy.Tag = "fixedPosition";
 			this.labelVacancy.Text = "Вакансія";
 			// 
 			// buttonVacancy
@@ -125,6 +130,7 @@
 			this.buttonVacancy.Name = "buttonVacancy";
 			this.buttonVacancy.Size = new System.Drawing.Size(250, 35);
 			this.buttonVacancy.TabIndex = 3;
+			this.buttonVacancy.Tag = "fixedPosition";
 			this.buttonVacancy.Text = "Вакансія";
 			this.buttonVacancy.UseVisualStyleBackColor = false;
 			// 
@@ -138,6 +144,7 @@
 			this.buttonCandidate.Name = "buttonCandidate";
 			this.buttonCandidate.Size = new System.Drawing.Size(250, 35);
 			this.buttonCandidate.TabIndex = 1;
+			this.buttonCandidate.Tag = "fixedPosition";
 			this.buttonCandidate.Text = "Кандидат";
 			this.buttonCandidate.UseVisualStyleBackColor = false;
 			// 
@@ -152,6 +159,7 @@
 			this.labelCandidate.Name = "labelCandidate";
 			this.labelCandidate.Size = new System.Drawing.Size(158, 32);
 			this.labelCandidate.TabIndex = 0;
+			this.labelCandidate.Tag = "fixedPosition";
 			this.labelCandidate.Text = "Кандидат:";
 			// 
 			// labelEmpty
@@ -190,12 +198,8 @@
 			this.ClientSize = new System.Drawing.Size(1264, 627);
 			this.Controls.Add(this.flpMain);
 			this.Controls.Add(this.labelTitle);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "AssignmentForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Призначення";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AssignmentForm_FormClosed);
 			this.Load += new System.EventHandler(this.AssignmentForm_Load);

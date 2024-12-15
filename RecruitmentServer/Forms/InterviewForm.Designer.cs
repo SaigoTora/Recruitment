@@ -203,10 +203,11 @@
 			this.panelDate.Controls.Add(this.labelHours);
 			this.panelDate.Controls.Add(this.dateTimePickerInterview);
 			this.panelDate.Controls.Add(this.numericUpDownHours);
-			this.panelDate.Location = new System.Drawing.Point(8, 190);
+			this.panelDate.Location = new System.Drawing.Point(8, 215);
 			this.panelDate.Name = "panelDate";
 			this.panelDate.Size = new System.Drawing.Size(358, 148);
 			this.panelDate.TabIndex = 4;
+			this.panelDate.Tag = "";
 			this.panelDate.Visible = false;
 			// 
 			// labelDate
@@ -221,6 +222,7 @@
 			this.labelDate.Name = "labelDate";
 			this.labelDate.Size = new System.Drawing.Size(316, 32);
 			this.labelDate.TabIndex = 0;
+			this.labelDate.Tag = "fixedPosition";
 			this.labelDate.Text = "Дата і час співбесіди:";
 			// 
 			// labelMinutes
@@ -235,6 +237,7 @@
 			this.labelMinutes.Name = "labelMinutes";
 			this.labelMinutes.Size = new System.Drawing.Size(39, 23);
 			this.labelMinutes.TabIndex = 5;
+			this.labelMinutes.Tag = "fixedPosition";
 			this.labelMinutes.Text = "хв.";
 			// 
 			// numericUpDownMinutes
@@ -250,6 +253,7 @@
 			this.numericUpDownMinutes.Name = "numericUpDownMinutes";
 			this.numericUpDownMinutes.Size = new System.Drawing.Size(50, 36);
 			this.numericUpDownMinutes.TabIndex = 4;
+			this.numericUpDownMinutes.Tag = "fixedPosition";
 			this.numericUpDownMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// labelHours
@@ -264,6 +268,7 @@
 			this.labelHours.Name = "labelHours";
 			this.labelHours.Size = new System.Drawing.Size(50, 23);
 			this.labelHours.TabIndex = 3;
+			this.labelHours.Tag = "fixedPosition";
 			this.labelHours.Text = "год.";
 			// 
 			// dateTimePickerInterview
@@ -281,6 +286,7 @@
 			this.dateTimePickerInterview.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.dateTimePickerInterview.Size = new System.Drawing.Size(300, 36);
 			this.dateTimePickerInterview.TabIndex = 1;
+			this.dateTimePickerInterview.Tag = "fixedPosition";
 			this.dateTimePickerInterview.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
 			// 
 			// numericUpDownHours
@@ -296,6 +302,7 @@
 			this.numericUpDownHours.Name = "numericUpDownHours";
 			this.numericUpDownHours.Size = new System.Drawing.Size(50, 36);
 			this.numericUpDownHours.TabIndex = 2;
+			this.numericUpDownHours.Tag = "fixedPosition";
 			this.numericUpDownHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// buttonChangeApply
@@ -330,15 +337,11 @@
 			this.Controls.Add(this.buttonApplication);
 			this.Controls.Add(this.labelDateEvent);
 			this.Controls.Add(this.buttonApply);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "InterviewForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Співбесіда";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InterviewForm_FormClosed);
-			this.Load += new System.EventHandler(this.ApplicationForm_Load);
+			this.Load += new System.EventHandler(this.InterviewForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.interviewStatusBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).EndInit();
 			this.panelDate.ResumeLayout(false);

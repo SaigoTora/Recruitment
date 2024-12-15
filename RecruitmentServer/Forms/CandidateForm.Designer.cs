@@ -66,12 +66,14 @@
 			this.labelDriverLicense = new System.Windows.Forms.Label();
 			this.labelReadiness = new System.Windows.Forms.Label();
 			this.labelExperience = new System.Windows.Forms.Label();
+			this.panelMain = new System.Windows.Forms.Panel();
 			this.panelMore.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			this.flpEducations.SuspendLayout();
 			this.panelEducation.SuspendLayout();
 			this.flpLanguages.SuspendLayout();
 			this.panelLanguage.SuspendLayout();
+			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonMore
@@ -85,6 +87,7 @@
 			this.buttonMore.Name = "buttonMore";
 			this.buttonMore.Size = new System.Drawing.Size(160, 40);
 			this.buttonMore.TabIndex = 8;
+			this.buttonMore.Tag = "fixedPosition";
 			this.buttonMore.Text = "Більше";
 			this.buttonMore.UseVisualStyleBackColor = false;
 			this.buttonMore.Click += new System.EventHandler(this.ButtonMore_Click);
@@ -100,6 +103,7 @@
 			this.labelCity.Name = "labelCity";
 			this.labelCity.Size = new System.Drawing.Size(600, 29);
 			this.labelCity.TabIndex = 2;
+			this.labelCity.Tag = "fixedPosition";
 			this.labelCity.Text = "Місце проживання";
 			this.labelCity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -116,6 +120,7 @@
 			this.richTextBoxAdditionalInfo.Size = new System.Drawing.Size(525, 305);
 			this.richTextBoxAdditionalInfo.TabIndex = 7;
 			this.richTextBoxAdditionalInfo.TabStop = false;
+			this.richTextBoxAdditionalInfo.Tag = "fixedPosition";
 			this.richTextBoxAdditionalInfo.Text = "";
 			// 
 			// labelAdditionalInfoTitle
@@ -129,6 +134,7 @@
 			this.labelAdditionalInfoTitle.Name = "labelAdditionalInfoTitle";
 			this.labelAdditionalInfoTitle.Size = new System.Drawing.Size(479, 29);
 			this.labelAdditionalInfoTitle.TabIndex = 6;
+			this.labelAdditionalInfoTitle.Tag = "fixedPosition";
 			this.labelAdditionalInfoTitle.Text = "Додаткова інформація від кандидата:";
 			// 
 			// labelNationality
@@ -142,6 +148,7 @@
 			this.labelNationality.Name = "labelNationality";
 			this.labelNationality.Size = new System.Drawing.Size(600, 29);
 			this.labelNationality.TabIndex = 1;
+			this.labelNationality.Tag = "fixedPosition";
 			this.labelNationality.Text = "Громадянство";
 			this.labelNationality.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -156,6 +163,7 @@
 			this.labelFullName.Name = "labelFullName";
 			this.labelFullName.Size = new System.Drawing.Size(1240, 40);
 			this.labelFullName.TabIndex = 0;
+			this.labelFullName.Tag = "fixedPosition";
 			this.labelFullName.Text = "ПІБ";
 			this.labelFullName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
@@ -170,6 +178,7 @@
 			this.labelBirthday.Name = "labelBirthday";
 			this.labelBirthday.Size = new System.Drawing.Size(600, 29);
 			this.labelBirthday.TabIndex = 3;
+			this.labelBirthday.Tag = "fixedPosition";
 			this.labelBirthday.Text = "Дата народження";
 			this.labelBirthday.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -186,6 +195,7 @@
 			this.richTextBoxContact.Size = new System.Drawing.Size(500, 120);
 			this.richTextBoxContact.TabIndex = 5;
 			this.richTextBoxContact.TabStop = false;
+			this.richTextBoxContact.Tag = "fixedPosition";
 			this.richTextBoxContact.Text = "Інформація";
 			// 
 			// labelContact
@@ -199,6 +209,7 @@
 			this.labelContact.Name = "labelContact";
 			this.labelContact.Size = new System.Drawing.Size(334, 32);
 			this.labelContact.TabIndex = 4;
+			this.labelContact.Tag = "fixedPosition";
 			this.labelContact.Text = "Контактна інформація:";
 			// 
 			// panelMore
@@ -223,7 +234,7 @@
 			this.panelMore.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panelMore.Location = new System.Drawing.Point(0, 417);
 			this.panelMore.Name = "panelMore";
-			this.panelMore.Size = new System.Drawing.Size(1337, 1320);
+			this.panelMore.Size = new System.Drawing.Size(1354, 1320);
 			this.panelMore.TabIndex = 9;
 			this.panelMore.Visible = false;
 			// 
@@ -237,6 +248,7 @@
 			this.labelLanguageHelp.Name = "labelLanguageHelp";
 			this.labelLanguageHelp.Size = new System.Drawing.Size(448, 18);
 			this.labelLanguageHelp.TabIndex = 50;
+			this.labelLanguageHelp.Tag = "fixedPosition";
 			this.labelLanguageHelp.Text = "(рівень знань може приймати значення від 1 до 10)";
 			// 
 			// pictureBoxLine
@@ -244,12 +256,13 @@
 			this.pictureBoxLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.pictureBoxLine.BackColor = System.Drawing.Color.Black;
 			this.pictureBoxLine.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.pictureBoxLine.Location = new System.Drawing.Point(433, 6);
+			this.pictureBoxLine.Location = new System.Drawing.Point(294, 6);
 			this.pictureBoxLine.Name = "pictureBoxLine";
 			this.pictureBoxLine.Size = new System.Drawing.Size(423, 2);
 			this.pictureBoxLine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxLine.TabIndex = 49;
 			this.pictureBoxLine.TabStop = false;
+			this.pictureBoxLine.Tag = "fixedPosition";
 			// 
 			// labelLanguageTitle
 			// 
@@ -261,6 +274,7 @@
 			this.labelLanguageTitle.Name = "labelLanguageTitle";
 			this.labelLanguageTitle.Size = new System.Drawing.Size(101, 38);
 			this.labelLanguageTitle.TabIndex = 10;
+			this.labelLanguageTitle.Tag = "fixedPosition";
 			this.labelLanguageTitle.Text = "Мова";
 			// 
 			// labelEducationTitle
@@ -273,6 +287,7 @@
 			this.labelEducationTitle.Name = "labelEducationTitle";
 			this.labelEducationTitle.Size = new System.Drawing.Size(122, 38);
 			this.labelEducationTitle.TabIndex = 12;
+			this.labelEducationTitle.Tag = "fixedPosition";
 			this.labelEducationTitle.Text = "Освіта";
 			// 
 			// flpEducations
@@ -284,6 +299,7 @@
 			this.flpEducations.Name = "flpEducations";
 			this.flpEducations.Size = new System.Drawing.Size(1211, 450);
 			this.flpEducations.TabIndex = 13;
+			this.flpEducations.Tag = "fixedPosition";
 			// 
 			// panelEducation
 			// 
@@ -299,6 +315,7 @@
 			this.panelEducation.Name = "panelEducation";
 			this.panelEducation.Size = new System.Drawing.Size(1188, 246);
 			this.panelEducation.TabIndex = 0;
+			this.panelEducation.Tag = "fixedPosition";
 			this.panelEducation.Visible = false;
 			// 
 			// labelEducationForm
@@ -311,6 +328,7 @@
 			this.labelEducationForm.Name = "labelEducationForm";
 			this.labelEducationForm.Size = new System.Drawing.Size(420, 32);
 			this.labelEducationForm.TabIndex = 6;
+			this.labelEducationForm.Tag = "fixedPosition";
 			this.labelEducationForm.Text = "Форма навчання";
 			// 
 			// labelEducationDegree
@@ -323,6 +341,7 @@
 			this.labelEducationDegree.Name = "labelEducationDegree";
 			this.labelEducationDegree.Size = new System.Drawing.Size(600, 32);
 			this.labelEducationDegree.TabIndex = 3;
+			this.labelEducationDegree.Tag = "fixedPosition";
 			this.labelEducationDegree.Text = "Ступінь освіти";
 			// 
 			// labelDateEnd
@@ -335,6 +354,7 @@
 			this.labelDateEnd.Name = "labelDateEnd";
 			this.labelDateEnd.Size = new System.Drawing.Size(420, 32);
 			this.labelDateEnd.TabIndex = 5;
+			this.labelDateEnd.Tag = "fixedPosition";
 			this.labelDateEnd.Text = "Дата закінчення";
 			// 
 			// labelYearAdmission
@@ -347,6 +367,7 @@
 			this.labelYearAdmission.Name = "labelYearAdmission";
 			this.labelYearAdmission.Size = new System.Drawing.Size(420, 32);
 			this.labelYearAdmission.TabIndex = 4;
+			this.labelYearAdmission.Tag = "fixedPosition";
 			this.labelYearAdmission.Text = "Рік вступу";
 			// 
 			// labelSpecialty
@@ -359,6 +380,7 @@
 			this.labelSpecialty.Name = "labelSpecialty";
 			this.labelSpecialty.Size = new System.Drawing.Size(600, 32);
 			this.labelSpecialty.TabIndex = 2;
+			this.labelSpecialty.Tag = "fixedPosition";
 			this.labelSpecialty.Text = "Спецальність";
 			// 
 			// labelNameInstitution
@@ -371,6 +393,7 @@
 			this.labelNameInstitution.Name = "labelNameInstitution";
 			this.labelNameInstitution.Size = new System.Drawing.Size(600, 32);
 			this.labelNameInstitution.TabIndex = 1;
+			this.labelNameInstitution.Tag = "fixedPosition";
 			this.labelNameInstitution.Text = "Назва закладу";
 			// 
 			// labelEducationNumber
@@ -383,6 +406,7 @@
 			this.labelEducationNumber.Name = "labelEducationNumber";
 			this.labelEducationNumber.Size = new System.Drawing.Size(45, 48);
 			this.labelEducationNumber.TabIndex = 0;
+			this.labelEducationNumber.Tag = "fixedPosition";
 			this.labelEducationNumber.Text = "1";
 			// 
 			// flpLanguages
@@ -394,6 +418,7 @@
 			this.flpLanguages.Name = "flpLanguages";
 			this.flpLanguages.Size = new System.Drawing.Size(873, 350);
 			this.flpLanguages.TabIndex = 11;
+			this.flpLanguages.Tag = "fixedPosition";
 			// 
 			// panelLanguage
 			// 
@@ -405,6 +430,7 @@
 			this.panelLanguage.Name = "panelLanguage";
 			this.panelLanguage.Size = new System.Drawing.Size(850, 125);
 			this.panelLanguage.TabIndex = 0;
+			this.panelLanguage.Tag = "fixedPosition";
 			this.panelLanguage.Visible = false;
 			// 
 			// labelLevel
@@ -417,6 +443,7 @@
 			this.labelLevel.Name = "labelLevel";
 			this.labelLevel.Size = new System.Drawing.Size(180, 29);
 			this.labelLevel.TabIndex = 2;
+			this.labelLevel.Tag = "fixedPosition";
 			this.labelLevel.Text = "Рівень знань:";
 			// 
 			// labelLanguageNumber
@@ -429,6 +456,7 @@
 			this.labelLanguageNumber.Name = "labelLanguageNumber";
 			this.labelLanguageNumber.Size = new System.Drawing.Size(40, 42);
 			this.labelLanguageNumber.TabIndex = 0;
+			this.labelLanguageNumber.Tag = "fixedPosition";
 			this.labelLanguageNumber.Text = "1";
 			// 
 			// labelLanguage
@@ -441,6 +469,7 @@
 			this.labelLanguage.Name = "labelLanguage";
 			this.labelLanguage.Size = new System.Drawing.Size(87, 29);
 			this.labelLanguage.TabIndex = 1;
+			this.labelLanguage.Tag = "fixedPosition";
 			this.labelLanguage.Text = "Мова:";
 			// 
 			// richTextBoxChronicDiseases
@@ -456,6 +485,7 @@
 			this.richTextBoxChronicDiseases.Size = new System.Drawing.Size(500, 164);
 			this.richTextBoxChronicDiseases.TabIndex = 9;
 			this.richTextBoxChronicDiseases.TabStop = false;
+			this.richTextBoxChronicDiseases.Tag = "fixedPosition";
 			this.richTextBoxChronicDiseases.Text = "";
 			// 
 			// labelChronicDiseases
@@ -469,6 +499,7 @@
 			this.labelChronicDiseases.Name = "labelChronicDiseases";
 			this.labelChronicDiseases.Size = new System.Drawing.Size(312, 29);
 			this.labelChronicDiseases.TabIndex = 8;
+			this.labelChronicDiseases.Tag = "fixedPosition";
 			this.labelChronicDiseases.Text = "Хронічні захворювання:";
 			// 
 			// labelSmokerAlcohol
@@ -482,6 +513,7 @@
 			this.labelSmokerAlcohol.Name = "labelSmokerAlcohol";
 			this.labelSmokerAlcohol.Size = new System.Drawing.Size(530, 29);
 			this.labelSmokerAlcohol.TabIndex = 7;
+			this.labelSmokerAlcohol.Tag = "fixedPosition";
 			this.labelSmokerAlcohol.Text = "Куріння та алкоголь";
 			this.labelSmokerAlcohol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -497,6 +529,7 @@
 			this.labelHealth.Name = "labelHealth";
 			this.labelHealth.Size = new System.Drawing.Size(147, 35);
 			this.labelHealth.TabIndex = 6;
+			this.labelHealth.Tag = "fixedPosition";
 			this.labelHealth.Text = "Здоров’я";
 			this.labelHealth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -511,6 +544,7 @@
 			this.labelFamilyStatus.Name = "labelFamilyStatus";
 			this.labelFamilyStatus.Size = new System.Drawing.Size(600, 29);
 			this.labelFamilyStatus.TabIndex = 4;
+			this.labelFamilyStatus.Tag = "fixedPosition";
 			this.labelFamilyStatus.Text = "Сімейний стан";
 			this.labelFamilyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -525,6 +559,7 @@
 			this.labelBusinessTrip.Name = "labelBusinessTrip";
 			this.labelBusinessTrip.Size = new System.Drawing.Size(600, 29);
 			this.labelBusinessTrip.TabIndex = 1;
+			this.labelBusinessTrip.Tag = "fixedPosition";
 			this.labelBusinessTrip.Text = "Можливість відряджень";
 			this.labelBusinessTrip.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -539,6 +574,7 @@
 			this.labelChildrenAmount.Name = "labelChildrenAmount";
 			this.labelChildrenAmount.Size = new System.Drawing.Size(600, 29);
 			this.labelChildrenAmount.TabIndex = 5;
+			this.labelChildrenAmount.Tag = "fixedPosition";
 			this.labelChildrenAmount.Text = "Кількість дітей";
 			this.labelChildrenAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -553,6 +589,7 @@
 			this.labelDriverLicense.Name = "labelDriverLicense";
 			this.labelDriverLicense.Size = new System.Drawing.Size(600, 29);
 			this.labelDriverLicense.TabIndex = 2;
+			this.labelDriverLicense.Tag = "fixedPosition";
 			this.labelDriverLicense.Text = "Посвідчення водія";
 			this.labelDriverLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -567,6 +604,7 @@
 			this.labelReadiness.Name = "labelReadiness";
 			this.labelReadiness.Size = new System.Drawing.Size(600, 29);
 			this.labelReadiness.TabIndex = 3;
+			this.labelReadiness.Tag = "fixedPosition";
 			this.labelReadiness.Text = "Готовність до роботи";
 			this.labelReadiness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -581,31 +619,38 @@
 			this.labelExperience.Name = "labelExperience";
 			this.labelExperience.Size = new System.Drawing.Size(600, 29);
 			this.labelExperience.TabIndex = 0;
+			this.labelExperience.Tag = "fixedPosition";
 			this.labelExperience.Text = "Досвід роботи";
 			this.labelExperience.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// panelMain
+			// 
+			this.panelMain.AutoScroll = true;
+			this.panelMain.BackColor = System.Drawing.Color.Transparent;
+			this.panelMain.Controls.Add(this.panelMore);
+			this.panelMain.Controls.Add(this.richTextBoxContact);
+			this.panelMain.Controls.Add(this.labelContact);
+			this.panelMain.Controls.Add(this.labelBirthday);
+			this.panelMain.Controls.Add(this.labelFullName);
+			this.panelMain.Controls.Add(this.buttonMore);
+			this.panelMain.Controls.Add(this.labelCity);
+			this.panelMain.Controls.Add(this.richTextBoxAdditionalInfo);
+			this.panelMain.Controls.Add(this.labelAdditionalInfoTitle);
+			this.panelMain.Controls.Add(this.labelNationality);
+			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMain.Location = new System.Drawing.Point(0, 0);
+			this.panelMain.Name = "panelMain";
+			this.panelMain.Size = new System.Drawing.Size(1371, 501);
+			this.panelMain.TabIndex = 10;
 			// 
 			// CandidateForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoScroll = true;
-			this.ClientSize = new System.Drawing.Size(1354, 501);
-			this.Controls.Add(this.panelMore);
-			this.Controls.Add(this.richTextBoxContact);
-			this.Controls.Add(this.labelContact);
-			this.Controls.Add(this.labelBirthday);
-			this.Controls.Add(this.labelFullName);
-			this.Controls.Add(this.buttonMore);
-			this.Controls.Add(this.labelCity);
-			this.Controls.Add(this.richTextBoxAdditionalInfo);
-			this.Controls.Add(this.labelAdditionalInfoTitle);
-			this.Controls.Add(this.labelNationality);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
+			this.ClientSize = new System.Drawing.Size(1371, 501);
+			this.Controls.Add(this.panelMain);
 			this.Name = "CandidateForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Кандидат";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CandidateForm_FormClosed);
 			this.panelMore.ResumeLayout(false);
@@ -617,8 +662,9 @@
 			this.flpLanguages.ResumeLayout(false);
 			this.panelLanguage.ResumeLayout(false);
 			this.panelLanguage.PerformLayout();
+			this.panelMain.ResumeLayout(false);
+			this.panelMain.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
         }
 
@@ -661,5 +707,6 @@
         private System.Windows.Forms.Label labelEducationNumber;
         private System.Windows.Forms.PictureBox pictureBoxLine;
         private System.Windows.Forms.Label labelLanguageHelp;
-    }
+		private System.Windows.Forms.Panel panelMain;
+	}
 }

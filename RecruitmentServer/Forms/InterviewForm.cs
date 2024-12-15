@@ -5,10 +5,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class InterviewForm : Form, IThemeChange
+	internal partial class InterviewForm : BaseForm, IThemeChange
 	{// Форма співбесіди
 		private const int INCREMENT_HEIGHT = 150;
 
@@ -20,7 +22,8 @@ namespace RecruitmentServer.Forms
 		internal InterviewForm(FullInterview interview, Action<EventArgs> refresh, ServerAccount account)
 		{// Конструктор форми співбесіди
 			InitializeComponent();
-			Text = $"Співбесіда ({interview.Status})";
+
+			customTitleBar = new CustomTitleBar(this, $"Співбесіда ({interview.Status})", minimizeBox: false, maximizeBox: false);
 			richTextBoxPosition.Text = interview.Position.Name;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " + interview.DateEvent.ToString("d MMMM yyyy HH:mm");
 
@@ -39,7 +42,7 @@ namespace RecruitmentServer.Forms
 			this.account = account;
 			SetTheme(account.Theme);
 		}
-		private void ApplicationForm_Load(object sender, EventArgs e)
+		private void InterviewForm_Load(object sender, EventArgs e)
 		{// Обробник події завантаження форми
 			interview_StatusTableAdapter.Fill(recruitmentDBDataSet.Interview_Status);
 			dateTimePickerInterview.MinDate = DateTime.Now;

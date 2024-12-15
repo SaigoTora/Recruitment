@@ -575,7 +575,6 @@
 			this.Controls.Add(this.NUDAgeUnder18);
 			this.Controls.Add(this.labelAgeUnder18);
 			this.Controls.Add(this.buttonCreate);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "PointsForm";

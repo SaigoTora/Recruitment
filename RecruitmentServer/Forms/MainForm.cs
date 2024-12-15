@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using RecruitmentLibrary;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
@@ -20,7 +21,7 @@ namespace RecruitmentServer.Forms
 		Employee
 	}
 
-	internal partial class MainForm : Form, IThemeChange
+	internal partial class MainForm : BaseForm, IThemeChange
 	{
 		private const int COUNT_ON_PAGE = 10;// Кількість завантажуваних панелей
 		private const int DEFAULT_SEARCH_DATE = 5;// Значення дати пошуку за замовчуванням
@@ -49,6 +50,8 @@ namespace RecruitmentServer.Forms
 		{// Конструктор
 			_ = Server.StartAsync();
 			InitializeComponent();
+			customTitleBar = new CustomTitleBar(this, "Головна");
+
 			this.account = account;
 
 			flpMain.MouseWheel += FlpMain_MouseWheel;
@@ -129,7 +132,7 @@ namespace RecruitmentServer.Forms
 
 		private void CreateFirstVacancies()
 		{// Метод, який створює перші вакансії
-			panelMinMax.Visible = true;
+			SetMinMaxSearchVisible(true);
 			labelMinMax.Text = "Кількість заявок: ";
 
 			if (panelsInfo != PanelsInfo.Vacancy)
@@ -156,7 +159,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void CreateFirstApplications()
 		{// Метод, який створює перші заявки
-			panelMinMax.Visible = true;
+			SetMinMaxSearchVisible(true);
 			labelMinMax.Text = "Кількість балів: ";
 
 			if (panelsInfo != PanelsInfo.Application)
@@ -184,7 +187,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void CreateFirstInterviews()
 		{// Метод, який створює перші співбесіди
-			panelMinMax.Visible = false;
+			SetMinMaxSearchVisible(false);
 
 			if (panelsInfo != PanelsInfo.Interview)
 			{// Якщо до цього була інша панель
@@ -211,7 +214,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void CreateFirstEmployee()
 		{// Метод, який створює перших співробітників
-			panelMinMax.Visible = false;
+			SetMinMaxSearchVisible(false);
 			if (panelsInfo != PanelsInfo.Employee)
 			{// Якщо до цього була інша панель
 				labelStatus.Visible = false;
@@ -232,6 +235,13 @@ namespace RecruitmentServer.Forms
 			panelsInfo = PanelsInfo.Employee;
 			countPanels = DataBase.GetCountEmployees(searcher);
 			CreateEmployees();
+		}
+		private void SetMinMaxSearchVisible(bool visible)
+		{
+			labelMinMax.Visible = visible;
+			textBoxMin.Visible = visible;
+			labelMinMax2.Visible = visible;
+			textBoxMax.Visible = visible;
 		}
 
 		private void CreateVacancies()

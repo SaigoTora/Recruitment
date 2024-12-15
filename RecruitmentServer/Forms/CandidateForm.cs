@@ -5,10 +5,12 @@ using System.Windows.Forms;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class CandidateForm : Form, IThemeChange
+	internal partial class CandidateForm : BaseForm, IThemeChange
 	{// Форма кандидата
 		private const int INCREASE_FORM_HEIGHT = 100;
 		private readonly int idBusinessTrip, idFamilyStatus;
@@ -17,6 +19,7 @@ namespace RecruitmentServer.Forms
 		{// Конструктор форми кандидата
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Кандидат", minimizeBox: false, maximizeBox: false);
 			labelFullName.Text = $"{candidate.Surname.ToUpper()} {candidate.Name} {candidate.FatherName}";
 			labelNationality.Text = "Громадянство: " + candidate.questionnaire.Nationality;
 			labelCity.Text = "Місце проживання: " + candidate.questionnaire.City;

@@ -390,7 +390,7 @@
 			this.Controls.Add(this.labelAdditionalInfoTitle);
 			this.Controls.Add(this.labelScores);
 			this.Controls.Add(this.buttonApply);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ApplicationForm";

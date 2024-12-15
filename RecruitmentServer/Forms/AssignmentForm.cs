@@ -9,10 +9,12 @@ using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentServer.Forms
 {
-	internal partial class AssignmentForm : Form, IThemeChange
+	internal partial class AssignmentForm : BaseForm, IThemeChange
 	{// Форма призначення заявок
 		private readonly ServerAccount account;// Акаунт
 
@@ -28,6 +30,7 @@ namespace RecruitmentServer.Forms
 		{// Конструктор форми призначення
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Призначення", minimizeBox: false, maximizeBox: false);
 			this.refresh = refresh;// Встановлюємо значення
 			this.account = account;
 

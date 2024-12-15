@@ -473,7 +473,7 @@
 			this.flpLanguages.Name = "flpLanguages";
 			this.flpLanguages.Size = new System.Drawing.Size(873, 350);
 			this.flpLanguages.TabIndex = 28;
-			this.flpLanguages.Tag = "needToMoveParentDown, fixedPosition";
+			this.flpLanguages.Tag = "fixedPosition";
 			// 
 			// panelLanguage
 			// 
@@ -666,7 +666,7 @@
 			this.flpEducations.Name = "flpEducations";
 			this.flpEducations.Size = new System.Drawing.Size(1211, 450);
 			this.flpEducations.TabIndex = 30;
-			this.flpEducations.Tag = "needToMoveParentDown, fixedPosition";
+			this.flpEducations.Tag = "fixedPosition";
 			// 
 			// panelEducation
 			// 
