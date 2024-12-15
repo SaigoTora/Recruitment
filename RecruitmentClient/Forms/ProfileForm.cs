@@ -1,15 +1,16 @@
-﻿using System;
+﻿using RecruitmentClient.ClientUtilities;
+using RecruitmentClient.FormUtilities;
+using RecruitmentLibrary.FormUtilities;
+using RecruitmentLibrary.PersonInfo;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
-using RecruitmentLibrary.PersonInfo;
-using RecruitmentLibrary.FormUtilities;
-using RecruitmentClient.ClientUtilities;
-using RecruitmentClient.FormUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentClient.Forms
 {
-	internal partial class ProfileForm : Form, IThemeChange
+	internal partial class ProfileForm : BaseForm, IThemeChange
 	{// Форма запису кандидата
 		private readonly ClientAccount account;
 		private readonly StartForm startForm;
@@ -20,6 +21,7 @@ namespace RecruitmentClient.Forms
 		{// Конструктор
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Профіль", Properties.Resources.profile, maximizeBox: false);
 			account = a;// Передаємо посилання на акаунт
 			if (account.candidate == null)
 				account.candidate = new Candidate();

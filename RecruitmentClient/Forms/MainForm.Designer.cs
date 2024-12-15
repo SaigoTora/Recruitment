@@ -60,7 +60,6 @@
 			this.labelEmpty = new System.Windows.Forms.Label();
 			this.textBoxPositionSearch = new System.Windows.Forms.TextBox();
 			this.comboBoxDate = new System.Windows.Forms.ComboBox();
-			this.panelSalarySearch = new System.Windows.Forms.Panel();
 			this.textBoxMaxSalarySearch = new System.Windows.Forms.TextBox();
 			this.labelSalarySearch2 = new System.Windows.Forms.Label();
 			this.labelSalarySearch = new System.Windows.Forms.Label();
@@ -83,7 +82,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxApplication)).BeginInit();
 			this.panelInterview.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxInterview)).BeginInit();
-			this.panelSalarySearch.SuspendLayout();
 			this.panelSearch.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).BeginInit();
@@ -103,6 +101,7 @@
 			this.buttonProfile.Size = new System.Drawing.Size(200, 36);
 			this.buttonProfile.TabIndex = 0;
 			this.buttonProfile.TabStop = false;
+			this.buttonProfile.Tag = "fixedPosition";
 			this.buttonProfile.Text = "Профіль";
 			this.buttonProfile.UseVisualStyleBackColor = false;
 			this.buttonProfile.Click += new System.EventHandler(this.ButtonProfile_Click);
@@ -120,6 +119,7 @@
 			this.panelUp.Name = "panelUp";
 			this.panelUp.Size = new System.Drawing.Size(1377, 70);
 			this.panelUp.TabIndex = 3;
+			this.panelUp.Tag = "";
 			// 
 			// pictureBoxLine
 			// 
@@ -132,6 +132,7 @@
 			this.pictureBoxLine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxLine.TabIndex = 47;
 			this.pictureBoxLine.TabStop = false;
+			this.pictureBoxLine.Tag = "fixedPosition";
 			// 
 			// pictureBoxTheme
 			// 
@@ -144,6 +145,7 @@
 			this.pictureBoxTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxTheme.TabIndex = 46;
 			this.pictureBoxTheme.TabStop = false;
+			this.pictureBoxTheme.Tag = "fixedPosition";
 			this.pictureBoxTheme.Click += new System.EventHandler(this.PictureBoxTheme_Click);
 			// 
 			// pictureBoxPasswordChange
@@ -158,6 +160,7 @@
 			this.pictureBoxPasswordChange.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxPasswordChange.TabIndex = 45;
 			this.pictureBoxPasswordChange.TabStop = false;
+			this.pictureBoxPasswordChange.Tag = "fixedPosition";
 			this.pictureBoxPasswordChange.Click += new System.EventHandler(this.ButtonPasswordChange_Click);
 			// 
 			// pictureBoxExit
@@ -172,6 +175,7 @@
 			this.pictureBoxExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxExit.TabIndex = 44;
 			this.pictureBoxExit.TabStop = false;
+			this.pictureBoxExit.Tag = "fixedPosition";
 			this.pictureBoxExit.Click += new System.EventHandler(this.ButtonExit_Click);
 			// 
 			// flp_Menu
@@ -245,6 +249,7 @@
 			this.flpMain.Name = "flpMain";
 			this.flpMain.Size = new System.Drawing.Size(1167, 531);
 			this.flpMain.TabIndex = 6;
+			this.flpMain.Tag = "";
 			this.flpMain.Scroll += new System.Windows.Forms.ScrollEventHandler(this.PanelMain_Scroll);
 			this.flpMain.Resize += new System.EventHandler(this.FlpMain_Resize);
 			// 
@@ -263,6 +268,7 @@
 			this.panelVacancy.Name = "panelVacancy";
 			this.panelVacancy.Size = new System.Drawing.Size(1134, 168);
 			this.panelVacancy.TabIndex = 12;
+			this.panelVacancy.Tag = "needToMoveParentDown";
 			this.panelVacancy.Visible = false;
 			// 
 			// buttonVacancy
@@ -277,6 +283,7 @@
 			this.buttonVacancy.Name = "buttonVacancy";
 			this.buttonVacancy.Size = new System.Drawing.Size(150, 35);
 			this.buttonVacancy.TabIndex = 4;
+			this.buttonVacancy.Tag = "fixedPosition";
 			this.buttonVacancy.Text = "Перейти";
 			this.buttonVacancy.UseVisualStyleBackColor = false;
 			// 
@@ -291,6 +298,7 @@
 			this.labelDatePublicationV.Name = "labelDatePublicationV";
 			this.labelDatePublicationV.Size = new System.Drawing.Size(522, 25);
 			this.labelDatePublicationV.TabIndex = 5;
+			this.labelDatePublicationV.Tag = "fixedPosition";
 			this.labelDatePublicationV.Text = "Опубліковано";
 			this.labelDatePublicationV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -305,6 +313,7 @@
 			this.labelSalaryV.Name = "labelSalaryV";
 			this.labelSalaryV.Size = new System.Drawing.Size(143, 32);
 			this.labelSalaryV.TabIndex = 3;
+			this.labelSalaryV.Tag = "fixedPosition";
 			this.labelSalaryV.Text = "Зарплата";
 			// 
 			// labelPositionDescriptionV
@@ -320,6 +329,7 @@
 			this.labelPositionDescriptionV.Name = "labelPositionDescriptionV";
 			this.labelPositionDescriptionV.Size = new System.Drawing.Size(655, 57);
 			this.labelPositionDescriptionV.TabIndex = 2;
+			this.labelPositionDescriptionV.Tag = "fixedPosition";
 			this.labelPositionDescriptionV.Text = resources.GetString("labelPositionDescriptionV.Text");
 			// 
 			// labelPositionV
@@ -333,6 +343,7 @@
 			this.labelPositionV.Name = "labelPositionV";
 			this.labelPositionV.Size = new System.Drawing.Size(440, 32);
 			this.labelPositionV.TabIndex = 1;
+			this.labelPositionV.Tag = "fixedPosition";
 			this.labelPositionV.Text = "Посада";
 			// 
 			// panelApplication
@@ -348,6 +359,7 @@
 			this.panelApplication.Name = "panelApplication";
 			this.panelApplication.Size = new System.Drawing.Size(1134, 107);
 			this.panelApplication.TabIndex = 13;
+			this.panelApplication.Tag = "needToMoveParentDown";
 			this.panelApplication.Visible = false;
 			// 
 			// pictureBoxApplication
@@ -371,6 +383,7 @@
 			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
 			this.buttonReasonRejectionA.Size = new System.Drawing.Size(230, 35);
 			this.buttonReasonRejectionA.TabIndex = 3;
+			this.buttonReasonRejectionA.Tag = "fixedPosition";
 			this.buttonReasonRejectionA.Text = "Причина відмови";
 			this.buttonReasonRejectionA.UseVisualStyleBackColor = false;
 			// 
@@ -385,6 +398,7 @@
 			this.labelStatusA.Name = "labelStatusA";
 			this.labelStatusA.Size = new System.Drawing.Size(105, 32);
 			this.labelStatusA.TabIndex = 2;
+			this.labelStatusA.Tag = "fixedPosition";
 			this.labelStatusA.Text = "Статус";
 			// 
 			// labelDateSubmissionA
@@ -398,6 +412,7 @@
 			this.labelDateSubmissionA.Name = "labelDateSubmissionA";
 			this.labelDateSubmissionA.Size = new System.Drawing.Size(522, 25);
 			this.labelDateSubmissionA.TabIndex = 4;
+			this.labelDateSubmissionA.Tag = "fixedPosition";
 			this.labelDateSubmissionA.Text = "Дата і час подачі";
 			this.labelDateSubmissionA.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -412,6 +427,7 @@
 			this.labelPositionA.Name = "labelPositionA";
 			this.labelPositionA.Size = new System.Drawing.Size(370, 32);
 			this.labelPositionA.TabIndex = 1;
+			this.labelPositionA.Tag = "fixedPosition";
 			this.labelPositionA.Text = "Посада";
 			// 
 			// panelInterview
@@ -426,6 +442,7 @@
 			this.panelInterview.Name = "panelInterview";
 			this.panelInterview.Size = new System.Drawing.Size(1134, 107);
 			this.panelInterview.TabIndex = 14;
+			this.panelInterview.Tag = "needToMoveParentDown";
 			this.panelInterview.Visible = false;
 			// 
 			// pictureBoxInterview
@@ -450,6 +467,7 @@
 			this.labelStatusI.Name = "labelStatusI";
 			this.labelStatusI.Size = new System.Drawing.Size(105, 32);
 			this.labelStatusI.TabIndex = 2;
+			this.labelStatusI.Tag = "fixedPosition";
 			this.labelStatusI.Text = "Статус";
 			// 
 			// labelDateEventI
@@ -463,6 +481,7 @@
 			this.labelDateEventI.Name = "labelDateEventI";
 			this.labelDateEventI.Size = new System.Drawing.Size(526, 25);
 			this.labelDateEventI.TabIndex = 3;
+			this.labelDateEventI.Tag = "fixedPosition";
 			this.labelDateEventI.Text = "Дата і час проведення";
 			this.labelDateEventI.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
@@ -477,6 +496,7 @@
 			this.labelPositionI.Name = "labelPositionI";
 			this.labelPositionI.Size = new System.Drawing.Size(370, 32);
 			this.labelPositionI.TabIndex = 1;
+			this.labelPositionI.Tag = "fixedPosition";
 			this.labelPositionI.Text = "Посада";
 			// 
 			// labelEmpty
@@ -504,6 +524,7 @@
 			this.textBoxPositionSearch.Name = "textBoxPositionSearch";
 			this.textBoxPositionSearch.Size = new System.Drawing.Size(275, 33);
 			this.textBoxPositionSearch.TabIndex = 6;
+			this.textBoxPositionSearch.Tag = "fixedPosition";
 			this.textBoxPositionSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxPositionSearch_KeyDown);
 			this.textBoxPositionSearch.Leave += new System.EventHandler(this.TextBoxPositionSearch_Leave);
 			// 
@@ -525,27 +546,18 @@
 			this.comboBoxDate.Name = "comboBoxDate";
 			this.comboBoxDate.Size = new System.Drawing.Size(253, 33);
 			this.comboBoxDate.TabIndex = 5;
+			this.comboBoxDate.Tag = "fixedPosition";
 			this.comboBoxDate.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDate_SelectedIndexChanged);
-			// 
-			// panelSalarySearch
-			// 
-			this.panelSalarySearch.Controls.Add(this.textBoxMaxSalarySearch);
-			this.panelSalarySearch.Controls.Add(this.labelSalarySearch2);
-			this.panelSalarySearch.Controls.Add(this.labelSalarySearch);
-			this.panelSalarySearch.Controls.Add(this.textBoxMinSalarySearch);
-			this.panelSalarySearch.Location = new System.Drawing.Point(202, 55);
-			this.panelSalarySearch.Name = "panelSalarySearch";
-			this.panelSalarySearch.Size = new System.Drawing.Size(375, 53);
-			this.panelSalarySearch.TabIndex = 37;
 			// 
 			// textBoxMaxSalarySearch
 			// 
 			this.textBoxMaxSalarySearch.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxMaxSalarySearch.Location = new System.Drawing.Point(275, 8);
+			this.textBoxMaxSalarySearch.Location = new System.Drawing.Point(482, 53);
 			this.textBoxMaxSalarySearch.MaxLength = 6;
 			this.textBoxMaxSalarySearch.Name = "textBoxMaxSalarySearch";
 			this.textBoxMaxSalarySearch.Size = new System.Drawing.Size(90, 33);
 			this.textBoxMaxSalarySearch.TabIndex = 10;
+			this.textBoxMaxSalarySearch.Tag = "fixedPosition";
 			this.textBoxMaxSalarySearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalarySearch_KeyPress);
 			this.textBoxMaxSalarySearch.Leave += new System.EventHandler(this.TextBoxMaxSalarySearch_Leave);
 			// 
@@ -554,11 +566,12 @@
 			this.labelSalarySearch2.AutoSize = true;
 			this.labelSalarySearch2.Font = new System.Drawing.Font("Georgia", 20.25F);
 			this.labelSalarySearch2.ForeColor = System.Drawing.Color.Black;
-			this.labelSalarySearch2.Location = new System.Drawing.Point(233, 7);
+			this.labelSalarySearch2.Location = new System.Drawing.Point(440, 52);
 			this.labelSalarySearch2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalarySearch2.Name = "labelSalarySearch2";
 			this.labelSalarySearch2.Size = new System.Drawing.Size(37, 31);
 			this.labelSalarySearch2.TabIndex = 9;
+			this.labelSalarySearch2.Tag = "fixedPosition";
 			this.labelSalarySearch2.Text = "\t—";
 			// 
 			// labelSalarySearch
@@ -566,21 +579,23 @@
 			this.labelSalarySearch.AutoSize = true;
 			this.labelSalarySearch.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalarySearch.ForeColor = System.Drawing.Color.Black;
-			this.labelSalarySearch.Location = new System.Drawing.Point(-5, 9);
+			this.labelSalarySearch.Location = new System.Drawing.Point(202, 54);
 			this.labelSalarySearch.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalarySearch.Name = "labelSalarySearch";
 			this.labelSalarySearch.Size = new System.Drawing.Size(138, 29);
 			this.labelSalarySearch.TabIndex = 7;
+			this.labelSalarySearch.Tag = "fixedPosition";
 			this.labelSalarySearch.Text = "Зарплата:";
 			// 
 			// textBoxMinSalarySearch
 			// 
 			this.textBoxMinSalarySearch.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxMinSalarySearch.Location = new System.Drawing.Point(138, 8);
+			this.textBoxMinSalarySearch.Location = new System.Drawing.Point(345, 53);
 			this.textBoxMinSalarySearch.MaxLength = 6;
 			this.textBoxMinSalarySearch.Name = "textBoxMinSalarySearch";
 			this.textBoxMinSalarySearch.Size = new System.Drawing.Size(90, 33);
 			this.textBoxMinSalarySearch.TabIndex = 8;
+			this.textBoxMinSalarySearch.Tag = "fixedPosition";
 			this.textBoxMinSalarySearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalarySearch_KeyPress);
 			this.textBoxMinSalarySearch.Leave += new System.EventHandler(this.TextBoxMinSalarySearch_Leave);
 			// 
@@ -599,17 +614,21 @@
 			this.comboBoxSort.Name = "comboBoxSort";
 			this.comboBoxSort.Size = new System.Drawing.Size(173, 33);
 			this.comboBoxSort.TabIndex = 4;
+			this.comboBoxSort.Tag = "fixedPosition";
 			this.comboBoxSort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSort_SelectedIndexChanged);
 			// 
 			// panelSearch
 			// 
 			this.panelSearch.BackColor = System.Drawing.Color.Transparent;
+			this.panelSearch.Controls.Add(this.textBoxMaxSalarySearch);
+			this.panelSearch.Controls.Add(this.labelSalarySearch2);
 			this.panelSearch.Controls.Add(this.pictureBoxSearch);
+			this.panelSearch.Controls.Add(this.labelSalarySearch);
 			this.panelSearch.Controls.Add(this.pictureBoxUp);
+			this.panelSearch.Controls.Add(this.textBoxMinSalarySearch);
 			this.panelSearch.Controls.Add(this.pictureBoxDown);
 			this.panelSearch.Controls.Add(this.pictureBoxRefresh);
 			this.panelSearch.Controls.Add(this.comboBoxSort);
-			this.panelSearch.Controls.Add(this.panelSalarySearch);
 			this.panelSearch.Controls.Add(this.comboBoxDate);
 			this.panelSearch.Controls.Add(this.textBoxPositionSearch);
 			this.panelSearch.Dock = System.Windows.Forms.DockStyle.Top;
@@ -631,6 +650,7 @@
 			this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxSearch.TabIndex = 44;
 			this.pictureBoxSearch.TabStop = false;
+			this.pictureBoxSearch.Tag = "fixedPosition";
 			this.pictureBoxSearch.Click += new System.EventHandler(this.PictureBoxSearch_Click);
 			// 
 			// pictureBoxUp
@@ -644,6 +664,7 @@
 			this.pictureBoxUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxUp.TabIndex = 43;
 			this.pictureBoxUp.TabStop = false;
+			this.pictureBoxUp.Tag = "fixedPosition";
 			this.pictureBoxUp.Click += new System.EventHandler(this.ButtonUp_Click);
 			// 
 			// pictureBoxDown
@@ -657,6 +678,7 @@
 			this.pictureBoxDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxDown.TabIndex = 42;
 			this.pictureBoxDown.TabStop = false;
+			this.pictureBoxDown.Tag = "fixedPosition";
 			this.pictureBoxDown.Click += new System.EventHandler(this.ButtonDown_Click);
 			// 
 			// pictureBoxRefresh
@@ -670,6 +692,7 @@
 			this.pictureBoxRefresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxRefresh.TabIndex = 41;
 			this.pictureBoxRefresh.TabStop = false;
+			this.pictureBoxRefresh.Tag = "fixedPosition";
 			this.pictureBoxRefresh.Click += new System.EventHandler(this.PictureBoxRefresh_Click);
 			// 
 			// MainForm
@@ -684,7 +707,6 @@
 			this.Controls.Add(this.panelUp);
 			this.MinimumSize = new System.Drawing.Size(1225, 450);
 			this.Name = "MainForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Головна";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
 			this.Load += new System.EventHandler(this.MainForm_Load);
@@ -705,8 +727,6 @@
 			this.panelInterview.ResumeLayout(false);
 			this.panelInterview.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxInterview)).EndInit();
-			this.panelSalarySearch.ResumeLayout(false);
-			this.panelSalarySearch.PerformLayout();
 			this.panelSearch.ResumeLayout(false);
 			this.panelSearch.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).EndInit();
@@ -729,7 +749,6 @@
         private System.Windows.Forms.Label labelEmpty;
         private System.Windows.Forms.TextBox textBoxPositionSearch;
         private System.Windows.Forms.ComboBox comboBoxDate;
-        private System.Windows.Forms.Panel panelSalarySearch;
         private System.Windows.Forms.TextBox textBoxMaxSalarySearch;
         private System.Windows.Forms.Label labelSalarySearch2;
         private System.Windows.Forms.Label labelSalarySearch;

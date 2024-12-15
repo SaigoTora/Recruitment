@@ -52,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxLogin.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxLogin.ForeColor = System.Drawing.Color.Black;
-			this.textBoxLogin.Location = new System.Drawing.Point(145, 12);
+			this.textBoxLogin.Location = new System.Drawing.Point(145, 47);
 			this.textBoxLogin.MaxLength = 16;
 			this.textBoxLogin.Name = "textBoxLogin";
 			this.textBoxLogin.Size = new System.Drawing.Size(225, 36);
@@ -66,7 +66,7 @@
 			this.labelLogin.BackColor = System.Drawing.Color.Transparent;
 			this.labelLogin.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLogin.ForeColor = System.Drawing.Color.Black;
-			this.labelLogin.Location = new System.Drawing.Point(40, 14);
+			this.labelLogin.Location = new System.Drawing.Point(40, 49);
 			this.labelLogin.Name = "labelLogin";
 			this.labelLogin.Size = new System.Drawing.Size(99, 32);
 			this.labelLogin.TabIndex = 1;
@@ -79,7 +79,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPassword.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPassword.ForeColor = System.Drawing.Color.Black;
-			this.textBoxPassword.Location = new System.Drawing.Point(145, 90);
+			this.textBoxPassword.Location = new System.Drawing.Point(145, 125);
 			this.textBoxPassword.MaxLength = 16;
 			this.textBoxPassword.Name = "textBoxPassword";
 			this.textBoxPassword.PasswordChar = '*';
@@ -95,7 +95,7 @@
 			this.labelPassword.BackColor = System.Drawing.Color.Transparent;
 			this.labelPassword.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPassword.ForeColor = System.Drawing.Color.Black;
-			this.labelPassword.Location = new System.Drawing.Point(12, 92);
+			this.labelPassword.Location = new System.Drawing.Point(12, 127);
 			this.labelPassword.Name = "labelPassword";
 			this.labelPassword.Size = new System.Drawing.Size(127, 32);
 			this.labelPassword.TabIndex = 3;
@@ -109,7 +109,7 @@
 			this.buttonRegister2.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonRegister2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonRegister2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRegister2.Location = new System.Drawing.Point(397, 259);
+			this.buttonRegister2.Location = new System.Drawing.Point(397, 294);
 			this.buttonRegister2.Name = "buttonRegister2";
 			this.buttonRegister2.Size = new System.Drawing.Size(175, 40);
 			this.buttonRegister2.TabIndex = 11;
@@ -128,7 +128,7 @@
 			this.checkBoxRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxRememberMe.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxRememberMe.Location = new System.Drawing.Point(12, 174);
+			this.checkBoxRememberMe.Location = new System.Drawing.Point(12, 209);
 			this.checkBoxRememberMe.Name = "checkBoxRememberMe";
 			this.checkBoxRememberMe.Size = new System.Drawing.Size(339, 27);
 			this.checkBoxRememberMe.TabIndex = 8;
@@ -144,7 +144,7 @@
 			this.buttonLogin.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonLogin.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonLogin.Location = new System.Drawing.Point(397, 259);
+			this.buttonLogin.Location = new System.Drawing.Point(397, 294);
 			this.buttonLogin.Name = "buttonLogin";
 			this.buttonLogin.Size = new System.Drawing.Size(175, 40);
 			this.buttonLogin.TabIndex = 9;
@@ -158,7 +158,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPassword2.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPassword2.ForeColor = System.Drawing.Color.Black;
-			this.textBoxPassword2.Location = new System.Drawing.Point(255, 168);
+			this.textBoxPassword2.Location = new System.Drawing.Point(255, 203);
 			this.textBoxPassword2.MaxLength = 16;
 			this.textBoxPassword2.Name = "textBoxPassword2";
 			this.textBoxPassword2.PasswordChar = '*';
@@ -175,7 +175,7 @@
 			this.labelPassword2.BackColor = System.Drawing.Color.Transparent;
 			this.labelPassword2.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPassword2.ForeColor = System.Drawing.Color.Black;
-			this.labelPassword2.Location = new System.Drawing.Point(12, 170);
+			this.labelPassword2.Location = new System.Drawing.Point(12, 205);
 			this.labelPassword2.Name = "labelPassword2";
 			this.labelPassword2.Size = new System.Drawing.Size(237, 32);
 			this.labelPassword2.TabIndex = 5;
@@ -190,7 +190,7 @@
 			this.buttonBack.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonBack.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonBack.Location = new System.Drawing.Point(12, 259);
+			this.buttonBack.Location = new System.Drawing.Point(12, 294);
 			this.buttonBack.Name = "buttonBack";
 			this.buttonBack.Size = new System.Drawing.Size(175, 40);
 			this.buttonBack.TabIndex = 12;
@@ -207,7 +207,7 @@
 			this.labelRegister1.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelRegister1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelRegister1.ForeColor = System.Drawing.Color.Black;
-			this.labelRegister1.Location = new System.Drawing.Point(12, 279);
+			this.labelRegister1.Location = new System.Drawing.Point(12, 314);
 			this.labelRegister1.Name = "labelRegister1";
 			this.labelRegister1.Size = new System.Drawing.Size(172, 23);
 			this.labelRegister1.TabIndex = 10;
@@ -235,7 +235,7 @@
 			this.pictureBoxShowPwd.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxShowPwd.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxShowPwd.Image = global::RecruitmentClient.Properties.Resources.eyeClB;
-			this.pictureBoxShowPwd.Location = new System.Drawing.Point(376, 94);
+			this.pictureBoxShowPwd.Location = new System.Drawing.Point(376, 129);
 			this.pictureBoxShowPwd.Name = "pictureBoxShowPwd";
 			this.pictureBoxShowPwd.Size = new System.Drawing.Size(28, 28);
 			this.pictureBoxShowPwd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -248,7 +248,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-			this.ClientSize = new System.Drawing.Size(584, 311);
+			this.ClientSize = new System.Drawing.Size(584, 346);
 			this.Controls.Add(this.pictureBoxTheme);
 			this.Controls.Add(this.pictureBoxShowPwd);
 			this.Controls.Add(this.labelRegister1);
@@ -262,10 +262,7 @@
 			this.Controls.Add(this.labelPassword);
 			this.Controls.Add(this.textBoxLogin);
 			this.Controls.Add(this.labelLogin);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
 			this.Name = "StartForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Вхід";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StartForm_FormClosed);
 			this.Load += new System.EventHandler(this.StartForm_Load);

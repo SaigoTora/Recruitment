@@ -7,10 +7,12 @@ using RecruitmentLibrary.PersonInfo;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentClient.Forms
 {
-	internal partial class QuestionnaireForm : Form, IThemeChange
+	internal partial class QuestionnaireForm : BaseForm, IThemeChange
 	{// Форма запису анкети
 		private const int MAX_LANGUAGE_COUNT = 10;// Максимальна кількість мов та освіт
 		private const int MAX_EDUCATION_COUNT = 5;
@@ -32,6 +34,7 @@ namespace RecruitmentClient.Forms
 		{// Конструктор
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Анкета", Properties.Resources.questionnaire, maximizeBox: false);
 			account = a;// Передаємо посилання на акаунт
 			SetTheme(account.Theme);
 			if (startForm == null)// Якщо форма відкрита для змін даних

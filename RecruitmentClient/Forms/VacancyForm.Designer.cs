@@ -241,12 +241,8 @@
 			this.Controls.Add(this.labelAdditionalInfoTitle);
 			this.Controls.Add(this.labelPositionDescriptionTitle);
 			this.Controls.Add(this.labelSalaryTitle);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "VacancyForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Вакансія";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VacancyForm_FormClosed);
 			this.ResumeLayout(false);

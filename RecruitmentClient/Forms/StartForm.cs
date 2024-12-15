@@ -1,16 +1,17 @@
-﻿using System;
+﻿using RecruitmentClient.ClientUtilities;
+using RecruitmentClient.FormUtilities;
+using RecruitmentLibrary.FormUtilities;
+using RecruitmentLibrary.PersonInfo;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using RecruitmentLibrary.PersonInfo;
-using RecruitmentLibrary.FormUtilities;
-using RecruitmentClient.ClientUtilities;
-using RecruitmentClient.FormUtilities;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentClient.Forms
 {
-	internal partial class StartForm : Form, IThemeChange
+	internal partial class StartForm : BaseForm, IThemeChange
 	{// Форма входу та реєстрації
 		private const int OFFSET_PASSWORD_X = 106;// Відступи для елементів форми
 		private const int OFFSET_REMEMBER_Y = 78;
@@ -32,6 +33,8 @@ namespace RecruitmentClient.Forms
 		internal StartForm()
 		{// Конструктор першого запуску
 			InitializeComponent();
+
+			customTitleBar = new CustomTitleBar(this, "Вхід", Properties.Resources.login, maximizeBox: false);
 		}
 		internal StartForm(ClientAccount a) : this()
 		{// Конструктор зміни паролю запуску

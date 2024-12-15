@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.PersonInfo;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentClient.ClientUtilities;
+using RecruitmentLibrary.ApplicationInfo;
+using RecruitmentLibrary.FormUtilities;
+using RecruitmentLibrary.PersonInfo;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentClient.Forms
 {
-	internal partial class VacancyForm : Form, IThemeChange
+	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
 		private readonly int idVacancy;
 		private readonly string login;
@@ -17,6 +19,8 @@ namespace RecruitmentClient.Forms
 		internal VacancyForm(Vacancy vacancy, string login, Action<EventArgs> refresh, Theme theme)
 		{// Конструктор форми
 			InitializeComponent();
+
+			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false, maximizeBox: false);
 			idVacancy = vacancy.Id;
 			this.login = login;
 			this.refresh = refresh;

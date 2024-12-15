@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.PersonInfo;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentClient.ClientUtilities;
+using RecruitmentLibrary.ApplicationInfo;
+using RecruitmentLibrary.FormUtilities;
+using RecruitmentLibrary.PersonInfo;
+using UIHelpers.Controls;
+using UIHelpers.Forms;
 
 namespace RecruitmentClient.Forms
 {
@@ -18,7 +20,7 @@ namespace RecruitmentClient.Forms
 		Interview
 	}
 
-	internal partial class MainForm : Form, IThemeChange
+	internal partial class MainForm : BaseForm, IThemeChange
 	{
 		private const int COUNT_ON_PAGE = 10;// Кількість завантажуваних панелей
 		private const int DEFAULT_SEARCH_DATE = 5;// Значення дати пошуку за замовчуванням
@@ -45,6 +47,7 @@ namespace RecruitmentClient.Forms
 		{// Конструктор
 			InitializeComponent();
 
+			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main, maximizeBox: false);
 			account = a;
 			comboBoxSortCount = comboBoxSort.Items.Count;
 			flpMain.MouseWheel += FlpMain_MouseWheel;
@@ -164,7 +167,7 @@ namespace RecruitmentClient.Forms
 
 		private void CreateFirstVacancies()
 		{// Метод, який створює перші вакансії
-			panelSalarySearch.Visible = true;
+			SetSalarySearchVisible(true);
 			if (panelsInfo == PanelsInfo.Application || panelsInfo == PanelsInfo.Interview)
 				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height + PANEL_SEARCH_OFFSET);
 			SetLabels(labelVacancy, labelApplication, labelInterview);
@@ -178,7 +181,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateFirstApplications()
 		{// Метод, який створює перші заявки
-			panelSalarySearch.Visible = false;
+			SetSalarySearchVisible(false);
 			if (panelsInfo == PanelsInfo.None || panelsInfo == PanelsInfo.Vacancy)
 				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height - PANEL_SEARCH_OFFSET);
 			SetLabels(labelApplication, labelVacancy, labelInterview);
@@ -192,7 +195,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateFirstInterviews()
 		{// Метод, який створює перші співбесіди
-			panelSalarySearch.Visible = false;
+			SetSalarySearchVisible(false);
 			if (panelsInfo == PanelsInfo.None || panelsInfo == PanelsInfo.Vacancy)
 				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height - PANEL_SEARCH_OFFSET);
 			SetLabels(labelInterview, labelVacancy, labelApplication);
@@ -204,7 +207,13 @@ namespace RecruitmentClient.Forms
 			countPanels = Client.GetCountInterviews(account.Login, searcher);
 			CreateInterviews();
 		}
-
+		private void SetSalarySearchVisible(bool visible)
+		{
+			labelSalarySearch.Visible = visible;
+			textBoxMinSalarySearch.Visible = visible;
+			labelSalarySearch2.Visible = visible;
+			textBoxMaxSalarySearch.Visible = visible;
+		}
 		private void CreateVacancies()
 		{// Метод, який створює на формі вакансії
 			if (currentOffset >= countPanels)
