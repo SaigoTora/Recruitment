@@ -4,9 +4,9 @@ using System.Windows.Forms;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.FormUtilities;
-using RecruitmentLibrary.PersonInfo;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
+using UIHelpers.Themes;
 
 namespace RecruitmentClient.Forms
 {

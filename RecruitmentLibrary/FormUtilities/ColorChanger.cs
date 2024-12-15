@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
+using UIHelpers.Themes;
 
 namespace RecruitmentLibrary.FormUtilities
 {

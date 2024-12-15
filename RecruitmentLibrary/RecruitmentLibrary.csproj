@@ -61,13 +61,17 @@
     <Compile Include="PersonInfo\Language.cs" />
     <Compile Include="PersonInfo\Person.cs" />
     <Compile Include="PersonInfo\Questionnaire.cs" />
-    <Compile Include="PersonInfo\Theme.cs" />
     <Compile Include="FormUtilities\ColorChanger.cs" />
     <Compile Include="FormUtilities\Creator.cs" />
-    <Compile Include="FormUtilities\IThemeChange.cs" />
     <Compile Include="FormUtilities\Validator.cs" />
     <Compile Include="FormUtilities\ValidLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UIHelpers\UIHelpers.csproj">
+      <Project>{49f42a8b-4e71-4075-987b-66cd7d258ec2}</Project>
+      <Name>UIHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
