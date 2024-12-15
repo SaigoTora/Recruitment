@@ -70,6 +70,7 @@
 			this.pictureBoxUp = new System.Windows.Forms.PictureBox();
 			this.pictureBoxDown = new System.Windows.Forms.PictureBox();
 			this.pictureBoxRefresh = new System.Windows.Forms.PictureBox();
+			this.panelMain = new System.Windows.Forms.Panel();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
@@ -87,6 +88,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRefresh)).BeginInit();
+			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonProfile
@@ -96,7 +98,7 @@
 			this.buttonProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
 			this.buttonProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonProfile.Font = new System.Drawing.Font("Georgia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonProfile.Location = new System.Drawing.Point(1165, 7);
+			this.buttonProfile.Location = new System.Drawing.Point(1155, 42);
 			this.buttonProfile.Name = "buttonProfile";
 			this.buttonProfile.Size = new System.Drawing.Size(200, 36);
 			this.buttonProfile.TabIndex = 0;
@@ -117,7 +119,7 @@
 			this.panelUp.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelUp.Location = new System.Drawing.Point(0, 0);
 			this.panelUp.Name = "panelUp";
-			this.panelUp.Size = new System.Drawing.Size(1377, 70);
+			this.panelUp.Size = new System.Drawing.Size(1367, 105);
 			this.panelUp.TabIndex = 3;
 			this.panelUp.Tag = "";
 			// 
@@ -126,7 +128,7 @@
 			this.pictureBoxLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxLine.BackColor = System.Drawing.Color.Black;
 			this.pictureBoxLine.Cursor = System.Windows.Forms.Cursors.Default;
-			this.pictureBoxLine.Location = new System.Drawing.Point(974, 60);
+			this.pictureBoxLine.Location = new System.Drawing.Point(964, 95);
 			this.pictureBoxLine.Name = "pictureBoxLine";
 			this.pictureBoxLine.Size = new System.Drawing.Size(400, 2);
 			this.pictureBoxLine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -139,7 +141,7 @@
 			this.pictureBoxTheme.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxTheme.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxTheme.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTheme.Image")));
-			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 10);
+			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 45);
 			this.pictureBoxTheme.Name = "pictureBoxTheme";
 			this.pictureBoxTheme.Size = new System.Drawing.Size(35, 35);
 			this.pictureBoxTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -154,7 +156,7 @@
 			this.pictureBoxPasswordChange.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxPasswordChange.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxPasswordChange.Image = global::RecruitmentClient.Properties.Resources.keyB;
-			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(1115, 10);
+			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(1105, 45);
 			this.pictureBoxPasswordChange.Name = "pictureBoxPasswordChange";
 			this.pictureBoxPasswordChange.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxPasswordChange.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -169,7 +171,7 @@
 			this.pictureBoxExit.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxExit.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxExit.Image = global::RecruitmentClient.Properties.Resources.exit;
-			this.pictureBoxExit.Location = new System.Drawing.Point(1070, 10);
+			this.pictureBoxExit.Location = new System.Drawing.Point(1060, 45);
 			this.pictureBoxExit.Name = "pictureBoxExit";
 			this.pictureBoxExit.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -187,10 +189,10 @@
 			this.flp_Menu.Dock = System.Windows.Forms.DockStyle.Left;
 			this.flp_Menu.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flp_Menu.ForeColor = System.Drawing.Color.Black;
-			this.flp_Menu.Location = new System.Drawing.Point(0, 70);
+			this.flp_Menu.Location = new System.Drawing.Point(0, 105);
 			this.flp_Menu.Name = "flp_Menu";
 			this.flp_Menu.Padding = new System.Windows.Forms.Padding(10, 15, 15, 15);
-			this.flp_Menu.Size = new System.Drawing.Size(210, 641);
+			this.flp_Menu.Size = new System.Drawing.Size(210, 601);
 			this.flp_Menu.TabIndex = 4;
 			// 
 			// labelVacancy
@@ -244,10 +246,10 @@
 			this.flpMain.Controls.Add(this.panelInterview);
 			this.flpMain.Controls.Add(this.labelEmpty);
 			this.flpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flpMain.Location = new System.Drawing.Point(210, 180);
+			this.flpMain.Location = new System.Drawing.Point(210, 215);
 			this.flpMain.Margin = new System.Windows.Forms.Padding(0);
 			this.flpMain.Name = "flpMain";
-			this.flpMain.Size = new System.Drawing.Size(1167, 531);
+			this.flpMain.Size = new System.Drawing.Size(1157, 491);
 			this.flpMain.TabIndex = 6;
 			this.flpMain.Tag = "";
 			this.flpMain.Scroll += new System.Windows.Forms.ScrollEventHandler(this.PanelMain_Scroll);
@@ -519,7 +521,7 @@
 			this.textBoxPositionSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPositionSearch.BackColor = System.Drawing.Color.White;
 			this.textBoxPositionSearch.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxPositionSearch.Location = new System.Drawing.Point(844, 9);
+			this.textBoxPositionSearch.Location = new System.Drawing.Point(834, 9);
 			this.textBoxPositionSearch.MaxLength = 64;
 			this.textBoxPositionSearch.Name = "textBoxPositionSearch";
 			this.textBoxPositionSearch.Size = new System.Drawing.Size(275, 33);
@@ -632,9 +634,9 @@
 			this.panelSearch.Controls.Add(this.comboBoxDate);
 			this.panelSearch.Controls.Add(this.textBoxPositionSearch);
 			this.panelSearch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelSearch.Location = new System.Drawing.Point(210, 70);
+			this.panelSearch.Location = new System.Drawing.Point(210, 105);
 			this.panelSearch.Name = "panelSearch";
-			this.panelSearch.Size = new System.Drawing.Size(1167, 110);
+			this.panelSearch.Size = new System.Drawing.Size(1157, 110);
 			this.panelSearch.TabIndex = 5;
 			this.panelSearch.Visible = false;
 			// 
@@ -644,7 +646,7 @@
 			this.pictureBoxSearch.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Default;
 			this.pictureBoxSearch.Image = global::RecruitmentClient.Properties.Resources.loupeB;
-			this.pictureBoxSearch.Location = new System.Drawing.Point(1125, 10);
+			this.pictureBoxSearch.Location = new System.Drawing.Point(1115, 10);
 			this.pictureBoxSearch.Name = "pictureBoxSearch";
 			this.pictureBoxSearch.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -695,16 +697,29 @@
 			this.pictureBoxRefresh.Tag = "fixedPosition";
 			this.pictureBoxRefresh.Click += new System.EventHandler(this.PictureBoxRefresh_Click);
 			// 
+			// panelMain
+			// 
+			this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelMain.BackColor = System.Drawing.Color.Transparent;
+			this.panelMain.Controls.Add(this.flpMain);
+			this.panelMain.Controls.Add(this.panelSearch);
+			this.panelMain.Controls.Add(this.flp_Menu);
+			this.panelMain.Controls.Add(this.panelUp);
+			this.panelMain.Location = new System.Drawing.Point(5, 0);
+			this.panelMain.Margin = new System.Windows.Forms.Padding(5, 0, 5, 5);
+			this.panelMain.Name = "panelMain";
+			this.panelMain.Size = new System.Drawing.Size(1367, 706);
+			this.panelMain.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Gainsboro;
 			this.ClientSize = new System.Drawing.Size(1377, 711);
-			this.Controls.Add(this.flpMain);
-			this.Controls.Add(this.panelSearch);
-			this.Controls.Add(this.flp_Menu);
-			this.Controls.Add(this.panelUp);
+			this.Controls.Add(this.panelMain);
 			this.MinimumSize = new System.Drawing.Size(1225, 450);
 			this.Name = "MainForm";
 			this.Text = "Головна";
@@ -733,6 +748,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRefresh)).EndInit();
+			this.panelMain.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -780,6 +796,7 @@
         private System.Windows.Forms.Label labelPositionI;
         private System.Windows.Forms.PictureBox pictureBoxApplication;
         private System.Windows.Forms.PictureBox pictureBoxInterview;
-    }
+		private System.Windows.Forms.Panel panelMain;
+	}
 }
 

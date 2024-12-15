@@ -80,6 +80,7 @@
 			this.pictureBoxUp = new System.Windows.Forms.PictureBox();
 			this.pictureBoxDown = new System.Windows.Forms.PictureBox();
 			this.pictureBoxRefresh = new System.Windows.Forms.PictureBox();
+			this.panelMain = new System.Windows.Forms.Panel();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
@@ -97,6 +98,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRefresh)).BeginInit();
+			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panelUp
@@ -107,9 +109,9 @@
 			this.panelUp.Controls.Add(this.pictureBoxLine);
 			this.panelUp.Controls.Add(this.pictureBoxTheme);
 			this.panelUp.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelUp.Location = new System.Drawing.Point(10, 10);
+			this.panelUp.Location = new System.Drawing.Point(0, 0);
 			this.panelUp.Name = "panelUp";
-			this.panelUp.Size = new System.Drawing.Size(1464, 70);
+			this.panelUp.Size = new System.Drawing.Size(1474, 105);
 			this.panelUp.TabIndex = 3;
 			// 
 			// buttonAssignment
@@ -120,7 +122,7 @@
 			this.buttonAssignment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonAssignment.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.buttonAssignment.ForeColor = System.Drawing.Color.Black;
-			this.buttonAssignment.Location = new System.Drawing.Point(970, 12);
+			this.buttonAssignment.Location = new System.Drawing.Point(980, 47);
 			this.buttonAssignment.Name = "buttonAssignment";
 			this.buttonAssignment.Size = new System.Drawing.Size(200, 36);
 			this.buttonAssignment.TabIndex = 48;
@@ -138,7 +140,7 @@
 			this.buttonAddVacancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonAddVacancy.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.buttonAddVacancy.ForeColor = System.Drawing.Color.Black;
-			this.buttonAddVacancy.Location = new System.Drawing.Point(1201, 12);
+			this.buttonAddVacancy.Location = new System.Drawing.Point(1211, 47);
 			this.buttonAddVacancy.Name = "buttonAddVacancy";
 			this.buttonAddVacancy.Size = new System.Drawing.Size(236, 36);
 			this.buttonAddVacancy.TabIndex = 45;
@@ -153,7 +155,7 @@
 			this.pictureBoxLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxLine.BackColor = System.Drawing.Color.Black;
 			this.pictureBoxLine.Cursor = System.Windows.Forms.Cursors.Default;
-			this.pictureBoxLine.Location = new System.Drawing.Point(1051, 60);
+			this.pictureBoxLine.Location = new System.Drawing.Point(1061, 95);
 			this.pictureBoxLine.Name = "pictureBoxLine";
 			this.pictureBoxLine.Size = new System.Drawing.Size(400, 2);
 			this.pictureBoxLine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -166,7 +168,7 @@
 			this.pictureBoxTheme.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxTheme.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxTheme.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTheme.Image")));
-			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 10);
+			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 45);
 			this.pictureBoxTheme.Name = "pictureBoxTheme";
 			this.pictureBoxTheme.Size = new System.Drawing.Size(35, 35);
 			this.pictureBoxTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -185,9 +187,9 @@
 			this.flp_Menu.Dock = System.Windows.Forms.DockStyle.Left;
 			this.flp_Menu.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flp_Menu.ForeColor = System.Drawing.Color.Black;
-			this.flp_Menu.Location = new System.Drawing.Point(10, 80);
+			this.flp_Menu.Location = new System.Drawing.Point(0, 105);
 			this.flp_Menu.Name = "flp_Menu";
-			this.flp_Menu.Size = new System.Drawing.Size(240, 621);
+			this.flp_Menu.Size = new System.Drawing.Size(240, 601);
 			this.flp_Menu.TabIndex = 4;
 			// 
 			// labelVacancy
@@ -271,10 +273,10 @@
 			this.flpMain.Controls.Add(this.panelEmployee);
 			this.flpMain.Controls.Add(this.labelEmpty);
 			this.flpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flpMain.Location = new System.Drawing.Point(250, 200);
+			this.flpMain.Location = new System.Drawing.Point(240, 225);
 			this.flpMain.Margin = new System.Windows.Forms.Padding(0);
 			this.flpMain.Name = "flpMain";
-			this.flpMain.Size = new System.Drawing.Size(1224, 501);
+			this.flpMain.Size = new System.Drawing.Size(1234, 481);
 			this.flpMain.TabIndex = 6;
 			this.flpMain.Scroll += new System.Windows.Forms.ScrollEventHandler(this.PanelMain_Scroll);
 			this.flpMain.Resize += new System.EventHandler(this.FlpMain_Resize);
@@ -649,7 +651,7 @@
 			this.textBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxSearch.BackColor = System.Drawing.Color.White;
 			this.textBoxSearch.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxSearch.Location = new System.Drawing.Point(897, 9);
+			this.textBoxSearch.Location = new System.Drawing.Point(907, 9);
 			this.textBoxSearch.MaxLength = 64;
 			this.textBoxSearch.Name = "textBoxSearch";
 			this.textBoxSearch.Size = new System.Drawing.Size(275, 33);
@@ -683,7 +685,7 @@
 			// 
 			this.textBoxMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxMax.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxMax.Location = new System.Drawing.Point(565, 69);
+			this.textBoxMax.Location = new System.Drawing.Point(575, 69);
 			this.textBoxMax.MaxLength = 6;
 			this.textBoxMax.Name = "textBoxMax";
 			this.textBoxMax.Size = new System.Drawing.Size(90, 33);
@@ -698,7 +700,7 @@
 			this.labelMinMax2.AutoSize = true;
 			this.labelMinMax2.Font = new System.Drawing.Font("Georgia", 20.25F);
 			this.labelMinMax2.ForeColor = System.Drawing.Color.Black;
-			this.labelMinMax2.Location = new System.Drawing.Point(523, 68);
+			this.labelMinMax2.Location = new System.Drawing.Point(533, 68);
 			this.labelMinMax2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelMinMax2.Name = "labelMinMax2";
 			this.labelMinMax2.Size = new System.Drawing.Size(37, 31);
@@ -712,7 +714,7 @@
 			this.labelMinMax.AutoEllipsis = true;
 			this.labelMinMax.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelMinMax.ForeColor = System.Drawing.Color.Black;
-			this.labelMinMax.Location = new System.Drawing.Point(173, 70);
+			this.labelMinMax.Location = new System.Drawing.Point(183, 70);
 			this.labelMinMax.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelMinMax.Name = "labelMinMax";
 			this.labelMinMax.Size = new System.Drawing.Size(250, 29);
@@ -725,7 +727,7 @@
 			// 
 			this.textBoxMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxMin.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic);
-			this.textBoxMin.Location = new System.Drawing.Point(428, 69);
+			this.textBoxMin.Location = new System.Drawing.Point(438, 69);
 			this.textBoxMin.MaxLength = 6;
 			this.textBoxMin.Name = "textBoxMin";
 			this.textBoxMin.Size = new System.Drawing.Size(90, 33);
@@ -768,9 +770,9 @@
 			this.panelSearch.Controls.Add(this.comboBoxDate);
 			this.panelSearch.Controls.Add(this.textBoxSearch);
 			this.panelSearch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelSearch.Location = new System.Drawing.Point(250, 80);
+			this.panelSearch.Location = new System.Drawing.Point(240, 105);
 			this.panelSearch.Name = "panelSearch";
-			this.panelSearch.Size = new System.Drawing.Size(1224, 120);
+			this.panelSearch.Size = new System.Drawing.Size(1234, 120);
 			this.panelSearch.TabIndex = 5;
 			this.panelSearch.Visible = false;
 			// 
@@ -781,7 +783,7 @@
 			this.labelStatus.AutoSize = true;
 			this.labelStatus.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatus.ForeColor = System.Drawing.Color.Black;
-			this.labelStatus.Location = new System.Drawing.Point(737, 72);
+			this.labelStatus.Location = new System.Drawing.Point(747, 72);
 			this.labelStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(106, 29);
@@ -800,7 +802,7 @@
 			this.comboBoxStatus.FormattingEnabled = true;
 			this.comboBoxStatus.Items.AddRange(new object[] {
             "Всі"});
-			this.comboBoxStatus.Location = new System.Drawing.Point(848, 69);
+			this.comboBoxStatus.Location = new System.Drawing.Point(858, 69);
 			this.comboBoxStatus.Name = "comboBoxStatus";
 			this.comboBoxStatus.Size = new System.Drawing.Size(360, 33);
 			this.comboBoxStatus.TabIndex = 45;
@@ -813,7 +815,7 @@
 			this.pictureBoxSearch.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Default;
 			this.pictureBoxSearch.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch.Image")));
-			this.pictureBoxSearch.Location = new System.Drawing.Point(1178, 10);
+			this.pictureBoxSearch.Location = new System.Drawing.Point(1188, 10);
 			this.pictureBoxSearch.Name = "pictureBoxSearch";
 			this.pictureBoxSearch.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -864,16 +866,29 @@
 			this.pictureBoxRefresh.Tag = "fixedPosition";
 			this.pictureBoxRefresh.Click += new System.EventHandler(this.PictureBoxRefresh_Click);
 			// 
+			// panelMain
+			// 
+			this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelMain.BackColor = System.Drawing.Color.Transparent;
+			this.panelMain.Controls.Add(this.flpMain);
+			this.panelMain.Controls.Add(this.panelSearch);
+			this.panelMain.Controls.Add(this.flp_Menu);
+			this.panelMain.Controls.Add(this.panelUp);
+			this.panelMain.Location = new System.Drawing.Point(5, 0);
+			this.panelMain.Margin = new System.Windows.Forms.Padding(5, 0, 5, 5);
+			this.panelMain.Name = "panelMain";
+			this.panelMain.Size = new System.Drawing.Size(1474, 706);
+			this.panelMain.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Gainsboro;
 			this.ClientSize = new System.Drawing.Size(1484, 711);
-			this.Controls.Add(this.flpMain);
-			this.Controls.Add(this.panelSearch);
-			this.Controls.Add(this.flp_Menu);
-			this.Controls.Add(this.panelUp);
+			this.Controls.Add(this.panelMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(1438, 450);
 			this.Name = "MainForm";
@@ -903,6 +918,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxUp)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRefresh)).EndInit();
+			this.panelMain.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -959,6 +975,7 @@
         private System.Windows.Forms.ComboBox comboBoxStatus;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Button buttonAssignment;
-    }
+		private System.Windows.Forms.Panel panelMain;
+	}
 }
 

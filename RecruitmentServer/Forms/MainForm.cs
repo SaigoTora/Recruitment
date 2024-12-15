@@ -49,8 +49,9 @@ namespace RecruitmentServer.Forms
 		internal MainForm(ServerAccount account)
 		{// Конструктор
 			_ = Server.StartAsync();
-			InitializeComponent();
 			customTitleBar = new CustomTitleBar(this, "Головна");
+			IsResizable = true;
+			InitializeComponent();
 
 			this.account = account;
 

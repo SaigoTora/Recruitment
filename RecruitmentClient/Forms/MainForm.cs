@@ -45,9 +45,10 @@ namespace RecruitmentClient.Forms
 
 		internal MainForm(ClientAccount a)
 		{// Конструктор
+			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
+			IsResizable = true;
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			account = a;
 			comboBoxSortCount = comboBoxSort.Items.Count;
 			flpMain.MouseWheel += FlpMain_MouseWheel;
