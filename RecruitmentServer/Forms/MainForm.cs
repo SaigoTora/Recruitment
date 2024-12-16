@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
@@ -36,7 +37,7 @@ namespace RecruitmentServer.Forms
 		private PanelsInfo panelsInfo = PanelsInfo.None;// Змінна, яка зберігає інформацію про вид панелей
 		private readonly List<Panel> createdPanels = new List<Panel>();// Панелі які були створені в процесі роботи
 		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private int countPanels;// Загальна кількість панелей необхідних для відображення
 		private int currentPanelHeight;// Висота поточної панелі
@@ -50,7 +51,7 @@ namespace RecruitmentServer.Forms
 		internal MainForm(ServerAccount account)
 		{// Конструктор
 			_ = Server.StartAsync();
-			customTitleBar = new CustomTitleBar(this, "Головна",Properties.Resources.main);
+			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			IsResizable = true;
 			InitializeComponent();
 
@@ -64,7 +65,7 @@ namespace RecruitmentServer.Forms
 
 			pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
 				pictureBoxDown, pictureBoxUp, pictureBoxTheme);
-			buttonEventHandlers.SubscribeToHover(buttonAssignment, buttonAddVacancy);
+			//buttonEventHandlers.SubscribeToHover(buttonAssignment, buttonAddVacancy);
 			SetTheme(account.Theme);
 		}
 
@@ -344,9 +345,9 @@ namespace RecruitmentServer.Forms
 				picture.BackColor = Color.Transparent;
 
 			// Підписання кнопки на обробники подій
-			Button button = creator.CreateButton(buttonVacancy);
+			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
-			buttonEventHandlers.SubscribeToHover(button);
+			//buttonEventHandlers.SubscribeToHover(button);
 		}
 		private void CreateApplication(FullApplication application, Creator creator)
 		{// Метод, який створює одну заявку
@@ -367,9 +368,9 @@ namespace RecruitmentServer.Forms
 			creator.CreateLabel(labelDateSubmissionA, "Дата і час подачі: " + GetStringDate(application.DateSubmission));
 
 			// Підписання кнопки на обробники подій
-			Button button = creator.CreateButton(buttonApplication);
+			Guna2GradientButton button = creator.CreateButton(buttonApplication);
 			AddEventApplicationButton_Click(button, application);
-			buttonEventHandlers.SubscribeToHover(button);
+			//buttonEventHandlers.SubscribeToHover(button);
 		}
 		private void CreateInterview(FullInterview interview, Creator creator)
 		{// Метод, який створює одну співбесіду
@@ -389,21 +390,21 @@ namespace RecruitmentServer.Forms
 				picture.BackColor = Color.Transparent;
 
 			creator.CreateLabel(labelDateEventI, "Дата і час проведення: " + GetStringDate(interview.DateEvent));
-			Button button = creator.CreateButton(buttonInterview);
+			Guna2GradientButton button = creator.CreateButton(buttonInterview);
 			AddEventInterviewButton_Click(button, interview);
-			buttonEventHandlers.SubscribeToHover(button);
+			//buttonEventHandlers.SubscribeToHover(button);
 		}
 		private void CreateEmployee(Employee employee, Creator creator)
 		{// Метод, який створює одного співробітника
 			creator.CreateLabel(labelPositionE, employee.Position);
 			creator.CreateLabel(labelFullName, $"{employee.Surname} {employee.Name} {employee.FatherName}");
 			creator.CreateLabel(labelDateEmploymentE, "Дата працевлаштування: " + GetStringDate(employee.DateEmployment));
-			Button button = creator.CreateButton(buttonEmployee);
+			Guna2GradientButton button = creator.CreateButton(buttonEmployee);
 			AddEventEmployeeButton_Click(button, employee);
-			buttonEventHandlers.SubscribeToHover(button);
+			//buttonEventHandlers.SubscribeToHover(button);
 		}
 
-		private void AddEventVacancyButton_Click(Button button, FullVacancy vacancy)
+		private void AddEventVacancyButton_Click(Guna2GradientButton button, FullVacancy vacancy)
 		{// Метод який підписується на подію натискання на вакансію
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -411,7 +412,7 @@ namespace RecruitmentServer.Forms
 				vf.ShowDialog();
 			};
 		}
-		private void AddEventApplicationButton_Click(Button button, FullApplication application)
+		private void AddEventApplicationButton_Click(Guna2GradientButton button, FullApplication application)
 		{// Метод який підписується на подію натискання на заявку
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -419,7 +420,7 @@ namespace RecruitmentServer.Forms
 				af.ShowDialog();
 			};
 		}
-		private void AddEventInterviewButton_Click(Button button, FullInterview interview)
+		private void AddEventInterviewButton_Click(Guna2GradientButton button, FullInterview interview)
 		{// Метод який підписується на подію натискання на співбесіду
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -427,7 +428,7 @@ namespace RecruitmentServer.Forms
 				inf.ShowDialog();
 			};
 		}
-		private void AddEventEmployeeButton_Click(Button button, Employee employee)
+		private void AddEventEmployeeButton_Click(Guna2GradientButton button, Employee employee)
 		{// Метод який підписується на подію натискання на співробітника
 			button.Click += (s, args) =>
 				{// Підписуємось на подію відкриття форми
@@ -786,7 +787,7 @@ namespace RecruitmentServer.Forms
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			pictureBoxEventHandlers.UnsubscribeAll();
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 			Server.Stop();
 		}
 	}

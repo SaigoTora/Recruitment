@@ -246,6 +246,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TempTextFile.txt" />
     <None Include="main.ico" />
     <Content Include="RecruitmentDB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

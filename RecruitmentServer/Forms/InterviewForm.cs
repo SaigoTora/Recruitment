@@ -18,7 +18,7 @@ namespace RecruitmentServer.Forms
 		private readonly ServerAccount account;// Акаунт
 		private readonly FullInterview interview;// Співбесіда
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal InterviewForm(FullInterview interview, Action<EventArgs> refresh, ServerAccount account)
 		{// Конструктор форми співбесіди
@@ -50,8 +50,8 @@ namespace RecruitmentServer.Forms
 			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1);
 			if (interview.Status == "Кандидат чекає на рішення")// Обираємо потрібний елемент
 				comboBoxDecision.SelectedIndex = 1;
-			buttonEventHandlers.SubscribeToHover(buttonApplication,
-				buttonEmployee, buttonApply, buttonChangeDate, buttonChangeApply);
+			//buttonEventHandlers.SubscribeToHover(buttonApplication,
+				//buttonEmployee, buttonApply, buttonChangeDate, buttonChangeApply);
 		}
 
 		private void ButtonApply_Click(object sender, EventArgs e)
@@ -185,7 +185,7 @@ namespace RecruitmentServer.Forms
 
 		private void InterviewForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

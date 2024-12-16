@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			this.buttonCreate = new System.Windows.Forms.Button();
 			this.NUDAgeUnder18 = new System.Windows.Forms.NumericUpDown();
 			this.labelAgeUnder18 = new System.Windows.Forms.Label();
 			this.NUDAge18_30 = new System.Windows.Forms.NumericUpDown();
@@ -63,6 +62,7 @@
 			this.educationDegreeBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.education_DegreeTableAdapter = new RecruitmentServer.RecruitmentDBTableAdapters.Education_DegreeTableAdapter();
 			this.NUDDegree = new System.Windows.Forms.NumericUpDown();
+			this.buttonCreate = new Guna.UI2.WinForms.Guna2GradientButton();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeUnder18)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAge18_30)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeOver50)).BeginInit();
@@ -81,22 +81,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.educationDegreeBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDDegree)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// buttonCreate
-			// 
-			this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonCreate.AutoSize = true;
-			this.buttonCreate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
-			this.buttonCreate.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonCreate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonCreate.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonCreate.Location = new System.Drawing.Point(1072, 545);
-			this.buttonCreate.Name = "buttonCreate";
-			this.buttonCreate.Size = new System.Drawing.Size(175, 40);
-			this.buttonCreate.TabIndex = 30;
-			this.buttonCreate.Text = "Створити";
-			this.buttonCreate.UseVisualStyleBackColor = false;
-			this.buttonCreate.Click += new System.EventHandler(this.ButtonCreate_Click);
 			// 
 			// NUDAgeUnder18
 			// 
@@ -539,11 +523,42 @@
 			this.NUDDegree.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.NUDDegree.ValueChanged += new System.EventHandler(this.NUDDegree_ValueChanged);
 			// 
+			// buttonCreate
+			// 
+			this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonCreate.Animated = true;
+			this.buttonCreate.BackColor = System.Drawing.Color.Transparent;
+			this.buttonCreate.BorderRadius = 7;
+			this.buttonCreate.BorderThickness = 1;
+			this.buttonCreate.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonCreate.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonCreate.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonCreate.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonCreate.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonCreate.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonCreate.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonCreate.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonCreate.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonCreate.ForeColor = System.Drawing.Color.Black;
+			this.buttonCreate.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonCreate.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonCreate.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonCreate.Location = new System.Drawing.Point(1072, 545);
+			this.buttonCreate.Name = "buttonCreate";
+			this.buttonCreate.PressedColor = System.Drawing.Color.White;
+			this.buttonCreate.PressedDepth = 20;
+			this.buttonCreate.Size = new System.Drawing.Size(175, 40);
+			this.buttonCreate.TabIndex = 30;
+			this.buttonCreate.TabStop = false;
+			this.buttonCreate.Text = "Створити";
+			this.buttonCreate.Click += new System.EventHandler(this.ButtonCreate_Click);
+			// 
 			// PointsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1264, 602);
+			this.Controls.Add(this.buttonCreate);
 			this.Controls.Add(this.NUDDegree);
 			this.Controls.Add(this.comboBoxDegrees);
 			this.Controls.Add(this.NUDBusinessTripOpportunity);
@@ -574,12 +589,8 @@
 			this.Controls.Add(this.labelAge18_30);
 			this.Controls.Add(this.NUDAgeUnder18);
 			this.Controls.Add(this.labelAgeUnder18);
-			this.Controls.Add(this.buttonCreate);
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "PointsForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Бали";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PointsForm_FormClosed);
 			this.Load += new System.EventHandler(this.PointsForm_Load);
@@ -606,7 +617,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.NumericUpDown NUDAgeUnder18;
         private System.Windows.Forms.Label labelAgeUnder18;
         private System.Windows.Forms.NumericUpDown NUDAge18_30;
@@ -640,5 +650,6 @@
         private System.Windows.Forms.BindingSource educationDegreeBindingSource;
         private RecruitmentDBTableAdapters.Education_DegreeTableAdapter education_DegreeTableAdapter;
         private System.Windows.Forms.NumericUpDown NUDDegree;
-    }
+		private Guna.UI2.WinForms.Guna2GradientButton buttonCreate;
+	}
 }

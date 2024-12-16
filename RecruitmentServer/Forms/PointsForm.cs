@@ -15,7 +15,7 @@ namespace RecruitmentServer.Forms
 	{// Форма балів
 		private readonly Points points;// Об'єкт, який зберігає інформацію про кількість балів
 		private PointDegree[] degrees;// Масив, який зберігає інформацію про кількість балів для ступенів освіти
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 		internal PointsForm(Points points, bool isForView, ServerAccount account)
 		{// Конструктор форми
 			InitializeComponent();
@@ -69,7 +69,7 @@ namespace RecruitmentServer.Forms
 			NUDNoSmoker.Value = points.NoSmoker;
 			NUDNoDrinkAlcohol.Value = points.NoDrinkAlcohol;
 			NUDBusinessTripOpportunity.Value = points.BusinessTripOpportunity;
-			buttonEventHandlers.SubscribeToHover(buttonCreate);
+			//buttonEventHandlers.SubscribeToHover(buttonCreate);
 
 			if (degrees == null)
 			{// Заповнюємо масив degrees
@@ -144,7 +144,7 @@ namespace RecruitmentServer.Forms
 
 		private void PointsForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

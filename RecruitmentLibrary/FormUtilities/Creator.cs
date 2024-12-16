@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Guna.UI2.WinForms;
+using System.Windows.Forms;
 
 namespace RecruitmentLibrary.FormUtilities
 {
@@ -56,6 +57,24 @@ namespace RecruitmentLibrary.FormUtilities
 		{
 			Button button = CreateControl(sample);
 			button.FlatStyle = sample.FlatStyle;
+			button.Text = sample.Text;
+			button.Cursor = sample.Cursor;
+
+			return button;
+		}
+		public Guna2GradientButton CreateButton(Guna2GradientButton sample)
+		{
+			Guna2GradientButton button = CreateControl(sample);
+			button.Animated = sample.Animated;
+			button.PressedColor = sample.PressedColor;
+			button.PressedDepth = sample.PressedDepth;
+			button.BorderColor = sample.BorderColor;
+			button.BorderRadius = sample.BorderRadius;
+			button.BorderThickness = sample.BorderThickness;
+			button.FillColor = sample.FillColor;
+			button.FillColor2 = sample.FillColor2;
+			button.GradientMode = sample.GradientMode;
+			button.HoverState = sample.HoverState;
 			button.Text = sample.Text;
 			button.Cursor = sample.Cursor;
 

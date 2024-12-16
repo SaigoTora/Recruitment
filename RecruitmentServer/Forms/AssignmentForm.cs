@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 
 using RecruitmentLibrary;
 using RecruitmentLibrary.FormUtilities;
@@ -25,7 +26,7 @@ namespace RecruitmentServer.Forms
 
 		private readonly List<AssignmentItem> resultItems = new List<AssignmentItem>();// Список результатів
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal AssignmentForm(ServerAccount account, Action<EventArgs> refresh)
 		{// Конструктор форми призначення
@@ -62,7 +63,7 @@ namespace RecruitmentServer.Forms
 			}
 
 			CreateFormResultItems();
-			buttonEventHandlers.SubscribeToHover(buttonApplication);
+			//buttonEventHandlers.SubscribeToHover(buttonApplication);
 		}
 
 		private int[,] ConvertAssignmentItemsToMatrix()
@@ -113,9 +114,9 @@ namespace RecruitmentServer.Forms
 				creator.CreateLabel(labelVacancy);
 				creator.CreateLabel(labelScores, $"Балів: {resultItems[i].Scores}");
 
-				Button buttonC = creator.CreateButton(buttonCandidate);
-				Button buttonV = creator.CreateButton(buttonVacancy);
-				Button buttonA = creator.CreateButton(buttonApplication);
+				Guna2GradientButton buttonC = creator.CreateButton(buttonCandidate);
+				Guna2GradientButton buttonV = creator.CreateButton(buttonVacancy);
+				Guna2GradientButton buttonA = creator.CreateButton(buttonApplication);
 
 				buttonC.Text = candidate.Surname;
 				buttonV.Text = vacancy.Position.Name;
@@ -124,7 +125,7 @@ namespace RecruitmentServer.Forms
 				AddEventVacancyButton_Click(buttonV, vacancy);
 				AddEventApplicationButton_Click(buttonA, application);
 
-				buttonEventHandlers.SubscribeToHover(buttonC, buttonV, buttonA);
+				//buttonEventHandlers.SubscribeToHover(buttonC, buttonV, buttonA);
 			}
 
 			if (panels.Count <= 0)
@@ -133,7 +134,7 @@ namespace RecruitmentServer.Forms
 				foreach (Panel panel in panels)// Вмикаємо видимість панелям
 					panel.Visible = true;
 		}
-		private void AddEventCandidateButton_Click(Button button, Candidate candidate)
+		private void AddEventCandidateButton_Click(Guna2GradientButton button, Candidate candidate)
 		{// Метод який підписується на подію натискання на кандидата
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -141,7 +142,7 @@ namespace RecruitmentServer.Forms
 				cf.ShowDialog();
 			};
 		}
-		private void AddEventVacancyButton_Click(Button button, FullVacancy vacancy)
+		private void AddEventVacancyButton_Click(Guna2GradientButton button, FullVacancy vacancy)
 		{// Метод який підписується на подію натискання на вакансію
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -149,7 +150,7 @@ namespace RecruitmentServer.Forms
 				vf.ShowDialog();
 			};
 		}
-		private void AddEventApplicationButton_Click(Button button, FullApplication application)
+		private void AddEventApplicationButton_Click(Guna2GradientButton button, FullApplication application)
 		{// Метод який підписується на подію натискання на заявку
 			button.Click += (s, args) =>
 			{// Підписуємось на подію відкриття форми
@@ -180,7 +181,7 @@ namespace RecruitmentServer.Forms
 
 		private void AssignmentForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

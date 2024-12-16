@@ -17,7 +17,7 @@ namespace RecruitmentServer.Forms
 
 		private readonly FullApplication application;// Заявка
 		private readonly ServerAccount account;// Акаунт
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
 		internal ApplicationForm(FullApplication application, Action<EventArgs> refresh, ServerAccount account)
@@ -66,7 +66,7 @@ namespace RecruitmentServer.Forms
 			dateTimePickerInterview.Value = DateTime.Now.AddDays(7);
 			numericUpDownHours.Value = DateTime.Now.Hour;
 			numericUpDownMinutes.Value = DateTime.Now.Minute;
-			buttonEventHandlers.SubscribeToHover(buttonVacancy, buttonCandidate, buttonApply, buttonReasonRejection);
+			//buttonEventHandlers.SubscribeToHover(buttonVacancy, buttonCandidate, buttonApply, buttonReasonRejection);
 		}
 
 		private void ButtonApply_Click(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace RecruitmentServer.Forms
 
 		private void ApplicationForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

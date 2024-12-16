@@ -36,10 +36,10 @@
 			this.labelCity = new System.Windows.Forms.Label();
 			this.labelBirthday = new System.Windows.Forms.Label();
 			this.labelDateEmployment = new System.Windows.Forms.Label();
-			this.buttonChangeSalary = new System.Windows.Forms.Button();
-			this.buttonFire = new System.Windows.Forms.Button();
 			this.richTextBoxPosition = new System.Windows.Forms.RichTextBox();
-			this.buttonChangePosition = new System.Windows.Forms.Button();
+			this.buttonChangePosition = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonChangeSalary = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonFire = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.SuspendLayout();
 			// 
 			// labelSalaryTitle
@@ -153,35 +153,6 @@
 			this.labelDateEmployment.Text = "Дата працевлаштування";
 			this.labelDateEmployment.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
-			// buttonChangeSalary
-			// 
-			this.buttonChangeSalary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(128)))));
-			this.buttonChangeSalary.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonChangeSalary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonChangeSalary.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonChangeSalary.Location = new System.Drawing.Point(12, 177);
-			this.buttonChangeSalary.Name = "buttonChangeSalary";
-			this.buttonChangeSalary.Size = new System.Drawing.Size(85, 25);
-			this.buttonChangeSalary.TabIndex = 5;
-			this.buttonChangeSalary.Text = "Змінити";
-			this.buttonChangeSalary.UseVisualStyleBackColor = false;
-			this.buttonChangeSalary.Visible = false;
-			this.buttonChangeSalary.Click += new System.EventHandler(this.ButtonChangeSalary_Click);
-			// 
-			// buttonFire
-			// 
-			this.buttonFire.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(29)))), ((int)(((byte)(52)))));
-			this.buttonFire.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonFire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonFire.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonFire.Location = new System.Drawing.Point(967, 409);
-			this.buttonFire.Name = "buttonFire";
-			this.buttonFire.Size = new System.Drawing.Size(200, 35);
-			this.buttonFire.TabIndex = 11;
-			this.buttonFire.Text = "Звільнити";
-			this.buttonFire.UseVisualStyleBackColor = false;
-			this.buttonFire.Click += new System.EventHandler(this.ButtonFire_Click);
-			// 
 			// richTextBoxPosition
 			// 
 			this.richTextBoxPosition.BackColor = System.Drawing.SystemColors.Control;
@@ -199,28 +170,103 @@
 			// 
 			// buttonChangePosition
 			// 
-			this.buttonChangePosition.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(128)))));
+			this.buttonChangePosition.Animated = true;
+			this.buttonChangePosition.BackColor = System.Drawing.Color.Transparent;
+			this.buttonChangePosition.BorderRadius = 7;
+			this.buttonChangePosition.BorderThickness = 1;
 			this.buttonChangePosition.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonChangePosition.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonChangePosition.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonChangePosition.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonChangePosition.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonChangePosition.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonChangePosition.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonChangePosition.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonChangePosition.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonChangePosition.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonChangePosition.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonChangePosition.ForeColor = System.Drawing.Color.Black;
+			this.buttonChangePosition.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonChangePosition.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonChangePosition.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
 			this.buttonChangePosition.Location = new System.Drawing.Point(12, 116);
 			this.buttonChangePosition.Name = "buttonChangePosition";
+			this.buttonChangePosition.PressedColor = System.Drawing.Color.White;
+			this.buttonChangePosition.PressedDepth = 20;
 			this.buttonChangePosition.Size = new System.Drawing.Size(85, 25);
 			this.buttonChangePosition.TabIndex = 2;
+			this.buttonChangePosition.TabStop = false;
 			this.buttonChangePosition.Text = "Змінити";
-			this.buttonChangePosition.UseVisualStyleBackColor = false;
 			this.buttonChangePosition.Visible = false;
 			this.buttonChangePosition.Click += new System.EventHandler(this.ButtonChangePosition_Click);
+			// 
+			// buttonChangeSalary
+			// 
+			this.buttonChangeSalary.Animated = true;
+			this.buttonChangeSalary.BackColor = System.Drawing.Color.Transparent;
+			this.buttonChangeSalary.BorderRadius = 7;
+			this.buttonChangeSalary.BorderThickness = 1;
+			this.buttonChangeSalary.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonChangeSalary.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonChangeSalary.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonChangeSalary.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonChangeSalary.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonChangeSalary.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonChangeSalary.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonChangeSalary.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonChangeSalary.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonChangeSalary.ForeColor = System.Drawing.Color.Black;
+			this.buttonChangeSalary.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonChangeSalary.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonChangeSalary.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonChangeSalary.Location = new System.Drawing.Point(12, 177);
+			this.buttonChangeSalary.Name = "buttonChangeSalary";
+			this.buttonChangeSalary.PressedColor = System.Drawing.Color.White;
+			this.buttonChangeSalary.PressedDepth = 20;
+			this.buttonChangeSalary.Size = new System.Drawing.Size(85, 25);
+			this.buttonChangeSalary.TabIndex = 5;
+			this.buttonChangeSalary.TabStop = false;
+			this.buttonChangeSalary.Text = "Змінити";
+			this.buttonChangeSalary.Visible = false;
+			this.buttonChangeSalary.Click += new System.EventHandler(this.ButtonChangeSalary_Click);
+			// 
+			// buttonFire
+			// 
+			this.buttonFire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonFire.Animated = true;
+			this.buttonFire.BackColor = System.Drawing.Color.Transparent;
+			this.buttonFire.BorderRadius = 7;
+			this.buttonFire.BorderThickness = 1;
+			this.buttonFire.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonFire.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonFire.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonFire.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonFire.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonFire.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonFire.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(50)))));
+			this.buttonFire.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.buttonFire.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonFire.ForeColor = System.Drawing.Color.Black;
+			this.buttonFire.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonFire.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
+			this.buttonFire.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+			this.buttonFire.Location = new System.Drawing.Point(967, 409);
+			this.buttonFire.Name = "buttonFire";
+			this.buttonFire.PressedColor = System.Drawing.Color.White;
+			this.buttonFire.PressedDepth = 20;
+			this.buttonFire.Size = new System.Drawing.Size(200, 35);
+			this.buttonFire.TabIndex = 11;
+			this.buttonFire.TabStop = false;
+			this.buttonFire.Text = "Звільнити";
+			this.buttonFire.Click += new System.EventHandler(this.ButtonFire_Click);
 			// 
 			// EmployeeForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1184, 461);
-			this.Controls.Add(this.buttonChangePosition);
-			this.Controls.Add(this.richTextBoxPosition);
 			this.Controls.Add(this.buttonFire);
 			this.Controls.Add(this.buttonChangeSalary);
+			this.Controls.Add(this.buttonChangePosition);
+			this.Controls.Add(this.richTextBoxPosition);
 			this.Controls.Add(this.labelDateEmployment);
 			this.Controls.Add(this.labelBirthday);
 			this.Controls.Add(this.labelCity);
@@ -229,11 +275,8 @@
 			this.Controls.Add(this.richTextBoxContact);
 			this.Controls.Add(this.labelContact);
 			this.Controls.Add(this.labelSalaryTitle);
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "EmployeeForm";
 			this.ShowIcon = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Співробітник";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EmployeeForm_FormClosed);
 			this.ResumeLayout(false);
@@ -250,9 +293,9 @@
         private System.Windows.Forms.Label labelCity;
         private System.Windows.Forms.Label labelBirthday;
         private System.Windows.Forms.Label labelDateEmployment;
-        private System.Windows.Forms.Button buttonChangeSalary;
-        private System.Windows.Forms.Button buttonFire;
         private System.Windows.Forms.RichTextBox richTextBoxPosition;
-        private System.Windows.Forms.Button buttonChangePosition;
-    }
+		private Guna.UI2.WinForms.Guna2GradientButton buttonChangePosition;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonChangeSalary;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonFire;
+	}
 }

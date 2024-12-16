@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.buttonMore = new System.Windows.Forms.Button();
 			this.labelCity = new System.Windows.Forms.Label();
 			this.richTextBoxAdditionalInfo = new System.Windows.Forms.RichTextBox();
 			this.labelAdditionalInfoTitle = new System.Windows.Forms.Label();
@@ -67,6 +66,7 @@
 			this.labelReadiness = new System.Windows.Forms.Label();
 			this.labelExperience = new System.Windows.Forms.Label();
 			this.panelMain = new System.Windows.Forms.Panel();
+			this.buttonMore = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.panelMore.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			this.flpEducations.SuspendLayout();
@@ -75,22 +75,6 @@
 			this.panelLanguage.SuspendLayout();
 			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// buttonMore
-			// 
-			this.buttonMore.AutoSize = true;
-			this.buttonMore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(128)))));
-			this.buttonMore.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonMore.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonMore.Location = new System.Drawing.Point(531, 377);
-			this.buttonMore.Name = "buttonMore";
-			this.buttonMore.Size = new System.Drawing.Size(160, 40);
-			this.buttonMore.TabIndex = 8;
-			this.buttonMore.Tag = "fixedPosition";
-			this.buttonMore.Text = "Більше";
-			this.buttonMore.UseVisualStyleBackColor = false;
-			this.buttonMore.Click += new System.EventHandler(this.ButtonMore_Click);
 			// 
 			// labelCity
 			// 
@@ -627,12 +611,12 @@
 			// 
 			this.panelMain.AutoScroll = true;
 			this.panelMain.BackColor = System.Drawing.Color.Transparent;
+			this.panelMain.Controls.Add(this.buttonMore);
 			this.panelMain.Controls.Add(this.panelMore);
 			this.panelMain.Controls.Add(this.richTextBoxContact);
 			this.panelMain.Controls.Add(this.labelContact);
 			this.panelMain.Controls.Add(this.labelBirthday);
 			this.panelMain.Controls.Add(this.labelFullName);
-			this.panelMain.Controls.Add(this.buttonMore);
 			this.panelMain.Controls.Add(this.labelCity);
 			this.panelMain.Controls.Add(this.richTextBoxAdditionalInfo);
 			this.panelMain.Controls.Add(this.labelAdditionalInfoTitle);
@@ -642,6 +626,36 @@
 			this.panelMain.Name = "panelMain";
 			this.panelMain.Size = new System.Drawing.Size(1371, 501);
 			this.panelMain.TabIndex = 10;
+			// 
+			// buttonMore
+			// 
+			this.buttonMore.Animated = true;
+			this.buttonMore.BackColor = System.Drawing.Color.Transparent;
+			this.buttonMore.BorderRadius = 7;
+			this.buttonMore.BorderThickness = 1;
+			this.buttonMore.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonMore.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonMore.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonMore.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonMore.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonMore.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonMore.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonMore.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonMore.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonMore.ForeColor = System.Drawing.Color.Black;
+			this.buttonMore.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonMore.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonMore.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonMore.Location = new System.Drawing.Point(531, 377);
+			this.buttonMore.Name = "buttonMore";
+			this.buttonMore.PressedColor = System.Drawing.Color.White;
+			this.buttonMore.PressedDepth = 20;
+			this.buttonMore.Size = new System.Drawing.Size(160, 40);
+			this.buttonMore.TabIndex = 8;
+			this.buttonMore.TabStop = false;
+			this.buttonMore.Tag = "fixedPosition";
+			this.buttonMore.Text = "Більше";
+			this.buttonMore.Click += new System.EventHandler(this.ButtonMore_Click);
 			// 
 			// CandidateForm
 			// 
@@ -669,7 +683,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonMore;
         private System.Windows.Forms.Label labelCity;
         private System.Windows.Forms.RichTextBox richTextBoxAdditionalInfo;
         private System.Windows.Forms.Label labelAdditionalInfoTitle;
@@ -708,5 +721,6 @@
         private System.Windows.Forms.PictureBox pictureBoxLine;
         private System.Windows.Forms.Label labelLanguageHelp;
 		private System.Windows.Forms.Panel panelMain;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonMore;
 	}
 }
