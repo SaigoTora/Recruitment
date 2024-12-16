@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
+using Guna.UI2.WinForms;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.FormUtilities;
@@ -34,7 +34,7 @@ namespace RecruitmentClient.Forms
 		private readonly Color colorRed = Color.FromArgb(191, 34, 51);
 		private readonly int comboBoxSortCount;// Кількість елементів у comboBoxSort
 		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private PanelsInfo panelsInfo = PanelsInfo.None;// Змінна, яка зберігає інформацію про вид панелей
 		private readonly List<Panel> panelsVAI = new List<Panel>();// Панелі вакансій або заявок або співбесід
@@ -285,9 +285,9 @@ namespace RecruitmentClient.Forms
 			creator.CreateLabel(labelDatePublicationV, "Опубліковано: " + GetStringDate(vacancy.DatePublication));
 
 			// Підписання кнопки на обробники подій
-			Button button = creator.CreateButton(buttonVacancy);
+			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
-			buttonEventHandlers.SubscribeToHover(button);
+			//buttonEventHandlers.SubscribeToHover(button);
 		}
 		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, Creator creator)
 		{// Метод, який створює одну заявку
@@ -310,13 +310,13 @@ namespace RecruitmentClient.Forms
 			string reason = application.ReasonRejection;
 			if (reason != null && reason.Length > 0)
 			{
-				Button button = creator.CreateButton(buttonReasonRejectionA);
+				Guna2GradientButton button = creator.CreateButton(buttonReasonRejectionA);
 				button.Click += (s, args) =>
 				{
 					MessageBox.Show(reason, "Причина відмови",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 				};
-				buttonEventHandlers.SubscribeToHover(button);
+				//buttonEventHandlers.SubscribeToHover(button);
 			}
 		}
 		private void CreateInterview(Interview interview, Creator creator)
@@ -339,7 +339,7 @@ namespace RecruitmentClient.Forms
 				picture.BackColor = Color.Transparent;
 		}
 
-		private void AddEventVacancyButton_Click(Button button, Vacancy vacancy)
+		private void AddEventVacancyButton_Click(Guna2GradientButton button, Vacancy vacancy)
 		{// Метод який підписується на подію натискання на кнопку
 			button.Click += (s, args) =>
 				{// Підписуємось на подію відкриття форми
@@ -663,7 +663,7 @@ namespace RecruitmentClient.Forms
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			pictureBoxEventHandlers.UnsubscribeAll();
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

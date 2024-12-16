@@ -43,8 +43,8 @@
 			this.dateTimePickerBirthday = new System.Windows.Forms.DateTimePicker();
 			this.labelEmail = new System.Windows.Forms.Label();
 			this.textBoxEmail = new System.Windows.Forms.TextBox();
-			this.buttonApply = new System.Windows.Forms.Button();
-			this.buttonQuestionnairе = new System.Windows.Forms.Button();
+			this.buttonQuestionnairе = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonApply = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.SuspendLayout();
 			// 
 			// labelSurname
@@ -256,37 +256,65 @@
 			this.textBoxEmail.Size = new System.Drawing.Size(300, 32);
 			this.textBoxEmail.TabIndex = 14;
 			// 
+			// buttonQuestionnairе
+			// 
+			this.buttonQuestionnairе.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonQuestionnairе.Animated = true;
+			this.buttonQuestionnairе.BackColor = System.Drawing.Color.Transparent;
+			this.buttonQuestionnairе.BorderRadius = 7;
+			this.buttonQuestionnairе.BorderThickness = 1;
+			this.buttonQuestionnairе.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonQuestionnairе.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonQuestionnairе.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonQuestionnairе.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonQuestionnairе.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonQuestionnairе.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonQuestionnairе.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonQuestionnairе.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonQuestionnairе.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonQuestionnairе.ForeColor = System.Drawing.Color.Black;
+			this.buttonQuestionnairе.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonQuestionnairе.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonQuestionnairе.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 426);
+			this.buttonQuestionnairе.Name = "buttonQuestionnairе";
+			this.buttonQuestionnairе.PressedColor = System.Drawing.Color.White;
+			this.buttonQuestionnairе.PressedDepth = 20;
+			this.buttonQuestionnairе.Size = new System.Drawing.Size(175, 40);
+			this.buttonQuestionnairе.TabIndex = 15;
+			this.buttonQuestionnairе.TabStop = false;
+			this.buttonQuestionnairе.Text = "Анкета";
+			this.buttonQuestionnairе.Click += new System.EventHandler(this.ButtonQuestionnaire_Click);
+			// 
 			// buttonApply
 			// 
 			this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonApply.AutoSize = true;
-			this.buttonApply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
+			this.buttonApply.Animated = true;
+			this.buttonApply.BackColor = System.Drawing.Color.Transparent;
+			this.buttonApply.BorderRadius = 7;
+			this.buttonApply.BorderThickness = 1;
 			this.buttonApply.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonApply.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonApply.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonApply.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonApply.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApply.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApply.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonApply.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonApply.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonApply.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonApply.ForeColor = System.Drawing.Color.Black;
+			this.buttonApply.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonApply.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonApply.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
 			this.buttonApply.Location = new System.Drawing.Point(616, 426);
 			this.buttonApply.Name = "buttonApply";
+			this.buttonApply.PressedColor = System.Drawing.Color.White;
+			this.buttonApply.PressedDepth = 20;
 			this.buttonApply.Size = new System.Drawing.Size(175, 40);
 			this.buttonApply.TabIndex = 16;
+			this.buttonApply.TabStop = false;
 			this.buttonApply.Text = "Застосувати";
-			this.buttonApply.UseVisualStyleBackColor = false;
 			this.buttonApply.Click += new System.EventHandler(this.ButtonApply_Click);
-			// 
-			// buttonQuestionnairе
-			// 
-			this.buttonQuestionnairе.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonQuestionnairе.AutoSize = true;
-			this.buttonQuestionnairе.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(128)))));
-			this.buttonQuestionnairе.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonQuestionnairе.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonQuestionnairе.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 426);
-			this.buttonQuestionnairе.Name = "buttonQuestionnairе";
-			this.buttonQuestionnairе.Size = new System.Drawing.Size(175, 40);
-			this.buttonQuestionnairе.TabIndex = 15;
-			this.buttonQuestionnairе.Text = "Анкета";
-			this.buttonQuestionnairе.UseVisualStyleBackColor = false;
-			this.buttonQuestionnairе.Click += new System.EventHandler(this.ButtonQuestionnaire_Click);
 			// 
 			// ProfileForm
 			// 
@@ -294,8 +322,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.ClientSize = new System.Drawing.Size(803, 478);
-			this.Controls.Add(this.buttonQuestionnairе);
 			this.Controls.Add(this.buttonApply);
+			this.Controls.Add(this.buttonQuestionnairе);
 			this.Controls.Add(this.textBoxEmail);
 			this.Controls.Add(this.labelEmail);
 			this.Controls.Add(this.dateTimePickerBirthday);
@@ -338,7 +366,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerBirthday;
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.TextBox textBoxEmail;
-        private System.Windows.Forms.Button buttonApply;
-        private System.Windows.Forms.Button buttonQuestionnairе;
-    }
+		private Guna.UI2.WinForms.Guna2GradientButton buttonQuestionnairе;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonApply;
+	}
 }

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.buttonProfile = new System.Windows.Forms.Button();
 			this.panelUp = new System.Windows.Forms.Panel();
+			this.buttonProfile = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxLine = new System.Windows.Forms.PictureBox();
 			this.pictureBoxTheme = new System.Windows.Forms.PictureBox();
 			this.pictureBoxPasswordChange = new System.Windows.Forms.PictureBox();
@@ -41,14 +41,13 @@
 			this.labelInterview = new System.Windows.Forms.Label();
 			this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
 			this.panelVacancy = new System.Windows.Forms.Panel();
-			this.buttonVacancy = new System.Windows.Forms.Button();
+			this.buttonVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.labelDatePublicationV = new System.Windows.Forms.Label();
 			this.labelSalaryV = new System.Windows.Forms.Label();
 			this.labelPositionDescriptionV = new System.Windows.Forms.Label();
 			this.labelPositionV = new System.Windows.Forms.Label();
 			this.panelApplication = new System.Windows.Forms.Panel();
 			this.pictureBoxApplication = new System.Windows.Forms.PictureBox();
-			this.buttonReasonRejectionA = new System.Windows.Forms.Button();
 			this.labelStatusA = new System.Windows.Forms.Label();
 			this.labelDateSubmissionA = new System.Windows.Forms.Label();
 			this.labelPositionA = new System.Windows.Forms.Label();
@@ -71,6 +70,7 @@
 			this.pictureBoxDown = new System.Windows.Forms.PictureBox();
 			this.pictureBoxRefresh = new System.Windows.Forms.PictureBox();
 			this.panelMain = new System.Windows.Forms.Panel();
+			this.buttonReasonRejectionA = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
@@ -91,37 +91,51 @@
 			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// buttonProfile
-			// 
-			this.buttonProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonProfile.AutoEllipsis = true;
-			this.buttonProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.buttonProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonProfile.Font = new System.Drawing.Font("Georgia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonProfile.Location = new System.Drawing.Point(1155, 42);
-			this.buttonProfile.Name = "buttonProfile";
-			this.buttonProfile.Size = new System.Drawing.Size(200, 36);
-			this.buttonProfile.TabIndex = 0;
-			this.buttonProfile.TabStop = false;
-			this.buttonProfile.Tag = "fixedPosition";
-			this.buttonProfile.Text = "Профіль";
-			this.buttonProfile.UseVisualStyleBackColor = false;
-			this.buttonProfile.Click += new System.EventHandler(this.ButtonProfile_Click);
-			// 
 			// panelUp
 			// 
 			this.panelUp.BackColor = System.Drawing.Color.Transparent;
+			this.panelUp.Controls.Add(this.buttonProfile);
 			this.panelUp.Controls.Add(this.pictureBoxLine);
 			this.panelUp.Controls.Add(this.pictureBoxTheme);
 			this.panelUp.Controls.Add(this.pictureBoxPasswordChange);
 			this.panelUp.Controls.Add(this.pictureBoxExit);
-			this.panelUp.Controls.Add(this.buttonProfile);
 			this.panelUp.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelUp.Location = new System.Drawing.Point(0, 0);
 			this.panelUp.Name = "panelUp";
 			this.panelUp.Size = new System.Drawing.Size(1367, 105);
 			this.panelUp.TabIndex = 3;
 			this.panelUp.Tag = "";
+			// 
+			// buttonProfile
+			// 
+			this.buttonProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonProfile.Animated = true;
+			this.buttonProfile.BackColor = System.Drawing.Color.Transparent;
+			this.buttonProfile.BorderRadius = 7;
+			this.buttonProfile.BorderThickness = 1;
+			this.buttonProfile.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonProfile.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonProfile.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonProfile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonProfile.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonProfile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonProfile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonProfile.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonProfile.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonProfile.ForeColor = System.Drawing.Color.Black;
+			this.buttonProfile.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonProfile.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonProfile.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonProfile.Location = new System.Drawing.Point(1155, 42);
+			this.buttonProfile.Name = "buttonProfile";
+			this.buttonProfile.PressedColor = System.Drawing.Color.White;
+			this.buttonProfile.PressedDepth = 20;
+			this.buttonProfile.Size = new System.Drawing.Size(200, 36);
+			this.buttonProfile.TabIndex = 3;
+			this.buttonProfile.TabStop = false;
+			this.buttonProfile.Tag = "fixedPosition";
+			this.buttonProfile.Text = "Профіль";
+			this.buttonProfile.Click += new System.EventHandler(this.ButtonProfile_Click);
 			// 
 			// pictureBoxLine
 			// 
@@ -276,18 +290,32 @@
 			// buttonVacancy
 			// 
 			this.buttonVacancy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonVacancy.AutoSize = true;
-			this.buttonVacancy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
+			this.buttonVacancy.Animated = true;
+			this.buttonVacancy.BackColor = System.Drawing.Color.Transparent;
+			this.buttonVacancy.BorderRadius = 7;
+			this.buttonVacancy.BorderThickness = 1;
 			this.buttonVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonVacancy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonVacancy.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonVacancy.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonVacancy.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonVacancy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonVacancy.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonVacancy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonVacancy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonVacancy.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonVacancy.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonVacancy.ForeColor = System.Drawing.Color.Black;
+			this.buttonVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
 			this.buttonVacancy.Location = new System.Drawing.Point(12, 124);
 			this.buttonVacancy.Name = "buttonVacancy";
+			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
+			this.buttonVacancy.PressedDepth = 20;
 			this.buttonVacancy.Size = new System.Drawing.Size(150, 35);
 			this.buttonVacancy.TabIndex = 4;
+			this.buttonVacancy.TabStop = false;
 			this.buttonVacancy.Tag = "fixedPosition";
 			this.buttonVacancy.Text = "Перейти";
-			this.buttonVacancy.UseVisualStyleBackColor = false;
 			// 
 			// labelDatePublicationV
 			// 
@@ -351,8 +379,8 @@
 			// panelApplication
 			// 
 			this.panelApplication.BackColor = System.Drawing.Color.White;
-			this.panelApplication.Controls.Add(this.pictureBoxApplication);
 			this.panelApplication.Controls.Add(this.buttonReasonRejectionA);
+			this.panelApplication.Controls.Add(this.pictureBoxApplication);
 			this.panelApplication.Controls.Add(this.labelStatusA);
 			this.panelApplication.Controls.Add(this.labelDateSubmissionA);
 			this.panelApplication.Controls.Add(this.labelPositionA);
@@ -374,20 +402,6 @@
 			this.pictureBoxApplication.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBoxApplication.TabIndex = 47;
 			this.pictureBoxApplication.TabStop = false;
-			// 
-			// buttonReasonRejectionA
-			// 
-			this.buttonReasonRejectionA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(29)))), ((int)(((byte)(52)))));
-			this.buttonReasonRejectionA.Cursor = System.Windows.Forms.Cursors.Help;
-			this.buttonReasonRejectionA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonReasonRejectionA.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonReasonRejectionA.Location = new System.Drawing.Point(300, 60);
-			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
-			this.buttonReasonRejectionA.Size = new System.Drawing.Size(230, 35);
-			this.buttonReasonRejectionA.TabIndex = 3;
-			this.buttonReasonRejectionA.Tag = "fixedPosition";
-			this.buttonReasonRejectionA.Text = "Причина відмови";
-			this.buttonReasonRejectionA.UseVisualStyleBackColor = false;
 			// 
 			// labelStatusA
 			// 
@@ -713,6 +727,35 @@
 			this.panelMain.Size = new System.Drawing.Size(1367, 706);
 			this.panelMain.TabIndex = 0;
 			// 
+			// buttonReasonRejectionA
+			// 
+			this.buttonReasonRejectionA.Animated = true;
+			this.buttonReasonRejectionA.BackColor = System.Drawing.Color.Transparent;
+			this.buttonReasonRejectionA.BorderRadius = 7;
+			this.buttonReasonRejectionA.BorderThickness = 1;
+			this.buttonReasonRejectionA.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonReasonRejectionA.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonReasonRejectionA.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonReasonRejectionA.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonReasonRejectionA.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(50)))));
+			this.buttonReasonRejectionA.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.buttonReasonRejectionA.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonReasonRejectionA.ForeColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonReasonRejectionA.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
+			this.buttonReasonRejectionA.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+			this.buttonReasonRejectionA.Location = new System.Drawing.Point(300, 60);
+			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
+			this.buttonReasonRejectionA.PressedColor = System.Drawing.Color.White;
+			this.buttonReasonRejectionA.PressedDepth = 20;
+			this.buttonReasonRejectionA.Size = new System.Drawing.Size(230, 35);
+			this.buttonReasonRejectionA.TabIndex = 3;
+			this.buttonReasonRejectionA.TabStop = false;
+			this.buttonReasonRejectionA.Tag = "fixedPosition";
+			this.buttonReasonRejectionA.Text = "Причина відмови";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -754,8 +797,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonProfile;
         private System.Windows.Forms.Panel panelUp;
         private System.Windows.Forms.FlowLayoutPanel flp_Menu;
         private System.Windows.Forms.Label labelVacancy;
@@ -780,13 +821,11 @@
         private System.Windows.Forms.PictureBox pictureBoxTheme;
         private System.Windows.Forms.PictureBox pictureBoxLine;
         private System.Windows.Forms.Panel panelVacancy;
-        private System.Windows.Forms.Button buttonVacancy;
         private System.Windows.Forms.Label labelDatePublicationV;
         private System.Windows.Forms.Label labelSalaryV;
         private System.Windows.Forms.Label labelPositionDescriptionV;
         private System.Windows.Forms.Label labelPositionV;
         private System.Windows.Forms.Panel panelApplication;
-        private System.Windows.Forms.Button buttonReasonRejectionA;
         private System.Windows.Forms.Label labelStatusA;
         private System.Windows.Forms.Label labelDateSubmissionA;
         private System.Windows.Forms.Label labelPositionA;
@@ -797,6 +836,9 @@
         private System.Windows.Forms.PictureBox pictureBoxApplication;
         private System.Windows.Forms.PictureBox pictureBoxInterview;
 		private System.Windows.Forms.Panel panelMain;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonProfile;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonVacancy;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonReasonRejectionA;
 	}
 }
 

@@ -60,8 +60,6 @@
 			this.labelLevel = new System.Windows.Forms.Label();
 			this.labelLanguageNumber = new System.Windows.Forms.Label();
 			this.labelLanguage = new System.Windows.Forms.Label();
-			this.buttonAddLanguage = new System.Windows.Forms.Button();
-			this.buttonRemoveLanguage = new System.Windows.Forms.Button();
 			this.flpEducations = new System.Windows.Forms.FlowLayoutPanel();
 			this.panelEducation = new System.Windows.Forms.Panel();
 			this.comboBoxEducationForm = new System.Windows.Forms.ComboBox();
@@ -77,15 +75,17 @@
 			this.textBoxNameInstitution = new System.Windows.Forms.TextBox();
 			this.labelNameInstitution = new System.Windows.Forms.Label();
 			this.labelEducationNumber = new System.Windows.Forms.Label();
-			this.buttonRemoveEducation = new System.Windows.Forms.Button();
-			this.buttonAddEducation = new System.Windows.Forms.Button();
 			this.comboBoxNationality = new System.Windows.Forms.ComboBox();
 			this.richTextBoxChronicDiseases = new System.Windows.Forms.RichTextBox();
 			this.labelChronicDiseasesInfo = new System.Windows.Forms.Label();
-			this.buttonLanguageHelp = new System.Windows.Forms.Button();
-			this.buttonApply = new System.Windows.Forms.Button();
 			this.labelEducation = new System.Windows.Forms.Label();
 			this.panelMain = new System.Windows.Forms.Panel();
+			this.buttonLanguageHelp = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonAddEducation = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonRemoveEducation = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonAddLanguage = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonRemoveLanguage = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonApply = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.panelDown = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownChildrenAmount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownExperience)).BeginInit();
@@ -553,7 +553,7 @@
             "Чеська",
             "Шведська",
             "Японська"});
-			this.comboBoxLanguage.Location = new System.Drawing.Point(210, 89);
+			this.comboBoxLanguage.Location = new System.Drawing.Point(210, 54);
 			this.comboBoxLanguage.MaxDropDownItems = 15;
 			this.comboBoxLanguage.Name = "comboBoxLanguage";
 			this.comboBoxLanguage.Size = new System.Drawing.Size(250, 36);
@@ -564,7 +564,7 @@
 			// 
 			this.numericUpDownLevel.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownLevel.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownLevel.Location = new System.Drawing.Point(724, 89);
+			this.numericUpDownLevel.Location = new System.Drawing.Point(724, 54);
 			this.numericUpDownLevel.Maximum = new decimal(new int[] {
             10,
             0,
@@ -592,7 +592,7 @@
 			this.labelLevel.BackColor = System.Drawing.Color.Transparent;
 			this.labelLevel.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLevel.ForeColor = System.Drawing.Color.Black;
-			this.labelLevel.Location = new System.Drawing.Point(516, 91);
+			this.labelLevel.Location = new System.Drawing.Point(516, 56);
 			this.labelLevel.Name = "labelLevel";
 			this.labelLevel.Size = new System.Drawing.Size(202, 32);
 			this.labelLevel.TabIndex = 4;
@@ -605,7 +605,7 @@
 			this.labelLanguageNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguageNumber.Font = new System.Drawing.Font("Verdana", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguageNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguageNumber.Location = new System.Drawing.Point(1, 86);
+			this.labelLanguageNumber.Location = new System.Drawing.Point(1, 51);
 			this.labelLanguageNumber.Name = "labelLanguageNumber";
 			this.labelLanguageNumber.Size = new System.Drawing.Size(40, 42);
 			this.labelLanguageNumber.TabIndex = 1;
@@ -618,44 +618,12 @@
 			this.labelLanguage.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguage.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguage.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguage.Location = new System.Drawing.Point(107, 91);
+			this.labelLanguage.Location = new System.Drawing.Point(107, 56);
 			this.labelLanguage.Name = "labelLanguage";
 			this.labelLanguage.Size = new System.Drawing.Size(97, 32);
 			this.labelLanguage.TabIndex = 2;
 			this.labelLanguage.Tag = "fixedPosition";
 			this.labelLanguage.Text = "Мова:";
-			// 
-			// buttonAddLanguage
-			// 
-			this.buttonAddLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(166)))), ((int)(((byte)(57)))));
-			this.buttonAddLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonAddLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonAddLanguage.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonAddLanguage.Location = new System.Drawing.Point(825, 792);
-			this.buttonAddLanguage.Name = "buttonAddLanguage";
-			this.buttonAddLanguage.Size = new System.Drawing.Size(40, 40);
-			this.buttonAddLanguage.TabIndex = 2;
-			this.buttonAddLanguage.TabStop = false;
-			this.buttonAddLanguage.Tag = "fixedPosition";
-			this.buttonAddLanguage.Text = "+";
-			this.buttonAddLanguage.UseVisualStyleBackColor = false;
-			this.buttonAddLanguage.Click += new System.EventHandler(this.ButtonAddLanguage_Click);
-			// 
-			// buttonRemoveLanguage
-			// 
-			this.buttonRemoveLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(29)))), ((int)(((byte)(52)))));
-			this.buttonRemoveLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonRemoveLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRemoveLanguage.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRemoveLanguage.Location = new System.Drawing.Point(765, 792);
-			this.buttonRemoveLanguage.Name = "buttonRemoveLanguage";
-			this.buttonRemoveLanguage.Size = new System.Drawing.Size(40, 40);
-			this.buttonRemoveLanguage.TabIndex = 2;
-			this.buttonRemoveLanguage.TabStop = false;
-			this.buttonRemoveLanguage.Tag = "fixedPosition";
-			this.buttonRemoveLanguage.Text = "—";
-			this.buttonRemoveLanguage.UseVisualStyleBackColor = false;
-			this.buttonRemoveLanguage.Click += new System.EventHandler(this.ButtonRemoveLanguage_Click);
 			// 
 			// flpEducations
 			// 
@@ -701,7 +669,7 @@
 			this.comboBoxEducationForm.Items.AddRange(new object[] {
             "Денна",
             "Заочна"});
-			this.comboBoxEducationForm.Location = new System.Drawing.Point(879, 209);
+			this.comboBoxEducationForm.Location = new System.Drawing.Point(880, 174);
 			this.comboBoxEducationForm.Name = "comboBoxEducationForm";
 			this.comboBoxEducationForm.Size = new System.Drawing.Size(250, 36);
 			this.comboBoxEducationForm.TabIndex = 12;
@@ -713,7 +681,7 @@
 			this.labelEducationForm.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationForm.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationForm.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationForm.Location = new System.Drawing.Point(616, 211);
+			this.labelEducationForm.Location = new System.Drawing.Point(617, 176);
 			this.labelEducationForm.Name = "labelEducationForm";
 			this.labelEducationForm.Size = new System.Drawing.Size(257, 32);
 			this.labelEducationForm.TabIndex = 11;
@@ -733,7 +701,7 @@
             "Спеціаліст",
             "Магістр",
             "Доктор наук"});
-			this.comboBoxEducationDegree.Location = new System.Drawing.Point(310, 209);
+			this.comboBoxEducationDegree.Location = new System.Drawing.Point(311, 174);
 			this.comboBoxEducationDegree.Name = "comboBoxEducationDegree";
 			this.comboBoxEducationDegree.Size = new System.Drawing.Size(250, 36);
 			this.comboBoxEducationDegree.TabIndex = 6;
@@ -745,7 +713,7 @@
 			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationDegree.Location = new System.Drawing.Point(81, 211);
+			this.labelEducationDegree.Location = new System.Drawing.Point(82, 176);
 			this.labelEducationDegree.Name = "labelEducationDegree";
 			this.labelEducationDegree.Size = new System.Drawing.Size(223, 32);
 			this.labelEducationDegree.TabIndex = 5;
@@ -757,7 +725,7 @@
 			this.dateTimePickerDateEnd.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dateTimePickerDateEnd.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
 			this.dateTimePickerDateEnd.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dateTimePickerDateEnd.Location = new System.Drawing.Point(879, 149);
+			this.dateTimePickerDateEnd.Location = new System.Drawing.Point(880, 114);
 			this.dateTimePickerDateEnd.MinDate = new System.DateTime(1951, 1, 1, 0, 0, 0, 0);
 			this.dateTimePickerDateEnd.Name = "dateTimePickerDateEnd";
 			this.dateTimePickerDateEnd.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -771,7 +739,7 @@
 			this.labelDateEnd.BackColor = System.Drawing.Color.Transparent;
 			this.labelDateEnd.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDateEnd.ForeColor = System.Drawing.Color.Black;
-			this.labelDateEnd.Location = new System.Drawing.Point(620, 151);
+			this.labelDateEnd.Location = new System.Drawing.Point(621, 116);
 			this.labelDateEnd.Name = "labelDateEnd";
 			this.labelDateEnd.Size = new System.Drawing.Size(253, 32);
 			this.labelDateEnd.TabIndex = 9;
@@ -782,7 +750,7 @@
 			// 
 			this.numericUpDownYearAdmission.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownYearAdmission.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownYearAdmission.Location = new System.Drawing.Point(879, 89);
+			this.numericUpDownYearAdmission.Location = new System.Drawing.Point(880, 54);
 			this.numericUpDownYearAdmission.Maximum = new decimal(new int[] {
             1950,
             0,
@@ -810,7 +778,7 @@
 			this.labelYearAdmission.BackColor = System.Drawing.Color.Transparent;
 			this.labelYearAdmission.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelYearAdmission.ForeColor = System.Drawing.Color.Black;
-			this.labelYearAdmission.Location = new System.Drawing.Point(706, 91);
+			this.labelYearAdmission.Location = new System.Drawing.Point(707, 56);
 			this.labelYearAdmission.Name = "labelYearAdmission";
 			this.labelYearAdmission.Size = new System.Drawing.Size(167, 32);
 			this.labelYearAdmission.TabIndex = 7;
@@ -821,7 +789,7 @@
 			// 
 			this.textBoxSpecialty.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxSpecialty.ForeColor = System.Drawing.Color.Black;
-			this.textBoxSpecialty.Location = new System.Drawing.Point(310, 149);
+			this.textBoxSpecialty.Location = new System.Drawing.Point(311, 114);
 			this.textBoxSpecialty.MaxLength = 64;
 			this.textBoxSpecialty.Name = "textBoxSpecialty";
 			this.textBoxSpecialty.Size = new System.Drawing.Size(250, 36);
@@ -834,7 +802,7 @@
 			this.labelSpecialty.BackColor = System.Drawing.Color.Transparent;
 			this.labelSpecialty.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSpecialty.ForeColor = System.Drawing.Color.Black;
-			this.labelSpecialty.Location = new System.Drawing.Point(95, 151);
+			this.labelSpecialty.Location = new System.Drawing.Point(96, 116);
 			this.labelSpecialty.Name = "labelSpecialty";
 			this.labelSpecialty.Size = new System.Drawing.Size(209, 32);
 			this.labelSpecialty.TabIndex = 3;
@@ -845,7 +813,7 @@
 			// 
 			this.textBoxNameInstitution.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxNameInstitution.ForeColor = System.Drawing.Color.Black;
-			this.textBoxNameInstitution.Location = new System.Drawing.Point(310, 89);
+			this.textBoxNameInstitution.Location = new System.Drawing.Point(311, 54);
 			this.textBoxNameInstitution.MaxLength = 128;
 			this.textBoxNameInstitution.Name = "textBoxNameInstitution";
 			this.textBoxNameInstitution.Size = new System.Drawing.Size(250, 36);
@@ -858,7 +826,7 @@
 			this.labelNameInstitution.BackColor = System.Drawing.Color.Transparent;
 			this.labelNameInstitution.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNameInstitution.ForeColor = System.Drawing.Color.Black;
-			this.labelNameInstitution.Location = new System.Drawing.Point(74, 91);
+			this.labelNameInstitution.Location = new System.Drawing.Point(75, 56);
 			this.labelNameInstitution.Name = "labelNameInstitution";
 			this.labelNameInstitution.Size = new System.Drawing.Size(230, 32);
 			this.labelNameInstitution.TabIndex = 1;
@@ -871,44 +839,12 @@
 			this.labelEducationNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationNumber.Font = new System.Drawing.Font("Verdana", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationNumber.Location = new System.Drawing.Point(-2, 143);
+			this.labelEducationNumber.Location = new System.Drawing.Point(-1, 108);
 			this.labelEducationNumber.Name = "labelEducationNumber";
 			this.labelEducationNumber.Size = new System.Drawing.Size(45, 48);
 			this.labelEducationNumber.TabIndex = 1;
 			this.labelEducationNumber.Tag = "fixedPosition";
 			this.labelEducationNumber.Text = "1";
-			// 
-			// buttonRemoveEducation
-			// 
-			this.buttonRemoveEducation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(29)))), ((int)(((byte)(52)))));
-			this.buttonRemoveEducation.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonRemoveEducation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRemoveEducation.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRemoveEducation.Location = new System.Drawing.Point(1106, 1252);
-			this.buttonRemoveEducation.Name = "buttonRemoveEducation";
-			this.buttonRemoveEducation.Size = new System.Drawing.Size(40, 40);
-			this.buttonRemoveEducation.TabIndex = 1;
-			this.buttonRemoveEducation.TabStop = false;
-			this.buttonRemoveEducation.Tag = "fixedPosition";
-			this.buttonRemoveEducation.Text = "—";
-			this.buttonRemoveEducation.UseVisualStyleBackColor = false;
-			this.buttonRemoveEducation.Click += new System.EventHandler(this.ButtonRemoveEducation_Click);
-			// 
-			// buttonAddEducation
-			// 
-			this.buttonAddEducation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(166)))), ((int)(((byte)(57)))));
-			this.buttonAddEducation.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonAddEducation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonAddEducation.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonAddEducation.Location = new System.Drawing.Point(1166, 1252);
-			this.buttonAddEducation.Name = "buttonAddEducation";
-			this.buttonAddEducation.Size = new System.Drawing.Size(40, 40);
-			this.buttonAddEducation.TabIndex = 2;
-			this.buttonAddEducation.TabStop = false;
-			this.buttonAddEducation.Tag = "fixedPosition";
-			this.buttonAddEducation.Text = "+";
-			this.buttonAddEducation.UseVisualStyleBackColor = false;
-			this.buttonAddEducation.Click += new System.EventHandler(this.ButtonAddEducation_Click);
 			// 
 			// comboBoxNationality
 			// 
@@ -1143,42 +1079,6 @@
 			this.labelChronicDiseasesInfo.Tag = "fixedPosition";
 			this.labelChronicDiseasesInfo.Text = "(залиште пустим якщо немає)";
 			// 
-			// buttonLanguageHelp
-			// 
-			this.buttonLanguageHelp.BackColor = System.Drawing.Color.Transparent;
-			this.buttonLanguageHelp.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonLanguageHelp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-			this.buttonLanguageHelp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-			this.buttonLanguageHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonLanguageHelp.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonLanguageHelp.Location = new System.Drawing.Point(12, 802);
-			this.buttonLanguageHelp.Name = "buttonLanguageHelp";
-			this.buttonLanguageHelp.Size = new System.Drawing.Size(30, 30);
-			this.buttonLanguageHelp.TabIndex = 26;
-			this.buttonLanguageHelp.TabStop = false;
-			this.buttonLanguageHelp.Tag = "fixedPosition";
-			this.buttonLanguageHelp.Text = "?";
-			this.buttonLanguageHelp.UseVisualStyleBackColor = false;
-			this.buttonLanguageHelp.Click += new System.EventHandler(this.ButtonLanguageHelp_Click);
-			// 
-			// buttonApply
-			// 
-			this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonApply.AutoSize = true;
-			this.buttonApply.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
-			this.buttonApply.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonApply.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonApply.Location = new System.Drawing.Point(1041, 2008);
-			this.buttonApply.Name = "buttonApply";
-			this.buttonApply.Size = new System.Drawing.Size(175, 40);
-			this.buttonApply.TabIndex = 1;
-			this.buttonApply.TabStop = false;
-			this.buttonApply.Tag = "fixedPosition";
-			this.buttonApply.Text = "Застосувати";
-			this.buttonApply.UseVisualStyleBackColor = false;
-			this.buttonApply.Click += new System.EventHandler(this.ButtonApply_Click);
-			// 
 			// labelEducation
 			// 
 			this.labelEducation.AutoSize = true;
@@ -1199,14 +1099,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelMain.AutoScroll = true;
 			this.panelMain.BackColor = System.Drawing.Color.Transparent;
-			this.panelMain.Controls.Add(this.buttonApply);
+			this.panelMain.Controls.Add(this.buttonLanguageHelp);
 			this.panelMain.Controls.Add(this.buttonAddEducation);
 			this.panelMain.Controls.Add(this.buttonRemoveEducation);
-			this.panelMain.Controls.Add(this.buttonRemoveLanguage);
 			this.panelMain.Controls.Add(this.buttonAddLanguage);
+			this.panelMain.Controls.Add(this.buttonRemoveLanguage);
+			this.panelMain.Controls.Add(this.buttonApply);
 			this.panelMain.Controls.Add(this.labelEducation);
 			this.panelMain.Controls.Add(this.panelDown);
-			this.panelMain.Controls.Add(this.buttonLanguageHelp);
 			this.panelMain.Controls.Add(this.labelChronicDiseasesInfo);
 			this.panelMain.Controls.Add(this.richTextBoxChronicDiseases);
 			this.panelMain.Controls.Add(this.comboBoxNationality);
@@ -1242,6 +1142,192 @@
 			this.panelMain.Size = new System.Drawing.Size(1365, 606);
 			this.panelMain.TabIndex = 0;
 			this.panelMain.Tag = "";
+			// 
+			// buttonLanguageHelp
+			// 
+			this.buttonLanguageHelp.Animated = true;
+			this.buttonLanguageHelp.BackColor = System.Drawing.Color.Transparent;
+			this.buttonLanguageHelp.BorderRadius = 15;
+			this.buttonLanguageHelp.BorderThickness = 1;
+			this.buttonLanguageHelp.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonLanguageHelp.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonLanguageHelp.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonLanguageHelp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonLanguageHelp.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonLanguageHelp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonLanguageHelp.FillColor = System.Drawing.Color.Silver;
+			this.buttonLanguageHelp.FillColor2 = System.Drawing.Color.Silver;
+			this.buttonLanguageHelp.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonLanguageHelp.ForeColor = System.Drawing.Color.Black;
+			this.buttonLanguageHelp.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonLanguageHelp.HoverState.FillColor = System.Drawing.Color.Gainsboro;
+			this.buttonLanguageHelp.HoverState.FillColor2 = System.Drawing.Color.Gainsboro;
+			this.buttonLanguageHelp.Location = new System.Drawing.Point(18, 802);
+			this.buttonLanguageHelp.Name = "buttonLanguageHelp";
+			this.buttonLanguageHelp.PressedColor = System.Drawing.Color.White;
+			this.buttonLanguageHelp.PressedDepth = 20;
+			this.buttonLanguageHelp.Size = new System.Drawing.Size(30, 30);
+			this.buttonLanguageHelp.TabIndex = 26;
+			this.buttonLanguageHelp.TabStop = false;
+			this.buttonLanguageHelp.Tag = "fixedPosition";
+			this.buttonLanguageHelp.Text = "?";
+			this.buttonLanguageHelp.TextFormatNoPrefix = true;
+			this.buttonLanguageHelp.Click += new System.EventHandler(this.ButtonLanguageHelp_Click);
+			// 
+			// buttonAddEducation
+			// 
+			this.buttonAddEducation.Animated = true;
+			this.buttonAddEducation.BackColor = System.Drawing.Color.Transparent;
+			this.buttonAddEducation.BorderRadius = 20;
+			this.buttonAddEducation.BorderThickness = 1;
+			this.buttonAddEducation.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonAddEducation.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonAddEducation.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonAddEducation.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddEducation.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddEducation.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonAddEducation.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(230)))), ((int)(((byte)(110)))));
+			this.buttonAddEducation.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(160)))), ((int)(((byte)(85)))));
+			this.buttonAddEducation.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonAddEducation.ForeColor = System.Drawing.Color.Black;
+			this.buttonAddEducation.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonAddEducation.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(245)))), ((int)(((byte)(130)))));
+			this.buttonAddEducation.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(175)))), ((int)(((byte)(95)))));
+			this.buttonAddEducation.Location = new System.Drawing.Point(1166, 1252);
+			this.buttonAddEducation.Name = "buttonAddEducation";
+			this.buttonAddEducation.PressedColor = System.Drawing.Color.White;
+			this.buttonAddEducation.PressedDepth = 20;
+			this.buttonAddEducation.Size = new System.Drawing.Size(40, 40);
+			this.buttonAddEducation.TabIndex = 40;
+			this.buttonAddEducation.TabStop = false;
+			this.buttonAddEducation.Tag = "fixedPosition";
+			this.buttonAddEducation.Text = "+";
+			this.buttonAddEducation.TextFormatNoPrefix = true;
+			this.buttonAddEducation.Click += new System.EventHandler(this.ButtonAddEducation_Click);
+			// 
+			// buttonRemoveEducation
+			// 
+			this.buttonRemoveEducation.Animated = true;
+			this.buttonRemoveEducation.BackColor = System.Drawing.Color.Transparent;
+			this.buttonRemoveEducation.BorderRadius = 20;
+			this.buttonRemoveEducation.BorderThickness = 1;
+			this.buttonRemoveEducation.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonRemoveEducation.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonRemoveEducation.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonRemoveEducation.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRemoveEducation.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRemoveEducation.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonRemoveEducation.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(70)))), ((int)(((byte)(60)))));
+			this.buttonRemoveEducation.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+			this.buttonRemoveEducation.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonRemoveEducation.ForeColor = System.Drawing.Color.Black;
+			this.buttonRemoveEducation.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonRemoveEducation.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(70)))));
+			this.buttonRemoveEducation.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+			this.buttonRemoveEducation.Location = new System.Drawing.Point(1106, 1252);
+			this.buttonRemoveEducation.Name = "buttonRemoveEducation";
+			this.buttonRemoveEducation.PressedColor = System.Drawing.Color.White;
+			this.buttonRemoveEducation.PressedDepth = 20;
+			this.buttonRemoveEducation.Size = new System.Drawing.Size(40, 40);
+			this.buttonRemoveEducation.TabIndex = 39;
+			this.buttonRemoveEducation.TabStop = false;
+			this.buttonRemoveEducation.Tag = "fixedPosition";
+			this.buttonRemoveEducation.Text = "—";
+			this.buttonRemoveEducation.TextFormatNoPrefix = true;
+			this.buttonRemoveEducation.Click += new System.EventHandler(this.ButtonRemoveEducation_Click);
+			// 
+			// buttonAddLanguage
+			// 
+			this.buttonAddLanguage.Animated = true;
+			this.buttonAddLanguage.BackColor = System.Drawing.Color.Transparent;
+			this.buttonAddLanguage.BorderRadius = 20;
+			this.buttonAddLanguage.BorderThickness = 1;
+			this.buttonAddLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonAddLanguage.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonAddLanguage.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonAddLanguage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddLanguage.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddLanguage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonAddLanguage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(230)))), ((int)(((byte)(110)))));
+			this.buttonAddLanguage.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(160)))), ((int)(((byte)(85)))));
+			this.buttonAddLanguage.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonAddLanguage.ForeColor = System.Drawing.Color.Black;
+			this.buttonAddLanguage.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonAddLanguage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(245)))), ((int)(((byte)(130)))));
+			this.buttonAddLanguage.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(175)))), ((int)(((byte)(95)))));
+			this.buttonAddLanguage.Location = new System.Drawing.Point(825, 792);
+			this.buttonAddLanguage.Name = "buttonAddLanguage";
+			this.buttonAddLanguage.PressedColor = System.Drawing.Color.White;
+			this.buttonAddLanguage.PressedDepth = 20;
+			this.buttonAddLanguage.Size = new System.Drawing.Size(40, 40);
+			this.buttonAddLanguage.TabIndex = 28;
+			this.buttonAddLanguage.TabStop = false;
+			this.buttonAddLanguage.Tag = "fixedPosition";
+			this.buttonAddLanguage.Text = "+";
+			this.buttonAddLanguage.TextFormatNoPrefix = true;
+			this.buttonAddLanguage.Click += new System.EventHandler(this.ButtonAddLanguage_Click);
+			// 
+			// buttonRemoveLanguage
+			// 
+			this.buttonRemoveLanguage.Animated = true;
+			this.buttonRemoveLanguage.BackColor = System.Drawing.Color.Transparent;
+			this.buttonRemoveLanguage.BorderRadius = 20;
+			this.buttonRemoveLanguage.BorderThickness = 1;
+			this.buttonRemoveLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonRemoveLanguage.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonRemoveLanguage.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonRemoveLanguage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRemoveLanguage.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRemoveLanguage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonRemoveLanguage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(70)))), ((int)(((byte)(60)))));
+			this.buttonRemoveLanguage.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+			this.buttonRemoveLanguage.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonRemoveLanguage.ForeColor = System.Drawing.Color.Black;
+			this.buttonRemoveLanguage.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonRemoveLanguage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(70)))));
+			this.buttonRemoveLanguage.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+			this.buttonRemoveLanguage.Location = new System.Drawing.Point(765, 792);
+			this.buttonRemoveLanguage.Name = "buttonRemoveLanguage";
+			this.buttonRemoveLanguage.PressedColor = System.Drawing.Color.White;
+			this.buttonRemoveLanguage.PressedDepth = 20;
+			this.buttonRemoveLanguage.Size = new System.Drawing.Size(40, 40);
+			this.buttonRemoveLanguage.TabIndex = 27;
+			this.buttonRemoveLanguage.TabStop = false;
+			this.buttonRemoveLanguage.Tag = "fixedPosition";
+			this.buttonRemoveLanguage.Text = "—";
+			this.buttonRemoveLanguage.TextFormatNoPrefix = true;
+			this.buttonRemoveLanguage.Click += new System.EventHandler(this.ButtonRemoveLanguage_Click);
+			// 
+			// buttonApply
+			// 
+			this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonApply.Animated = true;
+			this.buttonApply.BackColor = System.Drawing.Color.Transparent;
+			this.buttonApply.BorderRadius = 7;
+			this.buttonApply.BorderThickness = 1;
+			this.buttonApply.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonApply.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonApply.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonApply.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApply.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApply.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonApply.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonApply.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonApply.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonApply.ForeColor = System.Drawing.Color.Black;
+			this.buttonApply.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonApply.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonApply.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonApply.Location = new System.Drawing.Point(1041, 2008);
+			this.buttonApply.Name = "buttonApply";
+			this.buttonApply.PressedColor = System.Drawing.Color.White;
+			this.buttonApply.PressedDepth = 20;
+			this.buttonApply.Size = new System.Drawing.Size(175, 40);
+			this.buttonApply.TabIndex = 33;
+			this.buttonApply.TabStop = false;
+			this.buttonApply.Tag = "fixedPosition";
+			this.buttonApply.Text = "Застосувати";
+			this.buttonApply.Click += new System.EventHandler(this.ButtonApply_Click);
 			// 
 			// panelDown
 			// 
@@ -1315,8 +1401,6 @@
 		private System.Windows.Forms.Label labelLanguage;
 		private System.Windows.Forms.NumericUpDown numericUpDownLevel;
 		private System.Windows.Forms.Label labelLevel;
-		private System.Windows.Forms.Button buttonAddLanguage;
-		private System.Windows.Forms.Button buttonRemoveLanguage;
 		private System.Windows.Forms.FlowLayoutPanel flpEducations;
 		private System.Windows.Forms.Panel panelEducation;
 		private System.Windows.Forms.Label labelEducationNumber;
@@ -1332,16 +1416,18 @@
 		private System.Windows.Forms.Label labelEducationDegree;
 		private System.Windows.Forms.ComboBox comboBoxEducationForm;
 		private System.Windows.Forms.Label labelEducationForm;
-		private System.Windows.Forms.Button buttonRemoveEducation;
-		private System.Windows.Forms.Button buttonAddEducation;
 		private System.Windows.Forms.ComboBox comboBoxNationality;
 		private System.Windows.Forms.ComboBox comboBoxLanguage;
 		private System.Windows.Forms.RichTextBox richTextBoxChronicDiseases;
 		private System.Windows.Forms.Label labelChronicDiseasesInfo;
-		private System.Windows.Forms.Button buttonLanguageHelp;
-		private System.Windows.Forms.Button buttonApply;
 		private System.Windows.Forms.Label labelEducation;
 		private System.Windows.Forms.Panel panelMain;
 		private System.Windows.Forms.Panel panelDown;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonApply;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonRemoveLanguage;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonAddLanguage;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonRemoveEducation;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonAddEducation;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonLanguageHelp;
 	}
 }

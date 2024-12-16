@@ -33,15 +33,15 @@
 			this.labelLogin = new System.Windows.Forms.Label();
 			this.textBoxPassword = new System.Windows.Forms.TextBox();
 			this.labelPassword = new System.Windows.Forms.Label();
-			this.buttonRegister2 = new System.Windows.Forms.Button();
 			this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
-			this.buttonLogin = new System.Windows.Forms.Button();
 			this.textBoxPassword2 = new System.Windows.Forms.TextBox();
 			this.labelPassword2 = new System.Windows.Forms.Label();
-			this.buttonBack = new System.Windows.Forms.Button();
 			this.labelRegister1 = new System.Windows.Forms.Label();
 			this.pictureBoxTheme = new System.Windows.Forms.PictureBox();
 			this.pictureBoxShowPwd = new System.Windows.Forms.PictureBox();
+			this.buttonBack = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonLogin = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonRegister2 = new Guna.UI2.WinForms.Guna2GradientButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxShowPwd)).BeginInit();
 			this.SuspendLayout();
@@ -101,23 +101,6 @@
 			this.labelPassword.TabIndex = 3;
 			this.labelPassword.Text = "Пароль:";
 			// 
-			// buttonRegister2
-			// 
-			this.buttonRegister2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonRegister2.AutoSize = true;
-			this.buttonRegister2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
-			this.buttonRegister2.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonRegister2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRegister2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonRegister2.Location = new System.Drawing.Point(397, 294);
-			this.buttonRegister2.Name = "buttonRegister2";
-			this.buttonRegister2.Size = new System.Drawing.Size(175, 40);
-			this.buttonRegister2.TabIndex = 11;
-			this.buttonRegister2.Text = "Продовжити";
-			this.buttonRegister2.UseVisualStyleBackColor = false;
-			this.buttonRegister2.Visible = false;
-			this.buttonRegister2.Click += new System.EventHandler(this.ButtonRegister2_Click);
-			// 
 			// checkBoxRememberMe
 			// 
 			this.checkBoxRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -135,22 +118,6 @@
 			this.checkBoxRememberMe.Text = "Запам’ятати мене на цьому ПК:";
 			this.checkBoxRememberMe.UseVisualStyleBackColor = false;
 			this.checkBoxRememberMe.CheckedChanged += new System.EventHandler(this.CheckBoxRememberMe_CheckedChanged);
-			// 
-			// buttonLogin
-			// 
-			this.buttonLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonLogin.AutoSize = true;
-			this.buttonLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
-			this.buttonLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonLogin.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonLogin.Location = new System.Drawing.Point(397, 294);
-			this.buttonLogin.Name = "buttonLogin";
-			this.buttonLogin.Size = new System.Drawing.Size(175, 40);
-			this.buttonLogin.TabIndex = 9;
-			this.buttonLogin.Text = "Вхід";
-			this.buttonLogin.UseVisualStyleBackColor = false;
-			this.buttonLogin.Click += new System.EventHandler(this.ButtonLogin_Click);
 			// 
 			// textBoxPassword2
 			// 
@@ -181,23 +148,6 @@
 			this.labelPassword2.TabIndex = 5;
 			this.labelPassword2.Text = "Підтвердження:";
 			this.labelPassword2.Visible = false;
-			// 
-			// buttonBack
-			// 
-			this.buttonBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonBack.AutoSize = true;
-			this.buttonBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(185)))), ((int)(((byte)(97)))));
-			this.buttonBack.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonBack.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonBack.Location = new System.Drawing.Point(12, 294);
-			this.buttonBack.Name = "buttonBack";
-			this.buttonBack.Size = new System.Drawing.Size(175, 40);
-			this.buttonBack.TabIndex = 12;
-			this.buttonBack.Text = "Назад";
-			this.buttonBack.UseVisualStyleBackColor = false;
-			this.buttonBack.Visible = false;
-			this.buttonBack.Click += new System.EventHandler(this.ButtonBack_Click);
 			// 
 			// labelRegister1
 			// 
@@ -243,6 +193,98 @@
 			this.pictureBoxShowPwd.TabStop = false;
 			this.pictureBoxShowPwd.Click += new System.EventHandler(this.PictureBoxShowPwd_Click);
 			// 
+			// buttonBack
+			// 
+			this.buttonBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonBack.Animated = true;
+			this.buttonBack.BackColor = System.Drawing.Color.Transparent;
+			this.buttonBack.BorderRadius = 7;
+			this.buttonBack.BorderThickness = 1;
+			this.buttonBack.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonBack.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonBack.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonBack.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonBack.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonBack.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonBack.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonBack.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonBack.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonBack.ForeColor = System.Drawing.Color.Black;
+			this.buttonBack.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonBack.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonBack.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonBack.Location = new System.Drawing.Point(12, 294);
+			this.buttonBack.Name = "buttonBack";
+			this.buttonBack.PressedColor = System.Drawing.Color.White;
+			this.buttonBack.PressedDepth = 20;
+			this.buttonBack.Size = new System.Drawing.Size(175, 40);
+			this.buttonBack.TabIndex = 12;
+			this.buttonBack.TabStop = false;
+			this.buttonBack.Text = "Назад";
+			this.buttonBack.Visible = false;
+			this.buttonBack.Click += new System.EventHandler(this.ButtonBack_Click);
+			// 
+			// buttonLogin
+			// 
+			this.buttonLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonLogin.Animated = true;
+			this.buttonLogin.BackColor = System.Drawing.Color.Transparent;
+			this.buttonLogin.BorderRadius = 7;
+			this.buttonLogin.BorderThickness = 1;
+			this.buttonLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonLogin.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonLogin.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonLogin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonLogin.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonLogin.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonLogin.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonLogin.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonLogin.ForeColor = System.Drawing.Color.Black;
+			this.buttonLogin.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonLogin.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonLogin.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonLogin.Location = new System.Drawing.Point(397, 294);
+			this.buttonLogin.Name = "buttonLogin";
+			this.buttonLogin.PressedColor = System.Drawing.Color.White;
+			this.buttonLogin.PressedDepth = 20;
+			this.buttonLogin.Size = new System.Drawing.Size(175, 40);
+			this.buttonLogin.TabIndex = 9;
+			this.buttonLogin.TabStop = false;
+			this.buttonLogin.Text = "Вхід";
+			this.buttonLogin.Click += new System.EventHandler(this.ButtonLogin_Click);
+			// 
+			// buttonRegister2
+			// 
+			this.buttonRegister2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonRegister2.Animated = true;
+			this.buttonRegister2.BackColor = System.Drawing.Color.Transparent;
+			this.buttonRegister2.BorderRadius = 7;
+			this.buttonRegister2.BorderThickness = 1;
+			this.buttonRegister2.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonRegister2.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonRegister2.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonRegister2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRegister2.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonRegister2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonRegister2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonRegister2.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonRegister2.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonRegister2.ForeColor = System.Drawing.Color.Black;
+			this.buttonRegister2.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonRegister2.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonRegister2.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonRegister2.Location = new System.Drawing.Point(397, 294);
+			this.buttonRegister2.Name = "buttonRegister2";
+			this.buttonRegister2.PressedColor = System.Drawing.Color.White;
+			this.buttonRegister2.PressedDepth = 20;
+			this.buttonRegister2.Size = new System.Drawing.Size(175, 40);
+			this.buttonRegister2.TabIndex = 11;
+			this.buttonRegister2.TabStop = false;
+			this.buttonRegister2.Text = "Продовжити";
+			this.buttonRegister2.Visible = false;
+			this.buttonRegister2.Click += new System.EventHandler(this.ButtonRegister2_Click);
+			// 
 			// StartForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,16 +294,16 @@
 			this.Controls.Add(this.pictureBoxTheme);
 			this.Controls.Add(this.pictureBoxShowPwd);
 			this.Controls.Add(this.labelRegister1);
-			this.Controls.Add(this.buttonBack);
 			this.Controls.Add(this.textBoxPassword2);
 			this.Controls.Add(this.labelPassword2);
-			this.Controls.Add(this.buttonLogin);
 			this.Controls.Add(this.checkBoxRememberMe);
-			this.Controls.Add(this.buttonRegister2);
 			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.labelPassword);
 			this.Controls.Add(this.textBoxLogin);
 			this.Controls.Add(this.labelLogin);
+			this.Controls.Add(this.buttonBack);
+			this.Controls.Add(this.buttonLogin);
+			this.Controls.Add(this.buttonRegister2);
 			this.Name = "StartForm";
 			this.Text = "Вхід";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StartForm_FormClosed);
@@ -276,16 +318,16 @@
         #endregion
         private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.Label labelPassword;
-        private System.Windows.Forms.Button buttonRegister2;
         private System.Windows.Forms.CheckBox checkBoxRememberMe;
-        private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.TextBox textBoxPassword2;
         private System.Windows.Forms.Label labelPassword2;
         private System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.Label labelRegister1;
         private System.Windows.Forms.PictureBox pictureBoxShowPwd;
         private System.Windows.Forms.PictureBox pictureBoxTheme;
-    }
+		private Guna.UI2.WinForms.Guna2GradientButton buttonBack;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonLogin;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonRegister2;
+	}
 }

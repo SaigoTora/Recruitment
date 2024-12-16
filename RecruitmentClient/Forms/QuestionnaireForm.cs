@@ -29,7 +29,7 @@ namespace RecruitmentClient.Forms
 		private readonly ClientAccount account;// Обліковий запис
 		private readonly Questionnaire oldQuestionnaire = null;
 		private readonly bool formOpenForChange = false;
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal QuestionnaireForm(ClientAccount a, StartForm startForm)
 		{// Конструктор
@@ -76,8 +76,8 @@ namespace RecruitmentClient.Forms
 			// Максимальна дата закінчення навчання
 			dateTimePickerDateEnd.MaxDate = new DateTime(DateTime.Today.Year + 10, DateTime.Today.Month, DateTime.Today.Day);
 
-			buttonEventHandlers.SubscribeToHover(buttonRemoveLanguage, buttonAddLanguage,
-				buttonRemoveEducation, buttonAddEducation, buttonApply);
+			//buttonEventHandlers.SubscribeToHover(buttonRemoveLanguage, buttonAddLanguage,
+			//buttonRemoveEducation, buttonAddEducation, buttonApply);
 		}
 
 		// Методи встановлення значень форми
@@ -407,8 +407,7 @@ namespace RecruitmentClient.Forms
 
 			ColorChanger.ChangeInputControlsForeColor(theme,
 					checkBoxDriverLicenseNo, checkBoxDriverLicenseYes, checkBoxSmokerNo,
-					checkBoxSmokerYes, checkBoxDrinkAlcoholNo, checkBoxDrinkAlcoholYes,
-					buttonLanguageHelp);
+					checkBoxSmokerYes, checkBoxDrinkAlcoholNo, checkBoxDrinkAlcoholYes);
 
 			if (theme == Theme.White)
 			{// Якщо треба встановити світлу тему
@@ -430,7 +429,7 @@ namespace RecruitmentClient.Forms
 
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

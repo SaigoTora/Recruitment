@@ -38,9 +38,9 @@
 			this.richTextBoxPositionDescription = new System.Windows.Forms.RichTextBox();
 			this.richTextBoxAdditionalInfo = new System.Windows.Forms.RichTextBox();
 			this.richTextBoxRequirement = new System.Windows.Forms.RichTextBox();
-			this.buttonSend = new System.Windows.Forms.Button();
 			this.richTextBoxSalary = new System.Windows.Forms.RichTextBox();
 			this.labelPosition = new System.Windows.Forms.Label();
+			this.buttonSend = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.SuspendLayout();
 			// 
 			// labelSalaryTitle
@@ -179,22 +179,6 @@
 			this.richTextBoxRequirement.TabStop = false;
 			this.richTextBoxRequirement.Text = "Вимоги";
 			// 
-			// buttonSend
-			// 
-			this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSend.AutoSize = true;
-			this.buttonSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(167)))), ((int)(((byte)(106)))));
-			this.buttonSend.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonSend.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.buttonSend.Location = new System.Drawing.Point(1077, 703);
-			this.buttonSend.Name = "buttonSend";
-			this.buttonSend.Size = new System.Drawing.Size(175, 40);
-			this.buttonSend.TabIndex = 13;
-			this.buttonSend.Text = "Відправити";
-			this.buttonSend.UseVisualStyleBackColor = false;
-			this.buttonSend.Click += new System.EventHandler(this.ButtonSend_Click);
-			// 
 			// richTextBoxSalary
 			// 
 			this.richTextBoxSalary.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -223,14 +207,44 @@
 			this.labelPosition.TabIndex = 0;
 			this.labelPosition.Text = "Посада";
 			// 
+			// buttonSend
+			// 
+			this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonSend.Animated = true;
+			this.buttonSend.BackColor = System.Drawing.Color.Transparent;
+			this.buttonSend.BorderRadius = 7;
+			this.buttonSend.BorderThickness = 1;
+			this.buttonSend.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonSend.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonSend.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonSend.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonSend.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonSend.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonSend.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonSend.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonSend.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonSend.ForeColor = System.Drawing.Color.Black;
+			this.buttonSend.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonSend.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonSend.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonSend.Location = new System.Drawing.Point(1077, 703);
+			this.buttonSend.Name = "buttonSend";
+			this.buttonSend.PressedColor = System.Drawing.Color.White;
+			this.buttonSend.PressedDepth = 20;
+			this.buttonSend.Size = new System.Drawing.Size(175, 40);
+			this.buttonSend.TabIndex = 13;
+			this.buttonSend.TabStop = false;
+			this.buttonSend.Text = "Відправити";
+			this.buttonSend.Click += new System.EventHandler(this.ButtonSend_Click);
+			// 
 			// VacancyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1264, 755);
+			this.Controls.Add(this.buttonSend);
 			this.Controls.Add(this.labelPosition);
 			this.Controls.Add(this.richTextBoxSalary);
-			this.Controls.Add(this.buttonSend);
 			this.Controls.Add(this.richTextBoxRequirement);
 			this.Controls.Add(this.richTextBoxAdditionalInfo);
 			this.Controls.Add(this.richTextBoxPositionDescription);
@@ -262,7 +276,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxAdditionalInfo;
         private System.Windows.Forms.RichTextBox richTextBoxRequirement;
         private System.Windows.Forms.RichTextBox richTextBoxSalary;
-        private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Label labelPosition;
-    }
+		private Guna.UI2.WinForms.Guna2GradientButton buttonSend;
+	}
 }

@@ -24,7 +24,7 @@ namespace RecruitmentClient.Forms
 
 		private readonly ClientAccount account = new ClientAccount();
 		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private bool isPasswordVisible = false;
 		private byte countWrongLogin = 0;
@@ -50,7 +50,7 @@ namespace RecruitmentClient.Forms
 		{
 			Icon = Properties.Resources.login;
 			pictureBoxEventHandlers.SubscribeToHover(pictureBoxShowPwd, pictureBoxTheme);
-			buttonEventHandlers.SubscribeToHover(buttonLogin, buttonRegister2, buttonBack);
+			//buttonEventHandlers.SubscribeToHover(buttonLogin, buttonRegister2, buttonBack);
 			SetTheme(account.Theme);
 		}
 
@@ -375,7 +375,7 @@ namespace RecruitmentClient.Forms
 		private void StartForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			pictureBoxEventHandlers.UnsubscribeAll();
-			buttonEventHandlers.UnsubscribeAll();
+			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }
