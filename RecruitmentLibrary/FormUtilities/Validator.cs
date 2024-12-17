@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
+using UIHelpers.Forms;
 using UIHelpers.Themes;
 
 namespace RecruitmentLibrary.FormUtilities
@@ -113,7 +114,7 @@ namespace RecruitmentLibrary.FormUtilities
 			if (needToShowMB)
 			{
 				focus?.Focus();
-				MessageBox.Show("Дані були введені не вірно!\n" + errorMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				CustomMessageBox.Show("Дані були введені не вірно!\n" + errorMessage, caption, CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				needToShowMB = false;
 			}
 		}

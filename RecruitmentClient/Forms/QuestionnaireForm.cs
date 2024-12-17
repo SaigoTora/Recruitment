@@ -140,8 +140,8 @@ namespace RecruitmentClient.Forms
 		// Кнопки для мов та освіт
 		private void ButtonLanguageHelp_Click(object sender, EventArgs e)
 		{// Виведення додаткової інформації для користувача
-			MessageBox.Show("Рівень мови - це Ваш особистий рівень знань певної мови, він може приймати значення від 1 до 10.",
-				"Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			CustomMessageBox.Show("Рівень мови - це Ваш особистий рівень знань певної мови, він може приймати значення від 1 до 10.",
+				"Інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private void ButtonAddLanguage_Click(object sender, EventArgs e)
 		{// Додавання мови
@@ -369,9 +369,9 @@ namespace RecruitmentClient.Forms
 					}
 					catch (System.Net.Sockets.SocketException)
 					{
-						MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-							MessageBoxButtons.OK, MessageBoxIcon.Error);
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 				}
 
@@ -382,7 +382,8 @@ namespace RecruitmentClient.Forms
 		private void QuestionnaireForm_FormClosing(object sender, FormClosingEventArgs e)
 		{// Обробник події: закриття форми
 		 // Чи дійсно користувач хоче вийти?
-			DialogResult result = MessageBox.Show("Якщо Ви вийдете, то дані не будуть збережені.\nЧи дійсно Ви хочете вийти?", "Вихід", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+			DialogResult result = CustomMessageBox.Show("Якщо Ви вийдете, то дані не будуть збережені.\nЧи дійсно Ви хочете вийти?",
+				"Вихід", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.No)// Якщо користувач НЕ хоче виходити
 				e.Cancel = true;
 			else if (account.candidate.questionnaire.City == null)

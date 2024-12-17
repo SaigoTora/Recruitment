@@ -129,8 +129,8 @@ namespace RecruitmentClient.Forms
 				}
 				catch (System.Net.Sockets.SocketException)
 				{
-					MessageBox.Show("Спроба підключитись до серверу завершилась не вдало.\nСпробуйте пізніше.", "Помилка підключення",
-					MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало.\nСпробуйте пізніше.", "Помилка підключення",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 		}
@@ -157,8 +157,8 @@ namespace RecruitmentClient.Forms
 				mainForm.FormClosed += (s, args) => { Close(); };
 				Visible = false;
 
-				MessageBox.Show($"Ви успішно увійшли до свого акаунту.\nЛаскаво просимо!", "Успіх",
-					MessageBoxButtons.OK, MessageBoxIcon.Information);
+				CustomMessageBox.Show($"Ви успішно увійшли до свого акаунту.\nЛаскаво просимо!", "Успіх",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 			catch (ArgumentException ae)
 			{
@@ -171,13 +171,13 @@ namespace RecruitmentClient.Forms
 					countWrongLogin = 0;
 				}
 
-				MessageBox.Show($"{ae.Message} {msg}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				CustomMessageBox.Show($"{ae.Message} {msg}", "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
-				MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 					"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-					MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}
 		private async Task InactivityAsync()
@@ -262,7 +262,8 @@ namespace RecruitmentClient.Forms
 		private void CheckOldPassword()
 		{// Перевірка введення старого паролю
 			if (account.Password != textBoxPassword.Text)// Ввели НЕ вірно
-				MessageBox.Show("Старий пароль введений не вірно!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+				CustomMessageBox.Show("Старий пароль введений не вірно!", "Помилка",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			else
 			{// Ввели вірно
 				labelPassword2.Visible = true;
@@ -275,27 +276,29 @@ namespace RecruitmentClient.Forms
 				Text = "Введіть новий пароль";
 
 				textBoxPassword.Focus();
-				MessageBox.Show("Ви правильно ввели свій старий пароль!\nТепер введіть новий пароль та підтвердіть його.", "Підтверджено", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+				CustomMessageBox.Show("Ви правильно ввели свій старий пароль!\nТепер введіть новий пароль та підтвердіть його.",
+					"Підтверджено", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 
 		}
 		private void CheckNewPassword()
 		{// Перевірка введення нового паролю
 			if (account.Password == textBoxPassword.Text)// Ввели НЕ вірно
-				MessageBox.Show("Новий пароль не може співпадати зі старим!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+				CustomMessageBox.Show("Новий пароль не може співпадати зі старим!", "Помилка",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			else
 			{// Ввели вірно
-				DialogResult result = MessageBox.Show("Ви впевнені, що хочете змінити пароль?", "Зміна паролю",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити пароль?", "Зміна паролю",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 				if (result == DialogResult.Yes)
 				{
 					try
 					{ Client.ChangePassword(account.Login, account.Password, textBoxPassword.Text); }
 					catch (System.Net.Sockets.SocketException)
 					{
-						MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-							MessageBoxButtons.OK, MessageBoxIcon.Error);
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 					account.SetLoginPassword(account.Login, textBoxPassword.Text);
 

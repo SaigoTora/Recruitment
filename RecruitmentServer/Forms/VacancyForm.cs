@@ -98,7 +98,7 @@ namespace RecruitmentServer.Forms
 				requirement += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
 			}
 
-			MessageBox.Show(requirement, "Вимоги", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			CustomMessageBox.Show(requirement, "Вимоги", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private void ButtonRequirementCreate_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Вимоги" для створення
@@ -163,8 +163,8 @@ namespace RecruitmentServer.Forms
 				if (isDataOk)
 				{
 					buttonRequirement.Focus();
-					MessageBox.Show("Дані були введені не вірно!\nВимоги також потрібно заповнити.",
-						"Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!\nВимоги також потрібно заповнити.",
+						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -173,8 +173,8 @@ namespace RecruitmentServer.Forms
 				if (isDataOk)
 				{
 					buttonPoints.Focus();
-					MessageBox.Show("Дані були введені не вірно!\nБали також потрібно заповнити.",
-						"Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!\nБали також потрібно заповнити.",
+						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -183,8 +183,8 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonDelete_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку видалення вакансії
-			DialogResult result = MessageBox.Show("Ви впевнені, що хочете видалити цю вакансію?\n" +
-				"При видаленні вакансії також будуть видалені всі заявки та співбесіди, які пов'язані з цією вакансією", "Видалення", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете видалити цю вакансію?\n" +
+				"При видаленні вакансії також будуть видалені всі заявки та співбесіди, які пов'язані з цією вакансією", "Видалення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
 			{
 				DataBase.DeleteVacancy(vacancy.Id);

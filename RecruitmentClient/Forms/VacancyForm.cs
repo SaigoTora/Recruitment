@@ -74,13 +74,14 @@ namespace RecruitmentClient.Forms
 				Client.CreateApplication(login, richTextBoxClientAdditionalInfo.Text, idVacancy);
 				refresh(EventArgs.Empty);
 				Close();
-				MessageBox.Show("Заявка була відправлена успішно!\nБудь ласка, регулярно переглядайте вкладки заявок та\nспівбесід.", "Успішно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				CustomMessageBox.Show("Заявка була відправлена успішно!\nБудь ласка, регулярно переглядайте вкладки заявок та\nспівбесід.",
+					"Успішно", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
-				MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 					"\nСпробуйте, будь ласка, відправити заявку пізніше.", "Помилка підключення",
-					MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}
 

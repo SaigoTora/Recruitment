@@ -44,8 +44,8 @@ namespace RecruitmentServer.Forms
 				buttonReasonRejection.Visible = true;
 				buttonReasonRejection.Click += (sender, e) =>
 				{
-					MessageBox.Show(application.ReasonRejection, "Причина відмови",
-						MessageBoxButtons.OK, MessageBoxIcon.Information);
+					CustomMessageBox.Show(application.ReasonRejection, "Причина відмови",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				};
 			}
 
@@ -88,15 +88,15 @@ namespace RecruitmentServer.Forms
 						(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
 				if (DateTime.Now.AddHours(MIN_HOURS_WAIT_TO_EVENT) > dateTime)
 				{
-					MessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
+					CustomMessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
 						$"Проведення співбесіди не повинно відбуватися раніше,\nніж через {MIN_HOURS_WAIT_TO_EVENT} год. після прийняття заявки.",
-				"Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					return;
 				}
 			}
 
-			DialogResult result = MessageBox.Show("Ви впевнені, що хочете змінити статус заявки?\nПісля цього змінити статус буде неможливо.",
-				"Зміна статусу", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити статус заявки?\nПісля цього змінити статус буде неможливо.",
+				"Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
 			{
 				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
@@ -105,9 +105,9 @@ namespace RecruitmentServer.Forms
 				{// Створення співбесіди
 					DataBase.CreateInterview(application.Id, dateTime.ToUniversalTime());
 					Candidate candidate = DataBase.GetCandidate(application.IdCandidate);
-					MessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
+					CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
 						$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",
-						"Контактна інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						"Контактна інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				}
 
 				refresh(EventArgs.Empty);// Перезавантажуємо головну форму

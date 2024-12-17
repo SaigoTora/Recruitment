@@ -83,8 +83,8 @@ namespace RecruitmentClient.Forms
 				if (isDataOk)
 				{
 					buttonQuestionnairе.Focus();
-					MessageBox.Show("Дані були введені не вірно!\nАнкету також потрібно заповнити.",
-						"Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!\nАнкету також потрібно заповнити.",
+						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -162,9 +162,9 @@ namespace RecruitmentClient.Forms
 				}
 				catch (System.Net.Sockets.SocketException)
 				{
-					MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 						"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 		}
 		private void OpenMainForm()

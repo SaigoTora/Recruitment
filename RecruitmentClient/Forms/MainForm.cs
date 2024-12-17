@@ -113,11 +113,11 @@ namespace RecruitmentClient.Forms
 		}
 		private void ButtonExit_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку виходу з акаунту
-			DialogResult result = MessageBox.Show("Ви впевнені, що хочете вийти з акаунту?" +
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете вийти з акаунту?" +
 				"\nЯкщо так, то ваш логін та пароль будуть забуті на цьому    ПК. Крім того," +
 				" програма закриється, і для її подальшого     використання потрібно буде" +
 				" її знову запустити.", "Вихід з акаунту",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 
 			if (result == DialogResult.Yes)
 			{// Якщо користувач дійсно хоче вийти
@@ -163,9 +163,9 @@ namespace RecruitmentClient.Forms
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
-				MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 					"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-					MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 			ShowEmptyLabel(countPanels == 0);// Якщо пусто - true, інакше - false
 		}
@@ -315,8 +315,8 @@ namespace RecruitmentClient.Forms
 				Guna2GradientButton button = creator.CreateButton(buttonReasonRejectionA);
 				button.Click += (s, args) =>
 				{
-					MessageBox.Show(reason, "Причина відмови",
-					MessageBoxButtons.OK, MessageBoxIcon.Information);
+					CustomMessageBox.Show(reason, "Причина відмови",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				};
 			}
 		}
@@ -351,9 +351,9 @@ namespace RecruitmentClient.Forms
 					}
 					catch (System.Net.Sockets.SocketException)
 					{
-						MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-							MessageBoxButtons.OK, MessageBoxIcon.Error);
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 				};
 		}
@@ -420,8 +420,8 @@ namespace RecruitmentClient.Forms
 			if (textBoxMaxSalarySearch.Text != "")
 				maxSalary = Int32.Parse(textBoxMaxSalarySearch.Text);
 			if (minSalary != null && maxSalary != null && minSalary > maxSalary)
-				MessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
-					"Помилка пошуку", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
+					"Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
 
 			bool needToShowMB = true;
 			string position = textBoxPositionSearch.Text;// Посада
@@ -477,9 +477,9 @@ namespace RecruitmentClient.Forms
 				}
 				catch (System.Net.Sockets.SocketException)
 				{
-					MessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 						"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				finally
 				{ flpMain.VerticalScroll.Enabled = true; }

@@ -497,8 +497,8 @@ namespace RecruitmentServer.Forms
 			if (textBoxMax.Text != "")
 				max = Int32.Parse(textBoxMax.Text);
 			if (min != null && max != null && min > max)
-				MessageBox.Show("Мінімальне значення не може бути більше максимального!",
-					"Помилка пошуку", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				CustomMessageBox.Show("Мінімальне значення не може бути більше максимального!",
+					"Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
 
 			bool? isRelevance = null;// Актуальність
 			string status = null;// Статус

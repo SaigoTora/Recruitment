@@ -59,8 +59,8 @@ namespace RecruitmentServer.Forms
 		{// Обробник події натискання на кнопку "Застосувати"
 			if (DateTime.Now < interview.DateEvent)
 			{
-				MessageBox.Show("З кандидатом ще не було проведено співбесіди!",
-						"Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				CustomMessageBox.Show("З кандидатом ще не було проведено співбесіди!",
+						"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 
@@ -68,8 +68,8 @@ namespace RecruitmentServer.Forms
 			if (comboBoxDecision.Text == "Прийнято" || comboBoxDecision.Text == "Не прийнято")
 				message = "Після цього змінити статус буде неможливо.";
 
-			DialogResult result = MessageBox.Show($"Ви впевнені, що хочете змінити статус співбесіди?\n{message}",
-				"Зміна статусу", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що хочете змінити статус співбесіди?\n{message}",
+				"Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 
 			if (result == DialogResult.Yes)
 			{
@@ -154,9 +154,9 @@ namespace RecruitmentServer.Forms
 		(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
 			if (interview.DateEvent >= dateTime)
 			{
-				MessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
+				CustomMessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
 					$"Ви можете перенести дату співбесіди лише на ту дату,\nяка відбудеться після дати попередньої співбесіди.",
-			"Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 			interview.ChangeDate(dateTime);

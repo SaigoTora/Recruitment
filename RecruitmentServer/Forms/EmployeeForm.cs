@@ -47,8 +47,8 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonChangeSalary_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Змінити зарплату" 
-			DialogResult result = MessageBox.Show($"Ви впевнені що хочете змінити зарплату у цього\nспівробітника?", "Зміна зарплати",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити зарплату у цього\nспівробітника?", "Зміна зарплати",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 			buttonChangeSalary.Visible = false;
 
 			if (result == DialogResult.Yes)
@@ -61,7 +61,7 @@ namespace RecruitmentServer.Forms
 				catch
 				{
 					richTextBoxSalary.Text = employee.Salary.ToString();
-					MessageBox.Show("Дані були введені не вірно!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!", "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 			richTextBoxSalary.Text = employee.Salary.ToString();
@@ -79,12 +79,12 @@ namespace RecruitmentServer.Forms
 		{// Обробник події натискання на кнопку "Змінити посаду"
 			if (richTextBoxPosition.Text.Contains(Server.SEPARATOR.ToString()))
 			{// Якщо є заборонений символ
-				MessageBox.Show("В посаді не може бути заборонений символ: ¤", "Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				CustomMessageBox.Show("В посаді не може бути заборонений символ: ¤", "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 
-			DialogResult result = MessageBox.Show($"Ви впевнені що хочете змінити посаду у цього\nспівробітника?", "Зміна посади",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити посаду у цього\nспівробітника?", "Зміна посади",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 			buttonChangePosition.Visible = false;
 
 			if (result == DialogResult.Yes)
@@ -97,17 +97,16 @@ namespace RecruitmentServer.Forms
 				catch
 				{
 					richTextBoxPosition.Text = employee.Position.ToString();
-					MessageBox.Show("Дані були введені не вірно!", "Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!", "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 			richTextBoxPosition.Text = employee.Position.ToString();
-
 		}
 
 		private void ButtonFire_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку звільнення
-			DialogResult result = MessageBox.Show($"Ви впевнені що хочете ЗВІЛЬНИТИ цього співробітника?", "Звільнення",
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете ЗВІЛЬНИТИ цього співробітника?", "Звільнення",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 
 			if (result == DialogResult.Yes)
 			{
