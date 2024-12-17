@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 
 using RecruitmentLibrary;
 using RecruitmentLibrary.FormUtilities;
@@ -26,7 +26,6 @@ namespace RecruitmentServer.Forms
 
 		private readonly List<AssignmentItem> resultItems = new List<AssignmentItem>();// Список результатів
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal AssignmentForm(ServerAccount account, Action<EventArgs> refresh)
 		{// Конструктор форми призначення
@@ -63,7 +62,6 @@ namespace RecruitmentServer.Forms
 			}
 
 			CreateFormResultItems();
-			//buttonEventHandlers.SubscribeToHover(buttonApplication);
 		}
 
 		private int[,] ConvertAssignmentItemsToMatrix()
@@ -124,8 +122,6 @@ namespace RecruitmentServer.Forms
 				AddEventCandidateButton_Click(buttonC, candidate);
 				AddEventVacancyButton_Click(buttonV, vacancy);
 				AddEventApplicationButton_Click(buttonA, application);
-
-				//buttonEventHandlers.SubscribeToHover(buttonC, buttonV, buttonA);
 			}
 
 			if (panels.Count <= 0)
@@ -180,8 +176,6 @@ namespace RecruitmentServer.Forms
 		}
 
 		private void AssignmentForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			//buttonEventHandlers.UnsubscribeAll();
-		}
+		{ }
 	}
 }

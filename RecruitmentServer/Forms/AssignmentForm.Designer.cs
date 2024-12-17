@@ -32,12 +32,12 @@
 			this.panelAssignment = new System.Windows.Forms.Panel();
 			this.buttonVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonCandidate = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.buttonApplication = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.labelScores = new System.Windows.Forms.Label();
 			this.labelVacancy = new System.Windows.Forms.Label();
 			this.labelCandidate = new System.Windows.Forms.Label();
 			this.labelEmpty = new System.Windows.Forms.Label();
 			this.labelTitle = new System.Windows.Forms.Label();
-			this.buttonApplication = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.flpMain.SuspendLayout();
 			this.panelAssignment.SuspendLayout();
 			this.SuspendLayout();
@@ -99,7 +99,7 @@
 			this.buttonVacancy.Name = "buttonVacancy";
 			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
 			this.buttonVacancy.PressedDepth = 20;
-			this.buttonVacancy.Size = new System.Drawing.Size(250, 35);
+			this.buttonVacancy.Size = new System.Drawing.Size(300, 35);
 			this.buttonVacancy.TabIndex = 3;
 			this.buttonVacancy.TabStop = false;
 			this.buttonVacancy.Tag = "fixedPosition";
@@ -128,11 +128,41 @@
 			this.buttonCandidate.Name = "buttonCandidate";
 			this.buttonCandidate.PressedColor = System.Drawing.Color.White;
 			this.buttonCandidate.PressedDepth = 20;
-			this.buttonCandidate.Size = new System.Drawing.Size(250, 35);
+			this.buttonCandidate.Size = new System.Drawing.Size(300, 35);
 			this.buttonCandidate.TabIndex = 1;
 			this.buttonCandidate.TabStop = false;
 			this.buttonCandidate.Tag = "fixedPosition";
 			this.buttonCandidate.Text = "Кандидат";
+			// 
+			// buttonApplication
+			// 
+			this.buttonApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonApplication.Animated = true;
+			this.buttonApplication.BackColor = System.Drawing.Color.Transparent;
+			this.buttonApplication.BorderRadius = 7;
+			this.buttonApplication.BorderThickness = 1;
+			this.buttonApplication.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonApplication.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonApplication.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonApplication.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApplication.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApplication.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonApplication.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonApplication.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonApplication.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold);
+			this.buttonApplication.ForeColor = System.Drawing.Color.Black;
+			this.buttonApplication.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonApplication.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonApplication.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonApplication.Location = new System.Drawing.Point(1000, 70);
+			this.buttonApplication.Name = "buttonApplication";
+			this.buttonApplication.PressedColor = System.Drawing.Color.White;
+			this.buttonApplication.PressedDepth = 20;
+			this.buttonApplication.Size = new System.Drawing.Size(175, 35);
+			this.buttonApplication.TabIndex = 2;
+			this.buttonApplication.TabStop = false;
+			this.buttonApplication.Tag = "fixedPosition";
+			this.buttonApplication.Text = "Заявка";
 			// 
 			// labelScores
 			// 
@@ -151,31 +181,31 @@
 			// 
 			// labelVacancy
 			// 
-			this.labelVacancy.AutoSize = true;
 			this.labelVacancy.BackColor = System.Drawing.Color.Transparent;
 			this.labelVacancy.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelVacancy.ForeColor = System.Drawing.Color.Black;
-			this.labelVacancy.Location = new System.Drawing.Point(550, 12);
+			this.labelVacancy.Location = new System.Drawing.Point(556, 12);
 			this.labelVacancy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelVacancy.Name = "labelVacancy";
-			this.labelVacancy.Size = new System.Drawing.Size(135, 32);
+			this.labelVacancy.Size = new System.Drawing.Size(300, 32);
 			this.labelVacancy.TabIndex = 2;
 			this.labelVacancy.Tag = "fixedPosition";
 			this.labelVacancy.Text = "Вакансія";
+			this.labelVacancy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labelCandidate
 			// 
-			this.labelCandidate.AutoSize = true;
 			this.labelCandidate.BackColor = System.Drawing.Color.Transparent;
 			this.labelCandidate.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelCandidate.ForeColor = System.Drawing.Color.Black;
-			this.labelCandidate.Location = new System.Drawing.Point(12, 12);
+			this.labelCandidate.Location = new System.Drawing.Point(18, 12);
 			this.labelCandidate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelCandidate.Name = "labelCandidate";
-			this.labelCandidate.Size = new System.Drawing.Size(158, 32);
+			this.labelCandidate.Size = new System.Drawing.Size(300, 32);
 			this.labelCandidate.TabIndex = 0;
 			this.labelCandidate.Tag = "fixedPosition";
-			this.labelCandidate.Text = "Кандидат:";
+			this.labelCandidate.Text = "Кандидат";
+			this.labelCandidate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labelEmpty
 			// 
@@ -206,36 +236,6 @@
 			this.labelTitle.TabIndex = 0;
 			this.labelTitle.Text = "Рекомендований розподіл кандидатів та вакансій:";
 			// 
-			// buttonApplication
-			// 
-			this.buttonApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonApplication.Animated = true;
-			this.buttonApplication.BackColor = System.Drawing.Color.Transparent;
-			this.buttonApplication.BorderRadius = 7;
-			this.buttonApplication.BorderThickness = 1;
-			this.buttonApplication.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonApplication.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonApplication.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonApplication.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonApplication.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonApplication.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonApplication.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonApplication.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonApplication.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold);
-			this.buttonApplication.ForeColor = System.Drawing.Color.Black;
-			this.buttonApplication.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonApplication.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonApplication.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonApplication.Location = new System.Drawing.Point(948, 70);
-			this.buttonApplication.Name = "buttonApplication";
-			this.buttonApplication.PressedColor = System.Drawing.Color.White;
-			this.buttonApplication.PressedDepth = 20;
-			this.buttonApplication.Size = new System.Drawing.Size(175, 35);
-			this.buttonApplication.TabIndex = 2;
-			this.buttonApplication.TabStop = false;
-			this.buttonApplication.Tag = "fixedPosition";
-			this.buttonApplication.Text = "Заявка";
-			// 
 			// AssignmentForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,7 +251,6 @@
 			this.flpMain.ResumeLayout(false);
 			this.flpMain.PerformLayout();
 			this.panelAssignment.ResumeLayout(false);
-			this.panelAssignment.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

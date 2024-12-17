@@ -47,6 +47,7 @@
 			this.labelPositionDescriptionV = new System.Windows.Forms.Label();
 			this.labelPositionV = new System.Windows.Forms.Label();
 			this.panelApplication = new System.Windows.Forms.Panel();
+			this.buttonReasonRejectionA = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxApplication = new System.Windows.Forms.PictureBox();
 			this.labelStatusA = new System.Windows.Forms.Label();
 			this.labelDateSubmissionA = new System.Windows.Forms.Label();
@@ -70,7 +71,6 @@
 			this.pictureBoxDown = new System.Windows.Forms.PictureBox();
 			this.pictureBoxRefresh = new System.Windows.Forms.PictureBox();
 			this.panelMain = new System.Windows.Forms.Panel();
-			this.buttonReasonRejectionA = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
@@ -213,6 +213,7 @@
 			// 
 			this.labelVacancy.AutoSize = true;
 			this.labelVacancy.BackColor = System.Drawing.Color.Transparent;
+			this.labelVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelVacancy.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelVacancy.ForeColor = System.Drawing.Color.Black;
 			this.labelVacancy.Location = new System.Drawing.Point(12, 15);
@@ -227,6 +228,7 @@
 			// 
 			this.labelApplication.AutoSize = true;
 			this.labelApplication.BackColor = System.Drawing.Color.Transparent;
+			this.labelApplication.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelApplication.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelApplication.ForeColor = System.Drawing.Color.Black;
 			this.labelApplication.Location = new System.Drawing.Point(12, 62);
@@ -241,6 +243,7 @@
 			// 
 			this.labelInterview.AutoSize = true;
 			this.labelInterview.BackColor = System.Drawing.Color.Transparent;
+			this.labelInterview.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelInterview.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelInterview.ForeColor = System.Drawing.Color.Black;
 			this.labelInterview.Location = new System.Drawing.Point(12, 109);
@@ -391,6 +394,35 @@
 			this.panelApplication.TabIndex = 13;
 			this.panelApplication.Tag = "";
 			this.panelApplication.Visible = false;
+			// 
+			// buttonReasonRejectionA
+			// 
+			this.buttonReasonRejectionA.Animated = true;
+			this.buttonReasonRejectionA.BackColor = System.Drawing.Color.Transparent;
+			this.buttonReasonRejectionA.BorderRadius = 7;
+			this.buttonReasonRejectionA.BorderThickness = 1;
+			this.buttonReasonRejectionA.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonReasonRejectionA.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonReasonRejectionA.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonReasonRejectionA.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonReasonRejectionA.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(50)))));
+			this.buttonReasonRejectionA.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.buttonReasonRejectionA.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonReasonRejectionA.ForeColor = System.Drawing.Color.Black;
+			this.buttonReasonRejectionA.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonReasonRejectionA.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
+			this.buttonReasonRejectionA.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+			this.buttonReasonRejectionA.Location = new System.Drawing.Point(300, 60);
+			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
+			this.buttonReasonRejectionA.PressedColor = System.Drawing.Color.White;
+			this.buttonReasonRejectionA.PressedDepth = 20;
+			this.buttonReasonRejectionA.Size = new System.Drawing.Size(230, 35);
+			this.buttonReasonRejectionA.TabIndex = 3;
+			this.buttonReasonRejectionA.TabStop = false;
+			this.buttonReasonRejectionA.Tag = "fixedPosition";
+			this.buttonReasonRejectionA.Text = "Причина відмови";
 			// 
 			// pictureBoxApplication
 			// 
@@ -726,35 +758,6 @@
 			this.panelMain.Name = "panelMain";
 			this.panelMain.Size = new System.Drawing.Size(1367, 706);
 			this.panelMain.TabIndex = 0;
-			// 
-			// buttonReasonRejectionA
-			// 
-			this.buttonReasonRejectionA.Animated = true;
-			this.buttonReasonRejectionA.BackColor = System.Drawing.Color.Transparent;
-			this.buttonReasonRejectionA.BorderRadius = 7;
-			this.buttonReasonRejectionA.BorderThickness = 1;
-			this.buttonReasonRejectionA.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonReasonRejectionA.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonReasonRejectionA.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonReasonRejectionA.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonReasonRejectionA.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonReasonRejectionA.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonReasonRejectionA.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(50)))));
-			this.buttonReasonRejectionA.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.buttonReasonRejectionA.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonReasonRejectionA.ForeColor = System.Drawing.Color.Black;
-			this.buttonReasonRejectionA.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonReasonRejectionA.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
-			this.buttonReasonRejectionA.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-			this.buttonReasonRejectionA.Location = new System.Drawing.Point(300, 60);
-			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
-			this.buttonReasonRejectionA.PressedColor = System.Drawing.Color.White;
-			this.buttonReasonRejectionA.PressedDepth = 20;
-			this.buttonReasonRejectionA.Size = new System.Drawing.Size(230, 35);
-			this.buttonReasonRejectionA.TabIndex = 3;
-			this.buttonReasonRejectionA.TabStop = false;
-			this.buttonReasonRejectionA.Tag = "fixedPosition";
-			this.buttonReasonRejectionA.Text = "Причина відмови";
 			// 
 			// MainForm
 			// 

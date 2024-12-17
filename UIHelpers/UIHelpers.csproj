@@ -56,6 +56,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlEventHandlers\ButtonEventHandlers.cs" />
+    <Compile Include="ControlEventHandlers\ControlEventHandlers.cs" />
+    <Compile Include="ControlEventHandlers\LabelEventHandlers.cs" />
+    <Compile Include="ControlEventHandlers\PictureBoxEventHandlers.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
@@ -65,6 +69,7 @@
     <Compile Include="Themes\Theme.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ControlEventHandlers\ControlEventHandlersDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ using RecruitmentLibrary.PersonInfo;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -29,7 +30,7 @@ namespace RecruitmentClient.Forms
 		private readonly ClientAccount account;// Обліковий запис
 		private readonly Questionnaire oldQuestionnaire = null;
 		private readonly bool formOpenForChange = false;
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal QuestionnaireForm(ClientAccount a, StartForm startForm)
 		{// Конструктор
@@ -76,8 +77,8 @@ namespace RecruitmentClient.Forms
 			// Максимальна дата закінчення навчання
 			dateTimePickerDateEnd.MaxDate = new DateTime(DateTime.Today.Year + 10, DateTime.Today.Month, DateTime.Today.Day);
 
-			//buttonEventHandlers.SubscribeToHover(buttonRemoveLanguage, buttonAddLanguage,
-			//buttonRemoveEducation, buttonAddEducation, buttonApply);
+			buttonEventHandlers.SubscribeToHover(buttonRemoveLanguage, buttonAddLanguage,
+			buttonRemoveEducation, buttonAddEducation, buttonApply);
 		}
 
 		// Методи встановлення значень форми
@@ -429,7 +430,7 @@ namespace RecruitmentClient.Forms
 
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

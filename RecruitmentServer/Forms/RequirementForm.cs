@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -16,7 +17,8 @@ namespace RecruitmentServer.Forms
 	{// Форма вакансій
 		private readonly FullRequirement requirement;// Вимоги
 		private readonly ServerAccount account;// Акаунт
-											   //private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+
 		internal RequirementForm(FullRequirement requirement, ServerAccount account)
 		{// Конструктор форми створення вакансії
 			InitializeComponent();
@@ -50,7 +52,7 @@ namespace RecruitmentServer.Forms
 				checkBoxDiplomaAll.Checked = true;// Вибираємо всі ступені освіти
 				numericUpDownAgeMax.Value = numericUpDownAgeMax.Maximum;
 			}
-			//buttonEventHandlers.SubscribeToHover(buttonCreate);
+			buttonEventHandlers.SubscribeToHover(buttonCreate);
 
 			this.account = account;
 			SetTheme(account.Theme);
@@ -227,7 +229,7 @@ namespace RecruitmentServer.Forms
 
 		private void RequirementForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

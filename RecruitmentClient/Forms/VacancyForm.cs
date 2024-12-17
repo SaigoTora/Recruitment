@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.FormUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -15,7 +16,7 @@ namespace RecruitmentClient.Forms
 		private readonly int idVacancy;
 		private readonly string login;
 		private readonly Action<EventArgs> refresh;
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 		internal VacancyForm(Vacancy vacancy, string login, Action<EventArgs> refresh, Theme theme)
 		{// Конструктор форми
 			InitializeComponent();
@@ -55,7 +56,7 @@ namespace RecruitmentClient.Forms
 				richTextBoxPositionDescription.Visible = false;
 			}
 
-			//buttonEventHandlers.SubscribeToHover(buttonSend);
+			buttonEventHandlers.SubscribeToHover(buttonSend);
 			SetTheme(theme);
 		}
 
@@ -108,7 +109,7 @@ namespace RecruitmentClient.Forms
 
 		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

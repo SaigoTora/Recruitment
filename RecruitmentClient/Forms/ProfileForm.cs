@@ -6,6 +6,7 @@ using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -17,7 +18,7 @@ namespace RecruitmentClient.Forms
 		private readonly ClientAccount account;
 		private readonly StartForm startForm;
 		private readonly Candidate oldCandidate;
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal ProfileForm(ClientAccount a, StartForm startForm = null)
 		{// Конструктор
@@ -39,7 +40,7 @@ namespace RecruitmentClient.Forms
 			Icon = Properties.Resources.profile;
 			textBoxSurname.Focus();
 			dateTimePickerBirthday.MaxDate = DateTime.Today;
-			//buttonEventHandlers.SubscribeToHover(buttonQuestionnairе, buttonApply);
+			buttonEventHandlers.SubscribeToHover(buttonQuestionnairе, buttonApply);
 			SetTheme(account.Theme);
 		}
 
@@ -179,7 +180,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void ProfileForm_FormClosed(object sender, FormClosedEventArgs e)
 		{// Обробник події: закриття форми
-		 //buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 			if (startForm != null)
 			{
 				startForm.Visible = true;

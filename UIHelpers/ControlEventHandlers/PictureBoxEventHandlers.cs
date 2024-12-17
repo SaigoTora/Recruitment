@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
-namespace RecruitmentLibrary.FormUtilities
+namespace UIHelpers.ControlEventHandlers
 {
 	public class PictureBoxEventHandlers : ControlEventHandlers<PictureBox>
 	{
 		private const byte PICTURE_SIZE_PERCENT_SCALER = 7;
 
-		#region PictureBoxHover
+		private readonly Dictionary<PictureBox, (Color defaultColor, Color hoverColor)> _colorPictures
+			= new Dictionary<PictureBox, (Color, Color)>();
+
+		#region PictureBox hover
 		public void SubscribeToHover(params PictureBox[] pictureBoxes)
 		{
 			foreach (PictureBox pictureBox in pictureBoxes)
@@ -18,6 +23,18 @@ namespace RecruitmentLibrary.FormUtilities
 				pictureBox.MouseEnter += PictureBox_MouseEnter;
 				pictureBox.MouseLeave += PictureBox_MouseLeave;
 				controls.Add(pictureBox);
+			}
+		}
+		public void SubscribeToHover(Color hoverColor, params PictureBox[] pictureBoxes)
+		{
+			foreach (PictureBox pictureBox in pictureBoxes)
+			{
+				if (controls.Contains(pictureBox))
+					throw new ArgumentException($"The PictureBox '{pictureBox.Name}' is already subscribed.");
+
+				pictureBox.MouseEnter += PictureBoxColor_MouseEnter;
+				pictureBox.MouseLeave += PictureBoxColor_MouseLeave;
+				_colorPictures.Add(pictureBox, (pictureBox.BackColor, hoverColor));
 			}
 		}
 
@@ -37,6 +54,17 @@ namespace RecruitmentLibrary.FormUtilities
 			ResizeControl(picture, PICTURE_SIZE_PERCENT_SCALER, false);
 			isControlIncreased = false;
 		}
+
+		private void PictureBoxColor_MouseEnter(object sender, EventArgs e)
+		{
+			if (sender is PictureBox picture)
+				picture.BackColor = _colorPictures[picture].hoverColor;
+		}
+		private void PictureBoxColor_MouseLeave(object sender, EventArgs e)
+		{
+			if (sender is PictureBox picture)
+				picture.BackColor = _colorPictures[picture].defaultColor;
+		}
 		#endregion
 
 		protected override void DefaultUnsubscribe(PictureBox pictureBox)
@@ -49,10 +77,21 @@ namespace RecruitmentLibrary.FormUtilities
 			DefaultUnsubscribe(pictureBox);
 			controls.Remove(pictureBox);
 		}
+
+		private void DefaultUnsubscribeHoverColor(PictureBox pictureBox)
+		{
+			pictureBox.MouseEnter -= PictureBoxColor_MouseEnter;
+			pictureBox.MouseLeave -= PictureBoxColor_MouseLeave;
+		}
+
 		public override void UnsubscribeAll()
 		{
 			foreach (PictureBox pictureBox in controls)
 				DefaultUnsubscribe(pictureBox);
+
+			foreach (PictureBox pictureBox in _colorPictures.Keys)
+				DefaultUnsubscribeHoverColor(pictureBox);
+
 			controls.Clear();
 		}
 	}

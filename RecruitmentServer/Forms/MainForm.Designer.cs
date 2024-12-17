@@ -30,6 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.panelUp = new System.Windows.Forms.Panel();
+			this.buttonAddVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonAssignment = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxLine = new System.Windows.Forms.PictureBox();
 			this.pictureBoxTheme = new System.Windows.Forms.PictureBox();
@@ -44,20 +45,24 @@
 			this.pictureBoxVacancy = new System.Windows.Forms.PictureBox();
 			this.labelDatePublicationV = new System.Windows.Forms.Label();
 			this.labelCountV = new System.Windows.Forms.Label();
+			this.buttonVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.labelRelevance = new System.Windows.Forms.Label();
 			this.labelPositionV = new System.Windows.Forms.Label();
 			this.panelApplication = new System.Windows.Forms.Panel();
+			this.buttonApplication = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxApplication = new System.Windows.Forms.PictureBox();
 			this.labelStatusA = new System.Windows.Forms.Label();
 			this.labelScores = new System.Windows.Forms.Label();
 			this.labelDateSubmissionA = new System.Windows.Forms.Label();
 			this.labelPositionA = new System.Windows.Forms.Label();
 			this.panelInterview = new System.Windows.Forms.Panel();
+			this.buttonInterview = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxInterview = new System.Windows.Forms.PictureBox();
 			this.labelStatusI = new System.Windows.Forms.Label();
 			this.labelDateEventI = new System.Windows.Forms.Label();
 			this.labelPositionI = new System.Windows.Forms.Label();
 			this.panelEmployee = new System.Windows.Forms.Panel();
+			this.buttonEmployee = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.labelDateEmploymentE = new System.Windows.Forms.Label();
 			this.labelFullName = new System.Windows.Forms.Label();
 			this.labelPositionE = new System.Windows.Forms.Label();
@@ -76,11 +81,6 @@
 			this.pictureBoxDown = new System.Windows.Forms.PictureBox();
 			this.pictureBoxRefresh = new System.Windows.Forms.PictureBox();
 			this.panelMain = new System.Windows.Forms.Panel();
-			this.buttonAddVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.buttonVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.buttonApplication = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.buttonInterview = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.buttonEmployee = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
@@ -114,6 +114,37 @@
 			this.panelUp.Size = new System.Drawing.Size(1474, 105);
 			this.panelUp.TabIndex = 3;
 			// 
+			// buttonAddVacancy
+			// 
+			this.buttonAddVacancy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonAddVacancy.Animated = true;
+			this.buttonAddVacancy.BackColor = System.Drawing.Color.Transparent;
+			this.buttonAddVacancy.BorderRadius = 7;
+			this.buttonAddVacancy.BorderThickness = 1;
+			this.buttonAddVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonAddVacancy.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonAddVacancy.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonAddVacancy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddVacancy.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonAddVacancy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonAddVacancy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonAddVacancy.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonAddVacancy.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonAddVacancy.ForeColor = System.Drawing.Color.Black;
+			this.buttonAddVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonAddVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonAddVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonAddVacancy.Location = new System.Drawing.Point(1272, 47);
+			this.buttonAddVacancy.Name = "buttonAddVacancy";
+			this.buttonAddVacancy.PressedColor = System.Drawing.Color.White;
+			this.buttonAddVacancy.PressedDepth = 20;
+			this.buttonAddVacancy.Size = new System.Drawing.Size(175, 36);
+			this.buttonAddVacancy.TabIndex = 2;
+			this.buttonAddVacancy.TabStop = false;
+			this.buttonAddVacancy.Tag = "fixedPosition";
+			this.buttonAddVacancy.Text = "Створити";
+			this.buttonAddVacancy.Click += new System.EventHandler(this.ButtonAddVacancy_Click);
+			// 
 			// buttonAssignment
 			// 
 			this.buttonAssignment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -134,11 +165,11 @@
 			this.buttonAssignment.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonAssignment.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonAssignment.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonAssignment.Location = new System.Drawing.Point(980, 47);
+			this.buttonAssignment.Location = new System.Drawing.Point(1066, 47);
 			this.buttonAssignment.Name = "buttonAssignment";
 			this.buttonAssignment.PressedColor = System.Drawing.Color.White;
 			this.buttonAssignment.PressedDepth = 20;
-			this.buttonAssignment.Size = new System.Drawing.Size(200, 36);
+			this.buttonAssignment.Size = new System.Drawing.Size(175, 36);
 			this.buttonAssignment.TabIndex = 1;
 			this.buttonAssignment.TabStop = false;
 			this.buttonAssignment.Tag = "fixedPosition";
@@ -191,6 +222,7 @@
 			// 
 			this.labelVacancy.AutoSize = true;
 			this.labelVacancy.BackColor = System.Drawing.Color.Transparent;
+			this.labelVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelVacancy.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelVacancy.ForeColor = System.Drawing.Color.Black;
 			this.labelVacancy.Location = new System.Drawing.Point(2, 0);
@@ -205,6 +237,7 @@
 			// 
 			this.labelApplication.AutoSize = true;
 			this.labelApplication.BackColor = System.Drawing.Color.Transparent;
+			this.labelApplication.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelApplication.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelApplication.ForeColor = System.Drawing.Color.Black;
 			this.labelApplication.Location = new System.Drawing.Point(2, 44);
@@ -219,6 +252,7 @@
 			// 
 			this.labelInterview.AutoSize = true;
 			this.labelInterview.BackColor = System.Drawing.Color.Transparent;
+			this.labelInterview.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelInterview.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelInterview.ForeColor = System.Drawing.Color.Black;
 			this.labelInterview.Location = new System.Drawing.Point(2, 88);
@@ -233,6 +267,7 @@
 			// 
 			this.labelEmployee.AutoSize = true;
 			this.labelEmployee.BackColor = System.Drawing.Color.Transparent;
+			this.labelEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEmployee.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEmployee.ForeColor = System.Drawing.Color.Black;
 			this.labelEmployee.Location = new System.Drawing.Point(2, 132);
@@ -337,6 +372,36 @@
 			this.labelCountV.Tag = "fixedPosition";
 			this.labelCountV.Text = "Заявок:";
 			// 
+			// buttonVacancy
+			// 
+			this.buttonVacancy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonVacancy.Animated = true;
+			this.buttonVacancy.BackColor = System.Drawing.Color.Transparent;
+			this.buttonVacancy.BorderRadius = 7;
+			this.buttonVacancy.BorderThickness = 1;
+			this.buttonVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonVacancy.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonVacancy.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonVacancy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonVacancy.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonVacancy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonVacancy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonVacancy.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonVacancy.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonVacancy.ForeColor = System.Drawing.Color.Black;
+			this.buttonVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonVacancy.Location = new System.Drawing.Point(12, 118);
+			this.buttonVacancy.Name = "buttonVacancy";
+			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
+			this.buttonVacancy.PressedDepth = 20;
+			this.buttonVacancy.Size = new System.Drawing.Size(150, 35);
+			this.buttonVacancy.TabIndex = 4;
+			this.buttonVacancy.TabStop = false;
+			this.buttonVacancy.Tag = "fixedPosition";
+			this.buttonVacancy.Text = "Вакансія";
+			// 
 			// labelRelevance
 			// 
 			this.labelRelevance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -382,6 +447,36 @@
 			this.panelApplication.Size = new System.Drawing.Size(1211, 168);
 			this.panelApplication.TabIndex = 11;
 			this.panelApplication.Visible = false;
+			// 
+			// buttonApplication
+			// 
+			this.buttonApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonApplication.Animated = true;
+			this.buttonApplication.BackColor = System.Drawing.Color.Transparent;
+			this.buttonApplication.BorderRadius = 7;
+			this.buttonApplication.BorderThickness = 1;
+			this.buttonApplication.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonApplication.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonApplication.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonApplication.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApplication.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonApplication.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonApplication.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonApplication.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonApplication.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonApplication.ForeColor = System.Drawing.Color.Black;
+			this.buttonApplication.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonApplication.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonApplication.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonApplication.Location = new System.Drawing.Point(12, 118);
+			this.buttonApplication.Name = "buttonApplication";
+			this.buttonApplication.PressedColor = System.Drawing.Color.White;
+			this.buttonApplication.PressedDepth = 20;
+			this.buttonApplication.Size = new System.Drawing.Size(150, 35);
+			this.buttonApplication.TabIndex = 3;
+			this.buttonApplication.TabStop = false;
+			this.buttonApplication.Tag = "fixedPosition";
+			this.buttonApplication.Text = "Заявка";
 			// 
 			// pictureBoxApplication
 			// 
@@ -469,6 +564,36 @@
 			this.panelInterview.TabIndex = 12;
 			this.panelInterview.Visible = false;
 			// 
+			// buttonInterview
+			// 
+			this.buttonInterview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonInterview.Animated = true;
+			this.buttonInterview.BackColor = System.Drawing.Color.Transparent;
+			this.buttonInterview.BorderRadius = 7;
+			this.buttonInterview.BorderThickness = 1;
+			this.buttonInterview.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonInterview.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonInterview.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonInterview.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonInterview.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonInterview.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonInterview.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonInterview.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonInterview.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonInterview.ForeColor = System.Drawing.Color.Black;
+			this.buttonInterview.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonInterview.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonInterview.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonInterview.Location = new System.Drawing.Point(12, 118);
+			this.buttonInterview.Name = "buttonInterview";
+			this.buttonInterview.PressedColor = System.Drawing.Color.White;
+			this.buttonInterview.PressedDepth = 20;
+			this.buttonInterview.Size = new System.Drawing.Size(185, 35);
+			this.buttonInterview.TabIndex = 2;
+			this.buttonInterview.TabStop = false;
+			this.buttonInterview.Tag = "fixedPosition";
+			this.buttonInterview.Text = "Співбесіда";
+			// 
 			// pictureBoxInterview
 			// 
 			this.pictureBoxInterview.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -538,6 +663,36 @@
 			this.panelEmployee.Size = new System.Drawing.Size(1211, 168);
 			this.panelEmployee.TabIndex = 13;
 			this.panelEmployee.Visible = false;
+			// 
+			// buttonEmployee
+			// 
+			this.buttonEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonEmployee.Animated = true;
+			this.buttonEmployee.BackColor = System.Drawing.Color.Transparent;
+			this.buttonEmployee.BorderRadius = 7;
+			this.buttonEmployee.BorderThickness = 1;
+			this.buttonEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonEmployee.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonEmployee.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonEmployee.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonEmployee.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonEmployee.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonEmployee.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
+			this.buttonEmployee.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
+			this.buttonEmployee.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonEmployee.ForeColor = System.Drawing.Color.Black;
+			this.buttonEmployee.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonEmployee.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
+			this.buttonEmployee.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
+			this.buttonEmployee.Location = new System.Drawing.Point(12, 118);
+			this.buttonEmployee.Name = "buttonEmployee";
+			this.buttonEmployee.PressedColor = System.Drawing.Color.White;
+			this.buttonEmployee.PressedDepth = 20;
+			this.buttonEmployee.Size = new System.Drawing.Size(185, 35);
+			this.buttonEmployee.TabIndex = 4;
+			this.buttonEmployee.TabStop = false;
+			this.buttonEmployee.Tag = "fixedPosition";
+			this.buttonEmployee.Text = "Співробітник";
 			// 
 			// labelDateEmploymentE
 			// 
@@ -816,157 +971,6 @@
 			this.panelMain.Name = "panelMain";
 			this.panelMain.Size = new System.Drawing.Size(1474, 706);
 			this.panelMain.TabIndex = 0;
-			// 
-			// buttonAddVacancy
-			// 
-			this.buttonAddVacancy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonAddVacancy.Animated = true;
-			this.buttonAddVacancy.BackColor = System.Drawing.Color.Transparent;
-			this.buttonAddVacancy.BorderRadius = 7;
-			this.buttonAddVacancy.BorderThickness = 1;
-			this.buttonAddVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonAddVacancy.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonAddVacancy.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonAddVacancy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonAddVacancy.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonAddVacancy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonAddVacancy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonAddVacancy.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonAddVacancy.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonAddVacancy.ForeColor = System.Drawing.Color.Black;
-			this.buttonAddVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonAddVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonAddVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonAddVacancy.Location = new System.Drawing.Point(1211, 47);
-			this.buttonAddVacancy.Name = "buttonAddVacancy";
-			this.buttonAddVacancy.PressedColor = System.Drawing.Color.White;
-			this.buttonAddVacancy.PressedDepth = 20;
-			this.buttonAddVacancy.Size = new System.Drawing.Size(236, 36);
-			this.buttonAddVacancy.TabIndex = 2;
-			this.buttonAddVacancy.TabStop = false;
-			this.buttonAddVacancy.Tag = "fixedPosition";
-			this.buttonAddVacancy.Text = "Створити вакансію";
-			this.buttonAddVacancy.Click += new System.EventHandler(this.ButtonAddVacancy_Click);
-			// 
-			// buttonVacancy
-			// 
-			this.buttonVacancy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonVacancy.Animated = true;
-			this.buttonVacancy.BackColor = System.Drawing.Color.Transparent;
-			this.buttonVacancy.BorderRadius = 7;
-			this.buttonVacancy.BorderThickness = 1;
-			this.buttonVacancy.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonVacancy.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonVacancy.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonVacancy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonVacancy.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonVacancy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonVacancy.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonVacancy.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonVacancy.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonVacancy.ForeColor = System.Drawing.Color.Black;
-			this.buttonVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonVacancy.Location = new System.Drawing.Point(12, 118);
-			this.buttonVacancy.Name = "buttonVacancy";
-			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
-			this.buttonVacancy.PressedDepth = 20;
-			this.buttonVacancy.Size = new System.Drawing.Size(150, 35);
-			this.buttonVacancy.TabIndex = 4;
-			this.buttonVacancy.TabStop = false;
-			this.buttonVacancy.Tag = "fixedPosition";
-			this.buttonVacancy.Text = "Вакансія";
-			// 
-			// buttonApplication
-			// 
-			this.buttonApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonApplication.Animated = true;
-			this.buttonApplication.BackColor = System.Drawing.Color.Transparent;
-			this.buttonApplication.BorderRadius = 7;
-			this.buttonApplication.BorderThickness = 1;
-			this.buttonApplication.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonApplication.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonApplication.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonApplication.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonApplication.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonApplication.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonApplication.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonApplication.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonApplication.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonApplication.ForeColor = System.Drawing.Color.Black;
-			this.buttonApplication.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonApplication.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonApplication.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonApplication.Location = new System.Drawing.Point(12, 118);
-			this.buttonApplication.Name = "buttonApplication";
-			this.buttonApplication.PressedColor = System.Drawing.Color.White;
-			this.buttonApplication.PressedDepth = 20;
-			this.buttonApplication.Size = new System.Drawing.Size(150, 35);
-			this.buttonApplication.TabIndex = 3;
-			this.buttonApplication.TabStop = false;
-			this.buttonApplication.Tag = "fixedPosition";
-			this.buttonApplication.Text = "Заявка";
-			// 
-			// buttonInterview
-			// 
-			this.buttonInterview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonInterview.Animated = true;
-			this.buttonInterview.BackColor = System.Drawing.Color.Transparent;
-			this.buttonInterview.BorderRadius = 7;
-			this.buttonInterview.BorderThickness = 1;
-			this.buttonInterview.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonInterview.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonInterview.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonInterview.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonInterview.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonInterview.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonInterview.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonInterview.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonInterview.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonInterview.ForeColor = System.Drawing.Color.Black;
-			this.buttonInterview.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonInterview.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonInterview.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonInterview.Location = new System.Drawing.Point(12, 118);
-			this.buttonInterview.Name = "buttonInterview";
-			this.buttonInterview.PressedColor = System.Drawing.Color.White;
-			this.buttonInterview.PressedDepth = 20;
-			this.buttonInterview.Size = new System.Drawing.Size(175, 35);
-			this.buttonInterview.TabIndex = 2;
-			this.buttonInterview.TabStop = false;
-			this.buttonInterview.Tag = "fixedPosition";
-			this.buttonInterview.Text = "Співбесіда";
-			// 
-			// buttonEmployee
-			// 
-			this.buttonEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonEmployee.Animated = true;
-			this.buttonEmployee.BackColor = System.Drawing.Color.Transparent;
-			this.buttonEmployee.BorderRadius = 7;
-			this.buttonEmployee.BorderThickness = 1;
-			this.buttonEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.buttonEmployee.DisabledState.BorderColor = System.Drawing.Color.Black;
-			this.buttonEmployee.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
-			this.buttonEmployee.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonEmployee.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.buttonEmployee.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
-			this.buttonEmployee.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(213)))), ((int)(((byte)(95)))));
-			this.buttonEmployee.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(144)))), ((int)(((byte)(77)))));
-			this.buttonEmployee.Font = new System.Drawing.Font("Consolas", 15.75F);
-			this.buttonEmployee.ForeColor = System.Drawing.Color.Black;
-			this.buttonEmployee.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
-			this.buttonEmployee.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
-			this.buttonEmployee.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonEmployee.Location = new System.Drawing.Point(12, 118);
-			this.buttonEmployee.Name = "buttonEmployee";
-			this.buttonEmployee.PressedColor = System.Drawing.Color.White;
-			this.buttonEmployee.PressedDepth = 20;
-			this.buttonEmployee.Size = new System.Drawing.Size(175, 35);
-			this.buttonEmployee.TabIndex = 4;
-			this.buttonEmployee.TabStop = false;
-			this.buttonEmployee.Tag = "fixedPosition";
-			this.buttonEmployee.Text = "Співробітник";
 			// 
 			// MainForm
 			// 

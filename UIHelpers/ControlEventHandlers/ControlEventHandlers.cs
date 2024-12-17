@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RecruitmentLibrary.FormUtilities
+namespace UIHelpers.ControlEventHandlers
 {
 	public abstract class ControlEventHandlers<T> where T : Control
 	{
 		protected readonly List<T> controls = new List<T>();
 		protected bool isControlIncreased = false;
-		protected int widthScaler, heightScaler;// Поточні значення для збільшення ширини та висоти
+		protected int widthScaler, heightScaler;// Current values ​​for increase in width and height
 
-		#region AbstractMethods
+		#region Abstract methods
 		/// <summary>
 		/// Unsubscribes the specified control from its event handlers.
 		/// </summary>
@@ -54,7 +54,7 @@ namespace RecruitmentLibrary.FormUtilities
 		private int GetValueUsingPercentage(int number, int percent)
 		{
 			if (percent < 0 || percent > 100)
-				throw new ArgumentException("Значення проценту повинно бути від 0 до 100.");
+				throw new ArgumentException("The percentage value must be between 0 and 100.");
 
 			return percent * number / 100;
 		}

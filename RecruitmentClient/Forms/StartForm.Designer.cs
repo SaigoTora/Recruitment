@@ -164,8 +164,6 @@
 			this.labelRegister1.Text = "Зареєструватись";
 			this.labelRegister1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.labelRegister1.Click += new System.EventHandler(this.LabelRegister1_Click);
-			this.labelRegister1.MouseEnter += new System.EventHandler(this.LabelRegister1_MouseEnter);
-			this.labelRegister1.MouseLeave += new System.EventHandler(this.LabelRegister1_MouseLeave);
 			// 
 			// pictureBoxTheme
 			// 

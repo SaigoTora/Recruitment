@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -15,7 +16,8 @@ namespace RecruitmentServer.Forms
 	{// Форма кандидата
 		private const int INCREASE_FORM_HEIGHT = 100;
 		private readonly int idBusinessTrip, idFamilyStatus;
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+
 		internal CandidateForm(Candidate candidate, ServerAccount account)
 		{// Конструктор форми кандидата
 			InitializeComponent();
@@ -49,7 +51,7 @@ namespace RecruitmentServer.Forms
 
 			CreateLanguages(candidate.questionnaire.Languages);
 			CreateEducations(candidate.questionnaire.Educations);
-			//buttonEventHandlers.SubscribeToHover(buttonMore);
+			buttonEventHandlers.SubscribeToHover(buttonMore);
 		}
 		internal void CreateHealth(Health health)
 		{// Метод створює інформацію про ЗДОРОВ'Я на формі
@@ -102,7 +104,7 @@ namespace RecruitmentServer.Forms
 
 		private void CandidateForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 		}
 
 		public void SetTheme(Theme theme)

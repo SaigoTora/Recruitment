@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
+
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -33,8 +35,8 @@ namespace RecruitmentClient.Forms
 		private readonly Color colorYellow2 = Color.FromArgb(229, 158, 31);
 		private readonly Color colorRed = Color.FromArgb(191, 34, 51);
 		private readonly int comboBoxSortCount;// Кількість елементів у comboBoxSort
+		private readonly LabelEventHandlers labelEventHandlers = new LabelEventHandlers();
 		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private PanelsInfo panelsInfo = PanelsInfo.None;// Змінна, яка зберігає інформацію про вид панелей
 		private readonly List<Panel> panelsVAI = new List<Panel>();// Панелі вакансій або заявок або співбесід
@@ -63,6 +65,7 @@ namespace RecruitmentClient.Forms
 			SetDefaultSearchValues();
 
 			SetTheme(account.Theme);
+			labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication, labelInterview);
 			pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh, pictureBoxDown, pictureBoxUp,
 				pictureBoxExit, pictureBoxPasswordChange, pictureBoxTheme);
 		}
@@ -287,7 +290,6 @@ namespace RecruitmentClient.Forms
 			// Підписання кнопки на обробники подій
 			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
-			//buttonEventHandlers.SubscribeToHover(button);
 		}
 		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, Creator creator)
 		{// Метод, який створює одну заявку
@@ -316,7 +318,6 @@ namespace RecruitmentClient.Forms
 					MessageBox.Show(reason, "Причина відмови",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 				};
-				//buttonEventHandlers.SubscribeToHover(button);
 			}
 		}
 		private void CreateInterview(Interview interview, Creator creator)
@@ -662,8 +663,8 @@ namespace RecruitmentClient.Forms
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			labelEventHandlers.UnsubscribeAll();
 			pictureBoxEventHandlers.UnsubscribeAll();
-			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

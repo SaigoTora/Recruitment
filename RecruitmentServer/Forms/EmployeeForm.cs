@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -14,7 +15,7 @@ namespace RecruitmentServer.Forms
 	{// Форма співробітника
 		private readonly Employee employee;// Співробітник
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal EmployeeForm(Employee employee, Action<EventArgs> refresh, ServerAccount account)
 		{// Конструктор форми
@@ -32,7 +33,7 @@ namespace RecruitmentServer.Forms
 			labelDateEmployment.Text = "Дата працевлаштування: " + employee.DateEmployment.ToString("yyyy-MM-dd");
 			richTextBoxContact.Text = $"Номер телефону: {employee.Phone}\nE-mail: {employee.Email}";
 			richTextBoxPosition.Focus();
-			//buttonEventHandlers.SubscribeToHover(buttonFire);
+			buttonEventHandlers.SubscribeToHover(buttonFire);
 
 			SetTheme(account.Theme);
 		}
@@ -135,7 +136,7 @@ namespace RecruitmentServer.Forms
 
 		private void EmployeeForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//buttonEventHandlers.UnsubscribeAll();
+			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

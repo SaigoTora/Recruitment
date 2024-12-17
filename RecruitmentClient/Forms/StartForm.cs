@@ -7,6 +7,7 @@ using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
 using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -23,8 +24,9 @@ namespace RecruitmentClient.Forms
 		private const byte TIME_INACTIVITY = 15;
 
 		private readonly ClientAccount account = new ClientAccount();
+		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly LabelEventHandlers labelEventHandlers = new LabelEventHandlers();
 		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
-		//private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private bool isPasswordVisible = false;
 		private byte countWrongLogin = 0;
@@ -49,8 +51,9 @@ namespace RecruitmentClient.Forms
 		private void StartForm_Load(object sender, EventArgs e)
 		{
 			Icon = Properties.Resources.login;
+			buttonEventHandlers.SubscribeToHover(buttonLogin, buttonRegister2, buttonBack);
+			labelEventHandlers.SubscribeToHoverUnderline(labelRegister1);
 			pictureBoxEventHandlers.SubscribeToHover(pictureBoxShowPwd, pictureBoxTheme);
-			//buttonEventHandlers.SubscribeToHover(buttonLogin, buttonRegister2, buttonBack);
 			SetTheme(account.Theme);
 		}
 
@@ -374,8 +377,9 @@ namespace RecruitmentClient.Forms
 
 		private void StartForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			buttonEventHandlers.UnsubscribeAll();
+			labelEventHandlers.UnsubscribeAll();
 			pictureBoxEventHandlers.UnsubscribeAll();
-			//buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

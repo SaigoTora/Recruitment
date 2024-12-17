@@ -292,7 +292,7 @@
 			this.buttonChangeDate.Name = "buttonChangeDate";
 			this.buttonChangeDate.PressedColor = System.Drawing.Color.White;
 			this.buttonChangeDate.PressedDepth = 20;
-			this.buttonChangeDate.Size = new System.Drawing.Size(175, 40);
+			this.buttonChangeDate.Size = new System.Drawing.Size(200, 40);
 			this.buttonChangeDate.TabIndex = 6;
 			this.buttonChangeDate.TabStop = false;
 			this.buttonChangeDate.Text = "Змінити дату";
@@ -323,7 +323,7 @@
 			this.buttonEmployee.Name = "buttonEmployee";
 			this.buttonEmployee.PressedColor = System.Drawing.Color.White;
 			this.buttonEmployee.PressedDepth = 20;
-			this.buttonEmployee.Size = new System.Drawing.Size(175, 40);
+			this.buttonEmployee.Size = new System.Drawing.Size(200, 40);
 			this.buttonEmployee.TabIndex = 7;
 			this.buttonEmployee.TabStop = false;
 			this.buttonEmployee.Text = "Співробітник";

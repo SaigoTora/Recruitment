@@ -56,9 +56,6 @@
     <Compile Include="ApplicationInfo\Searcher.cs" />
     <Compile Include="ApplicationInfo\Vacancy.cs" />
     <Compile Include="AssignmentSolver.cs" />
-    <Compile Include="FormUtilities\ButtonEventHandlers.cs" />
-    <Compile Include="FormUtilities\ControlEventHandlers.cs" />
-    <Compile Include="FormUtilities\PictureBoxEventHandlers.cs" />
     <Compile Include="PersonInfo\Serializator.cs" />
     <Compile Include="PersonInfo\Candidate.cs" />
     <Compile Include="PersonInfo\Education.cs" />
