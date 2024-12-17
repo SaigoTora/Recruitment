@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using UIHelpers.Controls;
 using UIHelpers.Properties;
+using UIHelpers.Themes;
 
 namespace UIHelpers.Forms
 {
@@ -29,7 +30,7 @@ namespace UIHelpers.Forms
 	{
 		private DialogResult _dialogResult = DialogResult.None;
 
-		private CustomMessageBox(string text, string caption, CustomMessageBoxButtons buttons,
+		private CustomMessageBox(string text, Theme theme, string caption, CustomMessageBoxButtons buttons,
 			CustomMessageBoxIcon icon, int width)
 		{
 			InitializeComponent();
@@ -43,6 +44,8 @@ namespace UIHelpers.Forms
 			SetButtons(buttons);
 			SetIcon(icon);
 			AdjustFormSize(width);
+
+			ChangeTheme(theme);
 		}
 		private void SetButtons(CustomMessageBoxButtons buttons)
 		{
@@ -128,16 +131,45 @@ namespace UIHelpers.Forms
 			ClientSize = new Size(Math.Max(width, this.Width), requiredHeight);
 		}
 
-		public static DialogResult Show(string text, string caption = "",
+		#region Theme
+		public void ChangeTheme(Theme theme)
+		{
+			switch (theme)
+			{
+				case Theme.White:
+					SetWhiteMessageBox();
+					break;
+				case Theme.Black:
+					SetBlackMessageBox();
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+
+		private void SetWhiteMessageBox()
+		{
+			customTitleBar.ChangeTheme(Theme.White);
+			BackColor = Color.FromArgb(220, 220, 220);
+			labelText.ForeColor = Color.Black;
+		}
+		private void SetBlackMessageBox()
+		{
+			customTitleBar.ChangeTheme(Theme.Black);
+			BackColor = Color.FromArgb(35, 35, 35);
+			labelText.ForeColor = Color.White;
+		}
+		#endregion
+
+		public static DialogResult Show(string text, Theme theme, string caption = "",
 			CustomMessageBoxButtons buttons = CustomMessageBoxButtons.OK,
 			CustomMessageBoxIcon icon = CustomMessageBoxIcon.None, int width = 400)
 		{
-			CustomMessageBox messageBox = new CustomMessageBox(text, caption, buttons, icon, width);
+			CustomMessageBox messageBox = new CustomMessageBox(text, theme, caption, buttons, icon, width);
 			messageBox.ShowDialog();
 
 			return messageBox._dialogResult;
 		}
-
 		private void Button_Click(object sender, EventArgs e)
 		{
 			if (sender is Guna2GradientButton button)

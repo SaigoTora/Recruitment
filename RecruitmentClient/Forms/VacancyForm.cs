@@ -17,6 +17,8 @@ namespace RecruitmentClient.Forms
 		private readonly string login;
 		private readonly Action<EventArgs> refresh;
 		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+		private readonly Theme currentTheme;
+
 		internal VacancyForm(Vacancy vacancy, string login, Action<EventArgs> refresh, Theme theme)
 		{// Конструктор форми
 			InitializeComponent();
@@ -25,6 +27,7 @@ namespace RecruitmentClient.Forms
 			idVacancy = vacancy.Id;
 			this.login = login;
 			this.refresh = refresh;
+			currentTheme = theme;
 			labelPosition.Text = vacancy.Position.Name;
 			richTextBoxSalary.Text = vacancy.Salary.ToString() + " грн.";
 			richTextBoxPositionDescription.Text = vacancy.Position.Description;
@@ -63,7 +66,8 @@ namespace RecruitmentClient.Forms
 		private void ButtonSend_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку створення заявки
 			bool isDataOk = true;
-			Validator.CheckBannedChar(labelAdditionalTitle, richTextBoxClientAdditionalInfo.Text, Client.SEPARATOR, ref isDataOk);
+			Validator.CheckBannedChar(labelAdditionalTitle, richTextBoxClientAdditionalInfo.Text,
+				Client.SEPARATOR, currentTheme, ref isDataOk);
 			if (!isDataOk)
 			{
 				richTextBoxClientAdditionalInfo.Focus();
@@ -75,12 +79,12 @@ namespace RecruitmentClient.Forms
 				refresh(EventArgs.Empty);
 				Close();
 				CustomMessageBox.Show("Заявка була відправлена успішно!\nБудь ласка, регулярно переглядайте вкладки заявок та\nспівбесід.",
-					"Успішно", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+					currentTheme, "Успішно", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, відправити заявку пізніше.", "Помилка підключення",
+					"\nСпробуйте, будь ласка, відправити заявку пізніше.", currentTheme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}

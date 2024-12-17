@@ -102,7 +102,7 @@ namespace RecruitmentServer.Forms
 			bool isDataOk = true;
 			Validator.SetDefaultLabels(account.Theme, labelCity);
 
-			Validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, ref isDataOk);
+			Validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme, ref isDataOk);
 
 			return isDataOk;
 		}

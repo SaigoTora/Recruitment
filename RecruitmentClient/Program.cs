@@ -32,7 +32,7 @@ namespace RecruitmentClient
 				catch (System.Net.Sockets.SocketException)
 				{
 					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, запустити програму пізніше.", "Помилка підключення",
+						"\nСпробуйте, будь ласка, запустити програму пізніше.", account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					return;
 				}

@@ -98,7 +98,8 @@ namespace RecruitmentServer.Forms
 				requirement += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
 			}
 
-			CustomMessageBox.Show(requirement, "Вимоги", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+			CustomMessageBox.Show(requirement, account.Theme, "Вимоги",
+				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private void ButtonRequirementCreate_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Вимоги" для створення
@@ -151,12 +152,12 @@ namespace RecruitmentServer.Forms
 				labelAdditionalInfoTitle);// Встановлюємо значення label-ів за замовчуванням
 
 			Label bufLabel = new Label { Text = "Посада" };
-			Validator.CheckBannedChar(bufLabel, richTextBoxPosition.Text, Server.SEPARATOR, ref isDataOk);// Посада
-			Validator.CheckMinLength(bufLabel, richTextBoxPosition, 3, ref isDataOk);
-			Validator.CheckSymbols(labelSalaryTitle, richTextBoxSalary, ref isDataOk, ValidLanguage.None, "0123456789,");// Зарплата
-			Validator.CheckMinLength(labelSalaryTitle, richTextBoxSalary, 1, ref isDataOk);
-			Validator.CheckBannedChar(labelPositionDescriptionTitle, richTextBoxPositionDescription.Text, Server.SEPARATOR, ref isDataOk);// Опис
-			Validator.CheckBannedChar(labelAdditionalInfoTitle, richTextBoxAdditionalInfo.Text, Server.SEPARATOR, ref isDataOk);// Додаткова інформація
+			Validator.CheckBannedChar(bufLabel, richTextBoxPosition.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Посада
+			Validator.CheckMinLength(bufLabel, richTextBoxPosition, 3, account.Theme, ref isDataOk);
+			Validator.CheckSymbols(labelSalaryTitle, richTextBoxSalary, account.Theme, ref isDataOk, ValidLanguage.None, "0123456789,");// Зарплата
+			Validator.CheckMinLength(labelSalaryTitle, richTextBoxSalary, 1, account.Theme, ref isDataOk);
+			Validator.CheckBannedChar(labelPositionDescriptionTitle, richTextBoxPositionDescription.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Опис
+			Validator.CheckBannedChar(labelAdditionalInfoTitle, richTextBoxAdditionalInfo.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Додаткова інформація
 
 			if (requirement.City == null)
 			{// Якщо не заповнили вимоги
@@ -164,7 +165,7 @@ namespace RecruitmentServer.Forms
 				{
 					buttonRequirement.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nВимоги також потрібно заповнити.",
-						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -174,7 +175,7 @@ namespace RecruitmentServer.Forms
 				{
 					buttonPoints.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nБали також потрібно заповнити.",
-						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -184,7 +185,8 @@ namespace RecruitmentServer.Forms
 		private void ButtonDelete_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку видалення вакансії
 			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете видалити цю вакансію?\n" +
-				"При видаленні вакансії також будуть видалені всі заявки та співбесіди, які пов'язані з цією вакансією", "Видалення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+				"При видаленні вакансії також будуть видалені всі заявки та співбесіди, які пов'язані з цією вакансією",
+					account.Theme, "Видалення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
 			{
 				DataBase.DeleteVacancy(vacancy.Id);

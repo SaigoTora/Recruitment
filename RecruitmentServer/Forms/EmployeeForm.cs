@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.FormUtilities;
@@ -15,6 +16,7 @@ namespace RecruitmentServer.Forms
 	{// Форма співробітника
 		private readonly Employee employee;// Співробітник
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
+		private readonly ServerAccount account;
 		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal EmployeeForm(Employee employee, Action<EventArgs> refresh, ServerAccount account)
@@ -24,6 +26,7 @@ namespace RecruitmentServer.Forms
 			customTitleBar = new CustomTitleBar(this, "Співробітник", minimizeBox: false, maximizeBox: false);
 			this.employee = employee;
 			this.refresh = refresh;
+			this.account = account;
 
 			labelFullName.Text = $"{employee.Surname.ToUpper()} {employee.Name} {employee.FatherName}";
 			richTextBoxPosition.Text = employee.Position;
@@ -47,8 +50,8 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonChangeSalary_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Змінити зарплату" 
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити зарплату у цього\nспівробітника?", "Зміна зарплати",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити зарплату у цього\nспівробітника?",
+				account.Theme, "Зміна зарплати", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 			buttonChangeSalary.Visible = false;
 
 			if (result == DialogResult.Yes)
@@ -61,7 +64,7 @@ namespace RecruitmentServer.Forms
 				catch
 				{
 					richTextBoxSalary.Text = employee.Salary.ToString();
-					CustomMessageBox.Show("Дані були введені не вірно!", "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!", account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 			richTextBoxSalary.Text = employee.Salary.ToString();
@@ -79,12 +82,13 @@ namespace RecruitmentServer.Forms
 		{// Обробник події натискання на кнопку "Змінити посаду"
 			if (richTextBoxPosition.Text.Contains(Server.SEPARATOR.ToString()))
 			{// Якщо є заборонений символ
-				CustomMessageBox.Show("В посаді не може бути заборонений символ: ¤", "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				CustomMessageBox.Show("В посаді не може бути заборонений символ: ¤",
+					account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити посаду у цього\nспівробітника?", "Зміна посади",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити посаду у цього\nспівробітника?",
+				account.Theme, "Зміна посади", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 			buttonChangePosition.Visible = false;
 
 			if (result == DialogResult.Yes)
@@ -97,7 +101,8 @@ namespace RecruitmentServer.Forms
 				catch
 				{
 					richTextBoxPosition.Text = employee.Position.ToString();
-					CustomMessageBox.Show("Дані були введені не вірно!", "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					CustomMessageBox.Show("Дані були введені не вірно!", account.Theme, "Помилка введення",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 			richTextBoxPosition.Text = employee.Position.ToString();
@@ -105,8 +110,8 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonFire_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку звільнення
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете ЗВІЛЬНИТИ цього співробітника?", "Звільнення",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете ЗВІЛЬНИТИ цього співробітника?",
+				account.Theme, "Звільнення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 
 			if (result == DialogResult.Yes)
 			{

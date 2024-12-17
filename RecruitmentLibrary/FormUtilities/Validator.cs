@@ -46,24 +46,24 @@ namespace RecruitmentLibrary.FormUtilities
 			return res;
 		}
 
-		public static void CheckBannedChar(Label label, string text, char banChar, ref bool needToShowMB)
+		public static void CheckBannedChar(Label label, string text, char banChar, Theme theme, ref bool needToShowMB)
 		{// Метод перевіряє текст на заборонений для вводу символ
 			if (text.Contains(banChar.ToString()))
-				ShowWrongLabel(label, $"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.", ref needToShowMB);
+				ShowWrongLabel(label, $"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.", theme, ref needToShowMB);
 		}
-		public static void CheckMinLength(Label label, Control focus, int minLength, ref bool needToShowMB)
+		public static void CheckMinLength(Label label, Control focus, int minLength, Theme theme, ref bool needToShowMB)
 		{// Метод, який виділяє label, якщо кількість символів менше ніж minLength
 			if (focus.Text.Length < minLength)
 				ShowWrongLabel(label, $"{label.Text} мінімальна кількість символів для цього поля: {minLength}.",
-					ref needToShowMB, focus);
+					theme, ref needToShowMB, focus);
 		}
-		public static void CheckAllNumbers(Label label, Control focus, ref bool needToShowMB)
+		public static void CheckAllNumbers(Label label, Control focus, Theme theme, ref bool needToShowMB)
 		{// Метод, який виділяє label, якщо не всі символи - цифри
 			if (!StringHaveAllDigit(focus.Text))
-				ShowWrongLabel(label, $"{label.Text} рядок не може містити символи, які не є цифрою.",
+				ShowWrongLabel(label, $"{label.Text} рядок не може містити символи, які не є цифрою.", theme,
 					ref needToShowMB, focus);
 		}
-		public static void CheckSymbols(Label label, Control focus, ref bool needToShowMB, ValidLanguage language, string exceptChars)
+		public static void CheckSymbols(Label label, Control focus, Theme theme, ref bool needToShowMB, ValidLanguage language, string exceptChars)
 		{// Метод, який виділяє label, якщо є символ який не є літерою певної мови та не є символом з масиву exceptChars
 			if (focus is TextBox textBox)// Якщо не пароль, то видаляємо пробіли
 				textBox.Text = DeleteSpaces(textBox.Text);
@@ -85,12 +85,12 @@ namespace RecruitmentLibrary.FormUtilities
 				for (int j = 0; j < exceptChars.Length; j++)
 					if (text[i] != exceptChars[j] && j == exceptChars.Length - 1)
 					{// Якщо символа немає в дозволених символах
-						ShowWrongLabel(label, errorMessage, ref needToShowMB, focus);
+						ShowWrongLabel(label, errorMessage, theme, ref needToShowMB, focus);
 					}
 					else if (text[i] == exceptChars[j])
 						break;
 		}
-		public static void CheckMinCountSymbols(Label label, Control focus, ref bool needToShowMB, int count, string expectChars, string errorMessage)
+		public static void CheckMinCountSymbols(Label label, Control focus, Theme theme, ref bool needToShowMB, int count, string expectChars, string errorMessage)
 		{// Метод, який виділяє label, коли немає символів з expectChars у кількості count символів
 			string text = focus.Text.ToUpper();
 			int k = 0;// Лічильник
@@ -105,16 +105,16 @@ namespace RecruitmentLibrary.FormUtilities
 					}
 
 			if (k < count)// Якщо кількість менша за дозволену
-				ShowWrongLabel(label, $"{label.Text}: {errorMessage}", ref needToShowMB);
+				ShowWrongLabel(label, $"{label.Text}: {errorMessage}", theme, ref needToShowMB);
 		}
-		public static void ShowWrongLabel(Label label, string errorMessage, ref bool needToShowMB, Control focus = null, string caption = null)
+		public static void ShowWrongLabel(Label label, string errorMessage, Theme theme, ref bool needToShowMB, Control focus = null, string caption = null)
 		{// Метод виділяє неправильно заповнений об’єкт типу Label та показує, за потребою, MessageBox
 			ShowWrongLabel(label);
 			caption = caption ?? "Помилка введення";
 			if (needToShowMB)
 			{
 				focus?.Focus();
-				CustomMessageBox.Show("Дані були введені не вірно!\n" + errorMessage, caption, CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				CustomMessageBox.Show("Дані були введені не вірно!\n" + errorMessage, theme, caption, CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				needToShowMB = false;
 			}
 		}

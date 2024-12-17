@@ -60,21 +60,21 @@ namespace RecruitmentClient.Forms
 			bool isDataOk = true;
 			SetDefaultLabels(account.Theme);
 			// Прізвище
-			Validator.CheckSymbols(labelSurname, textBoxSurname, ref isDataOk, ValidLanguage.UA, "’-");
-			Validator.CheckMinLength(labelSurname, textBoxSurname, 2, ref isDataOk);
+			Validator.CheckSymbols(labelSurname, textBoxSurname, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
+			Validator.CheckMinLength(labelSurname, textBoxSurname, 2, account.Theme, ref isDataOk);
 			// Ім’я
-			Validator.CheckSymbols(labelName, textBoxName, ref isDataOk, ValidLanguage.UA, "’-");
-			Validator.CheckMinLength(labelName, textBoxName, 2, ref isDataOk);
+			Validator.CheckSymbols(labelName, textBoxName, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
+			Validator.CheckMinLength(labelName, textBoxName, 2, account.Theme, ref isDataOk);
 			// По-батькові
-			Validator.CheckSymbols(labelFatherName, textBoxFatherName, ref isDataOk, ValidLanguage.UA, "’-");
+			Validator.CheckSymbols(labelFatherName, textBoxFatherName, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
 
 			// Номер телефону
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone1, ref isDataOk);
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone2, ref isDataOk);
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone3, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone1, 3, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone2, 3, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone3, 3, ref isDataOk);
+			Validator.CheckAllNumbers(labelPhone, textBoxPhone1, account.Theme, ref isDataOk);
+			Validator.CheckAllNumbers(labelPhone, textBoxPhone2, account.Theme, ref isDataOk);
+			Validator.CheckAllNumbers(labelPhone, textBoxPhone3, account.Theme, ref isDataOk);
+			Validator.CheckMinLength(labelPhone, textBoxPhone1, 3, account.Theme, ref isDataOk);
+			Validator.CheckMinLength(labelPhone, textBoxPhone2, 3, account.Theme, ref isDataOk);
+			Validator.CheckMinLength(labelPhone, textBoxPhone3, 3, account.Theme, ref isDataOk);
 
 			CheckValidEmail(ref isDataOk);// E-mail
 
@@ -84,7 +84,7 @@ namespace RecruitmentClient.Forms
 				{
 					buttonQuestionnairе.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nАнкету також потрібно заповнити.",
-						"Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				isDataOk = false;
 			}
@@ -98,10 +98,11 @@ namespace RecruitmentClient.Forms
 			if (!Regex.IsMatch(email, pattern))
 				Validator.ShowWrongLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
 					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), де запис [n;m) - " +
-					$"кількість символів.", ref isDataOk, textBoxEmail);
+					$"кількість символів.", account.Theme, ref isDataOk, textBoxEmail);
 
 			if (email.Contains(Client.SEPARATOR.ToString()))
-				Validator.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.", ref isDataOk, textBoxEmail);
+				Validator.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
+					account.Theme, ref isDataOk, textBoxEmail);
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
@@ -132,8 +133,8 @@ namespace RecruitmentClient.Forms
 				{
 					// Перевірка номеру телефону та E-mail та логіну на унікальність
 					if (!ClientUnique.PhoneIsUnique(labelPhone, account.Login, $"{labelPhoneStart.Text}" +
-						$"{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}")
-					|| !ClientUnique.EmailIsUnique(labelEmail, account.Login, textBoxEmail.Text))
+						$"{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}", account.Theme)
+					|| !ClientUnique.EmailIsUnique(labelEmail, account.Login, textBoxEmail.Text, account.Theme))
 						return;
 
 					// Встановлюємо значення кандидата
@@ -143,7 +144,7 @@ namespace RecruitmentClient.Forms
 
 					if (startForm != null)
 					{// Якщо потрібно створити кандидата                        
-						if (!ClientUnique.LoginIsUnique(new Label() { Text = "Логін" }, account.Login))
+						if (!ClientUnique.LoginIsUnique(new Label() { Text = "Логін" }, account.Login, account.Theme))
 							return;
 
 						if (startForm.NeedToRemember)// Запис в файл при потребі
@@ -163,7 +164,7 @@ namespace RecruitmentClient.Forms
 				catch (System.Net.Sockets.SocketException)
 				{
 					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+						"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 		}

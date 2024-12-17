@@ -60,7 +60,7 @@ namespace RecruitmentServer.Forms
 			if (DateTime.Now < interview.DateEvent)
 			{
 				CustomMessageBox.Show("З кандидатом ще не було проведено співбесіди!",
-						"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 
@@ -69,7 +69,7 @@ namespace RecruitmentServer.Forms
 				message = "Після цього змінити статус буде неможливо.";
 
 			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що хочете змінити статус співбесіди?\n{message}",
-				"Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+				account.Theme, "Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 
 			if (result == DialogResult.Yes)
 			{
@@ -156,7 +156,7 @@ namespace RecruitmentServer.Forms
 			{
 				CustomMessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
 					$"Ви можете перенести дату співбесіди лише на ту дату,\nяка відбудеться після дати попередньої співбесіди.",
-			"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				return;
 			}
 			interview.ChangeDate(dateTime);

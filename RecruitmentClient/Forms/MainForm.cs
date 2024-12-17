@@ -116,7 +116,7 @@ namespace RecruitmentClient.Forms
 			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете вийти з акаунту?" +
 				"\nЯкщо так, то ваш логін та пароль будуть забуті на цьому    ПК. Крім того," +
 				" програма закриється, і для її подальшого     використання потрібно буде" +
-				" її знову запустити.", "Вихід з акаунту",
+				" її знову запустити.", account.Theme, "Вихід з акаунту",
 				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 
 			if (result == DialogResult.Yes)
@@ -164,7 +164,7 @@ namespace RecruitmentClient.Forms
 			catch (System.Net.Sockets.SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+					"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 			ShowEmptyLabel(countPanels == 0);// Якщо пусто - true, інакше - false
@@ -315,7 +315,7 @@ namespace RecruitmentClient.Forms
 				Guna2GradientButton button = creator.CreateButton(buttonReasonRejectionA);
 				button.Click += (s, args) =>
 				{
-					CustomMessageBox.Show(reason, "Причина відмови",
+					CustomMessageBox.Show(reason, account.Theme, "Причина відмови",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				};
 			}
@@ -352,7 +352,7 @@ namespace RecruitmentClient.Forms
 					catch (System.Net.Sockets.SocketException)
 					{
 						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+							"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 				};
@@ -421,12 +421,12 @@ namespace RecruitmentClient.Forms
 				maxSalary = Int32.Parse(textBoxMaxSalarySearch.Text);
 			if (minSalary != null && maxSalary != null && minSalary > maxSalary)
 				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
-					"Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
+					account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
 
 			bool needToShowMB = true;
 			string position = textBoxPositionSearch.Text;// Посада
 			Validator.CheckBannedChar(new Label() { Text = "Посада" },
-				position, Client.SEPARATOR, ref needToShowMB);
+				position, Client.SEPARATOR, account.Theme, ref needToShowMB);
 
 			ClientSortOption sortOption = ClientSortOption.Date;// Сортування
 			if (comboBoxSort.SelectedIndex == 1)
@@ -478,7 +478,7 @@ namespace RecruitmentClient.Forms
 				catch (System.Net.Sockets.SocketException)
 				{
 					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+						"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 				finally

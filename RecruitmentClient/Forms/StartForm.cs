@@ -81,25 +81,27 @@ namespace RecruitmentClient.Forms
 			bool isDataOk = true;
 
 			// Логін
-			Validator.CheckSymbols(labelLogin, textBoxLogin, ref isDataOk, ValidLanguage.ENG, "._-0123456789");
-			Validator.CheckMinLength(labelLogin, textBoxLogin, 4, ref isDataOk);
+			Validator.CheckSymbols(labelLogin, textBoxLogin, account.Theme,
+				ref isDataOk, ValidLanguage.ENG, "._-0123456789");
+			Validator.CheckMinLength(labelLogin, textBoxLogin, 4, account.Theme, ref isDataOk);
 			// Пароль
-			Validator.CheckSymbols(labelPassword, textBoxPassword, ref isDataOk, ValidLanguage.ENG, "@-_.*0123456789");
-			Validator.CheckMinLength(labelPassword, textBoxPassword, 8, ref isDataOk);
-			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, ref isDataOk, 2,
+			Validator.CheckSymbols(labelPassword, textBoxPassword, account.Theme,
+				ref isDataOk, ValidLanguage.ENG, "@-_.*0123456789");
+			Validator.CheckMinLength(labelPassword, textBoxPassword, 8, account.Theme, ref isDataOk);
+			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, ref isDataOk, 2,
 				"0123456789", "Пароль повинен мати хоча б дві цифри.");
-			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, ref isDataOk, 4,
+			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, ref isDataOk, 4,
 				"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Пароль повинен мати хоча б чотири літери.");
 
 			// Перевірка підтвердження паролю, якщо підтвердження видиме
 			if (labelPassword2.Visible && textBoxPassword2.Visible
 			&& textBoxPassword.Text != textBoxPassword2.Text)
 				Validator.ShowWrongLabel(labelPassword2,
-					$"Підтвердження пароля не вірне!", ref isDataOk, textBoxPassword2);
+					$"Підтвердження пароля не вірне!", account.Theme, ref isDataOk, textBoxPassword2);
 			// Якщо логін та пароль співпадає
 			if (textBoxLogin.Text == textBoxPassword.Text)
 			{
-				Validator.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", ref isDataOk);
+				Validator.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataOk);
 				Validator.ShowWrongLabel(labelPassword);
 			}
 
@@ -119,7 +121,7 @@ namespace RecruitmentClient.Forms
 			{// Якщо дані введено вірно
 				try
 				{
-					if (ClientUnique.LoginIsUnique(labelLogin, textBoxLogin.Text))
+					if (ClientUnique.LoginIsUnique(labelLogin, textBoxLogin.Text, account.Theme))
 					{// Якщо ввели повторно пароль, а також логін унікальний
 						account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
 						ProfileForm pf = new ProfileForm(account, this);
@@ -129,8 +131,8 @@ namespace RecruitmentClient.Forms
 				}
 				catch (System.Net.Sockets.SocketException)
 				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало.\nСпробуйте пізніше.", "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало.\nСпробуйте пізніше.",
+						account.Theme, "Помилка підключення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
 		}
@@ -138,8 +140,8 @@ namespace RecruitmentClient.Forms
 		{// Обробник події: натискання на кнопку входу
 			SetDefaultLabels(account.Theme);
 			bool isDataOk = true;// Якщо логін або пароль має заборонений символ, то виходимо
-			Validator.CheckBannedChar(labelLogin, textBoxLogin.Text, Client.SEPARATOR, ref isDataOk);
-			Validator.CheckBannedChar(labelPassword, textBoxPassword.Text, Client.SEPARATOR, ref isDataOk);
+			Validator.CheckBannedChar(labelLogin, textBoxLogin.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
+			Validator.CheckBannedChar(labelPassword, textBoxPassword.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
 			if (!isDataOk)
 				return;
 
@@ -157,8 +159,8 @@ namespace RecruitmentClient.Forms
 				mainForm.FormClosed += (s, args) => { Close(); };
 				Visible = false;
 
-				CustomMessageBox.Show($"Ви успішно увійшли до свого акаунту.\nЛаскаво просимо!", "Успіх",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+				CustomMessageBox.Show($"Ви успішно увійшли до свого акаунту.\nЛаскаво просимо!",
+					account.Theme, "Успіх", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 			catch (ArgumentException ae)
 			{
@@ -171,12 +173,13 @@ namespace RecruitmentClient.Forms
 					countWrongLogin = 0;
 				}
 
-				CustomMessageBox.Show($"{ae.Message} {msg}", "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				CustomMessageBox.Show($"{ae.Message} {msg}", account.Theme, "Помилка",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 			catch (System.Net.Sockets.SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+					"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}
@@ -262,8 +265,8 @@ namespace RecruitmentClient.Forms
 		private void CheckOldPassword()
 		{// Перевірка введення старого паролю
 			if (account.Password != textBoxPassword.Text)// Ввели НЕ вірно
-				CustomMessageBox.Show("Старий пароль введений не вірно!", "Помилка",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				CustomMessageBox.Show("Старий пароль введений не вірно!", account.Theme,
+					"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			else
 			{// Ввели вірно
 				labelPassword2.Visible = true;
@@ -277,19 +280,19 @@ namespace RecruitmentClient.Forms
 
 				textBoxPassword.Focus();
 				CustomMessageBox.Show("Ви правильно ввели свій старий пароль!\nТепер введіть новий пароль та підтвердіть його.",
-					"Підтверджено", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+					account.Theme, "Підтверджено", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 			}
 
 		}
 		private void CheckNewPassword()
 		{// Перевірка введення нового паролю
 			if (account.Password == textBoxPassword.Text)// Ввели НЕ вірно
-				CustomMessageBox.Show("Новий пароль не може співпадати зі старим!", "Помилка",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				CustomMessageBox.Show("Новий пароль не може співпадати зі старим!",
+					account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			else
 			{// Ввели вірно
-				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити пароль?", "Зміна паролю",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити пароль?",
+					account.Theme, "Зміна паролю", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 				if (result == DialogResult.Yes)
 				{
 					try
@@ -297,7 +300,7 @@ namespace RecruitmentClient.Forms
 					catch (System.Net.Sockets.SocketException)
 					{
 						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+							"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 					account.SetLoginPassword(account.Login, textBoxPassword.Text);

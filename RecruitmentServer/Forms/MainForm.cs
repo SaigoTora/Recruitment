@@ -498,7 +498,7 @@ namespace RecruitmentServer.Forms
 				max = Int32.Parse(textBoxMax.Text);
 			if (min != null && max != null && min > max)
 				CustomMessageBox.Show("Мінімальне значення не може бути більше максимального!",
-					"Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
+					account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
 
 			bool? isRelevance = null;// Актуальність
 			string status = null;// Статус
@@ -527,7 +527,7 @@ namespace RecruitmentServer.Forms
 				bool needToShowMB = true;
 				position = textBoxSearch.Text;// Посада
 				Validator.CheckBannedChar(new Label() { Text = "Посада" },
-					position, Server.SEPARATOR, ref needToShowMB);
+					position, Server.SEPARATOR, account.Theme, ref needToShowMB);
 			}
 
 			ServerSortOption sortOption = ServerSortOption.Date;// Сортування

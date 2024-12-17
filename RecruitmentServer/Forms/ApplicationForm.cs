@@ -44,7 +44,7 @@ namespace RecruitmentServer.Forms
 				buttonReasonRejection.Visible = true;
 				buttonReasonRejection.Click += (sender, e) =>
 				{
-					CustomMessageBox.Show(application.ReasonRejection, "Причина відмови",
+					CustomMessageBox.Show(application.ReasonRejection, account.Theme, "Причина відмови",
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				};
 			}
@@ -76,7 +76,7 @@ namespace RecruitmentServer.Forms
 			if (comboBoxDecision.Text == "Відхилена")
 			{// Перевірка причини відмови на заборонений символ
 				bool isDataOk = true;
-				Validator.CheckBannedChar(labelReason, richTextBoxReason.Text, Server.SEPARATOR, ref isDataOk);
+				Validator.CheckBannedChar(labelReason, richTextBoxReason.Text, Server.SEPARATOR, account.Theme, ref isDataOk);
 				if (!isDataOk)
 					return;
 			}
@@ -90,13 +90,13 @@ namespace RecruitmentServer.Forms
 				{
 					CustomMessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
 						$"Проведення співбесіди не повинно відбуватися раніше,\nніж через {MIN_HOURS_WAIT_TO_EVENT} год. після прийняття заявки.",
-				"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					return;
 				}
 			}
 
 			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити статус заявки?\nПісля цього змінити статус буде неможливо.",
-				"Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+				account.Theme, "Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.Yes)
 			{
 				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
@@ -107,7 +107,7 @@ namespace RecruitmentServer.Forms
 					Candidate candidate = DataBase.GetCandidate(application.IdCandidate);
 					CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
 						$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",
-						"Контактна інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+						account.Theme, "Контактна інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				}
 
 				refresh(EventArgs.Empty);// Перезавантажуємо головну форму

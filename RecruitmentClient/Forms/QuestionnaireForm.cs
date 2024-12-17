@@ -141,7 +141,7 @@ namespace RecruitmentClient.Forms
 		private void ButtonLanguageHelp_Click(object sender, EventArgs e)
 		{// Виведення додаткової інформації для користувача
 			CustomMessageBox.Show("Рівень мови - це Ваш особистий рівень знань певної мови, він може приймати значення від 1 до 10.",
-				"Інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+				account.Theme, "Інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private void ButtonAddLanguage_Click(object sender, EventArgs e)
 		{// Додавання мови
@@ -251,20 +251,21 @@ namespace RecruitmentClient.Forms
 			bool isDataOk = true;
 
 			// Місто або село проживання
-			Validator.CheckSymbols(labelCity, textBoxCity, ref isDataOk, ValidLanguage.UA, "’- ");
-			Validator.CheckMinLength(labelCity, textBoxCity, 2, ref isDataOk);
+			Validator.CheckSymbols(labelCity, textBoxCity, account.Theme, ref isDataOk, ValidLanguage.UA, "’- ");
+			Validator.CheckMinLength(labelCity, textBoxCity, 2, account.Theme, ref isDataOk);
 			// Хронічні захворювання
-			Validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases, ref isDataOk, ValidLanguage.UA, "’- 0123456789");
+			Validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases, account.Theme, ref isDataOk, ValidLanguage.UA, "’- 0123456789");
 
 			CheckValidEducations(ref isDataOk);
-			Validator.CheckBannedChar(labelAdditionalInfo, richTextBoxAdditionalInfo.Text, Client.SEPARATOR, ref isDataOk);
+			Validator.CheckBannedChar(labelAdditionalInfo, richTextBoxAdditionalInfo.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
 
 			// Унікальність мов
 			for (int i = 0; i < languages.Count; i++)
 				for (int j = i + 1; j < languages.Count; j++)
 					if (languages[i].ComboBoxName.SelectedIndex == languages[j].ComboBoxName.SelectedIndex)
 					{
-						Validator.ShowWrongLabel(languages[i].LabelName, "Список мов не може зберігати дві однакові мови.", ref isDataOk);
+						Validator.ShowWrongLabel(languages[i].LabelName, "Список мов не може зберігати дві однакові мови.",
+							account.Theme, ref isDataOk);
 						Validator.ShowWrongLabel(languages[j].LabelName);
 						break;
 					}
@@ -274,7 +275,8 @@ namespace RecruitmentClient.Forms
 				for (int j = i + 1; j < educations.Count; j++)
 					if (educations[i].Equals(educations[j]))
 					{
-						Validator.ShowWrongLabel(educations[i].LabelNameInstitution, "Список освіт не може зберігати дві однакові освіти.", ref isDataOk);
+						Validator.ShowWrongLabel(educations[i].LabelNameInstitution, "Список освіт не може зберігати дві однакові освіти.",
+							account.Theme, ref isDataOk);
 						Validator.ShowWrongLabel(educations[j].LabelNameInstitution);
 						break;
 					}
@@ -285,20 +287,23 @@ namespace RecruitmentClient.Forms
 		{// Метод перевіряє та показує які освіти були введені не вірно
 			for (int i = 0; i < educations.Count; i++)
 			{// Назви закладів, спеціальності та перевірка дат
-				Validator.CheckSymbols(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution, ref isDataOk,
-					ValidLanguage.UA, "’.\"-№ 0123456789");
-				Validator.CheckMinLength(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution, 2, ref isDataOk);
+				Validator.CheckSymbols(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution,
+					account.Theme, ref isDataOk, ValidLanguage.UA, "’.\"-№ 0123456789");
+				Validator.CheckMinLength(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution, 2,
+					account.Theme, ref isDataOk);
 
-				Validator.CheckSymbols(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty, ref isDataOk,
-					ValidLanguage.UA, "’- ");
-				Validator.CheckMinLength(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty, 2, ref isDataOk);
+				Validator.CheckSymbols(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty,
+					account.Theme, ref isDataOk, ValidLanguage.UA, "’- ");
+				Validator.CheckMinLength(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty, 2,
+					account.Theme, ref isDataOk);
 
 				if (educations[i].NUD_YearAdmission.Value > educations[i].DTP_DateEnd.Value.Year)
 				{// Перевірка дати вступу та дати закінчення навчання
 					if (isDataOk)
 						educations[i].NUD_YearAdmission.Focus();
 
-					Validator.ShowWrongLabel(educations[i].LabelYearAdmission, "Рік початку навчання не може бути більшим, ніж рік закінчення!", ref isDataOk);
+					Validator.ShowWrongLabel(educations[i].LabelYearAdmission, "Рік початку навчання не може бути більшим, ніж рік закінчення!",
+						account.Theme, ref isDataOk);
 					Validator.ShowWrongLabel(educations[i].LabelDateEnd);
 				}
 			}
@@ -370,7 +375,7 @@ namespace RecruitmentClient.Forms
 					catch (System.Net.Sockets.SocketException)
 					{
 						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-							"\nСпробуйте, будь ласка, пізніше.", "Помилка підключення",
+							"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
 							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					}
 				}
@@ -383,7 +388,7 @@ namespace RecruitmentClient.Forms
 		{// Обробник події: закриття форми
 		 // Чи дійсно користувач хоче вийти?
 			DialogResult result = CustomMessageBox.Show("Якщо Ви вийдете, то дані не будуть збережені.\nЧи дійсно Ви хочете вийти?",
-				"Вихід", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+				account.Theme, "Вихід", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 			if (result == DialogResult.No)// Якщо користувач НЕ хоче виходити
 				e.Cancel = true;
 			else if (account.candidate.questionnaire.City == null)
