@@ -108,24 +108,11 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelFullName,
-				labelNationality, labelCity, labelBirthday, labelContact,
-				labelAdditionalInfoTitle, labelExperience, labelReadiness,
-				labelDriverLicense, labelChildrenAmount, labelBusinessTrip,
-				labelFamilyStatus, labelHealth, labelSmokerAlcohol,
-				labelChronicDiseases, labelLanguageTitle, labelLanguageNumber,
-				labelLanguage, labelLevel, labelLanguageHelp, labelEducationTitle, labelEducationNumber,
-				labelNameInstitution, labelSpecialty, labelEducationDegree, labelYearAdmission,
-				labelDateEnd, labelEducationForm);
-
-			ColorChanger.ChangeInputControlsColor(theme, richTextBoxContact,
-				 richTextBoxAdditionalInfo, richTextBoxChronicDiseases);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
 
 			if (theme == Theme.White)
 			{// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
 				pictureBoxLine.BackColor = Color.Black;
 				flpLanguages.BackColor = Color.FromArgb(213, 213, 213);
 				flpEducations.BackColor = Color.FromArgb(213, 213, 213);
@@ -134,7 +121,6 @@ namespace RecruitmentServer.Forms
 			}
 			else if (theme == Theme.Black)
 			{// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
 				pictureBoxLine.BackColor = Color.White;
 				flpLanguages.BackColor = Color.FromArgb(32, 32, 32);
 				flpEducations.BackColor = Color.FromArgb(32, 32, 32);

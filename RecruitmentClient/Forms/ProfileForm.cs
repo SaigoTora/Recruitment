@@ -179,6 +179,9 @@ namespace RecruitmentClient.Forms
 			};
 			Visible = false;
 		}
+		public void SetTheme(Theme theme)
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
+
 		private void ProfileForm_FormClosed(object sender, FormClosedEventArgs e)
 		{// Обробник події: закриття форми
 			buttonEventHandlers.UnsubscribeAll();
@@ -186,24 +189,6 @@ namespace RecruitmentClient.Forms
 			{
 				startForm.Visible = true;
 				account.candidate = null;
-			}
-		}
-
-		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelSurname, labelName, labelFatherName,
-				   labelPhone, labelPhoneStart, labelBirthday, labelEmail);
-			ColorChanger.ChangeInputControlsColor(theme, textBoxSurname, textBoxName,
-					textBoxFatherName, textBoxPhone1, textBoxPhone2, textBoxPhone3, textBoxEmail);
-
-			if (theme == Theme.White)
-			{// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
-			}
-			else if (theme == Theme.Black)
-			{// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
 			}
 		}
 	}

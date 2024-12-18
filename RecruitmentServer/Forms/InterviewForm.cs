@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
@@ -167,22 +166,7 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelDateEvent,
-				labelStatus, labelDate, labelHours, labelMinutes);
-
-			ColorChanger.ChangeInputControlsColor(theme, comboBoxDecision,
-				numericUpDownHours, numericUpDownMinutes);
-			ColorChanger.ChangeInputControlsForeColor(theme, richTextBoxPosition);
-
-			if (theme == Theme.White)// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
-			else if (theme == Theme.Black)// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
-
-			richTextBoxPosition.BackColor = BackColor;
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void InterviewForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

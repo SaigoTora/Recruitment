@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Themes\IThemeChange.cs" />
     <Compile Include="Themes\Theme.cs" />
+    <Compile Include="Themes\ThemeControlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ControlEventHandlers\ControlEventHandlersDiagram.cd" />

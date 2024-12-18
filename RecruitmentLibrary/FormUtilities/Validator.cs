@@ -8,7 +8,8 @@ namespace RecruitmentLibrary.FormUtilities
 {
 	public static class Validator
 	{// Статичний клас для перевірки даних та виділення label-ів
-		public static readonly Color ErrorColor = Color.Red;
+		private static readonly Color ErrorColor = Color.Red;
+
 		private static bool StringHaveAllDigit(string s)
 		{// Метод, який перевіряє рядок на те, що всі символи - цифри
 			for (int i = 0; i < s.Length; i++)
@@ -128,12 +129,8 @@ namespace RecruitmentLibrary.FormUtilities
 		{// Метод встановлює значення label-у за замовчуванням
 			for (int i = 0; i < labels.Length; i++)
 			{
-				if (theme == Theme.White)
-					labels[i].ForeColor = ColorChanger.LabelColorThemeW;
-				else if (theme == Theme.Black)
-					labels[i].ForeColor = ColorChanger.LabelColorThemeB;
+				ThemeControlManager.ChangeLabelsColor(theme, labels[i]);
 				labels[i].Font = new Font(labels[i].Font, FontStyle.Regular);
-
 			}
 		}
 	}

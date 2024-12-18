@@ -351,18 +351,16 @@ namespace RecruitmentClient.Forms
 			else if (account.Theme == Theme.Black)// Якщо тема була темною
 				account.Theme = Theme.White;
 
+			Validator.SetDefaultLabels(account.Theme, labelLogin, labelPassword, labelPassword2);
 			SetTheme(account.Theme);
 		}
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelLogin, labelPassword, labelPassword2, labelRegister1);
-			ColorChanger.ChangeInputControlsColor(theme, textBoxLogin, textBoxPassword, textBoxPassword2);
-			ColorChanger.ChangeInputControlsForeColor(theme, checkBoxRememberMe);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
+
 			if (theme == Theme.White)
 			{// Якщо треба встановити світлу тему
 				pictureBoxTheme.Image = Properties.Resources.sun;
-				BackColor = ColorChanger.BackColorThemeW;
 
 				if (isPasswordVisible)
 					pictureBoxShowPwd.Image = Properties.Resources.eyeOpB;
@@ -372,7 +370,6 @@ namespace RecruitmentClient.Forms
 			else if (theme == Theme.Black)
 			{// Якщо треба встановити темну тему
 				pictureBoxTheme.Image = Properties.Resources.moon;
-				BackColor = ColorChanger.BackColorThemeB;
 
 				if (isPasswordVisible)
 					pictureBoxShowPwd.Image = Properties.Resources.eyeOpW;

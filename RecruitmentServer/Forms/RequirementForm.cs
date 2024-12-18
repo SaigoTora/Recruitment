@@ -202,30 +202,7 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelCity, labelCityInfo,
-				labelAgeMin, labelAgeMax, labelExpMin, labelEducationDegree,
-				labelCandidateMustHave, labelNoChronicDiseases,
-				labelDriverLicense, labelNoSmoker, labelNoDrinkAlcohol, labelBusinessTrip,
-				labelStudent);
-
-			ColorChanger.ChangeInputControlsColor(theme, textBoxCity, numericUpDownAgeMin,
-				numericUpDownAgeMax, numericUpDownExpMin, listBoxDegrees);
-
-			ColorChanger.ChangeInputControlsForeColor(theme, checkBoxDiplomaAll,
-				checkBoxNoChronicDiseasesNo, checkBoxNoChronicDiseasesYes,
-				checkBoxDriverLicenseNo, checkBoxDriverLicenseYes,
-				checkBoxNoSmokerNo, checkBoxNoSmokerYes, checkBoxNoDrinkAlcoholNo,
-				checkBoxNoDrinkAlcoholYes, checkBoxBusinessTripNo,
-				checkBoxBusinessTripYes, checkBoxStudentNo, checkBoxStudentYes,
-				checkBoxStudentNull);
-
-			if (theme == Theme.White)// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
-			else if (theme == Theme.Black)// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void RequirementForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

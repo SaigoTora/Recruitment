@@ -395,30 +395,11 @@ namespace RecruitmentClient.Forms
 				account.candidate.questionnaire = null;
 		}
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelNationality, labelCity,
-					labelChildrenAmount, labelExperience, labelReadiness, labelDriverLicense,
-					labelFamilyStatus, labelBusinessTripOpportunity, labelChronicDiseases,
-					labelChronicDiseasesInfo, labelSmoker, labelDrinkAlcohol,
-					 labelLanguageNumber, labelLanguage, labelLevel, labelEducation, labelEducationNumber,
-					 labelNameInstitution, labelSpecialty, labelEducationDegree,
-					 labelYearAdmission, labelDateEnd, labelEducationForm, labelAdditionalInfo);
-
-			ColorChanger.ChangeInputControlsColor(theme, textBoxCity,
-					numericUpDownChildrenAmount, numericUpDownExperience, numericUpDownReadiness,
-					 richTextBoxChronicDiseases, numericUpDownLevel, textBoxNameInstitution,
-					 textBoxSpecialty, numericUpDownYearAdmission, richTextBoxAdditionalInfo,
-					 comboBoxNationality, comboBoxFamilyStatus, comboBoxBusinessTripOpportunity,
-					 comboBoxLanguage, comboBoxEducationDegree, comboBoxEducationForm);
-
-			ColorChanger.ChangeInputControlsForeColor(theme,
-					checkBoxDriverLicenseNo, checkBoxDriverLicenseYes, checkBoxSmokerNo,
-					checkBoxSmokerYes, checkBoxDrinkAlcoholNo, checkBoxDrinkAlcoholYes);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
 
 			if (theme == Theme.White)
 			{// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
 				flpLanguages.BackColor = Color.FromArgb(213, 213, 213);
 				flpEducations.BackColor = Color.FromArgb(213, 213, 213);
 				panelLanguage.BackColor = Color.FromArgb(230, 230, 230);
@@ -426,7 +407,6 @@ namespace RecruitmentClient.Forms
 			}
 			else if (theme == Theme.Black)
 			{// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
 				flpLanguages.BackColor = Color.FromArgb(32, 32, 32);
 				flpEducations.BackColor = Color.FromArgb(32, 32, 32);
 				panelLanguage.BackColor = Color.FromArgb(40, 40, 40);

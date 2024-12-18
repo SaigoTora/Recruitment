@@ -90,27 +90,7 @@ namespace RecruitmentClient.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelPosition,
-					labelDatePublication, labelSalaryTitle, labelPositionDescriptionTitle,
-					labelAdditionalInfoTitle, labelRequirementTitle, labelAdditionalTitle);
-
-			ColorChanger.ChangeInputControlsBackColor(theme, richTextBoxClientAdditionalInfo);
-			ColorChanger.ChangeInputControlsForeColor(theme, richTextBoxSalary, richTextBoxPositionDescription,
-					 richTextBoxAdditionalInfo, richTextBoxRequirement, richTextBoxClientAdditionalInfo);
-
-			if (theme == Theme.White)// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
-			else if (theme == Theme.Black)// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
-
-			richTextBoxSalary.BackColor = BackColor;
-			richTextBoxPositionDescription.BackColor = BackColor;
-			richTextBoxAdditionalInfo.BackColor = BackColor;
-			richTextBoxRequirement.BackColor = BackColor;
-			richTextBoxClientAdditionalInfo.BackColor = BackColor;
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

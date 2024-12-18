@@ -156,20 +156,16 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelTitle, labelCandidate,
-				labelVacancy, labelScores, labelEmpty);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
 
 			if (theme == Theme.White)// Якщо треба встановити світлу тему
 			{
-				BackColor = ColorChanger.BackColorThemeW;
 				flpMain.BackColor = Color.FromArgb(213, 213, 213);
 				panelAssignment.BackColor = Color.FromArgb(222, 222, 222);
 			}
 			else if (theme == Theme.Black)// Якщо треба встановити темну тему
 			{
-				BackColor = ColorChanger.BackColorThemeB;
 				flpMain.BackColor = Color.FromArgb(32, 32, 32);
 				panelAssignment.BackColor = Color.FromArgb(37, 37, 37);
 			}

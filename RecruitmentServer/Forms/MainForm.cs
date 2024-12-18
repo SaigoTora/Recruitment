@@ -704,21 +704,16 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelMinMax,
-					labelMinMax2, labelEmpty, labelCountV, labelFullName,
-					labelRelevance, labelScores, labelStatus, labelStatusA, labelStatusI,
-				labelDatePublicationV, labelDateSubmissionA, labelDateEventI, labelDateEmploymentE);
-			ColorChanger.ChangeInputControlsColor(theme, textBoxSearch, textBoxMin, textBoxMax,
-				comboBoxSort, comboBoxDate, comboBoxStatus);
-			ColorChanger.ChangeInputControlsForeColor(theme, panelSearch, labelVacancy, labelApplication, labelInterview,
-				labelEmployee, labelPositionV, labelPositionA, labelPositionI, labelPositionE);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
+			ThemeControlManager.ChangeLabelsColor(theme, labelEmpty, labelCountV, labelFullName,
+				labelRelevance, labelScores, labelStatus, labelStatusA, labelStatusI,
+				labelDatePublicationV, labelDateSubmissionA, labelDateEventI, labelDateEmploymentE,
+				labelPositionV, labelPositionA, labelPositionI, labelPositionE);
 
 			if (theme == Theme.White)
 			{// Якщо треба встановити світлу тему
 				pictureBoxTheme.Image = Properties.Resources.sun;
-				BackColor = Color.FromArgb(220, 220, 220);
 				flpMain.BackColor = Color.FromArgb(213, 213, 213);
 				pictureBoxLine.BackColor = Color.Black;
 
@@ -733,7 +728,6 @@ namespace RecruitmentServer.Forms
 			else if (theme == Theme.Black)
 			{// Якщо треба встановити темну тему
 				pictureBoxTheme.Image = Properties.Resources.moon;
-				BackColor = Color.FromArgb(35, 35, 35);
 				flpMain.BackColor = Color.FromArgb(32, 32, 32);
 				pictureBoxLine.BackColor = Color.White;
 
@@ -759,8 +753,8 @@ namespace RecruitmentServer.Forms
 			{
 				panel.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
 				foreach (Control control in panel.Controls)
-					if (control is Label)
-						control.ForeColor = ColorChanger.LabelColorThemeW;
+					if (control is Label label)
+						ThemeControlManager.ChangeLabelsColor(Theme.White, label);
 			}
 		}
 		private void SetBlackPanels()
@@ -776,8 +770,8 @@ namespace RecruitmentServer.Forms
 			{
 				panel.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
 				foreach (Control control in panel.Controls)
-					if (control is Label)
-						control.ForeColor = ColorChanger.LabelColorThemeB;
+					if (control is Label label)
+						ThemeControlManager.ChangeLabelsColor(Theme.Black, label);
 			}
 		}
 

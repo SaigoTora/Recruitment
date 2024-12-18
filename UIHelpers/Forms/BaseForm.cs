@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using UIHelpers.Controls;
+using UIHelpers.Themes;
 
 namespace UIHelpers.Forms
 {
@@ -105,6 +106,8 @@ namespace UIHelpers.Forms
 
 		}
 
+		public void ChangeCustomTitleBarTheme(Theme theme)
+			=> customTitleBar.ChangeTheme(theme);
 
 		protected override void Dispose(bool disposing)
 		{

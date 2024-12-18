@@ -2,7 +2,6 @@
 using System.Data;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
 using UIHelpers.ControlEventHandlers;
@@ -127,22 +126,7 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{// Метод задає формі потрібну тему
-			customTitleBar.ChangeTheme(theme);
-			ColorChanger.ChangeLabelsForeColor(theme, labelAgeUnder18,
-				labelAge18_30, labelAge30_50, labelAgeOver50, labelExpNone, labelExpUnderYear,
-				labelExp1_3, labelExpOver3, labelDiploma, labelNoChronicDiseases, labelDriverLicense,
-				labelNoSmoker, labelNoDrinkAlcohol, labelBusinessTripOpportunity);
-
-			ColorChanger.ChangeInputControlsColor(theme, NUDAgeUnder18,
-				NUDAge18_30, NUDAge30_50, NUDAgeOver50, NUDExpNone, NUDExpUnderYear,
-				NUDExp1_3, NUDExpOver3, NUDDiploma, NUDNoChronicDiseases, NUDDriverLicense,
-				NUDNoSmoker, NUDNoDrinkAlcohol, NUDBusinessTripOpportunity, NUDDegree, comboBoxDegrees);
-			if (theme == Theme.White)// Якщо треба встановити світлу тему
-				BackColor = ColorChanger.BackColorThemeW;
-			else if (theme == Theme.Black)// Якщо треба встановити темну тему
-				BackColor = ColorChanger.BackColorThemeB;
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void PointsForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
