@@ -395,24 +395,7 @@ namespace RecruitmentClient.Forms
 				account.candidate.questionnaire = null;
 		}
 		public void SetTheme(Theme theme)
-		{
-			ThemeControlManager.ChangeFormTheme(this, theme);
-
-			if (theme == Theme.White)
-			{// Якщо треба встановити світлу тему
-				flpLanguages.BackColor = Color.FromArgb(213, 213, 213);
-				flpEducations.BackColor = Color.FromArgb(213, 213, 213);
-				panelLanguage.BackColor = Color.FromArgb(230, 230, 230);
-				panelEducation.BackColor = Color.FromArgb(230, 230, 230);
-			}
-			else if (theme == Theme.Black)
-			{// Якщо треба встановити темну тему
-				flpLanguages.BackColor = Color.FromArgb(32, 32, 32);
-				flpEducations.BackColor = Color.FromArgb(32, 32, 32);
-				panelLanguage.BackColor = Color.FromArgb(40, 40, 40);
-				panelEducation.BackColor = Color.FromArgb(40, 40, 40);
-			}
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

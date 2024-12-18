@@ -329,27 +329,48 @@ namespace RecruitmentClient.Forms
 			if (isPasswordVisible)
 			{
 				textBoxPassword.PasswordChar = '*';
-				if (account.Theme == Theme.White)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeClB;
-				else if (account.Theme == Theme.Black)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeClW;
+				switch (account.Theme)
+				{
+					case Theme.White:
+						pictureBoxShowPwd.Image = Properties.Resources.eyeClB;
+						break;
+					case Theme.Black:
+						pictureBoxShowPwd.Image = Properties.Resources.eyeClW;
+						break;
+					default:
+						throw new InvalidOperationException($"Unknown theme: {account.Theme}");
+				}
 			}
 			else
 			{
 				textBoxPassword.PasswordChar = '\0';
-				if (account.Theme == Theme.White)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeOpB;
-				else if (account.Theme == Theme.Black)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeOpW;
+				switch (account.Theme)
+				{
+					case Theme.White:
+						pictureBoxShowPwd.Image = Properties.Resources.eyeOpB;
+						break;
+					case Theme.Black:
+						pictureBoxShowPwd.Image = Properties.Resources.eyeOpW;
+						break;
+					default:
+						throw new InvalidOperationException($"Unknown theme: {account.Theme}");
+				}
 			}
 			isPasswordVisible = !isPasswordVisible;
 		}
 		private void PictureBoxTheme_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку зміни теми
-			if (account.Theme == Theme.White)// Якщо тема була світлою
-				account.Theme = Theme.Black;
-			else if (account.Theme == Theme.Black)// Якщо тема була темною
-				account.Theme = Theme.White;
+		{
+			switch (account.Theme)
+			{
+				case Theme.White:
+					account.Theme = Theme.Black;
+					break;
+				case Theme.Black:
+					account.Theme = Theme.White;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {account.Theme}");
+			}
 
 			Validator.SetDefaultLabels(account.Theme, labelLogin, labelPassword, labelPassword2);
 			SetTheme(account.Theme);
@@ -358,23 +379,42 @@ namespace RecruitmentClient.Forms
 		{
 			ThemeControlManager.ChangeFormTheme(this, theme);
 
-			if (theme == Theme.White)
-			{// Якщо треба встановити світлу тему
-				pictureBoxTheme.Image = Properties.Resources.sun;
+			SetPasswordTheme(theme);
 
-				if (isPasswordVisible)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeOpB;
-				else
-					pictureBoxShowPwd.Image = Properties.Resources.eyeClB;
+			switch (theme)
+			{
+				case Theme.White:
+					pictureBoxTheme.Image = Properties.Resources.sun;
+					break;
+				case Theme.Black:
+					pictureBoxTheme.Image = Properties.Resources.moon;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
-			else if (theme == Theme.Black)
-			{// Якщо треба встановити темну тему
-				pictureBoxTheme.Image = Properties.Resources.moon;
-
-				if (isPasswordVisible)
-					pictureBoxShowPwd.Image = Properties.Resources.eyeOpW;
-				else
-					pictureBoxShowPwd.Image = Properties.Resources.eyeClW;
+		}
+		private void SetPasswordTheme(Theme theme)
+		{
+			switch (theme)
+			{
+				case Theme.White:
+					{
+						if (isPasswordVisible)
+							pictureBoxShowPwd.Image = Properties.Resources.eyeOpB;
+						else
+							pictureBoxShowPwd.Image = Properties.Resources.eyeClB;
+						break;
+					}
+				case Theme.Black:
+					{
+						if (isPasswordVisible)
+							pictureBoxShowPwd.Image = Properties.Resources.eyeOpW;
+						else
+							pictureBoxShowPwd.Image = Properties.Resources.eyeClW;
+						break;
+					}
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
 		}
 

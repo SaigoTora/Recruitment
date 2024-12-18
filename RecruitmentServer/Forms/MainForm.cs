@@ -692,12 +692,20 @@ namespace RecruitmentServer.Forms
 					control.Width = flpMain.ClientSize.Width - control.Margin.Horizontal - 6;
 		}
 
+		#region Theme
 		private void PictureBoxTheme_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку зміни теми
-			if (account.Theme == Theme.White)// Якщо тема була світлою
-				account.Theme = Theme.Black;
-			else if (account.Theme == Theme.Black)// Якщо тема була темною
-				account.Theme = Theme.White;
+		{
+			switch (account.Theme)
+			{
+				case Theme.White:
+					account.Theme = Theme.Black;
+					break;
+				case Theme.Black:
+					account.Theme = Theme.White;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {account.Theme}");
+			}
 
 			SetTheme(account.Theme);
 			Serializator.Serialize(account, Program.SerializePath, Program.EncryptKey);
@@ -711,69 +719,65 @@ namespace RecruitmentServer.Forms
 				labelDatePublicationV, labelDateSubmissionA, labelDateEventI, labelDateEmploymentE,
 				labelPositionV, labelPositionA, labelPositionI, labelPositionE);
 
-			if (theme == Theme.White)
-			{// Якщо треба встановити світлу тему
-				pictureBoxTheme.Image = Properties.Resources.sun;
-				flpMain.BackColor = Color.FromArgb(213, 213, 213);
-				pictureBoxLine.BackColor = Color.Black;
-
-				SetWhitePanels();
-
-				pictureBoxRefresh.Image = Properties.Resources.refreshB;
-				pictureBoxDown.Image = Properties.Resources.arrowDownB;
-				pictureBoxUp.Image = Properties.Resources.arrowUpB;
-				pictureBoxSearch.Image = Properties.Resources.loupeB;
-
-			}
-			else if (theme == Theme.Black)
-			{// Якщо треба встановити темну тему
-				pictureBoxTheme.Image = Properties.Resources.moon;
-				flpMain.BackColor = Color.FromArgb(32, 32, 32);
-				pictureBoxLine.BackColor = Color.White;
-
-				SetBlackPanels();
-
-				pictureBoxRefresh.Image = Properties.Resources.refreshW;
-				pictureBoxDown.Image = Properties.Resources.arrowDownW;
-				pictureBoxUp.Image = Properties.Resources.arrowUpW;
-				pictureBoxSearch.Image = Properties.Resources.loupeW;
+			SetPicturesAndPanelsTheme(theme);
+		}
+		private void SetPicturesAndPanelsTheme(Theme theme)
+		{
+			switch (theme)
+			{
+				case Theme.White:
+					{
+						pictureBoxTheme.Image = Properties.Resources.sun;
+						pictureBoxRefresh.Image = Properties.Resources.refreshB;
+						pictureBoxDown.Image = Properties.Resources.arrowDownB;
+						pictureBoxUp.Image = Properties.Resources.arrowUpB;
+						pictureBoxSearch.Image = Properties.Resources.loupeB;
+						pictureBoxLine.BackColor = Color.Black;
+						SetWhitePanels();
+						break;
+					}
+				case Theme.Black:
+					{
+						pictureBoxTheme.Image = Properties.Resources.moon;
+						pictureBoxRefresh.Image = Properties.Resources.refreshW;
+						pictureBoxDown.Image = Properties.Resources.arrowDownW;
+						pictureBoxUp.Image = Properties.Resources.arrowUpW;
+						pictureBoxSearch.Image = Properties.Resources.loupeW;
+						pictureBoxLine.BackColor = Color.White;
+						SetBlackPanels();
+						break;
+					}
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
 		}
 		private void SetWhitePanels()
-		{// Метод встановлює темну тему для панелей: вакансій, заявок, співбесід та співробітників
-			const byte COLOR = 222;
-
-			panelVacancy.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelApplication.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelInterview.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelEmployee.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-
+		{
+			ThemeControlManager.ChangePanelColor(Theme.White, panelVacancy,
+				panelApplication, panelInterview, panelEmployee);
 
 			foreach (Panel panel in createdPanels)
 			{
-				panel.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
+				panel.BackColor = ThemeControlManager.PanelBackColor.White;
 				foreach (Control control in panel.Controls)
 					if (control is Label label)
 						ThemeControlManager.ChangeLabelsColor(Theme.White, label);
 			}
 		}
 		private void SetBlackPanels()
-		{// Метод встановлює темну тему для панелей: вакансій, заявок, співбесід та співробітників
-			const byte COLOR = 37;
-
-			panelVacancy.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelApplication.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelInterview.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
-			panelEmployee.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
+		{
+			ThemeControlManager.ChangePanelColor(Theme.Black, panelVacancy,
+				panelApplication, panelInterview, panelEmployee);
 
 			foreach (Panel panel in createdPanels)
 			{
-				panel.BackColor = Color.FromArgb(COLOR, COLOR, COLOR);
+				panel.BackColor = ThemeControlManager.PanelBackColor.Black;
 				foreach (Control control in panel.Controls)
 					if (control is Label label)
 						ThemeControlManager.ChangeLabelsColor(Theme.Black, label);
 			}
 		}
+		#endregion
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

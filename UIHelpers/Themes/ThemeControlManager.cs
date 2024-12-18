@@ -2,12 +2,16 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using UIHelpers.Controls;
 using UIHelpers.Forms;
 
 namespace UIHelpers.Themes
 {
 	public class ThemeControlManager
 	{
+		public static readonly (Color White, Color Black) PanelBackColor =
+			(Color.FromArgb(222, 222, 222), Color.FromArgb(37, 37, 37));
+
 		public static void ChangeFormTheme(Form form, Theme theme)
 		{
 			if (form is BaseForm baseForm)
@@ -54,6 +58,13 @@ namespace UIHelpers.Themes
 					case RichTextBox richTextBox:
 						ChangeRichTextBoxColor(theme, richTextBox);
 						break;
+					case FlowLayoutPanel flowLayoutPanel:
+						ChangeFlowLayoutPanelColor(theme, flowLayoutPanel);
+						break;
+					case Panel panel:
+						if (panel.Name != CustomTitleBar.MAIN_PANEL_NAME)
+							ChangePanelColor(theme, panel);
+						break;
 					default:
 						break;
 				}
@@ -66,12 +77,89 @@ namespace UIHelpers.Themes
 		public static void ChangeLabelsColor(Theme theme, params Label[] labels)
 		{
 			(Color White, Color Black) _labelForeColor =
-				(Color.FromArgb(235, 235, 235), Color.FromArgb(20, 20, 20));
+				(Color.FromArgb(20, 20, 20), Color.FromArgb(235, 235, 235));
 
-			if (theme == Theme.White)
-				ChangeControlsForeColor(_labelForeColor.White, labels);
-			else if (theme == Theme.Black)
-				ChangeControlsForeColor(_labelForeColor.Black, labels);
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsForeColor(_labelForeColor.White, labels);
+					break;
+				case Theme.Black:
+					ChangeControlsForeColor(_labelForeColor.Black, labels);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		public static void ChangePanelColor(Theme theme, params Panel[] panels)
+		{
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsBackColor(PanelBackColor.White, panels);
+					break;
+				case Theme.Black:
+					ChangeControlsBackColor(PanelBackColor.Black, panels);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeInputControlsColor(Theme theme, params Control[] controls)
+		{
+			ChangeInputControlsBackColor(theme, controls);
+			ChangeInputControlsForeColor(theme, controls);
+		}
+		private static void ChangeInputControlsForeColor(Theme theme, params Control[] controls)
+		{
+			(Color White, Color Black) _inputBackColor =
+				(Color.Black, Color.White);
+
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsForeColor(_inputBackColor.White, controls);
+					break;
+				case Theme.Black:
+					ChangeControlsForeColor(_inputBackColor.Black, controls);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeInputControlsBackColor(Theme theme, params Control[] controls)
+		{
+			(Color White, Color Black) _inputForeColor =
+				(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
+
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsBackColor(_inputForeColor.White, controls);
+					break;
+				case Theme.Black:
+					ChangeControlsBackColor(_inputForeColor.Black, controls);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeFlowLayoutPanelColor(Theme theme, FlowLayoutPanel panel)
+		{
+			(Color White, Color Black) _panelBackColor =
+				(Color.FromArgb(213, 213, 213), Color.FromArgb(32, 32, 32));
+
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsBackColor(_panelBackColor.White, panel);
+					break;
+				case Theme.Black:
+					ChangeControlsBackColor(_panelBackColor.Black, panel);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
 		}
 		private static void ChangeRichTextBoxColor(Theme theme, RichTextBox richTextBox)
 		{
@@ -87,38 +175,13 @@ namespace UIHelpers.Themes
 			else
 				ChangeInputControlsColor(theme, richTextBox);
 		}
-		private static void ChangeInputControlsColor(Theme theme, params Control[] controls)
-		{
-			ChangeInputControlsBackColor(theme, controls);
-			ChangeInputControlsForeColor(theme, controls);
-		}
-		private static void ChangeInputControlsForeColor(Theme theme, params Control[] controls)
-		{
-			(Color White, Color Black) _inputBackColor =
-				(Color.Black, Color.White);
 
-			if (theme == Theme.White)
-				ChangeControlsForeColor(_inputBackColor.White, controls);
-			else if (theme == Theme.Black)
-				ChangeControlsForeColor(_inputBackColor.Black, controls);
-		}
-		private static void ChangeInputControlsBackColor(Theme theme, params Control[] controls)
-		{
-			(Color White, Color Black) _inputForeColor =
-				(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
-
-			if (theme == Theme.White)
-				ChangeControlsBackColor(_inputForeColor.White, controls);
-			else if (theme == Theme.Black)
-				ChangeControlsBackColor(_inputForeColor.Black, controls);
-		}
-
-		private static void ChangeControlsForeColor(Color color, Control[] controls)
+		private static void ChangeControlsForeColor(Color color, params Control[] controls)
 		{
 			for (int i = 0; i < controls.Length; i++)
 				controls[i].ForeColor = color;
 		}
-		private static void ChangeControlsBackColor(Color color, Control[] controls)
+		private static void ChangeControlsBackColor(Color color, params Control[] controls)
 		{
 			for (int i = 0; i < controls.Length; i++)
 				controls[i].BackColor = color;

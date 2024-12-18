@@ -156,20 +156,7 @@ namespace RecruitmentServer.Forms
 		}
 
 		public void SetTheme(Theme theme)
-		{
-			ThemeControlManager.ChangeFormTheme(this, theme);
-
-			if (theme == Theme.White)// Якщо треба встановити світлу тему
-			{
-				flpMain.BackColor = Color.FromArgb(213, 213, 213);
-				panelAssignment.BackColor = Color.FromArgb(222, 222, 222);
-			}
-			else if (theme == Theme.Black)// Якщо треба встановити темну тему
-			{
-				flpMain.BackColor = Color.FromArgb(32, 32, 32);
-				panelAssignment.BackColor = Color.FromArgb(37, 37, 37);
-			}
-		}
+			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void AssignmentForm_FormClosed(object sender, FormClosedEventArgs e)
 		{ }

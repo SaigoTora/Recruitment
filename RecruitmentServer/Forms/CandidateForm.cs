@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.FormUtilities;
@@ -100,33 +102,30 @@ namespace RecruitmentServer.Forms
 			panelMore.Visible = true;
 			labelBusinessTrip.Text = "Можливість відряджень: " + DataBase.GetBusinessTrip(idBusinessTrip);
 			labelFamilyStatus.Text = "Сімейний стан: " + DataBase.GetFamilyStatus(idFamilyStatus);
-		}
 
-		private void CandidateForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			buttonEventHandlers.UnsubscribeAll();
+			panelMore.Focus();
 		}
 
 		public void SetTheme(Theme theme)
 		{
 			ThemeControlManager.ChangeFormTheme(this, theme);
 
-			if (theme == Theme.White)
-			{// Якщо треба встановити світлу тему
-				pictureBoxLine.BackColor = Color.Black;
-				flpLanguages.BackColor = Color.FromArgb(213, 213, 213);
-				flpEducations.BackColor = Color.FromArgb(213, 213, 213);
-				panelLanguage.BackColor = Color.FromArgb(230, 230, 230);
-				panelEducation.BackColor = Color.FromArgb(230, 230, 230);
+			switch (theme)
+			{
+				case Theme.White:
+					pictureBoxLine.BackColor = Color.Black;
+					break;
+				case Theme.Black:
+					pictureBoxLine.BackColor = Color.White;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
-			else if (theme == Theme.Black)
-			{// Якщо треба встановити темну тему
-				pictureBoxLine.BackColor = Color.White;
-				flpLanguages.BackColor = Color.FromArgb(32, 32, 32);
-				flpEducations.BackColor = Color.FromArgb(32, 32, 32);
-				panelLanguage.BackColor = Color.FromArgb(40, 40, 40);
-				panelEducation.BackColor = Color.FromArgb(40, 40, 40);
-			}
+		}
+
+		private void CandidateForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }

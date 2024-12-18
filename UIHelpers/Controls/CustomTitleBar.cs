@@ -10,16 +10,16 @@ namespace UIHelpers.Controls
 {
 	public class CustomTitleBar : IDisposable
 	{
+		internal const string MAIN_PANEL_NAME = "panelCustomTitleBar";
 		private const string MOVE_PARENT_CONTROL_DOWN_TAG = "needToMoveParentDown";
 		private const string FIXED_CONTROL_POSITION_TAG = "fixedPosition";
 		private const int DEFAULT_PANEL_HEIGHT = 35;
-		private const string MAIN_PANEL_NAME = "panelCustomTitleBar";
 
 		#region Colors
 		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultPanelColor =
-			(Color.FromArgb(235, 235, 235), Color.FromArgb(31, 31, 31));
+			(Color.FromArgb(235, 235, 235), Color.FromArgb(32, 32, 32));
 		private static readonly (Color WhiteTheme, Color BlackTheme) _pressedPanelColor =
-			(Color.FromArgb(225, 225, 225), Color.FromArgb(35, 35, 35));
+			(Color.FromArgb(227, 227, 227), Color.FromArgb(28, 28, 28));
 		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultButtonColor =
 			(Color.Black, Color.FromArgb(200, 200, 200));
 		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultNameColor =
