@@ -60,6 +60,7 @@
     <Compile Include="ControlEventHandlers\ControlEventHandlers.cs" />
     <Compile Include="ControlEventHandlers\LabelEventHandlers.cs" />
     <Compile Include="ControlEventHandlers\PictureBoxEventHandlers.cs" />
+    <Compile Include="Controls\ControlCreator.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>

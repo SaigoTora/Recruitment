@@ -148,7 +148,7 @@ namespace RecruitmentClient.Forms
 			if (languages.Count + 1 > MAX_LANGUAGE_COUNT)// Не може бути більше ніж максимум мов
 				return;
 
-			Creator creator = new Creator(panelLanguage, flpLanguages, languages.Count + 1);
+			ControlCreator creator = new ControlCreator(panelLanguage, flpLanguages, languages.Count + 1);
 
 			// Створюємо об’єкти типу Label
 			creator.CreateLabel(labelLanguageNumber, (languages.Count + 1).ToString());
@@ -217,7 +217,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateEducation()
 		{// Метод, який створює елементи форми освіти
-			Creator creator = new Creator(panelEducation, flpEducations as Control, educations.Count + 1);
+			ControlCreator creator = new ControlCreator(panelEducation, flpEducations as Control, educations.Count + 1);
 
 			creator.CreateLabel(labelEducationNumber, (educations.Count + 1).ToString());// Створюємо об’єкти label
 			Label label1 = creator.CreateLabel(labelNameInstitution, labelNameInstitution.Text);

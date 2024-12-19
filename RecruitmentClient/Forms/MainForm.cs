@@ -231,7 +231,7 @@ namespace RecruitmentClient.Forms
 			Panel[] panels = new Panel[vacancies.Count];
 			for (int i = 0; i < vacancies.Count; i++)
 			{// Створення вакансій
-				Creator creator = new Creator(panelVacancy, flpMain, i + 1, false);
+				ControlCreator creator = new ControlCreator(panelVacancy, flpMain, i + 1, false);
 				panels[i] = creator.MainPanel;
 
 				CreateVacancy(vacancies[i], creator);
@@ -251,7 +251,7 @@ namespace RecruitmentClient.Forms
 			Panel[] panels = new Panel[applications.Count];
 			for (int i = 0; i < applications.Count; i++)
 			{// Створення заявок
-				Creator creator = new Creator(panelApplication, flpMain, i + 1, false);
+				ControlCreator creator = new ControlCreator(panelApplication, flpMain, i + 1, false);
 				panels[i] = creator.MainPanel;
 
 				CreateApplication(applications[i], creator);
@@ -271,7 +271,7 @@ namespace RecruitmentClient.Forms
 			Panel[] panels = new Panel[interviews.Count];
 			for (int i = 0; i < interviews.Count; i++)
 			{// Створення співбесід
-				Creator creator = new Creator(panelInterview, flpMain, i + 1, false);
+				ControlCreator creator = new ControlCreator(panelInterview, flpMain, i + 1, false);
 				panels[i] = creator.MainPanel;
 
 				CreateInterview(interviews[i], creator);
@@ -280,7 +280,7 @@ namespace RecruitmentClient.Forms
 			panelsVAI.AddRange(panels);
 		}
 
-		private void CreateVacancy(Vacancy vacancy, Creator creator)
+		private void CreateVacancy(Vacancy vacancy, ControlCreator creator)
 		{// Метод, який створює одну вакансію
 			creator.CreateLabel(labelPositionV, vacancy.Position.Name);
 			creator.CreateLabel(labelPositionDescriptionV, vacancy.Position.Description);
@@ -291,7 +291,7 @@ namespace RecruitmentClient.Forms
 			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
 		}
-		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, Creator creator)
+		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, ControlCreator creator)
 		{// Метод, який створює одну заявку
 			creator.CreateLabel(labelPositionA, application.Position.Name);
 			Label labelStatus = creator.CreateLabel(labelStatusA, application.Status);
@@ -320,7 +320,7 @@ namespace RecruitmentClient.Forms
 				};
 			}
 		}
-		private void CreateInterview(Interview interview, Creator creator)
+		private void CreateInterview(Interview interview, ControlCreator creator)
 		{// Метод, який створює одну співбесіду
 			creator.CreateLabel(labelPositionI, interview.Position.Name);
 			Label labelStatus = creator.CreateLabel(labelStatusI, interview.Status);

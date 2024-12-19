@@ -1,31 +1,34 @@
 ﻿using Guna.UI2.WinForms;
 using System.Windows.Forms;
 
-namespace RecruitmentLibrary.FormUtilities
+namespace UIHelpers.Controls
 {
-	public class Creator
-	{// Клас, який створює елементи форми за зразком
-		public Panel MainPanel { get; private set; }// Панель для елементів
-		public int Number { get; set; }// Номер для префіксу назви
+	public class ControlCreator
+	{
+		public Panel MainPanel { get; private set; }
 
-		public Creator(Panel panel, Control parent, int number, bool visible = true)
-		{// Конструктор
-			Number = number;
-			MainPanel = CreateControl(panel);
-			MainPanel.Visible = visible;
+		private readonly bool _visible;
+		private int _number = 0;// Number for the control name
+
+		public ControlCreator(Panel panel, Control parent, bool visible = true)
+		{
+			MainPanel = panel;
+			_visible = visible;
+
 			parent.Controls.Add(MainPanel);
 		}
 
 		private T CreateControl<T>(T sample) where T : Control, new()
-		{// Метод створює базовий клас Control за зразком
+		{
 			T control = new T()
 			{
-				Name = sample.Name + Number,
+				Name = sample.Name + _number,
 				Location = sample.Location,
 				Size = sample.Size,
 				BackColor = sample.BackColor,
 				ForeColor = sample.ForeColor,
 				Font = sample.Font,
+				Cursor = sample.Cursor,
 				Anchor = sample.Anchor,
 				Tag = sample.Tag
 			};
@@ -34,11 +37,21 @@ namespace RecruitmentLibrary.FormUtilities
 			return control;
 		}
 
+		public Panel CreateMainPanel()
+		{
+			_number++;
+			Control parent = MainPanel.Parent;
+
+			MainPanel = CreateControl(MainPanel);
+			MainPanel.Visible = _visible;
+			parent.Controls.Add(MainPanel);
+
+			return MainPanel;
+		}
 		public Label CreateLabel(Label sample, string text = null)
-		{// Метод створює об'єкт класу Label
+		{
 			Label label = CreateControl(sample);
 			label.AutoSize = sample.AutoSize;
-			label.Size = sample.Size;
 			label.TextAlign = sample.TextAlign;
 			label.AutoEllipsis = sample.AutoEllipsis;
 			if (text == null) label.Text = sample.Text;
@@ -47,20 +60,11 @@ namespace RecruitmentLibrary.FormUtilities
 			return label;
 		}
 		public TextBox CreateTextBox(TextBox sample)
-		{// Метод створює об'єкт класу TextBox
+		{
 			TextBox textBox = CreateControl(sample);
 			textBox.MaxLength = sample.MaxLength;
 
 			return textBox;
-		}
-		public Button CreateButton(Button sample)
-		{
-			Button button = CreateControl(sample);
-			button.FlatStyle = sample.FlatStyle;
-			button.Text = sample.Text;
-			button.Cursor = sample.Cursor;
-
-			return button;
 		}
 		public Guna2GradientButton CreateButton(Guna2GradientButton sample)
 		{
@@ -76,51 +80,50 @@ namespace RecruitmentLibrary.FormUtilities
 			button.GradientMode = sample.GradientMode;
 			button.HoverState = sample.HoverState;
 			button.Text = sample.Text;
-			button.Cursor = sample.Cursor;
 
 			return button;
 		}
 
 		public NumericUpDown CreateNumericUpDown(NumericUpDown sample)
-		{// Метод створює об'єкт класу NumericUpDown
-			NumericUpDown NUD = CreateControl(sample);
-			NUD.Minimum = sample.Minimum;
-			NUD.Maximum = sample.Maximum;
+		{
+			NumericUpDown nud = CreateControl(sample);
+			nud.Minimum = sample.Minimum;
+			nud.Maximum = sample.Maximum;
 
-			return NUD;
+			return nud;
 		}
 		public ComboBox CreateComboBox(ComboBox sample, int selectedIndex = 0)
-		{// Метод створює об'єкт класу ComboBox
-			ComboBox CB = CreateControl(sample);
-			foreach (string item in sample.Items)// Додаємо елементи комбобоксу
-				CB.Items.Add(item);
-			CB.SelectedIndex = selectedIndex;// Вибираємо потрібний елемент
-			CB.DropDownStyle = sample.DropDownStyle;
-			CB.Cursor = sample.Cursor;
-			CB.IntegralHeight = sample.IntegralHeight;
-			CB.MaxDropDownItems = sample.MaxDropDownItems;
+		{
+			ComboBox comboBox = CreateControl(sample);
+			foreach (string item in sample.Items)// Adding combobox elements
+				comboBox.Items.Add(item);
 
-			return CB;
+			comboBox.SelectedIndex = selectedIndex;
+			comboBox.DropDownStyle = sample.DropDownStyle;
+			comboBox.IntegralHeight = sample.IntegralHeight;
+			comboBox.MaxDropDownItems = sample.MaxDropDownItems;
+
+			return comboBox;
 		}
 		public DateTimePicker CreateDateTimePicker(DateTimePicker sample)
-		{// Метод створює об'єкт класу DateTimePicker
-			DateTimePicker DTP = CreateControl(sample);
-			DTP.CalendarFont = sample.CalendarFont;
-			DTP.MinDate = sample.MinDate;
-			DTP.MaxDate = sample.MaxDate;
-			DTP.DropDownAlign = sample.DropDownAlign;
+		{
+			DateTimePicker dtp = CreateControl(sample);
+			dtp.CalendarFont = sample.CalendarFont;
+			dtp.MinDate = sample.MinDate;
+			dtp.MaxDate = sample.MaxDate;
+			dtp.DropDownAlign = sample.DropDownAlign;
 
-			return DTP;
+			return dtp;
 		}
 		public PictureBox CreatePictureBox(PictureBox sample)
-		{// Метод створює об'єкт класу PictureBox
+		{
 			PictureBox pictureBox = CreateControl(sample);
 			pictureBox.Image = sample.Image;
 
 			return pictureBox;
 		}
 		public CheckBox CreateCheckBox(CheckBox sample)
-		{// Метод створює об'єкт класу CheckBox
+		{
 			CheckBox checkBox = CreateControl(sample);
 			checkBox.Checked = sample.Checked;
 			checkBox.Text = sample.Text;
