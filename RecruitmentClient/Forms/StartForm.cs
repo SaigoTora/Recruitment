@@ -5,12 +5,12 @@ using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentClient.Forms
 {
@@ -96,20 +96,20 @@ namespace RecruitmentClient.Forms
 			// Перевірка підтвердження паролю, якщо підтвердження видиме
 			if (labelPassword2.Visible && textBoxPassword2.Visible
 			&& textBoxPassword.Text != textBoxPassword2.Text)
-				Validator.ShowWrongLabel(labelPassword2,
+				ValidationFeedbackManager.ShowWrongLabel(labelPassword2,
 					$"Підтвердження пароля не вірне!", account.Theme, ref isDataOk, textBoxPassword2);
 			// Якщо логін та пароль співпадає
 			if (textBoxLogin.Text == textBoxPassword.Text)
 			{
-				Validator.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataOk);
-				Validator.ShowWrongLabel(labelPassword);
+				ValidationFeedbackManager.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataOk);
+				ValidationFeedbackManager.ShowWrongLabel(labelPassword);
 			}
 
 			return isDataOk;
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
-			Validator.SetDefaultLabels(theme, labelLogin, labelPassword, labelPassword2);
+			ValidationFeedbackManager.SetDefaultLabels(theme, labelLogin, labelPassword, labelPassword2);
 		}
 		private void OffsetElement(Control control, int x, int y)// Метод переміщує елемент
 		{ control.Location = new Point(control.Location.X + x, control.Location.Y + y); }
@@ -372,7 +372,7 @@ namespace RecruitmentClient.Forms
 					throw new InvalidOperationException($"Unknown theme: {account.Theme}");
 			}
 
-			Validator.SetDefaultLabels(account.Theme, labelLogin, labelPassword, labelPassword2);
+			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelLogin, labelPassword, labelPassword2);
 			SetTheme(account.Theme);
 		}
 		public void SetTheme(Theme theme)

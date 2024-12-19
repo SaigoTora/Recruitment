@@ -2,13 +2,13 @@
 using System.Windows.Forms;
 
 using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentServer.Forms
 {
@@ -148,7 +148,7 @@ namespace RecruitmentServer.Forms
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
 			bool isDataOk = true;
-			Validator.SetDefaultLabels(account.Theme, labelSalaryTitle, labelPositionDescriptionTitle,
+			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelSalaryTitle, labelPositionDescriptionTitle,
 				labelAdditionalInfoTitle);// Встановлюємо значення label-ів за замовчуванням
 
 			Label bufLabel = new Label { Text = "Посада" };

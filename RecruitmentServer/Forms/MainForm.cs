@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
@@ -12,6 +11,7 @@ using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentServer.Forms
 {

@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentClient.Forms
 {
@@ -96,17 +96,17 @@ namespace RecruitmentClient.Forms
 			string pattern = @"^.+@.{2,}\..{2,}$";
 			string email = textBoxEmail.Text;
 			if (!Regex.IsMatch(email, pattern))
-				Validator.ShowWrongLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
+				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
 					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), де запис [n;m) - " +
 					$"кількість символів.", account.Theme, ref isDataOk, textBoxEmail);
 
 			if (email.Contains(Client.SEPARATOR.ToString()))
-				Validator.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
+				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
 					account.Theme, ref isDataOk, textBoxEmail);
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
-			Validator.SetDefaultLabels(theme, labelSurname, labelName,
+			ValidationFeedbackManager.SetDefaultLabels(theme, labelSurname, labelName,
 				labelFatherName, labelPhone, labelEmail);
 		}
 

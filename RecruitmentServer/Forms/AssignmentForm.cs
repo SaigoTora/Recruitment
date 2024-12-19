@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentLibrary;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
@@ -100,7 +99,6 @@ namespace RecruitmentServer.Forms
 		private void CreateFormResultItems()
 		{// Метод створює на формі елементи з результуючими даними
 			List<Panel> panels = new List<Panel>();
-			ControlCreator creator = new ControlCreator(panelAssignment, flpMain, false);
 			for (int i = 0; i < resultItems.Count; i++)
 			{
 				FullVacancy vacancy = DataBase.GetVacancy(resultItems[i].IdVacancy);

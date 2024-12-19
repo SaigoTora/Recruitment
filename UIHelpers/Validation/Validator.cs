@@ -1,14 +1,12 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-using UIHelpers.Forms;
 using UIHelpers.Themes;
 
-namespace RecruitmentLibrary.FormUtilities
+namespace UIHelpers.Validation
 {
 	public static class Validator
-	{// Статичний клас для перевірки даних та виділення label-ів
-		private static readonly Color ErrorColor = Color.Red;
+	{
+		public static readonly bool IsDataCorrect = true;
 
 		private static bool StringHaveAllDigit(string s)
 		{// Метод, який перевіряє рядок на те, що всі символи - цифри
@@ -50,19 +48,23 @@ namespace RecruitmentLibrary.FormUtilities
 		public static void CheckBannedChar(Label label, string text, char banChar, Theme theme, ref bool needToShowMB)
 		{// Метод перевіряє текст на заборонений для вводу символ
 			if (text.Contains(banChar.ToString()))
-				ShowWrongLabel(label, $"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.", theme, ref needToShowMB);
+				ValidationFeedbackManager.ShowWrongLabel(label,
+					$"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.",
+					theme, ref needToShowMB);
 		}
 		public static void CheckMinLength(Label label, Control focus, int minLength, Theme theme, ref bool needToShowMB)
 		{// Метод, який виділяє label, якщо кількість символів менше ніж minLength
 			if (focus.Text.Length < minLength)
-				ShowWrongLabel(label, $"{label.Text} мінімальна кількість символів для цього поля: {minLength}.",
+				ValidationFeedbackManager.ShowWrongLabel(label,
+					$"{label.Text} мінімальна кількість символів для цього поля: {minLength}.",
 					theme, ref needToShowMB, focus);
 		}
 		public static void CheckAllNumbers(Label label, Control focus, Theme theme, ref bool needToShowMB)
 		{// Метод, який виділяє label, якщо не всі символи - цифри
 			if (!StringHaveAllDigit(focus.Text))
-				ShowWrongLabel(label, $"{label.Text} рядок не може містити символи, які не є цифрою.", theme,
-					ref needToShowMB, focus);
+				ValidationFeedbackManager.ShowWrongLabel(label,
+					$"{label.Text} рядок не може містити символи, які не є цифрою.",
+					theme, ref needToShowMB, focus);
 		}
 		public static void CheckSymbols(Label label, Control focus, Theme theme, ref bool needToShowMB, ValidLanguage language, string exceptChars)
 		{// Метод, який виділяє label, якщо є символ який не є літерою певної мови та не є символом з масиву exceptChars
@@ -86,7 +88,8 @@ namespace RecruitmentLibrary.FormUtilities
 				for (int j = 0; j < exceptChars.Length; j++)
 					if (text[i] != exceptChars[j] && j == exceptChars.Length - 1)
 					{// Якщо символа немає в дозволених символах
-						ShowWrongLabel(label, errorMessage, theme, ref needToShowMB, focus);
+						ValidationFeedbackManager.ShowWrongLabel(label,
+							errorMessage, theme, ref needToShowMB, focus);
 					}
 					else if (text[i] == exceptChars[j])
 						break;
@@ -106,32 +109,7 @@ namespace RecruitmentLibrary.FormUtilities
 					}
 
 			if (k < count)// Якщо кількість менша за дозволену
-				ShowWrongLabel(label, $"{label.Text}: {errorMessage}", theme, ref needToShowMB);
-		}
-		public static void ShowWrongLabel(Label label, string errorMessage, Theme theme, ref bool needToShowMB, Control focus = null, string caption = null)
-		{// Метод виділяє неправильно заповнений об’єкт типу Label та показує, за потребою, MessageBox
-			ShowWrongLabel(label);
-			caption = caption ?? "Помилка введення";
-			if (needToShowMB)
-			{
-				focus?.Focus();
-				CustomMessageBox.Show("Дані були введені не вірно!\n" + errorMessage, theme, caption, CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				needToShowMB = false;
-			}
-		}
-
-		public static void ShowWrongLabel(Label label)
-		{// Метод виділяє неправильно заповнений об’єкт типу Label
-			label.ForeColor = ErrorColor;
-			label.Font = new Font(label.Font, FontStyle.Underline);
-		}
-		public static void SetDefaultLabels(Theme theme, params Label[] labels)
-		{// Метод встановлює значення label-у за замовчуванням
-			for (int i = 0; i < labels.Length; i++)
-			{
-				ThemeControlManager.ChangeLabelsColor(theme, labels[i]);
-				labels[i].Font = new Font(labels[i].Font, FontStyle.Regular);
-			}
+				ValidationFeedbackManager.ShowWrongLabel(label, $"{label.Text}: {errorMessage}", theme, ref needToShowMB);
 		}
 	}
 }

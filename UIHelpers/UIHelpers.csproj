@@ -80,6 +80,9 @@
     <Compile Include="Themes\IThemeChange.cs" />
     <Compile Include="Themes\Theme.cs" />
     <Compile Include="Themes\ThemeControlManager.cs" />
+    <Compile Include="Validation\ValidationFeedbackManager.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\ValidLanguage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ControlEventHandlers\ControlEventHandlersDiagram.cd" />

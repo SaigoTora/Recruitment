@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentServer.Forms
 {
@@ -100,7 +100,7 @@ namespace RecruitmentServer.Forms
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
 			bool isDataOk = true;
-			Validator.SetDefaultLabels(account.Theme, labelCity);
+			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelCity);
 
 			Validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme, ref isDataOk);
 

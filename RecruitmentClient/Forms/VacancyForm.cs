@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.FormUtilities;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentClient.Forms
 {

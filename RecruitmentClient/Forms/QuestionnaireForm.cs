@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentLibrary.FormUtilities;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentClient.Forms
 {
@@ -134,7 +133,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetDefaultLabels()
 		{// Метод повертає всім label-ам початкові значення
-			Validator.SetDefaultLabels(account.Theme, labelNationality, labelCity);
+			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelNationality, labelCity);
 			// Мови
 			for (int i = 0; i < languages.Count; i++)
 				languages[i].SetDefaultLabel(account.Theme);
@@ -269,9 +268,9 @@ namespace RecruitmentClient.Forms
 				for (int j = i + 1; j < languages.Count; j++)
 					if (languages[i].ComboBoxName.SelectedIndex == languages[j].ComboBoxName.SelectedIndex)
 					{
-						Validator.ShowWrongLabel(languages[i].LabelName, "Список мов не може зберігати дві однакові мови.",
+						ValidationFeedbackManager.ShowWrongLabel(languages[i].LabelName, "Список мов не може зберігати дві однакові мови.",
 							account.Theme, ref isDataOk);
-						Validator.ShowWrongLabel(languages[j].LabelName);
+						ValidationFeedbackManager.ShowWrongLabel(languages[j].LabelName);
 						break;
 					}
 
@@ -280,9 +279,9 @@ namespace RecruitmentClient.Forms
 				for (int j = i + 1; j < educations.Count; j++)
 					if (educations[i].Equals(educations[j]))
 					{
-						Validator.ShowWrongLabel(educations[i].LabelNameInstitution, "Список освіт не може зберігати дві однакові освіти.",
-							account.Theme, ref isDataOk);
-						Validator.ShowWrongLabel(educations[j].LabelNameInstitution);
+						ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelNameInstitution,
+							"Список освіт не може зберігати дві однакові освіти.", account.Theme, ref isDataOk);
+						ValidationFeedbackManager.ShowWrongLabel(educations[j].LabelNameInstitution);
 						break;
 					}
 
@@ -307,9 +306,10 @@ namespace RecruitmentClient.Forms
 					if (isDataOk)
 						educations[i].NUD_YearAdmission.Focus();
 
-					Validator.ShowWrongLabel(educations[i].LabelYearAdmission, "Рік початку навчання не може бути більшим, ніж рік закінчення!",
+					ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelYearAdmission,
+						"Рік початку навчання не може бути більшим, ніж рік закінчення!",
 						account.Theme, ref isDataOk);
-					Validator.ShowWrongLabel(educations[i].LabelDateEnd);
+					ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelDateEnd);
 				}
 			}
 		}
