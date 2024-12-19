@@ -42,6 +42,7 @@ namespace UIHelpers.Controls
 		public Panel CreateMainPanel()
 		{
 			_number++;
+			Control parent = MainPanel.Parent;
 
 			MainPanel = CreateControl(MainPanel);
 			MainPanel.Visible = _visible;

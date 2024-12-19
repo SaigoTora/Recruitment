@@ -75,6 +75,8 @@ namespace RecruitmentServer.Forms
 		}
 		internal void CreateLanguages(List<Language> languages)
 		{// Метод створює інформацію про МОВИ на формі
+
+			ControlCreator creator = new ControlCreator(panelLanguage, flpLanguages);
 			for (int i = 0; i < languages.Count; i++)
 			{
 				languageCreator.CreateMainPanel();
@@ -85,6 +87,7 @@ namespace RecruitmentServer.Forms
 		}
 		internal void CreateEducations(List<Education> educations)
 		{// Метод створює інформацію про ОСВІТИ на формі
+			ControlCreator creator = new ControlCreator(panelEducation, flpEducations);
 			for (int i = 0; i < educations.Count; i++)
 			{
 				educationCreator.CreateMainPanel();

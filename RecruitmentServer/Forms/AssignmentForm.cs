@@ -100,6 +100,7 @@ namespace RecruitmentServer.Forms
 		private void CreateFormResultItems()
 		{// Метод створює на формі елементи з результуючими даними
 			List<Panel> panels = new List<Panel>();
+			ControlCreator creator = new ControlCreator(panelAssignment, flpMain, false);
 			for (int i = 0; i < resultItems.Count; i++)
 			{
 				FullVacancy vacancy = DataBase.GetVacancy(resultItems[i].IdVacancy);
