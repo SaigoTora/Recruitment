@@ -75,6 +75,9 @@ namespace RecruitmentClient.Forms
 			countPanels = 0;
 			currentOffset = 0;
 
+			foreach (Panel panel in panelsVAI)
+				panel.Dispose();
+
 			panelsVAI.Clear();// Очищаємо список
 			Controls.Add(labelEmpty);// Переносимо label, щоб він не видалився
 			flpMain.Controls.Clear();// Видаляємо елементи з панелі
@@ -229,10 +232,11 @@ namespace RecruitmentClient.Forms
 			currentOffset += vacancies.Count;
 
 			Panel[] panels = new Panel[vacancies.Count];
+			ControlCreator creator = new ControlCreator(panelVacancy, flpMain);
+
 			for (int i = 0; i < vacancies.Count; i++)
 			{// Створення вакансій
-				Creator creator = new Creator(panelVacancy, flpMain, i + 1, false);
-				panels[i] = creator.MainPanel;
+				panels[i] = creator.CreateMainPanel();
 
 				CreateVacancy(vacancies[i], creator);
 			}
@@ -249,10 +253,11 @@ namespace RecruitmentClient.Forms
 			currentOffset += applications.Count;
 
 			Panel[] panels = new Panel[applications.Count];
+			ControlCreator creator = new ControlCreator(panelApplication, flpMain);
+
 			for (int i = 0; i < applications.Count; i++)
 			{// Створення заявок
-				Creator creator = new Creator(panelApplication, flpMain, i + 1, false);
-				panels[i] = creator.MainPanel;
+				panels[i] = creator.CreateMainPanel();
 
 				CreateApplication(applications[i], creator);
 			}
@@ -269,10 +274,11 @@ namespace RecruitmentClient.Forms
 			currentOffset += interviews.Count;
 
 			Panel[] panels = new Panel[interviews.Count];
+			ControlCreator creator = new ControlCreator(panelInterview, flpMain);
+
 			for (int i = 0; i < interviews.Count; i++)
 			{// Створення співбесід
-				Creator creator = new Creator(panelInterview, flpMain, i + 1, false);
-				panels[i] = creator.MainPanel;
+				panels[i] = creator.CreateMainPanel();
 
 				CreateInterview(interviews[i], creator);
 			}
@@ -280,7 +286,7 @@ namespace RecruitmentClient.Forms
 			panelsVAI.AddRange(panels);
 		}
 
-		private void CreateVacancy(Vacancy vacancy, Creator creator)
+		private void CreateVacancy(Vacancy vacancy, ControlCreator creator)
 		{// Метод, який створює одну вакансію
 			creator.CreateLabel(labelPositionV, vacancy.Position.Name);
 			creator.CreateLabel(labelPositionDescriptionV, vacancy.Position.Description);
@@ -291,7 +297,7 @@ namespace RecruitmentClient.Forms
 			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
 		}
-		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, Creator creator)
+		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, ControlCreator creator)
 		{// Метод, який створює одну заявку
 			creator.CreateLabel(labelPositionA, application.Position.Name);
 			Label labelStatus = creator.CreateLabel(labelStatusA, application.Status);
@@ -320,7 +326,7 @@ namespace RecruitmentClient.Forms
 				};
 			}
 		}
-		private void CreateInterview(Interview interview, Creator creator)
+		private void CreateInterview(Interview interview, ControlCreator creator)
 		{// Метод, який створює одну співбесіду
 			creator.CreateLabel(labelPositionI, interview.Position.Name);
 			Label labelStatus = creator.CreateLabel(labelStatusI, interview.Status);
@@ -664,6 +670,7 @@ namespace RecruitmentClient.Forms
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			ClearMainPanel();
 			labelEventHandlers.UnsubscribeAll();
 			pictureBoxEventHandlers.UnsubscribeAll();
 		}

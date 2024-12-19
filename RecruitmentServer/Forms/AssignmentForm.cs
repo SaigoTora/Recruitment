@@ -24,6 +24,7 @@ namespace RecruitmentServer.Forms
 		private List<int> candidateIds = new List<int>();// Список кодів кандидата
 		private AssignmentItem[] allItems;
 
+		private readonly ControlCreator assignmentCreator;
 		private readonly List<AssignmentItem> resultItems = new List<AssignmentItem>();// Список результатів
 		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
 
@@ -34,6 +35,7 @@ namespace RecruitmentServer.Forms
 			customTitleBar = new CustomTitleBar(this, "Призначення", minimizeBox: false, maximizeBox: false);
 			this.refresh = refresh;// Встановлюємо значення
 			this.account = account;
+			assignmentCreator = new ControlCreator(panelAssignment, flpMain, false);
 
 			SetTheme(account.Theme);
 		}
@@ -105,16 +107,15 @@ namespace RecruitmentServer.Forms
 				FullApplication application = DataBase.GetApplication(resultItems[i].IdVacancy,
 					resultItems[i].IdCandidate);
 
-				Creator creator = new Creator(panelAssignment, flpMain, i + 1, false);
-				panels.Add(creator.MainPanel);
+				panels.Add(assignmentCreator.CreateMainPanel());
 
-				creator.CreateLabel(labelCandidate);
-				creator.CreateLabel(labelVacancy);
-				creator.CreateLabel(labelScores, $"Балів: {resultItems[i].Scores}");
+				assignmentCreator.CreateLabel(labelCandidate);
+				assignmentCreator.CreateLabel(labelVacancy);
+				assignmentCreator.CreateLabel(labelScores, $"Балів: {resultItems[i].Scores}");
 
-				Guna2GradientButton buttonC = creator.CreateButton(buttonCandidate);
-				Guna2GradientButton buttonV = creator.CreateButton(buttonVacancy);
-				Guna2GradientButton buttonA = creator.CreateButton(buttonApplication);
+				Guna2GradientButton buttonC = assignmentCreator.CreateButton(buttonCandidate);
+				Guna2GradientButton buttonV = assignmentCreator.CreateButton(buttonVacancy);
+				Guna2GradientButton buttonA = assignmentCreator.CreateButton(buttonApplication);
 
 				buttonC.Text = candidate.Surname;
 				buttonV.Text = vacancy.Position.Name;
@@ -159,6 +160,8 @@ namespace RecruitmentServer.Forms
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void AssignmentForm_FormClosed(object sender, FormClosedEventArgs e)
-		{ }
+		{
+			assignmentCreator.Dispose();
+		}
 	}
 }

@@ -18,6 +18,9 @@ namespace RecruitmentServer.Forms
 	{// Форма кандидата
 		private const int INCREASE_FORM_HEIGHT = 100;
 		private readonly int idBusinessTrip, idFamilyStatus;
+		private readonly ControlCreator languageCreator;
+		private readonly ControlCreator educationCreator;
+
 		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal CandidateForm(Candidate candidate, ServerAccount account)
@@ -51,6 +54,8 @@ namespace RecruitmentServer.Forms
 
 			SetTheme(account.Theme);
 
+			languageCreator = new ControlCreator(panelLanguage, flpLanguages);
+			educationCreator = new ControlCreator(panelEducation, flpEducations);
 			CreateLanguages(candidate.questionnaire.Languages);
 			CreateEducations(candidate.questionnaire.Educations);
 			buttonEventHandlers.SubscribeToHover(buttonMore);
@@ -72,25 +77,25 @@ namespace RecruitmentServer.Forms
 		{// Метод створює інформацію про МОВИ на формі
 			for (int i = 0; i < languages.Count; i++)
 			{
-				Creator creator = new Creator(panelLanguage, flpLanguages, i + 1);
-				creator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
-				creator.CreateLabel(labelLanguage, "Мова: " + languages[i].Name);
-				creator.CreateLabel(labelLevel, "Рівень знань: " + languages[i].Level);
+				languageCreator.CreateMainPanel();
+				languageCreator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
+				languageCreator.CreateLabel(labelLanguage, "Мова: " + languages[i].Name);
+				languageCreator.CreateLabel(labelLevel, "Рівень знань: " + languages[i].Level);
 			}
 		}
 		internal void CreateEducations(List<Education> educations)
 		{// Метод створює інформацію про ОСВІТИ на формі
 			for (int i = 0; i < educations.Count; i++)
 			{
-				Creator creator = new Creator(panelEducation, flpEducations, i + 1);
-				creator.CreateLabel(labelEducationNumber, (i + 1).ToString());
-				creator.CreateLabel(labelNameInstitution, "Назва закладу: " + educations[i].NameInstitution);
-				creator.CreateLabel(labelSpecialty, "Спецальність: " + educations[i].Specialty);
-				creator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
+				educationCreator.CreateMainPanel();
+				educationCreator.CreateLabel(labelEducationNumber, (i + 1).ToString());
+				educationCreator.CreateLabel(labelNameInstitution, "Назва закладу: " + educations[i].NameInstitution);
+				educationCreator.CreateLabel(labelSpecialty, "Спецальність: " + educations[i].Specialty);
+				educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
 					DataBase.GetEducationDegree(educations[i].ID_EducationDegree));
-				creator.CreateLabel(labelYearAdmission, "Рік вступу: " + educations[i].YearAdmission);
-				creator.CreateLabel(labelDateEnd, "Дата закінчення: " + educations[i].DateEnd.ToString("yyyy-MM-dd"));
-				creator.CreateLabel(labelEducationForm, "Форма навчання: " +
+				educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " + educations[i].YearAdmission);
+				educationCreator.CreateLabel(labelDateEnd, "Дата закінчення: " + educations[i].DateEnd.ToString("yyyy-MM-dd"));
+				educationCreator.CreateLabel(labelEducationForm, "Форма навчання: " +
 					DataBase.GetEducationForm(educations[i].ID_EducationForm));
 			}
 		}
@@ -125,6 +130,8 @@ namespace RecruitmentServer.Forms
 
 		private void CandidateForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			languageCreator.Dispose();
+			educationCreator.Dispose();
 			buttonEventHandlers.UnsubscribeAll();
 		}
 	}

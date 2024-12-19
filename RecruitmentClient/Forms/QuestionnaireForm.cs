@@ -26,7 +26,10 @@ namespace RecruitmentClient.Forms
 
 		// Елементи форми мов та освіт
 		private readonly List<LanguageFormElements> languages = new List<LanguageFormElements>(MAX_LANGUAGE_COUNT);
+		private readonly ControlCreator languageCreator;
 		private readonly List<EducationFormElements> educations = new List<EducationFormElements>(MAX_EDUCATION_COUNT);
+		private readonly ControlCreator educationCreator;
+
 		private readonly ClientAccount account;// Обліковий запис
 		private readonly Questionnaire oldQuestionnaire = null;
 		private readonly bool formOpenForChange = false;
@@ -60,6 +63,8 @@ namespace RecruitmentClient.Forms
 			// Додаємо перші елементи мови
 			languages.Add(new LanguageFormElements(panelLanguage, labelLanguage, comboBoxLanguage, numericUpDownLevel));
 
+			languageCreator = new ControlCreator(panelLanguage, flpLanguages);
+			educationCreator = new ControlCreator(panelEducation, flpEducations);
 			if (a.candidate.questionnaire == null)
 			{// Якщо анкета відкрита для створення
 				a.candidate.questionnaire = new Questionnaire();
@@ -69,6 +74,7 @@ namespace RecruitmentClient.Forms
 			}
 			else// Якщо вже була заповнена анкета
 				SetFormValues(a.candidate.questionnaire);
+
 		}
 		private void QuestionnaireForm_Load(object sender, EventArgs e)
 		{// Обробник події завантаження форми
@@ -148,21 +154,21 @@ namespace RecruitmentClient.Forms
 			if (languages.Count + 1 > MAX_LANGUAGE_COUNT)// Не може бути більше ніж максимум мов
 				return;
 
-			Creator creator = new Creator(panelLanguage, flpLanguages, languages.Count + 1);
+			languageCreator.CreateMainPanel();
 
 			// Створюємо об’єкти типу Label
-			creator.CreateLabel(labelLanguageNumber, (languages.Count + 1).ToString());
-			Label label = creator.CreateLabel(labelLanguage);
-			creator.CreateLabel(labelLevel);
+			languageCreator.CreateLabel(labelLanguageNumber, (languages.Count + 1).ToString());
+			Label label = languageCreator.CreateLabel(labelLanguage);
+			languageCreator.CreateLabel(labelLevel);
 
 			// Створюємо об’єкти типу TextBox та NumericUpDown
-			ComboBox comboBox = creator.CreateComboBox(comboBoxLanguage, comboBoxLanguage.FindString(DEFAULT_LANGUAGE));
-			NumericUpDown nud = creator.CreateNumericUpDown(numericUpDownLevel);
+			ComboBox comboBox = languageCreator.CreateComboBox(comboBoxLanguage, comboBoxLanguage.FindString(DEFAULT_LANGUAGE));
+			NumericUpDown nud = languageCreator.CreateNumericUpDown(numericUpDownLevel);
 
 			// Додаємо елементи в список
-			languages.Add(new LanguageFormElements(creator.MainPanel, label, comboBox, nud));
+			languages.Add(new LanguageFormElements(languageCreator.MainPanel, label, comboBox, nud));
 			languages[languages.Count - 1].SetDefaultLabel(account.Theme);
-			creator.MainPanel.Focus();
+			languageCreator.MainPanel.Focus();
 		}
 		private void ButtonRemoveLanguage_Click(object sender, EventArgs e)
 		{// Видалення мови
@@ -217,33 +223,32 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateEducation()
 		{// Метод, який створює елементи форми освіти
-			Creator creator = new Creator(panelEducation, flpEducations as Control, educations.Count + 1);
+			educationCreator.CreateMainPanel();
+			educationCreator.CreateLabel(labelEducationNumber, (educations.Count + 1).ToString());// Створюємо об’єкти label
+			Label label1 = educationCreator.CreateLabel(labelNameInstitution, labelNameInstitution.Text);
+			Label label2 = educationCreator.CreateLabel(labelSpecialty, labelSpecialty.Text);
+			Label label3 = educationCreator.CreateLabel(labelYearAdmission, labelYearAdmission.Text);
+			Label label4 = educationCreator.CreateLabel(labelDateEnd, labelDateEnd.Text);
+			educationCreator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
+			educationCreator.CreateLabel(labelEducationForm, labelEducationForm.Text);
 
-			creator.CreateLabel(labelEducationNumber, (educations.Count + 1).ToString());// Створюємо об’єкти label
-			Label label1 = creator.CreateLabel(labelNameInstitution, labelNameInstitution.Text);
-			Label label2 = creator.CreateLabel(labelSpecialty, labelSpecialty.Text);
-			Label label3 = creator.CreateLabel(labelYearAdmission, labelYearAdmission.Text);
-			Label label4 = creator.CreateLabel(labelDateEnd, labelDateEnd.Text);
-			creator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
-			creator.CreateLabel(labelEducationForm, labelEducationForm.Text);
+			TextBox textBox1 = educationCreator.CreateTextBox(textBoxNameInstitution);// Створюємо об’єкти типу TextBox
+			TextBox textBox2 = educationCreator.CreateTextBox(textBoxSpecialty);
 
-			TextBox textBox1 = creator.CreateTextBox(textBoxNameInstitution);// Створюємо об’єкти типу TextBox
-			TextBox textBox2 = creator.CreateTextBox(textBoxSpecialty);
-
-			NumericUpDown nud = creator.CreateNumericUpDown(numericUpDownYearAdmission);// Створюємо об’єкт типу NumericUpDown
+			NumericUpDown nud = educationCreator.CreateNumericUpDown(numericUpDownYearAdmission);// Створюємо об’єкт типу NumericUpDown
 			nud.Value = yearAdmissionValue;
 
-			ComboBox comboBox1 = creator.CreateComboBox(comboBoxEducationDegree, 1);// Створюємо об’єкти типу ComboBox
-			ComboBox comboBox2 = creator.CreateComboBox(comboBoxEducationForm);
+			ComboBox comboBox1 = educationCreator.CreateComboBox(comboBoxEducationDegree, 1);// Створюємо об’єкти типу ComboBox
+			ComboBox comboBox2 = educationCreator.CreateComboBox(comboBoxEducationForm);
 
-			DateTimePicker date = creator.CreateDateTimePicker(dateTimePickerDateEnd);
+			DateTimePicker date = educationCreator.CreateDateTimePicker(dateTimePickerDateEnd);
 
 			// Додаємо елементи
-			educations.Add(new EducationFormElements(creator.MainPanel, label1, label2, label3, label4,
+			educations.Add(new EducationFormElements(educationCreator.MainPanel, label1, label2, label3, label4,
 				textBox1, textBox2, nud, date, comboBox1, comboBox2));
 			educations[educations.Count - 1].SetDefaultLabels(account.Theme);
 
-			creator.MainPanel.Focus();
+			educationCreator.MainPanel.Focus();
 		}
 
 		private bool CheckValidData()
@@ -399,6 +404,8 @@ namespace RecruitmentClient.Forms
 
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			languageCreator.Dispose();
+			educationCreator.Dispose();
 			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
