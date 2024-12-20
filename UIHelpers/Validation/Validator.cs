@@ -21,21 +21,21 @@ namespace UIHelpers.Validation
 		public void CheckBannedChar(Label label, string text, char banChar, Theme theme)
 		{
 			if (text.Contains(banChar.ToString()))
-				ValidationFeedbackManager.ShowWrongLabel(label,
+				ValidationFeedbackManager.HighlightInvalidLabel(label,
 					$"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.",
 					theme, ref _isDataValid);
 		}
 		public void CheckMinLength(Label label, Control focus, int minLength, Theme theme)
 		{
 			if (focus.Text.Length < minLength)
-				ValidationFeedbackManager.ShowWrongLabel(label,
+				ValidationFeedbackManager.HighlightInvalidLabel(label,
 					$"{label.Text} мінімальна кількість символів для цього поля: {minLength}.",
 					theme, ref _isDataValid, focus);
 		}
 		public void CheckAllNumbers(Label label, Control focus, Theme theme)
 		{// The data is not valid if not all characters are numbers
 			if (!StringHaveAllDigit(focus.Text))
-				ValidationFeedbackManager.ShowWrongLabel(label,
+				ValidationFeedbackManager.HighlightInvalidLabel(label,
 					$"{label.Text} рядок не може містити символи, які не є цифрою.",
 					theme, ref _isDataValid, focus);
 		}
@@ -62,7 +62,7 @@ namespace UIHelpers.Validation
 				for (int j = 0; j < allowedChars.Length; j++)
 					if (text[i] != allowedChars[j] && j == allowedChars.Length - 1)
 					{// If the character is not in the allowed characters
-						ValidationFeedbackManager.ShowWrongLabel(label,
+						ValidationFeedbackManager.HighlightInvalidLabel(label,
 							errorMessage, theme, ref _isDataValid, focus);
 					}
 					else if (text[i] == allowedChars[j])
@@ -83,7 +83,7 @@ namespace UIHelpers.Validation
 					}
 
 			if (k < count)// If the quantity is less than the allowed
-				ValidationFeedbackManager.ShowWrongLabel(label, $"{label.Text}: {errorMessage}", theme, ref _isDataValid);
+				ValidationFeedbackManager.HighlightInvalidLabel(label, $"{label.Text}: {errorMessage}", theme, ref _isDataValid);
 		}
 
 		private bool StringHaveAllDigit(string s)

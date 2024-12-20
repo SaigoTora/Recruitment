@@ -99,7 +99,7 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelCity);
+			ValidationFeedbackManager.ResetLabelsToDefault(account.Theme, labelCity);
 
 			Validator validator = new Validator();
 			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme);

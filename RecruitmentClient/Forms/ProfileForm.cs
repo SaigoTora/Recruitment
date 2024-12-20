@@ -98,17 +98,17 @@ namespace RecruitmentClient.Forms
 			string pattern = @"^.+@.{2,}\..{2,}$";
 			string email = textBoxEmail.Text;
 			if (!Regex.IsMatch(email, pattern))
-				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
+				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
 					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), де запис [n;m) - " +
 					$"кількість символів.", account.Theme, ref isDataValid, textBoxEmail);
 
 			if (email.Contains(Client.SEPARATOR.ToString()))
-				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
+				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
 					account.Theme, ref isDataValid, textBoxEmail);
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
-			ValidationFeedbackManager.SetDefaultLabels(theme, labelSurname, labelName,
+			ValidationFeedbackManager.ResetLabelsToDefault(theme, labelSurname, labelName,
 				labelFatherName, labelPhone, labelEmail);
 		}
 

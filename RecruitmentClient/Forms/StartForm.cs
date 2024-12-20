@@ -96,20 +96,20 @@ namespace RecruitmentClient.Forms
 			// Перевірка підтвердження паролю, якщо підтвердження видиме
 			if (labelPassword2.Visible && textBoxPassword2.Visible
 			&& textBoxPassword.Text != textBoxPassword2.Text)
-				ValidationFeedbackManager.ShowWrongLabel(labelPassword2,
+				ValidationFeedbackManager.HighlightInvalidLabel(labelPassword2,
 					$"Підтвердження пароля не вірне!", account.Theme, ref isDataValid, textBoxPassword2);
 			// Якщо логін та пароль співпадає
 			if (textBoxLogin.Text == textBoxPassword.Text)
 			{
-				ValidationFeedbackManager.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataValid);
-				ValidationFeedbackManager.ShowWrongLabel(labelPassword);
+				ValidationFeedbackManager.HighlightInvalidLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataValid);
+				ValidationFeedbackManager.HighlightInvalidLabel(labelPassword);
 			}
 
 			return isDataValid;
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
-			ValidationFeedbackManager.SetDefaultLabels(theme, labelLogin, labelPassword, labelPassword2);
+			ValidationFeedbackManager.ResetLabelsToDefault(theme, labelLogin, labelPassword, labelPassword2);
 		}
 		private void OffsetElement(Control control, int x, int y)// Метод переміщує елемент
 		{ control.Location = new Point(control.Location.X + x, control.Location.Y + y); }
@@ -372,7 +372,7 @@ namespace RecruitmentClient.Forms
 					throw new InvalidOperationException($"Unknown theme: {account.Theme}");
 			}
 
-			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelLogin, labelPassword, labelPassword2);
+			ValidationFeedbackManager.ResetLabelsToDefault(account.Theme, labelLogin, labelPassword, labelPassword2);
 			SetTheme(account.Theme);
 		}
 		public void SetTheme(Theme theme)

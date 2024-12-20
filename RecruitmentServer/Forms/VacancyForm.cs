@@ -147,7 +147,7 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelPosition, labelSalaryTitle, labelPositionDescriptionTitle,
+			ValidationFeedbackManager.ResetLabelsToDefault(account.Theme, labelPosition, labelSalaryTitle, labelPositionDescriptionTitle,
 				labelAdditionalInfoTitle);// Встановлюємо значення label-ів за замовчуванням
 
 			Validator validator = new Validator();

@@ -12,7 +12,7 @@ namespace RecruitmentClient.FormUtilities
 		{// Метод, який перевіряє унікальність е-mail
 			bool isEmailUnique = true;
 			if (!Client.EmailIsUnique(login, email))// Якщо унікальність відсутня
-				ValidationFeedbackManager.ShowWrongLabel(label, $"Такий e-mail вже зайнятий іншим користувачем.", theme, ref isEmailUnique);
+				ValidationFeedbackManager.HighlightInvalidLabel(label, $"Такий e-mail вже зайнятий іншим користувачем.", theme, ref isEmailUnique);
 
 			return isEmailUnique;
 		}
@@ -20,7 +20,7 @@ namespace RecruitmentClient.FormUtilities
 		{// Метод, який перевіряє унікальність номеру телефону
 			bool isPhoneUnique = true;
 			if (!Client.PhoneIsUnique(login, phone))// Якщо унікальність відсутня
-				ValidationFeedbackManager.ShowWrongLabel(label, $"Такий номер телефону вже зайнятий іншим користувачем.", theme, ref isPhoneUnique);
+				ValidationFeedbackManager.HighlightInvalidLabel(label, $"Такий номер телефону вже зайнятий іншим користувачем.", theme, ref isPhoneUnique);
 
 			return isPhoneUnique;
 		}
@@ -28,7 +28,7 @@ namespace RecruitmentClient.FormUtilities
 		{// Метод, який перевіряє логін на унікальність
 			bool isLoginUnique = true;
 			if (!Client.LoginIsUnique(login))// Якщо логінів більше ніж допустимо
-				ValidationFeedbackManager.ShowWrongLabel(label, $"Такий логін вже зайнятий іншим користувачем.", theme, ref isLoginUnique);
+				ValidationFeedbackManager.HighlightInvalidLabel(label, $"Такий логін вже зайнятий іншим користувачем.", theme, ref isLoginUnique);
 
 			return isLoginUnique;
 		}

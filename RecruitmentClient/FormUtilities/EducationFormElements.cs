@@ -44,7 +44,7 @@ namespace RecruitmentClient.FormUtilities
 		}
 		internal void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
-			ValidationFeedbackManager.SetDefaultLabels(theme, LabelNameInstitution,
+			ValidationFeedbackManager.ResetLabelsToDefault(theme, LabelNameInstitution,
 				LabelSpecialty, LabelYearAdmission, LabelDateEnd);
 		}
 

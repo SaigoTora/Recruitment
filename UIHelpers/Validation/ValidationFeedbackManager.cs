@@ -10,10 +10,11 @@ namespace UIHelpers.Validation
 	{
 		private static readonly Color _errorColor = Color.Red;
 
-		public static void ShowWrongLabel(Label label, string errorMessage, Theme theme, 
+		public static void HighlightInvalidLabel(Label label, string errorMessage, Theme theme,
 			ref bool needToShowMB, Control focus = null, string caption = null)
-		{// Метод виділяє неправильно заповнений об’єкт типу Label та показує, за потребою, MessageBox
-			ShowWrongLabel(label);
+		{// Highlights an incorrectly filled Label object and
+		 // optionally displays a MessageBox with an error message.
+			HighlightInvalidLabel(label);
 			caption = caption ?? "Помилка введення";
 			if (needToShowMB)
 			{
@@ -24,18 +25,16 @@ namespace UIHelpers.Validation
 			}
 		}
 
-		public static void ShowWrongLabel(Label label)
-		{// Метод виділяє неправильно заповнений об’єкт типу Label
+		public static void HighlightInvalidLabel(Label label)
+		{
 			label.ForeColor = _errorColor;
 			label.Font = new Font(label.Font, FontStyle.Underline);
 		}
-		public static void SetDefaultLabels(Theme theme, params Label[] labels)
-		{// Метод встановлює значення label-у за замовчуванням
+		public static void ResetLabelsToDefault(Theme theme, params Label[] labels)
+		{
 			ThemeControlManager.ChangeLabelsColor(theme, labels);
 			for (int i = 0; i < labels.Length; i++)
-			{
 				labels[i].Font = new Font(labels[i].Font, FontStyle.Regular);
-			}
 		}
 	}
 }
