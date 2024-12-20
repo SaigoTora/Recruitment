@@ -93,18 +93,18 @@ namespace RecruitmentClient.Forms
 
 			return isDataValid;
 		}
-		private void CheckValidEmail(ref bool isDataOk)
+		private void CheckValidEmail(ref bool isDataValid)
 		{// Метод перевіряє на правильність E-mail
 			string pattern = @"^.+@.{2,}\..{2,}$";
 			string email = textBoxEmail.Text;
 			if (!Regex.IsMatch(email, pattern))
 				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
 					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), де запис [n;m) - " +
-					$"кількість символів.", account.Theme, ref isDataOk, textBoxEmail);
+					$"кількість символів.", account.Theme, ref isDataValid, textBoxEmail);
 
 			if (email.Contains(Client.SEPARATOR.ToString()))
 				ValidationFeedbackManager.ShowWrongLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
-					account.Theme, ref isDataOk, textBoxEmail);
+					account.Theme, ref isDataValid, textBoxEmail);
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
