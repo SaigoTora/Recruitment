@@ -94,7 +94,7 @@ namespace UIHelpers.Validation
 			return true;
 		}
 		private string DeleteSpaces(string s)
-		{// Метод видаляє зайві пробіли
+		{
 			string res = string.Empty;
 			s = s.Trim(' ');
 

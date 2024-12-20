@@ -45,7 +45,8 @@ namespace UIHelpers.Forms
 			SetIcon(icon);
 			AdjustFormSize(width);
 
-			ChangeTheme(theme);
+			ThemeControlManager.ChangeFormTheme(this, theme);
+			flpButtons.BackColor = Color.Transparent;
 		}
 		private void SetButtons(CustomMessageBoxButtons buttons)
 		{
@@ -130,36 +131,6 @@ namespace UIHelpers.Forms
 
 			ClientSize = new Size(Math.Max(width, this.Width), requiredHeight);
 		}
-
-		#region Theme
-		public void ChangeTheme(Theme theme)
-		{
-			switch (theme)
-			{
-				case Theme.White:
-					SetWhiteMessageBox();
-					break;
-				case Theme.Black:
-					SetBlackMessageBox();
-					break;
-				default:
-					throw new InvalidOperationException($"Unknown theme: {theme}");
-			}
-		}
-
-		private void SetWhiteMessageBox()
-		{
-			customTitleBar.ChangeTheme(Theme.White);
-			BackColor = Color.FromArgb(220, 220, 220);
-			labelText.ForeColor = Color.Black;
-		}
-		private void SetBlackMessageBox()
-		{
-			customTitleBar.ChangeTheme(Theme.Black);
-			BackColor = Color.FromArgb(35, 35, 35);
-			labelText.ForeColor = Color.White;
-		}
-		#endregion
 
 		public static DialogResult Show(string text, Theme theme, string caption = "",
 			CustomMessageBoxButtons buttons = CustomMessageBoxButtons.OK,
