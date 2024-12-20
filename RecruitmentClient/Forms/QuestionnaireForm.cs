@@ -252,16 +252,17 @@ namespace RecruitmentClient.Forms
 
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			bool isDataOk = true;
 
 			// Місто або село проживання
-			Validator.CheckSymbols(labelCity, textBoxCity, account.Theme, ref isDataOk, ValidLanguage.UA, "’- ");
-			Validator.CheckMinLength(labelCity, textBoxCity, 2, account.Theme, ref isDataOk);
+			Validator validator = new Validator();
+			validator.CheckSymbols(labelCity, textBoxCity, account.Theme, ValidLanguage.UA, "’- ");
+			validator.CheckMinLength(labelCity, textBoxCity, 2, account.Theme);
 			// Хронічні захворювання
-			Validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases, account.Theme, ref isDataOk, ValidLanguage.UA, "’- 0123456789");
+			validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases, account.Theme, ValidLanguage.UA, "’- 0123456789");
+			validator.CheckBannedChar(labelAdditionalInfo, richTextBoxAdditionalInfo.Text, Client.SEPARATOR, account.Theme);
 
-			CheckValidEducations(ref isDataOk);
-			Validator.CheckBannedChar(labelAdditionalInfo, richTextBoxAdditionalInfo.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
+			bool isDataValid = validator.IsDataValid;
+			CheckValidEducations(ref isDataValid);
 
 			// Унікальність мов
 			for (int i = 0; i < languages.Count; i++)
@@ -269,7 +270,7 @@ namespace RecruitmentClient.Forms
 					if (languages[i].ComboBoxName.SelectedIndex == languages[j].ComboBoxName.SelectedIndex)
 					{
 						ValidationFeedbackManager.ShowWrongLabel(languages[i].LabelName, "Список мов не може зберігати дві однакові мови.",
-							account.Theme, ref isDataOk);
+							account.Theme, ref isDataValid);
 						ValidationFeedbackManager.ShowWrongLabel(languages[j].LabelName);
 						break;
 					}
@@ -280,35 +281,37 @@ namespace RecruitmentClient.Forms
 					if (educations[i].Equals(educations[j]))
 					{
 						ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelNameInstitution,
-							"Список освіт не може зберігати дві однакові освіти.", account.Theme, ref isDataOk);
+							"Список освіт не може зберігати дві однакові освіти.", account.Theme, ref isDataValid);
 						ValidationFeedbackManager.ShowWrongLabel(educations[j].LabelNameInstitution);
 						break;
 					}
 
-			return isDataOk;
+			return isDataValid;
 		}
-		private void CheckValidEducations(ref bool isDataOk)
+		private void CheckValidEducations(ref bool isDataValid)
 		{// Метод перевіряє та показує які освіти були введені не вірно
 			for (int i = 0; i < educations.Count; i++)
 			{// Назви закладів, спеціальності та перевірка дат
-				Validator.CheckSymbols(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution,
-					account.Theme, ref isDataOk, ValidLanguage.UA, "’.\"-№ 0123456789");
-				Validator.CheckMinLength(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution, 2,
-					account.Theme, ref isDataOk);
+				Validator validator = new Validator();
+				validator.CheckSymbols(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution,
+					account.Theme, ValidLanguage.UA, "’.\"-№ 0123456789");
+				validator.CheckMinLength(educations[i].LabelNameInstitution, educations[i].TextBoxNameInstitution, 2,
+					account.Theme);
 
-				Validator.CheckSymbols(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty,
-					account.Theme, ref isDataOk, ValidLanguage.UA, "’- ");
-				Validator.CheckMinLength(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty, 2,
-					account.Theme, ref isDataOk);
+				validator.CheckSymbols(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty,
+					account.Theme, ValidLanguage.UA, "’- ");
+				validator.CheckMinLength(educations[i].LabelSpecialty, educations[i].TextBoxSpecialty, 2,
+					account.Theme);
 
+				isDataValid = validator.IsDataValid;
 				if (educations[i].NUD_YearAdmission.Value > educations[i].DTP_DateEnd.Value.Year)
 				{// Перевірка дати вступу та дати закінчення навчання
-					if (isDataOk)
+					if (isDataValid)
 						educations[i].NUD_YearAdmission.Focus();
 
 					ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelYearAdmission,
 						"Рік початку навчання не може бути більшим, ніж рік закінчення!",
-						account.Theme, ref isDataOk);
+						account.Theme, ref isDataValid);
 					ValidationFeedbackManager.ShowWrongLabel(educations[i].LabelDateEnd);
 				}
 			}

@@ -530,10 +530,10 @@ namespace RecruitmentServer.Forms
 				if (!isRelevance.HasValue && comboBoxStatus.SelectedIndex != 0)
 					status = comboBoxStatus.Items[comboBoxStatus.SelectedIndex].ToString();
 
-				bool needToShowMB = true;
 				position = textBoxSearch.Text;// Посада
-				Validator.CheckBannedChar(new Label() { Text = "Посада" },
-					position, Server.SEPARATOR, account.Theme, ref needToShowMB);
+				Validator validator = new Validator();
+				validator.CheckBannedChar(new Label() { Text = "Посада" },
+					position, Server.SEPARATOR, account.Theme);
 			}
 
 			ServerSortOption sortOption = ServerSortOption.Date;// Сортування

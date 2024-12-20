@@ -75,9 +75,9 @@ namespace RecruitmentServer.Forms
 		{// Обробник події натискання на кнопку "Застосувати"
 			if (comboBoxDecision.Text == "Відхилена")
 			{// Перевірка причини відмови на заборонений символ
-				bool isDataOk = true;
-				Validator.CheckBannedChar(labelReason, richTextBoxReason.Text, Server.SEPARATOR, account.Theme, ref isDataOk);
-				if (!isDataOk)
+				Validator validator = new Validator();
+				validator.CheckBannedChar(labelReason, richTextBoxReason.Text, Server.SEPARATOR, account.Theme);
+				if (!validator.IsDataValid)
 					return;
 			}
 			DateTime dateTime = new DateTime();

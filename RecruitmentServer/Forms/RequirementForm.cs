@@ -99,12 +99,12 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			bool isDataOk = true;
 			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelCity);
 
-			Validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme, ref isDataOk);
+			Validator validator = new Validator();
+			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme);
 
-			return isDataOk;
+			return validator.IsDataValid;
 		}
 
 		private void CheckBoxDiplomaAll_CheckedChanged(object sender, EventArgs e)

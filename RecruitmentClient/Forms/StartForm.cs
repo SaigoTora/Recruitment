@@ -78,34 +78,34 @@ namespace RecruitmentClient.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			bool isDataOk = true;
-
+			Validator validator = new Validator();
 			// Логін
-			Validator.CheckSymbols(labelLogin, textBoxLogin, account.Theme,
-				ref isDataOk, ValidLanguage.ENG, "._-0123456789");
-			Validator.CheckMinLength(labelLogin, textBoxLogin, 4, account.Theme, ref isDataOk);
+			validator.CheckSymbols(labelLogin, textBoxLogin, account.Theme,
+				ValidLanguage.ENG, "._-0123456789");
+			validator.CheckMinLength(labelLogin, textBoxLogin, 4, account.Theme);
 			// Пароль
-			Validator.CheckSymbols(labelPassword, textBoxPassword, account.Theme,
-				ref isDataOk, ValidLanguage.ENG, "@-_.*0123456789");
-			Validator.CheckMinLength(labelPassword, textBoxPassword, 8, account.Theme, ref isDataOk);
-			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, ref isDataOk, 2,
+			validator.CheckSymbols(labelPassword, textBoxPassword, account.Theme,
+				ValidLanguage.ENG, "@-_.*0123456789");
+			validator.CheckMinLength(labelPassword, textBoxPassword, 8, account.Theme);
+			validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, 2,
 				"0123456789", "Пароль повинен мати хоча б дві цифри.");
-			Validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, ref isDataOk, 4,
+			validator.CheckMinCountSymbols(labelPassword, textBoxPassword, account.Theme, 4,
 				"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Пароль повинен мати хоча б чотири літери.");
 
+			bool isDataValid = validator.IsDataValid;
 			// Перевірка підтвердження паролю, якщо підтвердження видиме
 			if (labelPassword2.Visible && textBoxPassword2.Visible
 			&& textBoxPassword.Text != textBoxPassword2.Text)
 				ValidationFeedbackManager.ShowWrongLabel(labelPassword2,
-					$"Підтвердження пароля не вірне!", account.Theme, ref isDataOk, textBoxPassword2);
+					$"Підтвердження пароля не вірне!", account.Theme, ref isDataValid, textBoxPassword2);
 			// Якщо логін та пароль співпадає
 			if (textBoxLogin.Text == textBoxPassword.Text)
 			{
-				ValidationFeedbackManager.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataOk);
+				ValidationFeedbackManager.ShowWrongLabel(labelLogin, "Логін не може співпадати з паролем.", account.Theme, ref isDataValid);
 				ValidationFeedbackManager.ShowWrongLabel(labelPassword);
 			}
 
-			return isDataOk;
+			return isDataValid;
 		}
 		private void SetDefaultLabels(Theme theme)
 		{// Метод встановлює значення label-ів за замовчуванням
@@ -139,10 +139,10 @@ namespace RecruitmentClient.Forms
 		private void ButtonLogin_Click(object sender, EventArgs e)
 		{// Обробник події: натискання на кнопку входу
 			SetDefaultLabels(account.Theme);
-			bool isDataOk = true;// Якщо логін або пароль має заборонений символ, то виходимо
-			Validator.CheckBannedChar(labelLogin, textBoxLogin.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
-			Validator.CheckBannedChar(labelPassword, textBoxPassword.Text, Client.SEPARATOR, account.Theme, ref isDataOk);
-			if (!isDataOk)
+			Validator validator = new Validator();// Якщо логін або пароль має заборонений символ, то виходимо
+			validator.CheckBannedChar(labelLogin, textBoxLogin.Text, Client.SEPARATOR, account.Theme);
+			validator.CheckBannedChar(labelPassword, textBoxPassword.Text, Client.SEPARATOR, account.Theme);
+			if (!validator.IsDataValid)
 				return;
 
 			try

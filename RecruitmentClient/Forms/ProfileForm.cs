@@ -57,39 +57,41 @@ namespace RecruitmentClient.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			bool isDataOk = true;
 			SetDefaultLabels(account.Theme);
+
+			Validator validator = new Validator();
 			// Прізвище
-			Validator.CheckSymbols(labelSurname, textBoxSurname, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
-			Validator.CheckMinLength(labelSurname, textBoxSurname, 2, account.Theme, ref isDataOk);
+			validator.CheckSymbols(labelSurname, textBoxSurname, account.Theme, ValidLanguage.UA, "’-");
+			validator.CheckMinLength(labelSurname, textBoxSurname, 2, account.Theme);
 			// Ім’я
-			Validator.CheckSymbols(labelName, textBoxName, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
-			Validator.CheckMinLength(labelName, textBoxName, 2, account.Theme, ref isDataOk);
+			validator.CheckSymbols(labelName, textBoxName, account.Theme, ValidLanguage.UA, "’-");
+			validator.CheckMinLength(labelName, textBoxName, 2, account.Theme);
 			// По-батькові
-			Validator.CheckSymbols(labelFatherName, textBoxFatherName, account.Theme, ref isDataOk, ValidLanguage.UA, "’-");
+			validator.CheckSymbols(labelFatherName, textBoxFatherName, account.Theme, ValidLanguage.UA, "’-");
 
 			// Номер телефону
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone1, account.Theme, ref isDataOk);
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone2, account.Theme, ref isDataOk);
-			Validator.CheckAllNumbers(labelPhone, textBoxPhone3, account.Theme, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone1, 3, account.Theme, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone2, 3, account.Theme, ref isDataOk);
-			Validator.CheckMinLength(labelPhone, textBoxPhone3, 3, account.Theme, ref isDataOk);
+			validator.CheckAllNumbers(labelPhone, textBoxPhone1, account.Theme);
+			validator.CheckAllNumbers(labelPhone, textBoxPhone2, account.Theme);
+			validator.CheckAllNumbers(labelPhone, textBoxPhone3, account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone1, 3, account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone2, 3, account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone3, 3, account.Theme);
 
-			CheckValidEmail(ref isDataOk);// E-mail
+			bool isDataValid = validator.IsDataValid;
+			CheckValidEmail(ref isDataValid);// E-mail
 
 			if (account.candidate.questionnaire == null)
 			{// Анкета
-				if (isDataOk)
+				if (isDataValid)
 				{
 					buttonQuestionnairе.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nАнкету також потрібно заповнити.",
 						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
-				isDataOk = false;
+				isDataValid = false;
 			}
 
-			return isDataOk;
+			return isDataValid;
 		}
 		private void CheckValidEmail(ref bool isDataOk)
 		{// Метод перевіряє на правильність E-mail

@@ -429,10 +429,10 @@ namespace RecruitmentClient.Forms
 				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
 					account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
 
-			bool needToShowMB = true;
 			string position = textBoxPositionSearch.Text;// Посада
-			Validator.CheckBannedChar(new Label() { Text = "Посада" },
-				position, Client.SEPARATOR, account.Theme, ref needToShowMB);
+			Validator validator = new Validator();
+			validator.CheckBannedChar(new Label() { Text = "Посада" },
+				position, Client.SEPARATOR, account.Theme);
 
 			ClientSortOption sortOption = ClientSortOption.Date;// Сортування
 			if (comboBoxSort.SelectedIndex == 1)

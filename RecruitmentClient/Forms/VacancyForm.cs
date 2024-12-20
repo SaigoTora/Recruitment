@@ -65,10 +65,10 @@ namespace RecruitmentClient.Forms
 
 		private void ButtonSend_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку створення заявки
-			bool isDataOk = true;
-			Validator.CheckBannedChar(labelAdditionalTitle, richTextBoxClientAdditionalInfo.Text,
-				Client.SEPARATOR, currentTheme, ref isDataOk);
-			if (!isDataOk)
+			Validator validator = new Validator();
+			validator.CheckBannedChar(labelAdditionalTitle, richTextBoxClientAdditionalInfo.Text,
+				Client.SEPARATOR, currentTheme);
+			if (!validator.IsDataValid)
 			{
 				richTextBoxClientAdditionalInfo.Focus();
 				return;

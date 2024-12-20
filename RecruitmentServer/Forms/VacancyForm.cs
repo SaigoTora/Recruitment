@@ -147,40 +147,40 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{// Метод перевіряє та показує які дані були введені не вірно
-			bool isDataOk = true;
-			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelSalaryTitle, labelPositionDescriptionTitle,
+			ValidationFeedbackManager.SetDefaultLabels(account.Theme, labelPosition, labelSalaryTitle, labelPositionDescriptionTitle,
 				labelAdditionalInfoTitle);// Встановлюємо значення label-ів за замовчуванням
 
-			Label bufLabel = new Label { Text = "Посада" };
-			Validator.CheckBannedChar(bufLabel, richTextBoxPosition.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Посада
-			Validator.CheckMinLength(bufLabel, richTextBoxPosition, 3, account.Theme, ref isDataOk);
-			Validator.CheckSymbols(labelSalaryTitle, richTextBoxSalary, account.Theme, ref isDataOk, ValidLanguage.None, "0123456789,");// Зарплата
-			Validator.CheckMinLength(labelSalaryTitle, richTextBoxSalary, 1, account.Theme, ref isDataOk);
-			Validator.CheckBannedChar(labelPositionDescriptionTitle, richTextBoxPositionDescription.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Опис
-			Validator.CheckBannedChar(labelAdditionalInfoTitle, richTextBoxAdditionalInfo.Text, Server.SEPARATOR, account.Theme, ref isDataOk);// Додаткова інформація
+			Validator validator = new Validator();
+			validator.CheckBannedChar(labelPosition, richTextBoxPosition.Text, Server.SEPARATOR, account.Theme);// Посада
+			validator.CheckMinLength(labelPosition, richTextBoxPosition, 3, account.Theme);
+			validator.CheckSymbols(labelSalaryTitle, richTextBoxSalary, account.Theme, ValidLanguage.None, "0123456789,");// Зарплата
+			validator.CheckMinLength(labelSalaryTitle, richTextBoxSalary, 1, account.Theme);
+			validator.CheckBannedChar(labelPositionDescriptionTitle, richTextBoxPositionDescription.Text, Server.SEPARATOR, account.Theme);// Опис
+			validator.CheckBannedChar(labelAdditionalInfoTitle, richTextBoxAdditionalInfo.Text, Server.SEPARATOR, account.Theme);// Додаткова інформація
 
+			bool isDataValid = validator.IsDataValid;
 			if (requirement.City == null)
 			{// Якщо не заповнили вимоги
-				if (isDataOk)
+				if (isDataValid)
 				{
 					buttonRequirement.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nВимоги також потрібно заповнити.",
 						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
-				isDataOk = false;
+				isDataValid = false;
 			}
 			if (points.Degrees == null)
 			{// Якщо не заповнили бали
-				if (isDataOk)
+				if (isDataValid)
 				{
 					buttonPoints.Focus();
 					CustomMessageBox.Show("Дані були введені не вірно!\nБали також потрібно заповнити.",
 						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
-				isDataOk = false;
+				isDataValid = false;
 			}
 
-			return isDataOk;
+			return isDataValid;
 		}
 		private void ButtonDelete_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку видалення вакансії
