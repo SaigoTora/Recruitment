@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 using UIHelpers.Controls;
 using UIHelpers.Forms;
+using static Guna.UI2.WinForms.Suite.Descriptions;
 
 namespace UIHelpers.Themes
 {
@@ -11,6 +13,9 @@ namespace UIHelpers.Themes
 	{
 		public static readonly (Color White, Color Black) PanelBackColor =
 			(Color.FromArgb(222, 222, 222), Color.FromArgb(37, 37, 37));
+
+		private static readonly (Color White, Color Black) _inputBackColor =
+				(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
 
 		public static void ChangeFormTheme(Form form, Theme theme)
 		{
@@ -44,29 +49,25 @@ namespace UIHelpers.Themes
 				switch (child)
 				{
 					case Label label:
-						ChangeLabelsColor(theme, label);
-						break;
+						ChangeLabelsColor(theme, label); break;
 					case CheckBox checkBox:
-						ChangeInputControlsForeColor(theme, checkBox);
-						break;
+						ChangeInputControlsForeColor(theme, checkBox); break;
 					case TextBox _:
 					case ComboBox _:
 					case NumericUpDown _:
 					case ListBox _:
-						ChangeInputControlsColor(theme, child);
-						break;
+						ChangeInputControlsColor(theme, child); break;
 					case RichTextBox richTextBox:
-						ChangeRichTextBoxColor(theme, richTextBox);
-						break;
+						ChangeRichTextBoxColor(theme, richTextBox); break;
+					case Guna2TextBox guna2TextBox:
+						ChangeGuna2TextBox(theme, guna2TextBox); break;
 					case FlowLayoutPanel flowLayoutPanel:
-						ChangeFlowLayoutPanelColor(theme, flowLayoutPanel);
-						break;
+						ChangeFlowLayoutPanelColor(theme, flowLayoutPanel); break;
 					case Panel panel:
 						if (panel.Name != CustomTitleBar.MAIN_PANEL_NAME)
 							ChangePanelColor(theme, panel);
 						break;
-					default:
-						break;
+					default: break;
 				}
 
 				if (child.Controls.Count > 0)
@@ -129,16 +130,52 @@ namespace UIHelpers.Themes
 		}
 		private static void ChangeInputControlsBackColor(Theme theme, params Control[] controls)
 		{
-			(Color White, Color Black) _inputForeColor =
-				(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
+			switch (theme)
+			{
+				case Theme.White:
+					ChangeControlsBackColor(_inputBackColor.White, controls);
+					break;
+				case Theme.Black:
+					ChangeControlsBackColor(_inputBackColor.Black, controls);
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeRichTextBoxColor(Theme theme, RichTextBox richTextBox)
+		{
+			if (richTextBox.ReadOnly)
+			{
+				ChangeInputControlsForeColor(theme, richTextBox);
+
+				Control parent = richTextBox.Parent;// Going up the control hierarchy while BackColor is Color.Transparent
+				while (parent.BackColor == Color.Transparent)
+					parent = parent.Parent;
+				richTextBox.BackColor = parent.BackColor;
+			}
+			else
+				ChangeInputControlsColor(theme, richTextBox);
+		}
+		private static void ChangeGuna2TextBox(Theme theme, Guna2TextBox textBox)
+		{
+			(Color White, Color Black) borderColor =
+				(Color.FromArgb(80, 80, 80), Color.FromArgb(175, 175, 175));
+			(Color White, Color Black) hoverBorderColor =
+				(Color.Black, Color.White);
+
+			ChangeInputControlsForeColor(theme, textBox);
 
 			switch (theme)
 			{
 				case Theme.White:
-					ChangeControlsBackColor(_inputForeColor.White, controls);
+					textBox.FillColor = _inputBackColor.White;
+					textBox.BorderColor = borderColor.White;
+					textBox.HoverState.BorderColor = hoverBorderColor.White;
 					break;
 				case Theme.Black:
-					ChangeControlsBackColor(_inputForeColor.Black, controls);
+					textBox.FillColor = _inputBackColor.Black;
+					textBox.BorderColor = borderColor.Black;
+					textBox.HoverState.BorderColor = hoverBorderColor.Black;
 					break;
 				default:
 					throw new InvalidOperationException($"Unknown theme: {theme}");
@@ -160,20 +197,6 @@ namespace UIHelpers.Themes
 				default:
 					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
-		}
-		private static void ChangeRichTextBoxColor(Theme theme, RichTextBox richTextBox)
-		{
-			if (richTextBox.ReadOnly)
-			{
-				ChangeInputControlsForeColor(theme, richTextBox);
-
-				Control parent = richTextBox.Parent;// Going up the control hierarchy while BackColor is Color.Transparent
-				while (parent.BackColor == Color.Transparent)
-					parent = parent.Parent;
-				richTextBox.BackColor = parent.BackColor;
-			}
-			else
-				ChangeInputControlsColor(theme, richTextBox);
 		}
 
 		private static void ChangeControlsForeColor(Color color, params Control[] controls)

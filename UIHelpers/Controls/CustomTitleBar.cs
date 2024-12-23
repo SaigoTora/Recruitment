@@ -1,4 +1,5 @@
 ﻿using FontAwesome.Sharp;
+using Guna.UI2.WinForms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -121,7 +122,7 @@ namespace UIHelpers.Controls
 			if (control.Tag != null && control.Tag.ToString().Contains(FIXED_CONTROL_POSITION_TAG))
 				movedLocation = new Point(control.Location.X, control.Location.Y);
 
-			if (control.HasChildren && !(control is NumericUpDown))
+			if (control.HasChildren && !(control is NumericUpDown) && !(control is Guna2TextBox))
 			{
 				foreach (Control item in control.Controls)
 					MoveFormElementsDown(item);
