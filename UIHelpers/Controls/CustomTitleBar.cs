@@ -118,11 +118,13 @@ namespace UIHelpers.Controls
 		}
 		private void MoveFormElementsDown(Control control)
 		{
-			Point movedLocation = new Point(control.Location.X, control.Location.Y + DEFAULT_PANEL_HEIGHT);
+			Point movedLocation = new Point(control.Location.X, control.Location.Y +
+				DEFAULT_PANEL_HEIGHT);
 			if (control.Tag != null && control.Tag.ToString().Contains(FIXED_CONTROL_POSITION_TAG))
 				movedLocation = new Point(control.Location.X, control.Location.Y);
 
-			if (control.HasChildren && !(control is NumericUpDown) && !(control is Guna2TextBox))
+			if (control.HasChildren && !(control is NumericUpDown)
+				&& !(control is Guna2TextBox) && !(control is Guna2CheckBox))
 			{
 				foreach (Control item in control.Controls)
 					MoveFormElementsDown(item);

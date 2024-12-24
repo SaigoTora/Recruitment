@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using UIHelpers.Controls;
 using UIHelpers.Forms;
-using static Guna.UI2.WinForms.Suite.Descriptions;
 
 namespace UIHelpers.Themes
 {
@@ -15,7 +14,9 @@ namespace UIHelpers.Themes
 			(Color.FromArgb(222, 222, 222), Color.FromArgb(37, 37, 37));
 
 		private static readonly (Color White, Color Black) _inputBackColor =
-				(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
+			(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
+		private static readonly (Color White, Color Black) _inputBorderColor =
+			(Color.FromArgb(80, 80, 80), Color.FromArgb(175, 175, 175));
 
 		public static void ChangeFormTheme(Form form, Theme theme)
 		{
@@ -50,6 +51,8 @@ namespace UIHelpers.Themes
 				{
 					case Label label:
 						ChangeLabelsColor(theme, label); break;
+					case Guna2CustomCheckBox guna2CheckBox:
+						ChangeGuna2CheckBox(theme, guna2CheckBox); break;
 					case CheckBox checkBox:
 						ChangeInputControlsForeColor(theme, checkBox); break;
 					case TextBox _:
@@ -158,8 +161,6 @@ namespace UIHelpers.Themes
 		}
 		private static void ChangeGuna2TextBox(Theme theme, Guna2TextBox textBox)
 		{
-			(Color White, Color Black) borderColor =
-				(Color.FromArgb(80, 80, 80), Color.FromArgb(175, 175, 175));
 			(Color White, Color Black) hoverBorderColor =
 				(Color.Black, Color.White);
 
@@ -169,17 +170,40 @@ namespace UIHelpers.Themes
 			{
 				case Theme.White:
 					textBox.FillColor = _inputBackColor.White;
-					textBox.BorderColor = borderColor.White;
+					textBox.BorderColor = _inputBorderColor.White;
 					textBox.HoverState.BorderColor = hoverBorderColor.White;
 					break;
 				case Theme.Black:
 					textBox.FillColor = _inputBackColor.Black;
-					textBox.BorderColor = borderColor.Black;
+					textBox.BorderColor = _inputBorderColor.Black;
 					textBox.HoverState.BorderColor = hoverBorderColor.Black;
 					break;
 				default:
 					throw new InvalidOperationException($"Unknown theme: {theme}");
 			}
+		}
+		private static void ChangeGuna2CheckBox(Theme theme, Guna2CustomCheckBox checkBox)
+		{
+			(Color White, Color Black) checkedBorderColor =
+				(Color.Black, Color.White);
+			ChangeInputControlsForeColor(theme, checkBox);
+
+			switch (theme)
+			{
+				case Theme.White:
+					checkBox.CheckedState.BorderColor = checkedBorderColor.White;
+					checkBox.UncheckedState.BorderColor = _inputBorderColor.White;
+					checkBox.UncheckedState.FillColor = _inputBackColor.White;
+					break;
+				case Theme.Black:
+					checkBox.CheckedState.BorderColor = checkedBorderColor.Black;
+					checkBox.UncheckedState.BorderColor = _inputBorderColor.Black;
+					checkBox.UncheckedState.FillColor = _inputBackColor.Black;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+			checkBox.ShadowDecoration.Color = checkBox.UncheckedState.BorderColor;
 		}
 		private static void ChangeFlowLayoutPanelColor(Theme theme, FlowLayoutPanel panel)
 		{

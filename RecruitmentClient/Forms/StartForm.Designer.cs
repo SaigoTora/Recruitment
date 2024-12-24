@@ -31,7 +31,6 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
 			this.labelLogin = new System.Windows.Forms.Label();
 			this.labelPassword = new System.Windows.Forms.Label();
-			this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
 			this.labelPassword2 = new System.Windows.Forms.Label();
 			this.labelRegisterStart = new System.Windows.Forms.Label();
 			this.pictureBoxTheme = new System.Windows.Forms.PictureBox();
@@ -42,6 +41,8 @@
 			this.textBoxLogin = new Guna.UI2.WinForms.Guna2TextBox();
 			this.textBoxPassword = new Guna.UI2.WinForms.Guna2TextBox();
 			this.textBoxPassword2 = new Guna.UI2.WinForms.Guna2TextBox();
+			this.labelRememberMe = new System.Windows.Forms.Label();
+			this.checkBoxRememberMe = new Guna.UI2.WinForms.Guna2CustomCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTheme)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxShowPwd)).BeginInit();
 			this.SuspendLayout();
@@ -79,24 +80,6 @@
 			this.labelPassword.Text = "Пароль:";
 			this.labelPassword.Click += new System.EventHandler(this.LabelPassword_Click);
 			// 
-			// checkBoxRememberMe
-			// 
-			this.checkBoxRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkBoxRememberMe.AutoSize = true;
-			this.checkBoxRememberMe.BackColor = System.Drawing.Color.Transparent;
-			this.checkBoxRememberMe.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.checkBoxRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.checkBoxRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.checkBoxRememberMe.ForeColor = System.Drawing.Color.Black;
-			this.checkBoxRememberMe.Location = new System.Drawing.Point(12, 209);
-			this.checkBoxRememberMe.Name = "checkBoxRememberMe";
-			this.checkBoxRememberMe.Size = new System.Drawing.Size(339, 27);
-			this.checkBoxRememberMe.TabIndex = 8;
-			this.checkBoxRememberMe.Text = "Запам’ятати мене на цьому ПК:";
-			this.checkBoxRememberMe.UseVisualStyleBackColor = false;
-			this.checkBoxRememberMe.CheckedChanged += new System.EventHandler(this.CheckBoxRememberMe_CheckedChanged);
-			// 
 			// labelPassword2
 			// 
 			this.labelPassword2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -125,7 +108,7 @@
 			this.labelRegisterStart.Location = new System.Drawing.Point(12, 314);
 			this.labelRegisterStart.Name = "labelRegisterStart";
 			this.labelRegisterStart.Size = new System.Drawing.Size(172, 23);
-			this.labelRegisterStart.TabIndex = 9;
+			this.labelRegisterStart.TabIndex = 10;
 			this.labelRegisterStart.Text = "Зареєструватись";
 			this.labelRegisterStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.labelRegisterStart.Click += new System.EventHandler(this.LabelRegisterStart_Click);
@@ -181,7 +164,7 @@
 			this.buttonBack.PressedColor = System.Drawing.Color.White;
 			this.buttonBack.PressedDepth = 20;
 			this.buttonBack.Size = new System.Drawing.Size(175, 40);
-			this.buttonBack.TabIndex = 11;
+			this.buttonBack.TabIndex = 12;
 			this.buttonBack.TabStop = false;
 			this.buttonBack.Text = "Назад";
 			this.buttonBack.Visible = false;
@@ -212,7 +195,7 @@
 			this.buttonLogin.PressedColor = System.Drawing.Color.White;
 			this.buttonLogin.PressedDepth = 20;
 			this.buttonLogin.Size = new System.Drawing.Size(175, 40);
-			this.buttonLogin.TabIndex = 10;
+			this.buttonLogin.TabIndex = 11;
 			this.buttonLogin.TabStop = false;
 			this.buttonLogin.Text = "Вхід";
 			this.buttonLogin.Click += new System.EventHandler(this.ButtonLogin_Click);
@@ -242,7 +225,7 @@
 			this.buttonRegisterContinue.PressedColor = System.Drawing.Color.White;
 			this.buttonRegisterContinue.PressedDepth = 20;
 			this.buttonRegisterContinue.Size = new System.Drawing.Size(175, 40);
-			this.buttonRegisterContinue.TabIndex = 12;
+			this.buttonRegisterContinue.TabIndex = 13;
 			this.buttonRegisterContinue.TabStop = false;
 			this.buttonRegisterContinue.Text = "Продовжити";
 			this.buttonRegisterContinue.Visible = false;
@@ -278,6 +261,7 @@
 			this.textBoxLogin.SelectedText = "";
 			this.textBoxLogin.Size = new System.Drawing.Size(250, 40);
 			this.textBoxLogin.TabIndex = 2;
+			this.textBoxLogin.TextOffset = new System.Drawing.Point(3, 0);
 			// 
 			// textBoxPassword
 			// 
@@ -309,6 +293,7 @@
 			this.textBoxPassword.SelectedText = "";
 			this.textBoxPassword.Size = new System.Drawing.Size(250, 40);
 			this.textBoxPassword.TabIndex = 4;
+			this.textBoxPassword.TextOffset = new System.Drawing.Point(3, 0);
 			// 
 			// textBoxPassword2
 			// 
@@ -340,7 +325,51 @@
 			this.textBoxPassword2.SelectedText = "";
 			this.textBoxPassword2.Size = new System.Drawing.Size(250, 40);
 			this.textBoxPassword2.TabIndex = 7;
+			this.textBoxPassword2.TextOffset = new System.Drawing.Point(3, 0);
 			this.textBoxPassword2.Visible = false;
+			// 
+			// labelRememberMe
+			// 
+			this.labelRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelRememberMe.AutoSize = true;
+			this.labelRememberMe.BackColor = System.Drawing.Color.Transparent;
+			this.labelRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.labelRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRememberMe.ForeColor = System.Drawing.Color.Black;
+			this.labelRememberMe.Location = new System.Drawing.Point(12, 209);
+			this.labelRememberMe.Name = "labelRememberMe";
+			this.labelRememberMe.Size = new System.Drawing.Size(320, 23);
+			this.labelRememberMe.TabIndex = 8;
+			this.labelRememberMe.Text = "Запам’ятати мене на цьому ПК:";
+			this.labelRememberMe.Click += new System.EventHandler(this.LabelRememberMe_Click);
+			// 
+			// checkBoxRememberMe
+			// 
+			this.checkBoxRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkBoxRememberMe.Animated = true;
+			this.checkBoxRememberMe.BackColor = System.Drawing.Color.Transparent;
+			this.checkBoxRememberMe.CheckedState.BorderColor = System.Drawing.Color.Black;
+			this.checkBoxRememberMe.CheckedState.BorderRadius = 2;
+			this.checkBoxRememberMe.CheckedState.BorderThickness = 1;
+			this.checkBoxRememberMe.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.checkBoxRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.checkBoxRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.checkBoxRememberMe.ForeColor = System.Drawing.Color.Transparent;
+			this.checkBoxRememberMe.Location = new System.Drawing.Point(338, 212);
+			this.checkBoxRememberMe.Name = "checkBoxRememberMe";
+			this.checkBoxRememberMe.ShadowDecoration.BorderRadius = 2;
+			this.checkBoxRememberMe.ShadowDecoration.Depth = 150;
+			this.checkBoxRememberMe.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(2);
+			this.checkBoxRememberMe.Size = new System.Drawing.Size(17, 17);
+			this.checkBoxRememberMe.TabIndex = 9;
+			this.checkBoxRememberMe.UncheckedState.BorderColor = System.Drawing.Color.Black;
+			this.checkBoxRememberMe.UncheckedState.BorderRadius = 2;
+			this.checkBoxRememberMe.UncheckedState.BorderThickness = 1;
+			this.checkBoxRememberMe.UncheckedState.FillColor = System.Drawing.Color.Silver;
+			this.checkBoxRememberMe.UseTransparentBackground = true;
+			this.checkBoxRememberMe.CheckedChanged += new System.EventHandler(this.CheckBoxRememberMe_CheckedChanged);
 			// 
 			// StartForm
 			// 
@@ -348,19 +377,20 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
 			this.ClientSize = new System.Drawing.Size(584, 356);
-			this.Controls.Add(this.textBoxPassword2);
+			this.Controls.Add(this.checkBoxRememberMe);
 			this.Controls.Add(this.textBoxPassword);
 			this.Controls.Add(this.textBoxLogin);
 			this.Controls.Add(this.pictureBoxTheme);
 			this.Controls.Add(this.pictureBoxShowPwd);
 			this.Controls.Add(this.labelRegisterStart);
-			this.Controls.Add(this.labelPassword2);
-			this.Controls.Add(this.checkBoxRememberMe);
 			this.Controls.Add(this.labelPassword);
 			this.Controls.Add(this.labelLogin);
 			this.Controls.Add(this.buttonBack);
 			this.Controls.Add(this.buttonLogin);
 			this.Controls.Add(this.buttonRegisterContinue);
+			this.Controls.Add(this.labelRememberMe);
+			this.Controls.Add(this.labelPassword2);
+			this.Controls.Add(this.textBoxPassword2);
 			this.Name = "StartForm";
 			this.Text = "Вхід";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StartForm_FormClosed);
@@ -375,7 +405,6 @@
         #endregion
         private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.Label labelPassword;
-        private System.Windows.Forms.CheckBox checkBoxRememberMe;
         private System.Windows.Forms.Label labelPassword2;
         private System.Windows.Forms.Label labelRegisterStart;
         private System.Windows.Forms.PictureBox pictureBoxShowPwd;
@@ -386,5 +415,7 @@
 		private Guna.UI2.WinForms.Guna2TextBox textBoxLogin;
 		private Guna.UI2.WinForms.Guna2TextBox textBoxPassword;
 		private Guna.UI2.WinForms.Guna2TextBox textBoxPassword2;
+		private System.Windows.Forms.Label labelRememberMe;
+		private Guna.UI2.WinForms.Guna2CustomCheckBox checkBoxRememberMe;
 	}
 }

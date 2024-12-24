@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlEventHandlers\ButtonEventHandlers.cs" />
+    <Compile Include="ControlEventHandlers\CheckBoxEventHandlers.cs" />
     <Compile Include="ControlEventHandlers\ControlEventHandlers.cs" />
     <Compile Include="ControlEventHandlers\LabelEventHandlers.cs" />
     <Compile Include="ControlEventHandlers\PictureBoxEventHandlers.cs" />

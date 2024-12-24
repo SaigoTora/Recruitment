@@ -24,6 +24,8 @@ namespace RecruitmentClient.Forms
 
 		private readonly ClientAccount _account = new ClientAccount();
 		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
+		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
+			new CheckBoxEventHandlers();
 		private readonly LabelEventHandlers _labelEventHandlers = new LabelEventHandlers();
 		private readonly PictureBoxEventHandlers _pictureBoxEventHandlers =
 			new PictureBoxEventHandlers();
@@ -54,6 +56,7 @@ namespace RecruitmentClient.Forms
 
 			_buttonEventHandlers.SubscribeToHover(buttonLogin,
 				buttonRegisterContinue, buttonBack);
+			_checkBoxEventHandlers.SubscribeToHoverShadow(checkBoxRememberMe);
 			_labelEventHandlers.SubscribeToHoverUnderline(labelRegisterStart);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxTheme);
 
@@ -70,6 +73,7 @@ namespace RecruitmentClient.Forms
 			MoveElement(labelPassword, -OFFSET_LABEL_PASSWORD_X, 0);
 			MoveInputFormElements(true);
 
+			labelRememberMe.Visible = false;
 			checkBoxRememberMe.Visible = false;
 			labelRegisterStart.Visible = false;
 			pictureBoxTheme.Visible = false;
@@ -158,6 +162,7 @@ namespace RecruitmentClient.Forms
 			if (!moveRight)
 				k = -1;
 
+			MoveElement(labelRememberMe, OFFSET_LOGIN_X * k, OFFSET_REMEMBER_Y * k);
 			MoveElement(checkBoxRememberMe, OFFSET_LOGIN_X * k, OFFSET_REMEMBER_Y * k);
 			MoveElement(labelLogin, OFFSET_LOGIN_X * k, 0);
 			MoveElement(labelPassword, OFFSET_LOGIN_X * k, 0);
@@ -407,6 +412,8 @@ namespace RecruitmentClient.Forms
 			=> textBoxPassword.Focus();
 		private void LabelPassword2_Click(object sender, EventArgs e)
 			=> textBoxPassword2.Focus();
+		private void LabelRememberMe_Click(object sender, EventArgs e)
+			=> checkBoxRememberMe.Checked = !checkBoxRememberMe.Checked;
 		#endregion
 
 		#region Theme
@@ -475,6 +482,7 @@ namespace RecruitmentClient.Forms
 			buttonLogin.Click -= ButtonChangePassword_Click;
 
 			_buttonEventHandlers.UnsubscribeAll();
+			_checkBoxEventHandlers.UnsubscribeAll();
 			_labelEventHandlers.UnsubscribeAll();
 			_pictureBoxEventHandlers.UnsubscribeAll();
 		}
