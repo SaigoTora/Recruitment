@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
@@ -14,183 +16,223 @@ using UIHelpers.Validation;
 namespace RecruitmentClient.Forms
 {
 	internal partial class ProfileForm : BaseForm, IThemeChange
-	{// Форма запису кандидата
-		private readonly ClientAccount account;
-		private readonly StartForm startForm;
-		private readonly Candidate oldCandidate;
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
+	{
+		private readonly ClientAccount _account;
+		private readonly StartForm _startForm;
+		private readonly Candidate _oldCandidate;
+		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
 
-		internal ProfileForm(ClientAccount a, StartForm startForm = null)
-		{// Конструктор
+		internal ProfileForm(ClientAccount account)
+		{// Constructor for changing data
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Профіль", Properties.Resources.profile, maximizeBox: false);
-			account = a;// Передаємо посилання на акаунт
-			if (account.candidate == null)
-				account.candidate = new Candidate();
-			else// Якщо вже був заповнений профіль, то записуємо його значення
-				SetFormValues(account);
+			customTitleBar = new CustomTitleBar(this, "Профіль",
+				Properties.Resources.profile, maximizeBox: false);
+			_account = account;
+			if (_account.candidate == null)
+				_account.candidate = new Candidate();
+			else
+				SetFormData(_account);
 
-			this.startForm = startForm;
-			if (this.startForm == null)// Якщо форма відкрита для зміни даних
-				oldCandidate = new Candidate(account.candidate);// Зберігаємо дані кандидата
+			_oldCandidate = new Candidate(_account.candidate);
+		}
+		internal ProfileForm(ClientAccount account, StartForm startForm)
+			: this(account)
+		{// Constructor for creation
+			_startForm = startForm;
 		}
 		private void ProfileForm_Load(object sender, EventArgs e)
-		{// Обробник події завантаження форми
-			Icon = Properties.Resources.profile;
+		{
+			const int MIN_AGE = 14;
+
 			textBoxSurname.Focus();
-			dateTimePickerBirthday.MaxDate = DateTime.Today;
-			buttonEventHandlers.SubscribeToHover(buttonQuestionnairе, buttonApply);
-			SetTheme(account.Theme);
+			dateTimePickerBirthday.MaxDate = DateTime.Today.AddYears(-MIN_AGE);
+
+			_buttonEventHandlers.SubscribeToHover(buttonQuestionnairе, buttonApply);
+			SetTheme(_account.Theme);
 		}
 
-		private void SetFormValues(ClientAccount a)
-		{// Метод записує дані з класу Account в форму
-			textBoxSurname.Text = a.candidate.Surname;
-			textBoxName.Text = a.candidate.Name;
-			textBoxFatherName.Text = a.candidate.FatherName;
-			textBoxPhone1.Text = a.candidate.Phone.Substring(4, 3);
-			textBoxPhone2.Text = a.candidate.Phone.Substring(7, 3);
-			textBoxPhone3.Text = a.candidate.Phone.Substring(10, 3);
-			dateTimePickerBirthday.Value = a.candidate.Birthday;
-			textBoxEmail.Text = a.candidate.Email;
+		private void SetFormData(ClientAccount account)
+		{
+			textBoxSurname.Text = account.candidate.Surname;
+			textBoxName.Text = account.candidate.Name;
+			textBoxFatherName.Text = account.candidate.FatherName;
+
+			textBoxPhone1.Text = account.candidate.Phone.Substring(4, 3);
+			textBoxPhone2.Text = account.candidate.Phone.Substring(7, 3);
+			textBoxPhone3.Text = account.candidate.Phone.Substring(10, 3);
+
+			dateTimePickerBirthday.Value = account.candidate.Birthday;
+			textBoxEmail.Text = account.candidate.Email;
+		}
+
+		private void SetDefaultLabels(Theme theme)
+		{
+			ValidationFeedbackManager.ResetLabelsToDefault(theme, labelSurname,
+				labelName, labelFatherName, labelPhone, labelEmail);
+		}
+		private bool CheckUniquePhoneAndEmail()
+		{
+			return (ClientUnique.PhoneIsUnique(labelPhone, _account.Login,
+						$"{labelPhoneStart.Text}{textBoxPhone1.Text}{textBoxPhone2.Text}" +
+						$"{textBoxPhone3.Text}", _account.Theme)
+						&& ClientUnique.EmailIsUnique(labelEmail, _account.Login,
+						textBoxEmail.Text, _account.Theme));
 		}
 		private bool CheckValidData()
-		{// Метод перевіряє та показує які дані були введені не вірно
-			SetDefaultLabels(account.Theme);
+		{
+			SetDefaultLabels(_account.Theme);
 
 			Validator validator = new Validator();
-			// Прізвище
-			validator.CheckSymbols(labelSurname, textBoxSurname, account.Theme, ValidLanguage.UA, "’-");
-			validator.CheckMinLength(labelSurname, textBoxSurname, 2, account.Theme);
-			// Ім’я
-			validator.CheckSymbols(labelName, textBoxName, account.Theme, ValidLanguage.UA, "’-");
-			validator.CheckMinLength(labelName, textBoxName, 2, account.Theme);
-			// По-батькові
-			validator.CheckSymbols(labelFatherName, textBoxFatherName, account.Theme, ValidLanguage.UA, "’-");
+			validator.CheckSymbols(labelSurname, textBoxSurname,
+				_account.Theme, ValidLanguage.UA, "’-");
+			validator.CheckMinLength(labelSurname, textBoxSurname, 2, _account.Theme);
+			validator.CheckSymbols(labelName, textBoxName, _account.Theme,
+				ValidLanguage.UA, "’-");
+			validator.CheckMinLength(labelName, textBoxName, 2, _account.Theme);
+			validator.CheckSymbols(labelFatherName, textBoxFatherName,
+				_account.Theme, ValidLanguage.UA, "’-");
 
-			// Номер телефону
-			validator.CheckAllNumbers(labelPhone, textBoxPhone1, account.Theme);
-			validator.CheckAllNumbers(labelPhone, textBoxPhone2, account.Theme);
-			validator.CheckAllNumbers(labelPhone, textBoxPhone3, account.Theme);
-			validator.CheckMinLength(labelPhone, textBoxPhone1, 3, account.Theme);
-			validator.CheckMinLength(labelPhone, textBoxPhone2, 3, account.Theme);
-			validator.CheckMinLength(labelPhone, textBoxPhone3, 3, account.Theme);
+			// Phone number
+			validator.CheckAllNumbers(labelPhone, textBoxPhone1, _account.Theme);
+			validator.CheckAllNumbers(labelPhone, textBoxPhone2, _account.Theme);
+			validator.CheckAllNumbers(labelPhone, textBoxPhone3, _account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone1, 3, _account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone2, 3, _account.Theme);
+			validator.CheckMinLength(labelPhone, textBoxPhone3, 3, _account.Theme);
 
 			bool isDataValid = validator.IsDataValid;
-			CheckValidEmail(ref isDataValid);// E-mail
-
-			if (account.candidate.questionnaire == null)
-			{// Анкета
-				if (isDataValid)
-				{
-					buttonQuestionnairе.Focus();
-					CustomMessageBox.Show("Дані були введені не вірно!\nАнкету також потрібно заповнити.",
-						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
-				isDataValid = false;
-			}
+			CheckValidEmail(ref isDataValid);
+			CheckValidQuestionnairе(ref isDataValid);
 
 			return isDataValid;
 		}
 		private void CheckValidEmail(ref bool isDataValid)
-		{// Метод перевіряє на правильність E-mail
+		{
 			string pattern = @"^.+@.{2,}\..{2,}$";
 			string email = textBoxEmail.Text;
+
 			if (!Regex.IsMatch(email, pattern))
-				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail, $"{labelEmail.Text} рядок не схожий на E-mail.\n" +
-					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), де запис [n;m) - " +
-					$"кількість символів.", account.Theme, ref isDataValid, textBoxEmail);
+				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail,
+					$"{labelEmail.Text} рядок не схожий на E-mail.\n" +
+					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), " +
+					$"де запис [n;m) - кількість символів.", _account.Theme,
+					ref isDataValid, textBoxEmail);
 
 			if (email.Contains(Client.SEPARATOR.ToString()))
-				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail, $"E-mail не може мати такий символ: {Client.SEPARATOR}.",
-					account.Theme, ref isDataValid, textBoxEmail);
+				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail,
+					$"E-mail не може мати такий символ: {Client.SEPARATOR}.",
+					_account.Theme, ref isDataValid, textBoxEmail);
 		}
-		private void SetDefaultLabels(Theme theme)
-		{// Метод встановлює значення label-ів за замовчуванням
-			ValidationFeedbackManager.ResetLabelsToDefault(theme, labelSurname, labelName,
-				labelFatherName, labelPhone, labelEmail);
+		private void CheckValidQuestionnairе(ref bool isDataValid)
+		{
+			if (_account.candidate.questionnaire == null)
+			{
+				if (isDataValid)
+				{
+					buttonQuestionnairе.Focus();
+					CustomMessageBox.Show("Дані були введені не вірно!" +
+						"\nАнкету також потрібно заповнити.",
+						_account.Theme, "Помилка введення",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				}
+				isDataValid = false;
+			}
 		}
 
-		// Обробники подій
 		private void TextBoxPhone_TextChanged(object sender, EventArgs e)
-		{// Обробник події введення номеру телефону
-		 // Коли ввели 3 символи перемикаємось далі
-			if (sender is TextBox textBox && textBox.Text.Length == 3)
+		{
+			if (sender is Guna2TextBox textBox
+				&& textBox.Text.Length == textBox.MaxLength)
 				ProcessTabKey(true);
 		}
+		private void TextBoxPhone_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar)
+				&& e.KeyChar != (char)Keys.Back)
+				e.Handled = true;
+		}
+
 		private void ButtonQuestionnaire_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Анкета"
-			QuestionnaireForm qf = new QuestionnaireForm(account, startForm);
+		{
+			QuestionnaireForm qf = new QuestionnaireForm(_account, _startForm);
 			qf.Show();
-			// Додаємо обробник події: коли закриється форма з анкетою,
-			// то перша форма стане знову видимою
 			qf.FormClosed += (s, args) => { Visible = true; };
 			Visible = false;
 		}
+
 		private void ButtonApply_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Застосувати"
-			if (CheckValidData())// Якщо дані правильно заповнені
+		{
+			if (CheckValidData())
 				try
 				{
-					// Перевірка номеру телефону та E-mail та логіну на унікальність
-					if (!ClientUnique.PhoneIsUnique(labelPhone, account.Login, $"{labelPhoneStart.Text}" +
-						$"{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}", account.Theme)
-					|| !ClientUnique.EmailIsUnique(labelEmail, account.Login, textBoxEmail.Text, account.Theme))
+					if (CheckUniquePhoneAndEmail() == false)
 						return;
 
-					// Встановлюємо значення кандидата
-					account.candidate = new Candidate(textBoxSurname.Text, textBoxName.Text, textBoxFatherName.Text,
-					$"{labelPhoneStart.Text}{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}",
-					dateTimePickerBirthday.Value, textBoxEmail.Text, account.candidate.questionnaire);
+					_account.candidate = new Candidate(textBoxSurname.Text,
+						textBoxName.Text, textBoxFatherName.Text,
+						$"{labelPhoneStart.Text}{textBoxPhone1.Text}" +
+						$"{textBoxPhone2.Text}{textBoxPhone3.Text}",
+						dateTimePickerBirthday.Value, textBoxEmail.Text,
+						_account.candidate.questionnaire);
 
-					if (startForm != null)
-					{// Якщо потрібно створити кандидата                        
-						if (!ClientUnique.LoginIsUnique(new Label() { Text = "Логін" }, account.Login, account.Theme))
-							return;
-
-						if (startForm.NeedToRemember)// Запис в файл при потребі
-							Serializator.Serialize(account, Program.SerializePath, Program.EncryptKey);
-						OpenMainForm();
-						Client.CreateCandidate(account);// Відправка даних на сервер
-					}
+					if (_startForm != null)
+						CreateCandidate();
 					else
-					{// Якщо потрібно змінити кандидата
-						Client.ChangeCandidate(account.Login, oldCandidate, account.candidate);
-						// Запис в файл при потребі
-						if (Serializator.SerializationFileExists(Program.SerializePath))
-							Serializator.Serialize(account, Program.SerializePath, Program.EncryptKey);
-						Close();
-					}
+						UpdateCandidate();
 				}
-				catch (System.Net.Sockets.SocketException)
+				catch (SocketException)
 				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
+					CustomMessageBox.Show("Спроба підключитись до серверу " +
+						"завершилась не вдало.\nСпробуйте, будь ласка, пізніше.",
+						_account.Theme, "Помилка підключення",
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 		}
+		private void CreateCandidate()
+		{
+			if (!ClientUnique.LoginIsUnique(new Label() { Text = "Логін" },
+				_account.Login, _account.Theme))
+				return;
+
+			Client.CreateCandidate(_account);
+			if (_startForm.NeedToRemember)
+				Serializator.Serialize(_account,
+					Program.SerializePath, Program.EncryptKey);
+
+			OpenMainForm();
+		}
 		private void OpenMainForm()
-		{// Метод відкриває головну форму
-			MainForm mf = new MainForm(account);
-			mf.Show();
-			mf.FormClosed += (s, args) =>
-			{// Обробник події закриття головної форми
+		{
+			MainForm mainForm = new MainForm(_account);
+			mainForm.Show();
+			mainForm.FormClosed += (s, args) =>
+			{
 				Close();
-				startForm.Close();
+				_startForm.Close();
 			};
 			Visible = false;
 		}
+		private void UpdateCandidate()
+		{
+			Client.ChangeCandidate(_account.Login, _oldCandidate, _account.candidate);
+			if (Serializator.SerializationFileExists(Program.SerializePath))
+				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
+
+			Close();
+		}
+
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void ProfileForm_FormClosed(object sender, FormClosedEventArgs e)
-		{// Обробник події: закриття форми
-			buttonEventHandlers.UnsubscribeAll();
-			if (startForm != null)
+		{
+			_buttonEventHandlers.UnsubscribeAll();
+
+			if (_startForm != null)
 			{
-				startForm.Visible = true;
-				account.candidate = null;
+				_startForm.Visible = true;
+				_account.candidate = null;
 			}
 		}
 	}

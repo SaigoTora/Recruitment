@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VacancyForm));
 			this.labelSalaryTitle = new System.Windows.Forms.Label();
 			this.labelPositionDescriptionTitle = new System.Windows.Forms.Label();
 			this.labelAdditionalInfoTitle = new System.Windows.Forms.Label();
@@ -278,8 +279,8 @@
 			this.Controls.Add(this.labelPositionDescriptionTitle);
 			this.Controls.Add(this.labelSalaryTitle);
 			this.Controls.Add(this.richTextBoxClientAdditionalInfo);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "VacancyForm";
-			this.ShowIcon = false;
 			this.Text = "Вакансія";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VacancyForm_FormClosed);
 			this.Load += new System.EventHandler(this.VacancyForm_Load);

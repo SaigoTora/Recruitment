@@ -64,6 +64,8 @@ namespace UIHelpers.Themes
 						ChangeRichTextBoxColor(theme, richTextBox); break;
 					case Guna2TextBox guna2TextBox:
 						ChangeGuna2TextBox(theme, guna2TextBox); break;
+					case Guna2DateTimePicker guna2DateTimePicker:
+						ChangeGuna2DateTimePicker(theme, guna2DateTimePicker); break;
 					case FlowLayoutPanel flowLayoutPanel:
 						ChangeFlowLayoutPanelColor(theme, flowLayoutPanel); break;
 					case Panel panel:
@@ -159,6 +161,7 @@ namespace UIHelpers.Themes
 			else
 				ChangeInputControlsColor(theme, richTextBox);
 		}
+
 		private static void ChangeGuna2TextBox(Theme theme, Guna2TextBox textBox)
 		{
 			(Color White, Color Black) hoverBorderColor =
@@ -205,6 +208,31 @@ namespace UIHelpers.Themes
 			}
 			checkBox.ShadowDecoration.Color = checkBox.UncheckedState.BorderColor;
 		}
+		private static void ChangeGuna2DateTimePicker(Theme theme,
+			Guna2DateTimePicker dtPicker)
+		{
+			(Color White, Color Black) borderColor =
+				(Color.Black, Color.White);
+
+			ChangeInputControlsForeColor(theme, dtPicker);
+
+			switch (theme)
+			{
+				case Theme.White:
+					dtPicker.BorderColor = borderColor.White;
+					dtPicker.FillColor = _inputBackColor.White;
+					dtPicker.HoverState.FillColor = _inputBackColor.White;
+					break;
+				case Theme.Black:
+					dtPicker.BorderColor = borderColor.Black;
+					dtPicker.FillColor = _inputBackColor.Black;
+					dtPicker.HoverState.FillColor = _inputBackColor.Black;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+
 		private static void ChangeFlowLayoutPanelColor(Theme theme, FlowLayoutPanel panel)
 		{
 			(Color White, Color Black) _panelBackColor =

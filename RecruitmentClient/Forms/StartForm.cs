@@ -52,8 +52,6 @@ namespace RecruitmentClient.Forms
 		}
 		private void StartForm_Load(object sender, EventArgs e)
 		{
-			Icon = Properties.Resources.login;
-
 			_buttonEventHandlers.SubscribeToHover(buttonLogin,
 				buttonRegisterContinue, buttonBack);
 			_checkBoxEventHandlers.SubscribeToHoverShadow(checkBoxRememberMe);
@@ -65,6 +63,7 @@ namespace RecruitmentClient.Forms
 
 		private void SetFormElementsForChangePassword()
 		{
+			Icon = Properties.Resources.profile;
 			textBoxLogin.Text = _account.Login;
 			textBoxLogin.ReadOnly = true;
 			ActiveControl = textBoxPassword;

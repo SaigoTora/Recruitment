@@ -391,6 +391,7 @@
 			this.Controls.Add(this.labelRememberMe);
 			this.Controls.Add(this.labelPassword2);
 			this.Controls.Add(this.textBoxPassword2);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "StartForm";
 			this.Text = "Вхід";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StartForm_FormClosed);
