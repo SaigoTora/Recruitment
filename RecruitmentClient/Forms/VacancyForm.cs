@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
@@ -13,61 +14,81 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
-		private readonly int idVacancy;
-		private readonly string login;
-		private readonly Action<EventArgs> refresh;
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
-		private readonly Theme currentTheme;
+		private readonly Vacancy _vacancy;
+		private readonly string _login;
+		private readonly Action<EventArgs> _refresh;
+		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
+		private readonly Theme _currentTheme;
 
-		internal VacancyForm(Vacancy vacancy, string login, Action<EventArgs> refresh, Theme theme)
-		{// Конструктор форми
+		private string _requirements;
+
+		internal VacancyForm(ClientAccount account, Vacancy vacancy,
+			string login, Action<EventArgs> refresh)
+		{
 			InitializeComponent();
 
 			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false, maximizeBox: false);
-			idVacancy = vacancy.Id;
-			this.login = login;
-			this.refresh = refresh;
-			currentTheme = theme;
-			labelPosition.Text = vacancy.Position.Name;
-			richTextBoxSalary.Text = vacancy.Salary.ToString() + " грн.";
-			richTextBoxPositionDescription.Text = vacancy.Position.Description;
-			labelDatePublication.Text = "Дата публікації: " + vacancy.DatePublication.ToString("yyyy-MM-dd");
-			richTextBoxAdditionalInfo.Text = vacancy.Info;
+			_vacancy = vacancy;
+			_login = login;
+			_refresh = refresh;
+			_currentTheme = account.Theme;
+		}
+		private void VacancyForm_Load(object sender, EventArgs e)
+		{
+			labelPosition.Text = _vacancy.Position.Name;
+			richTextBoxSalary.Text = _vacancy.Salary.ToString() + " грн.";
+			labelDatePublication.Text = "Дата публікації: " +
+				_vacancy.DatePublication.ToString("yyyy-MM-dd");
 
-			richTextBoxRequirement.Text = string.Empty;// Вимоги
-			richTextBoxRequirement.Text = Client.GetRequirement(idVacancy).ToString();
-			string educationDegrees = Client.GetRequirementEducationDegree(idVacancy);
-			if (educationDegrees != null)
-			{// Якщо є вимоги до ступенів освіти
-				if (richTextBoxRequirement.Text != string.Empty)// Якщо до цього був текст
-					richTextBoxRequirement.Text += "\n\n";
-				richTextBoxRequirement.Text += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
-			}
-			if (richTextBoxRequirement.Text == string.Empty)
-			{
-				labelRequirementTitle.Visible = false;
-				richTextBoxRequirement.Visible = false;
-			}
-			if (vacancy.Info == null || vacancy.Info.Length <= 0)
-			{
-				labelAdditionalInfoTitle.Visible = false;
-				richTextBoxAdditionalInfo.Visible = false;
-			}
-			if (vacancy.Position.Description == null || vacancy.Position.Description.Length <= 0)
-			{
-				labelPositionDescriptionTitle.Visible = false;
-				richTextBoxPositionDescription.Visible = false;
-			}
+			SetupInformation(_vacancy.Position.Description, labelPositionDescriptionTitle,
+				richTextBoxPositionDescription);
+			SetupInformation(_vacancy.Info,
+				labelAdditionalInfoTitle, richTextBoxAdditionalInfo);
+			SetupRequirements();
 
-			buttonEventHandlers.SubscribeToHover(buttonSend);
-			SetTheme(theme);
+			_buttonEventHandlers.SubscribeToHover(buttonRequirements, buttonSend);
+			SetTheme(_currentTheme);
 		}
 
+		private void SetupRequirements()
+		{
+			_requirements = string.Empty;
+			_requirements = Client.GetRequirement(_vacancy.Id).ToString();
+			string educationDegrees = Client.GetRequirementEducationDegree(_vacancy.Id);
+			if (educationDegrees != null)
+			{
+				if (_requirements != string.Empty)
+					_requirements += "\n\n";
+				_requirements += $"Необхідно мати один " +
+					$"із ступенів освіти: {educationDegrees}.";
+			}
+			buttonRequirements.Visible = _requirements != string.Empty;
+		}
+		private void SetupInformation(string text,
+			Label labelTitle, RichTextBox richTextBox)
+		{
+			if (_vacancy.Info == null || _vacancy.Info.Length <= 0)
+			{
+				labelTitle.Visible = false;
+				richTextBox.Visible = false;
+			}
+			else
+				richTextBox.Text = text;
+		}
+
+		private void ButtonRequirements_Click(object sender, EventArgs e)
+		{
+			CustomMessageBox.Show(_requirements, _currentTheme, "Вимоги",
+				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information, 550);
+		}
 		private void ButtonSend_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку створення заявки
+		{
+			richTextBoxClientAdditionalInfo.Text =
+				richTextBoxClientAdditionalInfo.Text.Trim(' ', '\r', '\n');
+
 			Validator validator = new Validator();
-			validator.CheckBannedChar(labelAdditionalTitle, richTextBoxClientAdditionalInfo.Text,
-				Client.SEPARATOR, currentTheme);
+			validator.CheckBannedChar(labelClientAdditionalInfoTitle,
+				richTextBoxClientAdditionalInfo.Text, Client.SEPARATOR, _currentTheme);
 			if (!validator.IsDataValid)
 			{
 				richTextBoxClientAdditionalInfo.Focus();
@@ -75,16 +96,20 @@ namespace RecruitmentClient.Forms
 			}
 			try
 			{
-				Client.CreateApplication(login, richTextBoxClientAdditionalInfo.Text, idVacancy);
-				refresh(EventArgs.Empty);
+				Client.CreateApplication(_login,
+					richTextBoxClientAdditionalInfo.Text, _vacancy.Id);
+				_refresh(EventArgs.Empty);
 				Close();
-				CustomMessageBox.Show("Заявка була відправлена успішно!\nБудь ласка, регулярно переглядайте вкладки заявок та\nспівбесід.",
-					currentTheme, "Успішно", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+				CustomMessageBox.Show("Заявка була відправлена успішно!\n" +
+					"Будь ласка, регулярно переглядайте вкладки заявок та співбесід.",
+					_currentTheme, "Успішно", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Information);
 			}
-			catch (System.Net.Sockets.SocketException)
+			catch (SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, відправити заявку пізніше.", currentTheme, "Помилка підключення",
+					"\nСпробуйте, будь ласка, відправити заявку пізніше.",
+					_currentTheme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}
@@ -93,8 +118,6 @@ namespace RecruitmentClient.Forms
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
 
 		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			buttonEventHandlers.UnsubscribeAll();
-		}
+			=> _buttonEventHandlers.UnsubscribeAll();
 	}
 }

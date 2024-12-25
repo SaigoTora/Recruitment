@@ -352,7 +352,8 @@ namespace RecruitmentClient.Forms
 				{// Підписуємось на подію відкриття форми
 					try
 					{
-						VacancyForm vf = new VacancyForm(vacancy, account.Login, SelectLabel, account.Theme);
+						VacancyForm vf = new VacancyForm(account, vacancy,
+							account.Login, SelectLabel);
 						vf.ShowDialog();
 					}
 					catch (System.Net.Sockets.SocketException)
