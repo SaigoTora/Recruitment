@@ -32,9 +32,10 @@ namespace RecruitmentClient.Forms
 			if (_account.candidate == null)
 				_account.candidate = new Candidate();
 			else
+			{
+				_oldCandidate = new Candidate(_account.candidate);
 				SetFormData(_account);
-
-			_oldCandidate = new Candidate(_account.candidate);
+			}
 		}
 		internal ProfileForm(ClientAccount account, StartForm startForm)
 			: this(account)

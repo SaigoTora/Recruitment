@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Guna.UI2.WinForms;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 using UIHelpers.Themes;
@@ -7,28 +8,28 @@ using UIHelpers.Validation;
 namespace RecruitmentClient.FormUtilities
 {
 	internal class EducationFormElements
-	{// Клас для зберігання елементів форми освіти
-		internal Panel PanelMain { get; private set; }
+	{
+		internal Guna2GradientPanel PanelMain { get; private set; }
 
 		internal Label LabelNameInstitution { get; private set; }
 		internal Label LabelSpecialty { get; private set; }
 		internal Label LabelYearAdmission { get; private set; }
 		internal Label LabelDateEnd { get; private set; }
 
-		internal TextBox TextBoxNameInstitution { get; private set; }
-		internal TextBox TextBoxSpecialty { get; private set; }
+		internal Guna2TextBox TextBoxNameInstitution { get; private set; }
+		internal Guna2TextBox TextBoxSpecialty { get; private set; }
 
 		internal NumericUpDown NUD_YearAdmission { get; private set; }
-		internal DateTimePicker DTP_DateEnd { get; private set; }
-		internal ComboBox CB_EducationDegree { get; private set; }
-		internal ComboBox CB_EducationForm { get; private set; }
+		internal Guna2DateTimePicker DTP_DateEnd { get; private set; }
+		internal Guna2ComboBox CB_EducationDegree { get; private set; }
+		internal Guna2ComboBox CB_EducationForm { get; private set; }
 
-		internal EducationFormElements(Panel panelMain, Label labelNameInstitution,
+		internal EducationFormElements(Guna2GradientPanel panelMain, Label labelNameInstitution,
 			Label labelSpecialty, Label labelYearAdmission, Label labelDateEnd,
-			TextBox textBoxNameInstitution, TextBox textBoxSpecialty,
-			NumericUpDown nud_YearAdmission, DateTimePicker dtp_DateEnd,
-			ComboBox cb_EducationDegree, ComboBox cb_EducationForm)
-		{// Конструктор
+			Guna2TextBox textBoxNameInstitution, Guna2TextBox textBoxSpecialty,
+			NumericUpDown nud_YearAdmission, Guna2DateTimePicker dtp_DateEnd,
+			Guna2ComboBox cb_EducationDegree, Guna2ComboBox cb_EducationForm)
+		{
 			PanelMain = panelMain;
 			LabelNameInstitution = labelNameInstitution;
 			LabelSpecialty = labelSpecialty;
@@ -70,17 +71,18 @@ namespace RecruitmentClient.FormUtilities
 		public override int GetHashCode()
 		{// Хеш-функція за замовчуванням
 			int hashCode = 1049417743;
-			hashCode = hashCode * -1521134295 + EqualityComparer<Panel>.Default.GetHashCode(PanelMain);
+			hashCode = hashCode * -1521134295 +
+				EqualityComparer<Guna2GradientPanel>.Default.GetHashCode(PanelMain);
 			hashCode = hashCode * -1521134295 + EqualityComparer<Label>.Default.GetHashCode(LabelNameInstitution);
 			hashCode = hashCode * -1521134295 + EqualityComparer<Label>.Default.GetHashCode(LabelSpecialty);
 			hashCode = hashCode * -1521134295 + EqualityComparer<Label>.Default.GetHashCode(LabelYearAdmission);
 			hashCode = hashCode * -1521134295 + EqualityComparer<Label>.Default.GetHashCode(LabelDateEnd);
-			hashCode = hashCode * -1521134295 + EqualityComparer<TextBox>.Default.GetHashCode(TextBoxNameInstitution);
-			hashCode = hashCode * -1521134295 + EqualityComparer<TextBox>.Default.GetHashCode(TextBoxSpecialty);
+			hashCode = hashCode * -1521134295 + EqualityComparer<Guna2TextBox>.Default.GetHashCode(TextBoxNameInstitution);
+			hashCode = hashCode * -1521134295 + EqualityComparer<Guna2TextBox>.Default.GetHashCode(TextBoxSpecialty);
 			hashCode = hashCode * -1521134295 + EqualityComparer<NumericUpDown>.Default.GetHashCode(NUD_YearAdmission);
-			hashCode = hashCode * -1521134295 + EqualityComparer<DateTimePicker>.Default.GetHashCode(DTP_DateEnd);
-			hashCode = hashCode * -1521134295 + EqualityComparer<ComboBox>.Default.GetHashCode(CB_EducationDegree);
-			hashCode = hashCode * -1521134295 + EqualityComparer<ComboBox>.Default.GetHashCode(CB_EducationForm);
+			hashCode = hashCode * -1521134295 + EqualityComparer<Guna2DateTimePicker>.Default.GetHashCode(DTP_DateEnd);
+			hashCode = hashCode * -1521134295 + EqualityComparer<Guna2ComboBox>.Default.GetHashCode(CB_EducationDegree);
+			hashCode = hashCode * -1521134295 + EqualityComparer<Guna2ComboBox>.Default.GetHashCode(CB_EducationForm);
 			return hashCode;
 		}
 	}

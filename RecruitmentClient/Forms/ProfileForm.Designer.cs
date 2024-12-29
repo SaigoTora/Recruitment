@@ -173,7 +173,7 @@
 			this.buttonQuestionnairе.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonQuestionnairе.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonQuestionnairе.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 426);
+			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 416);
 			this.buttonQuestionnairе.Name = "buttonQuestionnairе";
 			this.buttonQuestionnairе.PressedColor = System.Drawing.Color.White;
 			this.buttonQuestionnairе.PressedDepth = 20;
@@ -203,7 +203,7 @@
 			this.buttonApply.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonApply.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonApply.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonApply.Location = new System.Drawing.Point(616, 426);
+			this.buttonApply.Location = new System.Drawing.Point(616, 416);
 			this.buttonApply.Name = "buttonApply";
 			this.buttonApply.PressedColor = System.Drawing.Color.White;
 			this.buttonApply.PressedDepth = 20;
@@ -427,7 +427,7 @@
 			this.textBoxEmail.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxEmail.ForeColor = System.Drawing.Color.Black;
 			this.textBoxEmail.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxEmail.Location = new System.Drawing.Point(288, 329);
+			this.textBoxEmail.Location = new System.Drawing.Point(288, 328);
 			this.textBoxEmail.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxEmail.MaxLength = 64;
 			this.textBoxEmail.Name = "textBoxEmail";
@@ -436,7 +436,7 @@
 			this.textBoxEmail.PlaceholderText = "";
 			this.textBoxEmail.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxEmail.SelectedText = "";
-			this.textBoxEmail.Size = new System.Drawing.Size(350, 32);
+			this.textBoxEmail.Size = new System.Drawing.Size(350, 34);
 			this.textBoxEmail.TabIndex = 14;
 			this.textBoxEmail.TextOffset = new System.Drawing.Point(3, 0);
 			// 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Guna.UI2.WinForms;
+using System.Windows.Forms;
 
 using UIHelpers.Themes;
 using UIHelpers.Validation;
@@ -6,23 +7,21 @@ using UIHelpers.Validation;
 namespace RecruitmentClient.FormUtilities
 {
 	internal class LanguageFormElements
-	{// Клас для зберігання елементів форми мов
-		internal Panel PanelMain { get; private set; }
+	{
+		internal Guna2GradientPanel PanelMain { get; private set; }
 		internal Label LabelName { get; private set; }
-		internal ComboBox ComboBoxName { get; private set; }
-		internal NumericUpDown NUD_Level { get; private set; }
+		internal Guna2ComboBox ComboBoxName { get; private set; }
+		internal NumericUpDown NUDLevel { get; private set; }
 
-		internal LanguageFormElements(Panel panelMain, Label labelName,
-			ComboBox comboBoxName, NumericUpDown nud_Level)
-		{// Конструктор
+		internal LanguageFormElements(Guna2GradientPanel panelMain,
+			Label labelName, Guna2ComboBox comboBoxName, NumericUpDown nudLevel)
+		{
 			PanelMain = panelMain;
 			LabelName = labelName;
 			ComboBoxName = comboBoxName;
-			NUD_Level = nud_Level;
+			NUDLevel = nudLevel;
 		}
 		internal void SetDefaultLabel(Theme theme)
-		{// Метод встановлює значення label-у за замовчуванням
-			ValidationFeedbackManager.ResetLabelsToDefault(theme, LabelName);
-		}
+			=> ValidationFeedbackManager.ResetLabelsToDefault(theme, LabelName);
 	}
 }

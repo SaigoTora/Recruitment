@@ -11,7 +11,7 @@ namespace UIHelpers.Themes
 	public class ThemeControlManager
 	{
 		public static readonly (Color White, Color Black) PanelBackColor =
-			(Color.FromArgb(222, 222, 222), Color.FromArgb(37, 37, 37));
+			(Color.FromArgb(230, 230, 230), Color.FromArgb(45, 45, 45));
 
 		private static readonly (Color White, Color Black) _inputBackColor =
 			(Color.FromArgb(235, 235, 235), Color.FromArgb(50, 50, 50));
@@ -53,6 +53,8 @@ namespace UIHelpers.Themes
 						ChangeLabelsColor(theme, label); break;
 					case Guna2CustomCheckBox guna2CheckBox:
 						ChangeGuna2CheckBox(theme, guna2CheckBox); break;
+					case Guna2ComboBox comboBox:
+						ChangeGuna2ComboBox(theme, comboBox); break;
 					case CheckBox checkBox:
 						ChangeInputControlsForeColor(theme, checkBox); break;
 					case TextBox _:
@@ -66,6 +68,10 @@ namespace UIHelpers.Themes
 						ChangeGuna2TextBox(theme, guna2TextBox); break;
 					case Guna2DateTimePicker guna2DateTimePicker:
 						ChangeGuna2DateTimePicker(theme, guna2DateTimePicker); break;
+					case Guna2CustomRadioButton guna2RadioButton:
+						ChangeGuna2CustomRadioButton(theme, guna2RadioButton); break;
+					case Guna2GradientPanel guna2GradientPanel:
+						ChangeGuna2GradientPanel(theme, guna2GradientPanel); break;
 					case FlowLayoutPanel flowLayoutPanel:
 						ChangeFlowLayoutPanelColor(theme, flowLayoutPanel); break;
 					case Panel panel:
@@ -227,6 +233,73 @@ namespace UIHelpers.Themes
 					dtPicker.BorderColor = borderColor.Black;
 					dtPicker.FillColor = _inputBackColor.Black;
 					dtPicker.HoverState.FillColor = _inputBackColor.Black;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeGuna2CustomRadioButton(Theme theme,
+			Guna2CustomRadioButton radioButton)
+		{
+			(Color White, Color Black) checkedBorderColor =
+				(Color.Black, Color.White);
+
+			ChangeInputControlsForeColor(theme, radioButton);
+
+			switch (theme)
+			{
+				case Theme.White:
+					radioButton.CheckedState.BorderColor = checkedBorderColor.White;
+					radioButton.UncheckedState.BorderColor = _inputBorderColor.White;
+					break;
+				case Theme.Black:
+					radioButton.CheckedState.BorderColor = checkedBorderColor.Black;
+					radioButton.UncheckedState.BorderColor = _inputBorderColor.Black;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+			radioButton.ShadowDecoration.Color = radioButton.UncheckedState.BorderColor;
+			if (radioButton.CheckedState.FillColor == Color.Transparent)
+				radioButton.CheckedState.FillColor = radioButton.Parent.BackColor;
+			if (radioButton.UncheckedState.FillColor == Color.Transparent)
+				radioButton.UncheckedState.FillColor = radioButton.Parent.BackColor;
+		}
+		private static void ChangeGuna2ComboBox(Theme theme, Guna2ComboBox comboBox)
+		{
+			(Color White, Color Black) hoverBorderColor =
+				(Color.Black, Color.White);
+
+			ChangeInputControlsForeColor(theme, comboBox);
+
+			switch (theme)
+			{
+				case Theme.White:
+					comboBox.FillColor = _inputBackColor.White;
+					comboBox.BorderColor = _inputBorderColor.White;
+					comboBox.HoverState.BorderColor = hoverBorderColor.White;
+					break;
+				case Theme.Black:
+					comboBox.FillColor = _inputBackColor.Black;
+					comboBox.BorderColor = _inputBorderColor.Black;
+					comboBox.HoverState.BorderColor = hoverBorderColor.Black;
+					break;
+				default:
+					throw new InvalidOperationException($"Unknown theme: {theme}");
+			}
+		}
+		private static void ChangeGuna2GradientPanel(Theme theme,
+			Guna2GradientPanel gradientPanel)
+		{
+			switch (theme)
+			{
+				case Theme.White:
+					gradientPanel.FillColor = PanelBackColor.White;
+					gradientPanel.FillColor2 = PanelBackColor.White;
+					break;
+				case Theme.Black:
+					gradientPanel.FillColor = PanelBackColor.Black;
+					gradientPanel.FillColor2 = PanelBackColor.Black;
 					break;
 				default:
 					throw new InvalidOperationException($"Unknown theme: {theme}");
