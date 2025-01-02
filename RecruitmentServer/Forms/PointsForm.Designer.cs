@@ -592,7 +592,6 @@
 			this.Name = "PointsForm";
 			this.ShowIcon = false;
 			this.Text = "Бали";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PointsForm_FormClosed);
 			this.Load += new System.EventHandler(this.PointsForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeUnder18)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAge18_30)).EndInit();

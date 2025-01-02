@@ -650,7 +650,6 @@
 			this.Name = "RequirementForm";
 			this.ShowIcon = false;
 			this.Text = "Вимоги";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RequirementForm_FormClosed);
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownExpMin)).EndInit();

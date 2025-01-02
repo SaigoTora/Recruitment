@@ -23,7 +23,6 @@ namespace RecruitmentClient.Forms
 		internal bool NeedToRemember { get; private set; }
 
 		private readonly ClientAccount _account = new ClientAccount();
-		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
 		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
 			new CheckBoxEventHandlers();
 		private readonly LabelEventHandlers _labelEventHandlers = new LabelEventHandlers();
@@ -52,8 +51,6 @@ namespace RecruitmentClient.Forms
 		}
 		private void StartForm_Load(object sender, EventArgs e)
 		{
-			_buttonEventHandlers.SubscribeToHover(buttonLogin,
-				buttonRegisterContinue, buttonBack);
 			_checkBoxEventHandlers.SubscribeToHoverShadow(checkBoxRememberMe);
 			_labelEventHandlers.SubscribeToHoverUnderline(labelRegisterStart);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxTheme);
@@ -480,7 +477,6 @@ namespace RecruitmentClient.Forms
 		{
 			buttonLogin.Click -= ButtonChangePassword_Click;
 
-			_buttonEventHandlers.UnsubscribeAll();
 			_checkBoxEventHandlers.UnsubscribeAll();
 			_labelEventHandlers.UnsubscribeAll();
 			_pictureBoxEventHandlers.UnsubscribeAll();

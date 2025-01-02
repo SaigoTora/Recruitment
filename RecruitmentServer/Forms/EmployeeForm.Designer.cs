@@ -278,7 +278,6 @@
 			this.Name = "EmployeeForm";
 			this.ShowIcon = false;
 			this.Text = "Співробітник";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EmployeeForm_FormClosed);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

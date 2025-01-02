@@ -282,7 +282,6 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "VacancyForm";
 			this.Text = "Вакансія";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VacancyForm_FormClosed);
 			this.Load += new System.EventHandler(this.VacancyForm_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();

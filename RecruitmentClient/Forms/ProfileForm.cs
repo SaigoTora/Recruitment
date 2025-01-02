@@ -7,7 +7,6 @@ using Guna.UI2.WinForms;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
-using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -20,7 +19,6 @@ namespace RecruitmentClient.Forms
 		private readonly ClientAccount _account;
 		private readonly StartForm _startForm;
 		private readonly Candidate _oldCandidate;
-		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
 
 		internal ProfileForm(ClientAccount account)
 		{// Constructor for changing data
@@ -49,7 +47,6 @@ namespace RecruitmentClient.Forms
 			textBoxSurname.Focus();
 			dateTimePickerBirthday.MaxDate = DateTime.Today.AddYears(-MIN_AGE);
 
-			_buttonEventHandlers.SubscribeToHover(buttonQuestionnairе, buttonApply);
 			SetTheme(_account.Theme);
 		}
 
@@ -227,8 +224,6 @@ namespace RecruitmentClient.Forms
 
 		private void ProfileForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			_buttonEventHandlers.UnsubscribeAll();
-
 			if (_startForm != null)
 			{
 				_startForm.Visible = true;

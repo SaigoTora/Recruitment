@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
-using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -17,7 +16,6 @@ namespace RecruitmentClient.Forms
 		private readonly Vacancy _vacancy;
 		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
-		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
 		private readonly Theme _currentTheme;
 
 		private string _requirements;
@@ -46,7 +44,6 @@ namespace RecruitmentClient.Forms
 				labelAdditionalInfoTitle, richTextBoxAdditionalInfo);
 			SetupRequirements();
 
-			_buttonEventHandlers.SubscribeToHover(buttonRequirements, buttonSend);
 			SetTheme(_currentTheme);
 		}
 
@@ -116,8 +113,5 @@ namespace RecruitmentClient.Forms
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
-
-		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
-			=> _buttonEventHandlers.UnsubscribeAll();
 	}
 }

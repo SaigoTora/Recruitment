@@ -410,7 +410,6 @@
 			this.Name = "InterviewForm";
 			this.ShowIcon = false;
 			this.Text = "Співбесіда";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InterviewForm_FormClosed);
 			this.Load += new System.EventHandler(this.InterviewForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.interviewStatusBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).EndInit();

@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.FormUtilities;
+using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using Guna.UI2.WinForms;
-using System.Net.Sockets;
 
 namespace RecruitmentClient.Forms
 {
@@ -27,7 +27,6 @@ namespace RecruitmentClient.Forms
 		private readonly ClientAccount _account;
 		private readonly Questionnaire _oldQuestionnaire = null;
 		private readonly bool _formOpenForChange = false;
-		private readonly ButtonEventHandlers _buttonEventHandlers = new ButtonEventHandlers();
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
 
@@ -78,8 +77,6 @@ namespace RecruitmentClient.Forms
 			else
 				SetFormFields(_account.candidate.questionnaire);
 
-			_buttonEventHandlers.SubscribeToHover(buttonRemoveLanguage, buttonAddLanguage,
-			buttonRemoveEducation, buttonAddEducation, buttonApply);
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonDriverLicenseNo,
 				radioButtonDriverLicenseYes, radioButtonSmokerNo, radioButtonSmokerYes,
 				radioButtonDrinkAlcoholNo, radioButtonDrinkAlcoholYes);
@@ -512,7 +509,6 @@ namespace RecruitmentClient.Forms
 			DisposeLanguages();
 			DisposeEducations();
 
-			_buttonEventHandlers.UnsubscribeAll();
 			_radionButtonEventHandlers.UnsubscribeAll();
 		}
 		private void DisposeLanguages()

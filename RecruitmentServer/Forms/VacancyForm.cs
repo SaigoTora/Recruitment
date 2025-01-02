@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
-using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -17,7 +16,6 @@ namespace RecruitmentServer.Forms
 		private const int DECREASE_FORM_HEIGHT = 130;
 		private readonly FullRequirement requirement = new FullRequirement();// Вимоги
 		private readonly ServerAccount account;// Акаунт
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		private FullVacancy vacancy;// Вакансія
 		private Points points = new Points();// Бали
@@ -52,7 +50,6 @@ namespace RecruitmentServer.Forms
 
 			buttonRequirement.Click += ButtonRequirementCreate_Click;
 			buttonPoints.Click += ButtonPointsCreate_Click;
-			buttonEventHandlers.SubscribeToHover(buttonRequirement, buttonPoints, buttonCreate);
 
 			this.account = account;
 			SetTheme(account.Theme);
@@ -77,7 +74,6 @@ namespace RecruitmentServer.Forms
 
 			buttonRequirement.Click += ButtonRequirementShow_Click;
 			buttonPoints.Click += ButtonPointsShow_Click;
-			buttonEventHandlers.SubscribeToHover(buttonRequirement, buttonPoints, buttonDelete);
 
 			this.account = account;
 			SetTheme(account.Theme);
@@ -197,10 +193,5 @@ namespace RecruitmentServer.Forms
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
-
-		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			buttonEventHandlers.UnsubscribeAll();
-		}
 	}
 }

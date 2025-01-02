@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.Forms;
+using RecruitmentLibrary.PersonInfo;
 using UIHelpers.Forms;
-using System.Net.Sockets;
 
 namespace RecruitmentClient
 {

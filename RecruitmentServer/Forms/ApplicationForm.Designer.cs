@@ -459,7 +459,6 @@
 			this.Name = "ApplicationForm";
 			this.ShowIcon = false;
 			this.Text = "Заявка";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ApplicationForm_FormClosed);
 			this.Load += new System.EventHandler(this.ApplicationForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.applicationStatusBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).EndInit();

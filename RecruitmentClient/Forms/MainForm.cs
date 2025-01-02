@@ -1,7 +1,9 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
 using RecruitmentClient.ClientUtilities;
@@ -12,8 +14,6 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using System.Diagnostics;
-using System.Net.Sockets;
 
 namespace RecruitmentClient.Forms
 {

@@ -345,7 +345,6 @@
 			this.Name = "VacancyForm";
 			this.ShowIcon = false;
 			this.Text = "Вакансія";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VacancyForm_FormClosed);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

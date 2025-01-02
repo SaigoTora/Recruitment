@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.ServerUtilities;
-using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -18,8 +17,6 @@ namespace RecruitmentServer.Forms
 		private readonly int idBusinessTrip, idFamilyStatus;
 		private readonly ControlCreator languageCreator;
 		private readonly ControlCreator educationCreator;
-
-		private readonly ButtonEventHandlers buttonEventHandlers = new ButtonEventHandlers();
 
 		internal CandidateForm(Candidate candidate, ServerAccount account)
 		{// Конструктор форми кандидата
@@ -56,7 +53,6 @@ namespace RecruitmentServer.Forms
 			educationCreator = new ControlCreator(panelEducation, flpEducations);
 			CreateLanguages(candidate.questionnaire.Languages);
 			CreateEducations(candidate.questionnaire.Educations);
-			buttonEventHandlers.SubscribeToHover(buttonMore);
 		}
 		internal void CreateHealth(Health health)
 		{// Метод створює інформацію про ЗДОРОВ'Я на формі
@@ -130,7 +126,6 @@ namespace RecruitmentServer.Forms
 		{
 			languageCreator.Dispose();
 			educationCreator.Dispose();
-			buttonEventHandlers.UnsubscribeAll();
 		}
 	}
 }
