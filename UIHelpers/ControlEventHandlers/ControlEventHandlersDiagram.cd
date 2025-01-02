@@ -1,31 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="UIHelpers.ControlEventHandlers.ButtonEventHandlers" Collapsed="true">
+  <Class Name="UIHelpers.ControlEventHandlers.CheckBoxEventHandlers" Collapsed="true">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAEEAAAAAAAAAAgAAAAAAAAQEAQCAAAAAAAAA=</HashCode>
-      <FileName>ControlEventHandlers\ButtonEventHandlers.cs</FileName>
+      <HashCode>AAAAQAAAAEAAAAAAAAAAgAgAAAAAAAAAQEAAAAAAAAA=</HashCode>
+      <FileName>ControlEventHandlers\CheckBoxEventHandlers.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIHelpers.ControlEventHandlers.ControlEventHandlers&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABgCAAAAEAAAAAAACAAgAAAAAAAASAAwAAAAAAAAAA=</HashCode>
       <FileName>ControlEventHandlers\ControlEventHandlers.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIHelpers.ControlEventHandlers.LabelEventHandlers" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAgQAAAIAAAAAA=</HashCode>
       <FileName>ControlEventHandlers\LabelEventHandlers.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UIHelpers.ControlEventHandlers.PictureBoxEventHandlers" Collapsed="true">
-    <Position X="5" Y="1.75" Width="1.5" />
+    <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEIAQAAAAEAAAAAEAAAAgAAAAAAAAAAAQCAIAAAAICA=</HashCode>
       <FileName>ControlEventHandlers\PictureBoxEventHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIHelpers.ControlEventHandlers.RadioButtonEventHandlers" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAgAAAAAIAAAAAQEAAAAAAAAA=</HashCode>
+      <FileName>ControlEventHandlers\RadioButtonEventHandlers.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
