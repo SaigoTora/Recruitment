@@ -41,13 +41,13 @@ namespace RecruitmentClient.Forms
 			customTitleBar = new CustomTitleBar(this, "Вхід",
 				Properties.Resources.login, maximizeBox: false);
 		}
-		internal StartForm(ClientAccount a)
+		internal StartForm(ClientAccount account)
 		{// Constructor for password change
 			InitializeComponent();
 
 			customTitleBar = new CustomTitleBar(this, "Підтвердіть свій пароль",
 				maximizeBox: false);
-			_account = a;
+			_account = account;
 			SetFormElementsForChangePassword();
 		}
 		private void StartForm_Load(object sender, EventArgs e)

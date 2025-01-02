@@ -61,7 +61,7 @@ namespace UIHelpers.Controls
 
 			return MainPanel;
 		}
-		public Panel CreateMainPanelNEW()
+		public Guna2GradientPanel CreateMainPanelNEW()
 		{
 			_number++;
 			Control parent = MainPanelNEW.Parent;
@@ -71,7 +71,7 @@ namespace UIHelpers.Controls
 			_parent.Controls.Add(MainPanelNEW);
 			_createdPanels.Add(MainPanelNEW);
 
-			return MainPanel;
+			return MainPanelNEW;
 		}
 		private Guna2GradientPanel CreatePanel(Guna2GradientPanel sample)
 		{
@@ -206,6 +206,17 @@ namespace UIHelpers.Controls
 		{
 			PictureBox pictureBox = CreateControl(sample);
 			pictureBox.Image = sample.Image;
+
+			return pictureBox;
+		}
+		public Guna2PictureBox CreatePictureBox(Guna2PictureBox sample)
+		{
+			Guna2PictureBox pictureBox = CreateControl(sample);
+			pictureBox.Image = sample.Image;
+			pictureBox.FillColor = sample.FillColor;
+			pictureBox.BorderRadius = sample.BorderRadius;
+			pictureBox.BorderStyle = sample.BorderStyle;
+			pictureBox.CustomizableEdges = sample.CustomizableEdges;
 
 			return pictureBox;
 		}

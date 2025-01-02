@@ -6,6 +6,7 @@ using RecruitmentLibrary.PersonInfo;
 using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.Forms;
 using UIHelpers.Forms;
+using System.Net.Sockets;
 
 namespace RecruitmentClient
 {
@@ -29,7 +30,7 @@ namespace RecruitmentClient
 			{
 				try
 				{ account.candidate = Client.GetCandidate(account.Login, account.Password); }
-				catch (System.Net.Sockets.SocketException)
+				catch (SocketException)
 				{
 					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 						"\nСпробуйте, будь ласка, запустити програму пізніше.", account.Theme, "Помилка підключення",

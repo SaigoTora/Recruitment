@@ -336,21 +336,24 @@ namespace UIHelpers.Themes
 			if (radioButton.UncheckedState.FillColor == Color.Transparent)
 				radioButton.UncheckedState.FillColor = radioButton.Parent.BackColor;
 		}
-		private static void ChangeGuna2GradientPanel(Theme theme,
-			Guna2GradientPanel gradientPanel)
+		public static void ChangeGuna2GradientPanel(Theme theme,
+			params Guna2GradientPanel[] gradientPanels)
 		{
-			switch (theme)
+			foreach (var gradientPanel in gradientPanels)
 			{
-				case Theme.White:
-					gradientPanel.FillColor = PanelBackColor.White;
-					gradientPanel.FillColor2 = PanelBackColor.White;
-					break;
-				case Theme.Black:
-					gradientPanel.FillColor = PanelBackColor.Black;
-					gradientPanel.FillColor2 = PanelBackColor.Black;
-					break;
-				default:
-					throw new InvalidOperationException($"Unknown theme: {theme}");
+				switch (theme)
+				{
+					case Theme.White:
+						gradientPanel.FillColor = PanelBackColor.White;
+						gradientPanel.FillColor2 = PanelBackColor.White;
+						break;
+					case Theme.Black:
+						gradientPanel.FillColor = PanelBackColor.Black;
+						gradientPanel.FillColor2 = PanelBackColor.Black;
+						break;
+					default:
+						throw new InvalidOperationException($"Unknown theme: {theme}");
+				}
 			}
 		}
 		#endregion

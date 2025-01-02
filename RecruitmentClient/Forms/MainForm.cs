@@ -12,11 +12,13 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using System.Diagnostics;
+using System.Net.Sockets;
 
 namespace RecruitmentClient.Forms
 {
 	internal enum PanelsInfo : byte
-	{// Перелік, який вказує інформацію панелей
+	{
 		None,
 		Vacancy,
 		Application,
@@ -25,66 +27,137 @@ namespace RecruitmentClient.Forms
 
 	internal partial class MainForm : BaseForm, IThemeChange
 	{
-		private const int COUNT_ON_PAGE = 10;// Кількість завантажуваних панелей
-		private const int DEFAULT_SEARCH_DATE = 5;// Значення дати пошуку за замовчуванням
-		private const int PANEL_SEARCH_OFFSET = 59;// Значення для зміни розміру панелі
+		private const int COUNT_PANELS_ON_PAGE = 10;
+		private const int DEFAULT_SEARCH_DATE = 5;
+		private const int SCROLL_PADDING = 6;
 
-		private readonly ClientAccount account;// Обліковий запис
-		private readonly Color colorGreen = Color.FromArgb(0, 109, 91);// Кольори для pictureBox-ів у заявках та співбесідах
-		private readonly Color colorYellow1 = Color.FromArgb(255, 185, 97);
-		private readonly Color colorYellow2 = Color.FromArgb(229, 158, 31);
-		private readonly Color colorRed = Color.FromArgb(191, 34, 51);
-		private readonly int comboBoxSortCount;// Кількість елементів у comboBoxSort
-		private readonly LabelEventHandlers labelEventHandlers = new LabelEventHandlers();
-		private readonly PictureBoxEventHandlers pictureBoxEventHandlers = new PictureBoxEventHandlers();
+		private readonly (Color Accepted, Color Waiting, Color Invited, Color Rejected)
+			_statusColor = (Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97),
+			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
-		private PanelsInfo panelsInfo = PanelsInfo.None;// Змінна, яка зберігає інформацію про вид панелей
-		private readonly List<Panel> panelsVAI = new List<Panel>();// Панелі вакансій або заявок або співбесід
-		private int countPanels;// Загальна кількість панелей необхідних для відображення
-		private int currentPanelHeight;// Висота поточної панелі
-		private int currentOffset;// Кількість вже згенерованих панелей
-		private int currentDateIndex;// Індекс поточної вибраної дати в пошуку
-		private ClientSearcher searcher;// Змінна, яка зберігає інформацію про пошук
+		private readonly ClientAccount _account;
+		private readonly LabelEventHandlers _labelEventHandlers = new LabelEventHandlers();
+		private readonly PictureBoxEventHandlers _pictureBoxEventHandlers =
+			new PictureBoxEventHandlers();
+		private readonly int _comboBoxSortCount;
 
-		internal MainForm(ClientAccount a)
-		{// Конструктор
+		private ClientSearcher _searcher;
+		private PanelsInfo _panelsInfo = PanelsInfo.None;
+		private readonly List<Guna2GradientPanel> _createdPanels = new List<Guna2GradientPanel>();
+		private int _totalItemsToDisplay;// Total number of panels required for display
+		private int _currentComboBoxDateIndex;
+
+		internal MainForm(ClientAccount account)
+		{
 			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			IsResizable = true;
 			InitializeComponent();
 
-			account = a;
-			comboBoxSortCount = comboBoxSort.Items.Count;
-			flpMain.MouseWheel += FlpMain_MouseWheel;
+			_account = account;
+			_comboBoxSortCount = comboBoxSort.Items.Count;
+			flpContent.MouseWheel += FlpContent_MouseWheel;
 		}
 		private void MainForm_Load(object sender, EventArgs e)
-		{// Обробник події завантаження форми
-			Icon = Properties.Resources.main;
-			buttonProfile.Text = account.candidate.Name;
+		{
+			buttonProfile.Text = _account.candidate.Name;
 
-			pictureBoxExit.Visible = Serializator.SerializationFileExists(Program.SerializePath);
+			pictureBoxExit.Visible = Serializator.SerializationFileExists
+				(Program.SerializePath);
 			SetDefaultSearchValues();
 
-			SetTheme(account.Theme);
-			labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication, labelInterview);
-			pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh, pictureBoxDown, pictureBoxUp,
-				pictureBoxExit, pictureBoxPasswordChange, pictureBoxTheme);
+			SetTheme(_account.Theme);
+			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy,
+				labelApplication, labelInterview);
+			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh, pictureBoxDown,
+				pictureBoxUp, pictureBoxExit, pictureBoxPasswordChange, pictureBoxTheme);
 		}
 
-		private void ClearMainPanel()
-		{// Метод очищає головну панель
-			countPanels = 0;
-			currentOffset = 0;
+		private void ButtonExit_Click(object sender, EventArgs e)
+		{
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете " +
+				"вийти з акаунту?\nЯкщо так, то ваш логін та пароль будуть забуті " +
+				"на цьому ПК. Крім того, програма перезапуститься.", _account.Theme,
+				"Вихід з акаунту",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 
-			foreach (Panel panel in panelsVAI)
+			if (result == DialogResult.Yes)
+			{
+				Visible = false;
+				Serializator.DeleteSerializationFile(Program.SerializePath);
+				Process.Start(System.Windows.Forms.Application.ExecutablePath);
+				Environment.Exit(0);
+			}
+		}
+		private void ButtonPasswordChange_Click(object sender, EventArgs e)
+		{
+			Enabled = false;
+			StartForm sf = new StartForm(_account);
+			sf.Show();
+
+			sf.FormClosed += (s, args) =>
+			{ Enabled = true; };
+		}
+		private void ButtonProfile_Click(object sender, EventArgs e)
+		{
+			Enabled = false;
+			ProfileForm pf = new ProfileForm(_account);
+			pf.Show();
+			pf.FormClosed += (s, args) =>
+			{
+				buttonProfile.Text = _account.candidate.Name;
+				Enabled = true;
+				panelUp.Focus();
+			};
+		}
+
+		private void SelectLabel(EventArgs e)
+		{
+			if (_panelsInfo == PanelsInfo.Vacancy)
+				LabelNavigation_Click(labelVacancy, e);
+			else if (_panelsInfo == PanelsInfo.Application)
+				LabelNavigation_Click(labelApplication, e);
+			else if (_panelsInfo == PanelsInfo.Interview)
+				LabelNavigation_Click(labelInterview, e);
+		}
+		private void LabelNavigation_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Label label)) return;
+
+			ClearContentPanel();
+			panelSearch.Visible = true;
+
+			if (e != EventArgs.Empty)// If we are not searching
+			{
+				_searcher = null;
+				SetDefaultSearchValues();
+			}
+
+			try
+			{
+				CreateAndSetupFirstPanels(label);
+			}
+			catch (SocketException)
+			{
+				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+					"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+			}
+			labelEmpty.Visible = _totalItemsToDisplay == 0;
+		}
+		private void ClearContentPanel()
+		{
+			_totalItemsToDisplay = 0;
+
+			foreach (Guna2GradientPanel panel in _createdPanels)
 				panel.Dispose();
+			_createdPanels.Clear();
 
-			panelsVAI.Clear();// Очищаємо список
-			Controls.Add(labelEmpty);// Переносимо label, щоб він не видалився
-			flpMain.Controls.Clear();// Видаляємо елементи з панелі
-			flpMain.Controls.Add(labelEmpty);//Повертаємо його назад
+			Controls.Add(labelEmpty);// Move labelEmpty so it doesn't get deleted
+			flpContent.Controls.Clear();
+			flpContent.Controls.Add(labelEmpty);//Return labelEmpty back
 		}
 		private void SetDefaultSearchValues()
-		{// Метод встановлює пошуковим елементам початкові значення
+		{
 			textBoxMinSalarySearch.Text = "";
 			textBoxMaxSalarySearch.Text = "";
 			textBoxPositionSearch.Text = "";
@@ -92,129 +165,67 @@ namespace RecruitmentClient.Forms
 			comboBoxSort.SelectedIndex = 0;
 		}
 
-		private void ButtonProfile_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку профілю
-			Enabled = false;
-			ProfileForm pf = new ProfileForm(account);
-			pf.Show();
-			pf.FormClosed += (s, args) =>
-			{// Коли закриється форма профілю, то змінюється кнопка
-				buttonProfile.Text = account.candidate.Name;
-				Enabled = true;
-				panelUp.Focus();
-			};
-		}
-		private void ButtonPasswordChange_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку зміну паролю
-			Enabled = false;
-			StartForm sf = new StartForm(account);
-			sf.Show();
-
-			// Коли закриється форма зміни паролю
-			sf.FormClosed += (s, args) =>
-			{ Enabled = true; };
-		}
-		private void ButtonExit_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку виходу з акаунту
-			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете вийти з акаунту?" +
-				"\nЯкщо так, то ваш логін та пароль будуть забуті на цьому    ПК. Крім того," +
-				" програма закриється, і для її подальшого     використання потрібно буде" +
-				" її знову запустити.", account.Theme, "Вихід з акаунту",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
-
-			if (result == DialogResult.Yes)
-			{// Якщо користувач дійсно хоче вийти
-				Serializator.DeleteSerializationFile(Program.SerializePath);
-				Close();
-			}
-		}
-
-		// Методи для відображення інформації в головній панелі
-		private void PictureBoxRefresh_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку оновлення даних
-			SetDefaultSearchValues();
-			SelectLabel(e);
-		}
-		private void SelectLabel(EventArgs e)
-		{// Метод викликає обробник події з певними аргументами
-			if (panelsInfo == PanelsInfo.Vacancy)
-				LabelVAI_Click(labelVacancy, e);
-			else if (panelsInfo == PanelsInfo.Application)
-				LabelVAI_Click(labelApplication, e);
-			else if (panelsInfo == PanelsInfo.Interview)
-				LabelVAI_Click(labelInterview, e);
-		}
-		private void LabelVAI_Click(object sender, EventArgs e)
-		{// Обробник події натискання на такі label-и: вакансії, заявки та співбесіди
-			if (!(sender is Label label)) return;
-
-			ClearMainPanel();// Налаштовуємо панель
-			panelSearch.Visible = true;
-
-			if (e != EventArgs.Empty)// Якщо НЕ шукаємо
+		#region First creating panels
+		private void CreateAndSetupFirstPanels(Label label)
+		{
+			if (label == labelVacancy)
 			{
-				searcher = null;
-				SetDefaultSearchValues();
+				SetupVacancies();
+				CreateVacancies();
 			}
-
-			try
+			else if (label == labelApplication)
 			{
-				// Створюємо перші панелі
-				if (label == labelVacancy) CreateFirstVacancies();
-				else if (label == labelApplication) CreateFirstApplications();
-				else if (label == labelInterview) CreateFirstInterviews();
+				SetupApplications();
+				CreateApplications();
 			}
-			catch (System.Net.Sockets.SocketException)
+			else if (label == labelInterview)
 			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				SetupInterviews();
+				CreateInterviews();
 			}
-			ShowEmptyLabel(countPanels == 0);// Якщо пусто - true, інакше - false
 		}
+		private void SetupVacancies()
+		{
+			const string newSortingElement = "За зарплатою";
 
-		private void CreateFirstVacancies()
-		{// Метод, який створює перші вакансії
 			SetSalarySearchVisible(true);
-			if (panelsInfo == PanelsInfo.Application || panelsInfo == PanelsInfo.Interview)
-				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height + PANEL_SEARCH_OFFSET);
+			if (_panelsInfo == PanelsInfo.Application || _panelsInfo == PanelsInfo.Interview)
+				ChangePanelSearchHeight(true);
 			SetLabels(labelVacancy, labelApplication, labelInterview);
-			currentPanelHeight = panelVacancy.Size.Height;
-			if (comboBoxSortCount > comboBoxSort.Items.Count)
-				comboBoxSort.Items.Add("За зарплатою");// Додаємо пункт сортування
 
-			panelsInfo = PanelsInfo.Vacancy;
-			countPanels = Client.GetCountVacancies(account.Login, searcher);
-			CreateVacancies();
+			if (_comboBoxSortCount > comboBoxSort.Items.Count)
+				comboBoxSort.Items.Add(newSortingElement);
+
+			_panelsInfo = PanelsInfo.Vacancy;
+			_totalItemsToDisplay = Client.GetCountVacancies(_account.Login, _searcher);
 		}
-		private void CreateFirstApplications()
-		{// Метод, який створює перші заявки
+		private void SetupApplications()
+		{
 			SetSalarySearchVisible(false);
-			if (panelsInfo == PanelsInfo.None || panelsInfo == PanelsInfo.Vacancy)
-				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height - PANEL_SEARCH_OFFSET);
+			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
+				ChangePanelSearchHeight(false);
 			SetLabels(labelApplication, labelVacancy, labelInterview);
-			currentPanelHeight = panelApplication.Size.Height;
-			if (comboBoxSortCount == comboBoxSort.Items.Count)// Видаляємо пункт сортування
+
+			if (_comboBoxSortCount == comboBoxSort.Items.Count)
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
-			panelsInfo = PanelsInfo.Application;
-			countPanels = Client.GetCountApplications(account.Login, searcher);
-			CreateApplications();
+			_panelsInfo = PanelsInfo.Application;
+			_totalItemsToDisplay = Client.GetCountApplications(_account.Login, _searcher);
 		}
-		private void CreateFirstInterviews()
-		{// Метод, який створює перші співбесіди
+		private void SetupInterviews()
+		{
 			SetSalarySearchVisible(false);
-			if (panelsInfo == PanelsInfo.None || panelsInfo == PanelsInfo.Vacancy)
-				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height - PANEL_SEARCH_OFFSET);
+			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
+				ChangePanelSearchHeight(false);
 			SetLabels(labelInterview, labelVacancy, labelApplication);
-			currentPanelHeight = panelInterview.Size.Height;
-			if (comboBoxSortCount == comboBoxSort.Items.Count)// Видаляємо пункт сортування
+
+			if (_comboBoxSortCount == comboBoxSort.Items.Count)
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
-			panelsInfo = PanelsInfo.Interview;
-			countPanels = Client.GetCountInterviews(account.Login, searcher);
-			CreateInterviews();
+			_panelsInfo = PanelsInfo.Interview;
+			_totalItemsToDisplay = Client.GetCountInterviews(_account.Login, _searcher);
 		}
+
 		private void SetSalarySearchVisible(bool visible)
 		{
 			labelSalarySearch.Visible = visible;
@@ -222,158 +233,177 @@ namespace RecruitmentClient.Forms
 			labelSalarySearch2.Visible = visible;
 			textBoxMaxSalarySearch.Visible = visible;
 		}
+		private void ChangePanelSearchHeight(bool expandPanel)
+		{
+			const int SEARCH_PANEL_ADJUSTMENT = 40;
+
+			if (expandPanel)
+				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height +
+					SEARCH_PANEL_ADJUSTMENT);
+			else
+				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height -
+					SEARCH_PANEL_ADJUSTMENT);
+		}
+		private void SetLabels(Label labelShow, params Label[] labelsHide)
+		{
+			const int INCREASE_FONT_SIZE = 2;
+
+			// Highlight one label
+			labelShow.Enabled = false;
+
+			float fontSize = labelShow.Font.Size;
+			if (fontSize <= labelsHide[0].Font.Size)
+				fontSize += INCREASE_FONT_SIZE;
+			labelShow.Font = new Font(labelShow.Font.FontFamily, fontSize, labelShow.Font.Style);
+
+
+			// Hide other labels
+			for (int i = 0; i < labelsHide.Length; i++)
+			{
+				labelsHide[i].Enabled = true;
+
+				fontSize = labelsHide[i].Font.Size;
+				if (fontSize >= labelShow.Font.Size)
+					fontSize -= INCREASE_FONT_SIZE;
+				labelsHide[i].Font = new Font(labelsHide[i].Font.FontFamily, fontSize,
+					labelsHide[i].Font.Style);
+			}
+		}
+		#endregion
+
+		#region Creating panels
 		private void CreateVacancies()
-		{// Метод, який створює на формі вакансії
-			if (currentOffset >= countPanels)
-				return;// Якщо не потрібно генерувати панелі
+		{
+			if (_createdPanels.Count >= _totalItemsToDisplay)
+				return;
 
-			// Отримуємо вакансії від серверу
-			List<Vacancy> vacancies = Client.GetFreeVacancies(account.Login, currentOffset, COUNT_ON_PAGE, searcher);
-			currentOffset += vacancies.Count;
+			List<Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
+				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 
-			Panel[] panels = new Panel[vacancies.Count];
-			ControlCreator creator = new ControlCreator(panelVacancy, flpMain);
+			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
+			ControlCreator creator = new ControlCreator(panelVacancy, flpContent);
 
 			for (int i = 0; i < vacancies.Count; i++)
-			{// Створення вакансій
-				panels[i] = creator.CreateMainPanel();
-
+			{
+				panels[i] = creator.CreateMainPanelNEW();
 				CreateVacancy(vacancies[i], creator);
 			}
+
 			ShowPanels(panels);
-			panelsVAI.AddRange(panels);
+			_createdPanels.AddRange(panels);
 		}
 		private void CreateApplications()
-		{// Метод, який створює на формі заявки
-			if (currentOffset >= countPanels)
-				return;// Якщо не потрібно генерувати панелі
+		{
+			if (_createdPanels.Count >= _totalItemsToDisplay)
+				return;
 
-			// Отримуємо заявки від серверу
-			List<RecruitmentLibrary.ApplicationInfo.Application> applications = Client.GetApplications(account.Login, currentOffset, COUNT_ON_PAGE, searcher);
-			currentOffset += applications.Count;
+			List<RecruitmentLibrary.ApplicationInfo.Application> applications =
+				Client.GetApplications(_account.Login, _createdPanels.Count,
+				COUNT_PANELS_ON_PAGE, _searcher);
 
-			Panel[] panels = new Panel[applications.Count];
-			ControlCreator creator = new ControlCreator(panelApplication, flpMain);
+			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
+			ControlCreator creator = new ControlCreator(panelApplication, flpContent);
 
 			for (int i = 0; i < applications.Count; i++)
-			{// Створення заявок
-				panels[i] = creator.CreateMainPanel();
-
+			{
+				panels[i] = creator.CreateMainPanelNEW();
 				CreateApplication(applications[i], creator);
 			}
+
 			ShowPanels(panels);
-			panelsVAI.AddRange(panels);
+			_createdPanels.AddRange(panels);
 		}
 		private void CreateInterviews()
-		{// Метод, який створює на формі співбесіди
-			if (currentOffset >= countPanels)
-				return;// Якщо не потрібно генерувати панелі
+		{
+			if (_createdPanels.Count >= _totalItemsToDisplay)
+				return;
 
-			// Отримуємо співбесіди від серверу
-			List<Interview> interviews = Client.GetInterviews(account.Login, currentOffset, COUNT_ON_PAGE, searcher);
-			currentOffset += interviews.Count;
+			List<Interview> interviews = Client.GetInterviews(_account.Login,
+				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 
-			Panel[] panels = new Panel[interviews.Count];
-			ControlCreator creator = new ControlCreator(panelInterview, flpMain);
+			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
+			ControlCreator creator = new ControlCreator(panelInterview, flpContent);
 
 			for (int i = 0; i < interviews.Count; i++)
-			{// Створення співбесід
-				panels[i] = creator.CreateMainPanel();
-
+			{
+				panels[i] = creator.CreateMainPanelNEW();
 				CreateInterview(interviews[i], creator);
 			}
+
 			ShowPanels(panels);
-			panelsVAI.AddRange(panels);
+			_createdPanels.AddRange(panels);
+		}
+		private void ShowPanels(Guna2GradientPanel[] panels)
+		{
+			for (int i = 0; i < panels.Length; i++)
+				panels[i].Visible = true;
+
+			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
 		private void CreateVacancy(Vacancy vacancy, ControlCreator creator)
-		{// Метод, який створює одну вакансію
-			creator.CreateLabel(labelPositionV, vacancy.Position.Name);
-			creator.CreateLabel(labelPositionDescriptionV, vacancy.Position.Description);
-			creator.CreateLabel(labelSalaryV, vacancy.Salary.ToString() + " грн.");
-			creator.CreateLabel(labelDatePublicationV, "Опубліковано: " + GetStringDate(vacancy.DatePublication));
+		{
+			const string CURRENCY = "грн.";
+			const string DATE_PREFIX = "Опубліковано: ";
 
-			// Підписання кнопки на обробники подій
+			creator.CreateLabel(labelPositionV, vacancy.Position.Name);
+			Label labelDescription = creator.CreateLabel(labelPositionDescriptionV, vacancy.Position.Description);
+			AdjustLabelLocation(labelDescription, panelVacancy);
+			creator.CreateLabel(labelSalaryV, vacancy.Salary.ToString() + $" {CURRENCY}");
+			Label labelDate = creator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
+				ConvertDateToString(vacancy.DatePublication));
+			AdjustLabelLocation(labelDate, panelVacancy);
+
 			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
 			AddEventVacancyButton_Click(button, vacancy);
 		}
-		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application, ControlCreator creator)
-		{// Метод, який створює одну заявку
+		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application,
+			ControlCreator creator)
+		{
+			const string DATE_PREFIX = "Дата і час подачі: ";
+
 			creator.CreateLabel(labelPositionA, application.Position.Name);
-			Label labelStatus = creator.CreateLabel(labelStatusA, application.Status);
-			creator.CreateLabel(labelDateSubmissionA, "Дата і час подачі: " + GetStringDate(application.DateSubmission));
-			PictureBox picture = creator.CreatePictureBox(pictureBoxApplication);
+			creator.CreateLabel(labelStatusA, application.Status);
+			Label labelDate = creator.CreateLabel(labelDateSubmissionA, DATE_PREFIX +
+				ConvertDateToString(application.DateSubmission));
+			AdjustLabelLocation(labelDate, panelVacancy);
 
-			// Вибор кольору статусу
-			if (labelStatus.Text == "Прийнята")
-				picture.BackColor = colorGreen;
-			else if (labelStatus.Text == "Відхилена")
-				picture.BackColor = colorRed;
-			else if (labelStatus.Text == "В очікуванні")
-				picture.BackColor = colorYellow1;
-			else
-				picture.BackColor = Color.Transparent;
+			Guna2PictureBox picture = creator.CreatePictureBox(pictureBoxApplicationStatus);
+			picture.FillColor = GetApplicationStatusColor(application.Status);
 
-			// Підписання кнопки на обробники подій
 			string reason = application.ReasonRejection;
-			if (reason != null && reason.Length > 0)
+			if (!string.IsNullOrWhiteSpace(reason))
 			{
 				Guna2GradientButton button = creator.CreateButton(buttonReasonRejectionA);
 				button.Click += (s, args) =>
 				{
-					CustomMessageBox.Show(reason, account.Theme, "Причина відмови",
+					CustomMessageBox.Show(reason, _account.Theme, "Причина відмови",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 				};
 			}
 		}
 		private void CreateInterview(Interview interview, ControlCreator creator)
-		{// Метод, який створює одну співбесіду
+		{
+			const string DATE_PREFIX = "Дата і час проведення: ";
+
 			creator.CreateLabel(labelPositionI, interview.Position.Name);
-			Label labelStatus = creator.CreateLabel(labelStatusI, interview.Status);
-			creator.CreateLabel(labelDateEventI, "Дата і час проведення: " + GetStringDate(interview.DateEvent));
-			PictureBox picture = creator.CreatePictureBox(pictureBoxInterview);
+			creator.CreateLabel(labelStatusI, interview.Status);
+			Label labelDate = creator.CreateLabel(labelDateEventI, DATE_PREFIX + ConvertDateToString(interview.DateEvent));
+			AdjustLabelLocation(labelDate, panelVacancy);
 
-			// Вибор кольору статусу
-			if (labelStatus.Text == "Прийнято")
-				picture.BackColor = colorGreen;
-			else if (labelStatus.Text == "Не прийнято")
-				picture.BackColor = colorRed;
-			else if (labelStatus.Text == "Кандидат запрошений")
-				picture.BackColor = colorYellow2;
-			else if (labelStatus.Text == "Кандидат чекає на рішення")
-				picture.BackColor = colorYellow1;
-			else
-				picture.BackColor = Color.Transparent;
+			Guna2PictureBox picture = creator.CreatePictureBox(pictureBoxInterviewStatus);
+			picture.FillColor = GetInterviewStatusColor(interview.Status);
 		}
 
-		private void AddEventVacancyButton_Click(Guna2GradientButton button, Vacancy vacancy)
-		{// Метод який підписується на подію натискання на кнопку
-			button.Click += (s, args) =>
-				{// Підписуємось на подію відкриття форми
-					try
-					{
-						VacancyForm vf = new VacancyForm(account, vacancy,
-							account.Login, SelectLabel);
-						vf.ShowDialog();
-					}
-					catch (System.Net.Sockets.SocketException)
-					{
-						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-							"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
-							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-					}
-				};
-		}
-
-		private string GetStringDate(DateTime date)
-		{// Метод, який перетворює дату в рядок
+		private string ConvertDateToString(DateTime date)
+		{
 			string result;
 
-			if (date == DateTime.Today)
+			if (date.Day == DateTime.Today.Day)
 				result = "Сьогодні";
-			else if (date.AddDays(1) == DateTime.Today)
+			else if (date.AddDays(1).Day == DateTime.Today.Day)
 				result = "Вчора";
-			else if (date.AddDays(2) == DateTime.Today)
+			else if (date.AddDays(2).Day == DateTime.Today.Day)
 				result = "Два дні тому";
 			else if (date.Year == DateTime.Today.Year)
 				result = date.ToString("d MMMM");
@@ -383,140 +413,197 @@ namespace RecruitmentClient.Forms
 			result += $" {date:HH:mm}";
 			return result;
 		}
-		private void ShowPanels(Panel[] panels)
-		{// Метод, який показує масив панелей
-			for (int i = 0; i < panels.Length; i++)
-				panels[i].Visible = true;
-			FlpMain_Resize(flpMain, EventArgs.Empty);
+		private void AdjustLabelLocation(Label labelDate, Guna2GradientPanel panelModel)
+		{
+			labelDate.Location = new Point(labelDate.Location.X + (labelDate.Parent.Width - panelModel.Width),
+				labelDate.Location.Y);
 		}
-		private void SetLabels(Label labelShow, params Label[] labelsHide)
-		{// Метод, який виділяє один label, та приховує інші
-			const int INCREASE_SIZE = 2;// Розмір збільшення шрифту
-
-			// Виділяємо
-			float fontSize = labelShow.Font.Size;
-			if (fontSize <= labelsHide[0].Font.Size)
-				fontSize += INCREASE_SIZE;
-			labelShow.Enabled = false;
-			labelShow.Font = new Font(labelShow.Font.FontFamily, fontSize, labelShow.Font.Style);
-
-			for (int i = 0; i < labelsHide.Length; i++)
-			{// Приховуємо
-				labelsHide[i].Enabled = true;
-
-				fontSize = labelsHide[i].Font.Size;
-				if (labelsHide[i].Font.Size >= labelShow.Font.Size)
-					fontSize -= INCREASE_SIZE;
-				labelsHide[i].Font = new Font(labelsHide[i].Font.FontFamily, fontSize, labelsHide[i].Font.Style);
-			}
+		private void AddEventVacancyButton_Click(Guna2GradientButton button, Vacancy vacancy)
+		{
+			button.Click += (s, args) =>
+				{
+					try
+					{
+						VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
+							_account.Login, SelectLabel);
+						vacancyForm.ShowDialog();
+					}
+					catch (SocketException)
+					{
+						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало."
+							+ "\nСпробуйте, будь ласка, пізніше.",
+							_account.Theme, "Помилка підключення",
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					}
+				};
 		}
-		private void ShowEmptyLabel(bool isDataEmpty)// Метод приховує або показує
-			=> labelEmpty.Visible = isDataEmpty;// повідомлення, що немає даних
+		private Color GetApplicationStatusColor(string status)
+		{
+			if (status == "Прийнята")
+				return _statusColor.Accepted;
+			else if (status == "Відхилена")
+				return _statusColor.Rejected;
+			else if (status == "В очікуванні")
+				return _statusColor.Waiting;
 
-		// Методи для пошуку інформації
+			return Color.Transparent;
+		}
+		private Color GetInterviewStatusColor(string status)
+		{
+			if (status == "Прийнято")
+				return _statusColor.Accepted;
+			else if (status == "Не прийнято")
+				return _statusColor.Rejected;
+			else if (status == "Кандидат запрошений")
+				return _statusColor.Invited;
+			else if (status == "Кандидат чекає на рішення")
+				return _statusColor.Waiting;
+
+			return Color.Transparent;
+		}
+		#endregion
+
+		#region Searcher
 		private void Search()
-		{// Метод вибирає за пошуком
-			SetSearcher();
+		{
+			SetSearcherValues();
 			SelectLabel(EventArgs.Empty);
 		}
-		private void SetSearcher()
-		{// Метод встановлює значення властивостей searcher
-			int? minSalary = null, maxSalary = null;// Мін. та макс. зарплатня
-			if (textBoxMinSalarySearch.Text != "")
+		private void SetSearcherValues()
+		{
+			int? minSalary = null, maxSalary = null;// Salary
+			if (!string.IsNullOrWhiteSpace(textBoxMinSalarySearch.Text))
 				minSalary = Int32.Parse(textBoxMinSalarySearch.Text);
-			if (textBoxMaxSalarySearch.Text != "")
+			if (!string.IsNullOrWhiteSpace(textBoxMaxSalarySearch.Text))
 				maxSalary = Int32.Parse(textBoxMaxSalarySearch.Text);
 			if (minSalary != null && maxSalary != null && minSalary > maxSalary)
 				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
-					account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
+					_account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Warning);
 
-			string position = textBoxPositionSearch.Text;// Посада
+			string position = textBoxPositionSearch.Text;// Position
 			Validator validator = new Validator();
 			validator.CheckBannedChar(new Label() { Text = "Посада" },
-				position, Client.SEPARATOR, account.Theme);
+				position, Client.SEPARATOR, _account.Theme);
 
-			ClientSortOption sortOption = ClientSortOption.Date;// Сортування
+			ClientSortOption sortOption = ClientSortOption.Date;// Sorting
 			if (comboBoxSort.SelectedIndex == 1)
 				sortOption = ClientSortOption.Alphabet;
 			else if (comboBoxSort.SelectedIndex == 2)
 				sortOption = ClientSortOption.Salary;
 
-			// Створюємо значення властивостей пошуку
-			searcher = new ClientSearcher(position, GetFindDate(), minSalary, maxSalary, sortOption);
+			_searcher = new ClientSearcher(position, GetDateByComboBoxDate(),
+				minSalary, maxSalary, sortOption);
 		}
-		private DateTime? GetFindDate()
-		{// Метод який повертає дату або null в залежності індексу comboBoxDate
+		private DateTime? GetDateByComboBoxDate()
+		{// Method that returns a date or null depending on the comboBoxDate index
 			DateTime currentDate = DateTime.Now;
-			if (comboBoxDate.SelectedIndex == 0)//За останні три дні
+			if (comboBoxDate.SelectedIndex == 0)// 3 days
 				return currentDate.AddDays(-3);
-			else if (comboBoxDate.SelectedIndex == 1)//За останні тиждень
+			else if (comboBoxDate.SelectedIndex == 1)// 1 week
 				return currentDate.AddDays(-7);
-			else if (comboBoxDate.SelectedIndex == 2)//За останній місяць
+			else if (comboBoxDate.SelectedIndex == 2)// 1 month
 				return currentDate.AddMonths(-1);
-			else if (comboBoxDate.SelectedIndex == 3)//За останні три місяці
+			else if (comboBoxDate.SelectedIndex == 3)// 3 months
 				return currentDate.AddMonths(-3);
-			else if (comboBoxDate.SelectedIndex == 4)//За останній рік
+			else if (comboBoxDate.SelectedIndex == 4)// 1 year
 				return currentDate.AddYears(-1);
 			else
 				return null;
 		}
+		#endregion
 
-		// Інші обробники подій
-		private void TextBoxSalarySearch_KeyPress(object sender, KeyPressEventArgs e)
-		{// Обробник події вводу пошуку по зарплатні
-			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-				e.Handled = true;// Якщо не цифра та Backspace, то відміняємо введення
-		}
-
-		private void PanelMain_Scroll(object sender, ScrollEventArgs e)
-		{// Обробник події прокрутки панелі 
-			if (flpMain.VerticalScroll.Value + flpMain.Height >= flpMain.VerticalScroll.Maximum)
-			{// Чи досягнуто кінець панелі по вертикалі
-				flpMain.VerticalScroll.Enabled = false;
-				try
-				{
-					if (panelsInfo == PanelsInfo.Vacancy)
-						CreateVacancies();
-					else if (panelsInfo == PanelsInfo.Application)
-						CreateApplications();
-					else if (panelsInfo == PanelsInfo.Interview)
-						CreateInterviews();
-				}
-				catch (System.Net.Sockets.SocketException)
-				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, пізніше.", account.Theme, "Помилка підключення",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
-				finally
-				{ flpMain.VerticalScroll.Enabled = true; }
-			}
-		}
-		private void FlpMain_MouseWheel(object sender, MouseEventArgs e)
-		{// Обробник події прокрутки колеса миші користувачем
-			if (e.Delta < 0 && flpMain.VerticalScroll.Value > 0)
-				PanelMain_Scroll(sender, EventArgs.Empty as ScrollEventArgs);
-		}
-
-		private void ButtonUp_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку, яка піднімається на одну панель
-			int newValue = Math.Max(flpMain.VerticalScroll.Value - currentPanelHeight - 6, flpMain.VerticalScroll.Minimum);
-			flpMain.AutoScrollPosition = new Point(0, newValue);
+		#region Search event handlers
+		#region Buttons
+		private void PictureBoxRefresh_Click(object sender, EventArgs e)
+		{
+			SetDefaultSearchValues();
+			SelectLabel(e);
 		}
 		private void ButtonDown_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку, яка опускається на одну панель
-			int newValue = Math.Min(flpMain.VerticalScroll.Value + currentPanelHeight + 6, flpMain.VerticalScroll.Maximum);
-			flpMain.AutoScrollPosition = new Point(0, newValue);
-			PanelMain_Scroll(sender, new ScrollEventArgs(ScrollEventType.SmallIncrement, newValue));
+		{
+			int newValue = Math.Min(flpContent.VerticalScroll.Value + GetCurrentPanelHeight() +
+				SCROLL_PADDING, flpContent.VerticalScroll.Maximum);
+			flpContent.AutoScrollPosition = new Point(0, newValue);
+			FlpContent_Scroll(sender, new ScrollEventArgs(ScrollEventType.SmallIncrement,
+				newValue));
+		}
+		private void ButtonUp_Click(object sender, EventArgs e)
+		{
+			int newValue = Math.Max(flpContent.VerticalScroll.Value - GetCurrentPanelHeight() -
+				SCROLL_PADDING, flpContent.VerticalScroll.Minimum);
+			flpContent.AutoScrollPosition = new Point(0, newValue);
+		}
+		private int GetCurrentPanelHeight()
+		{
+			if (_createdPanels != null && _createdPanels.Count > 0)
+				return _createdPanels[0].Height;
+
+			return 0;
+		}
+		#endregion
+
+		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (_searcher == null)
+			{
+				if (comboBoxSort.SelectedIndex == 0)
+					return;
+				Search();
+			}
+			else if ((byte)_searcher.SortOption != comboBoxSort.SelectedIndex)
+				Search();// The index is different from the previous one
+		}
+		private void ComboBoxDate_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (_searcher == null)
+			{
+				if (comboBoxDate.SelectedIndex == DEFAULT_SEARCH_DATE)
+					return;
+				Search();
+			}
+			else if (_currentComboBoxDateIndex != comboBoxDate.SelectedIndex)
+				Search();// The index is different from the previous one
+			_currentComboBoxDateIndex = comboBoxDate.SelectedIndex;
 		}
 
+		#region Salary
+		private void TextBoxSalarySearch_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+				e.Handled = true;
+		}
+		private void TextBoxMinSalarySearch_Leave(object sender, EventArgs e)
+		{
+			string searcherText = _searcher?.MinSalary.ToString();
+			TextBoxSearchLeave(textBoxMinSalarySearch.Text, searcherText);
+		}
+		private void TextBoxMaxSalarySearch_Leave(object sender, EventArgs e)
+		{
+			string searcherText = _searcher?.MaxSalary.ToString();
+			TextBoxSearchLeave(textBoxMaxSalarySearch.Text, searcherText);
+		}
+		private void TextBoxSearchLeave(string text, string searcherText)
+		{
+			if (searcherText == null)
+			{
+				if (text.Length == 0)
+					return;
+				Search();
+			}
+			else if (searcherText != text)
+				Search();// The index is different from the previous one
+		}
+		#endregion
+
+		#region Position
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
-		{// Зміна пошуку посади
-			string searcherText = searcher?.Position;
+		{
+			string searcherText = _searcher?.Position;
 			TextBoxSearchLeave(textBoxPositionSearch.Text, searcherText);
 		}
 		private void TextBoxPositionSearch_KeyDown(object sender, KeyEventArgs e)
-		{// Обробник події вводу пошуку позиції
+		{
 			if (e.KeyCode == Keys.Enter)
 			{
 				e.SuppressKeyPress = true;
@@ -524,79 +611,69 @@ namespace RecruitmentClient.Forms
 				panelUp.Focus();
 			}
 		}
-		private void TextBoxMinSalarySearch_Leave(object sender, EventArgs e)
-		{// Зміна пошуку мінімальної зарплати
-			string searcherText = searcher?.MinSalary.ToString();
-			TextBoxSearchLeave(textBoxMinSalarySearch.Text, searcherText);
-		}
-		private void TextBoxMaxSalarySearch_Leave(object sender, EventArgs e)
-		{// Зміна пошуку максимальної зарплати
-			string searcherText = searcher?.MaxSalary.ToString();
-			TextBoxSearchLeave(textBoxMaxSalarySearch.Text, searcherText);
-		}
-		private void TextBoxSearchLeave(string text, string searcherText)
-		{// Метод який робить пошук після зміни textBox-у
-			if (searcherText == null)
-			{// Текст введено вперше
-				if (text.Length == 0)// Якщо нічого не введено
-					return;
-				Search();
-			}
-			else if (searcherText != text)
-				Search();// Текст відрізняється від попереднього
-		}
-
-		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
-		{// Зміна сортування
-			if (searcher == null)
-			{
-				if (comboBoxSort.SelectedIndex == 0)
-					return;
-				Search();
-			}
-			else if ((byte)searcher.SortOption != comboBoxSort.SelectedIndex)
-				Search();// Індекс відрізняється від попереднього
-		}
-		private void ComboBoxDate_SelectedIndexChanged(object sender, EventArgs e)
-		{// Зміна дати пошуку
-			if (searcher == null)
-			{
-				if (comboBoxDate.SelectedIndex == DEFAULT_SEARCH_DATE)
-					return;
-				Search();
-			}
-			else if (currentDateIndex != comboBoxDate.SelectedIndex)
-				Search();// Індекс відрізняється від попереднього
-			currentDateIndex = comboBoxDate.SelectedIndex;
-		}
-
 		private void PictureBoxSearch_Click(object sender, EventArgs e)
 		{ textBoxPositionSearch.Focus(); }
-		private void FlpMain_Resize(object sender, EventArgs e)
-		{// Обробник події зміни розміру панелі
-			foreach (Control control in flpMain.Controls)
-				if (control is Panel)
-					control.Width = flpMain.ClientSize.Width - control.Margin.Horizontal - 6;
+		#endregion
+		#endregion
+
+		#region Content panel event handlers
+		private void FlpContent_Scroll(object sender, ScrollEventArgs e)
+		{
+			if (flpContent.VerticalScroll.Value + flpContent.Height
+				>= flpContent.VerticalScroll.Maximum)
+			{// The end of the panel is reached vertically
+				flpContent.VerticalScroll.Enabled = false;
+				try
+				{
+					if (_panelsInfo == PanelsInfo.Vacancy)
+						CreateVacancies();
+					else if (_panelsInfo == PanelsInfo.Application)
+						CreateApplications();
+					else if (_panelsInfo == PanelsInfo.Interview)
+						CreateInterviews();
+				}
+				catch (SocketException)
+				{
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
+						"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				}
+				finally
+				{ flpContent.VerticalScroll.Enabled = true; }
+			}
 		}
+		private void FlpContent_MouseWheel(object sender, MouseEventArgs e)
+		{
+			if (e.Delta < 0 && flpContent.VerticalScroll.Value > 0)
+				FlpContent_Scroll(sender, EventArgs.Empty as ScrollEventArgs);
+		}
+		private void FlpContent_Resize(object sender, EventArgs e)
+		{
+			foreach (Control control in flpContent.Controls)
+				if (control is Guna2GradientPanel)
+					control.Width = flpContent.ClientSize.Width -
+						control.Margin.Horizontal - SCROLL_PADDING;
+		}
+		#endregion
 
 		#region Theme
 		private void PictureBoxTheme_Click(object sender, EventArgs e)
 		{
-			switch (account.Theme)
+			switch (_account.Theme)
 			{
 				case Theme.White:
-					account.Theme = Theme.Black;
+					_account.Theme = Theme.Black;
 					break;
 				case Theme.Black:
-					account.Theme = Theme.White;
+					_account.Theme = Theme.White;
 					break;
 				default:
-					throw new InvalidOperationException($"Unknown theme: {account.Theme}");
+					throw new InvalidOperationException($"Unknown theme: {_account.Theme}");
 			}
 
-			SetTheme(account.Theme);
+			SetTheme(_account.Theme);
 			if (Serializator.SerializationFileExists(Program.SerializePath))
-				Serializator.Serialize(account, Program.SerializePath, Program.EncryptKey);
+				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 		}
 
 		public void SetTheme(Theme theme)
@@ -606,6 +683,11 @@ namespace RecruitmentClient.Forms
 				labelPositionDescriptionV, labelStatusA, labelStatusI,
 				labelDatePublicationV, labelDateSubmissionA, labelDateEventI,
 				labelPositionV, labelPositionA, labelPositionI);
+			panelMain.BackColor = BackColor;
+			panelUp.BackColor = BackColor;
+			flpNavigation.BackColor = BackColor;
+			panelSearch.BackColor = BackColor;
+			flpContent.BackColor = BackColor;
 
 			SetPicturesAndPanelsTheme(theme);
 		}
@@ -643,12 +725,13 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetWhitePanels()
 		{
-			ThemeControlManager.ChangePanelColor(Theme.White, panelVacancy,
+			ThemeControlManager.ChangeGuna2GradientPanel(Theme.White, panelVacancy,
 				panelApplication, panelInterview);
 
-			foreach (Panel panel in panelsVAI)
+			foreach (Guna2GradientPanel panel in _createdPanels)
 			{
-				panel.BackColor = ThemeControlManager.PanelBackColor.White;
+				panel.FillColor = ThemeControlManager.PanelBackColor.White;
+				panel.FillColor2 = ThemeControlManager.PanelBackColor.White;
 				foreach (Control control in panel.Controls)
 					if (control is Label label)
 						ThemeControlManager.ChangeLabelsColor(Theme.White, label);
@@ -656,12 +739,13 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetBlackPanels()
 		{
-			ThemeControlManager.ChangePanelColor(Theme.Black, panelVacancy,
+			ThemeControlManager.ChangeGuna2GradientPanel(Theme.Black, panelVacancy,
 				panelApplication, panelInterview);
 
-			foreach (Panel panel in panelsVAI)
+			foreach (Guna2GradientPanel panel in _createdPanels)
 			{
-				panel.BackColor = ThemeControlManager.PanelBackColor.Black;
+				panel.FillColor = ThemeControlManager.PanelBackColor.Black;
+				panel.FillColor2 = ThemeControlManager.PanelBackColor.Black;
 				foreach (Control control in panel.Controls)
 					if (control is Label label)
 						ThemeControlManager.ChangeLabelsColor(Theme.Black, label);
@@ -671,9 +755,11 @@ namespace RecruitmentClient.Forms
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			ClearMainPanel();
-			labelEventHandlers.UnsubscribeAll();
-			pictureBoxEventHandlers.UnsubscribeAll();
+			flpContent.MouseWheel -= FlpContent_MouseWheel;
+			ClearContentPanel();
+
+			_labelEventHandlers.UnsubscribeAll();
+			_pictureBoxEventHandlers.UnsubscribeAll();
 		}
 	}
 }
