@@ -1,7 +1,6 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,151 +15,226 @@ using UIHelpers.Themes;
 namespace RecruitmentServer.Forms
 {
 	internal partial class AssignmentForm : BaseForm, IThemeChange
-	{// Форма призначення заявок
-		private readonly ServerAccount account;// Акаунт
+	{
+		private readonly ServerAccount _account;
+		private AssignmentItem[] _allItems;
+		private List<int> _vacancyIds = new List<int>();
+		private List<int> _candidateIds = new List<int>();
 
-		private List<int> vacancyIds = new List<int>();// Список кодів вакансій
-		private List<int> candidateIds = new List<int>();// Список кодів кандидата
-		private AssignmentItem[] allItems;
+		private readonly ControlCreator _assignmentCreator;
+		private readonly List<AssignmentItem> _resultItems = new List<AssignmentItem>();
+		private readonly Action<EventArgs> _refreshMainForm;
 
-		private readonly ControlCreator assignmentCreator;
-		private readonly List<AssignmentItem> resultItems = new List<AssignmentItem>();// Список результатів
-		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
+		private readonly Dictionary<Guna2GradientButton, Candidate>
+			_buttonCandidateMap = new Dictionary<Guna2GradientButton, Candidate>();
+		private readonly Dictionary<Guna2GradientButton, FullApplication>
+			_buttonApplicationMap = new Dictionary<Guna2GradientButton, FullApplication>();
+		private readonly Dictionary<Guna2GradientButton, FullVacancy>
+			_buttonVacancyMap = new Dictionary<Guna2GradientButton, FullVacancy>();
 
-		internal AssignmentForm(ServerAccount account, Action<EventArgs> refresh)
-		{// Конструктор форми призначення
+		internal AssignmentForm(ServerAccount account, Action<EventArgs> refreshMainForm)
+		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Призначення", minimizeBox: false, maximizeBox: false);
-			this.refresh = refresh;// Встановлюємо значення
-			this.account = account;
-			assignmentCreator = new ControlCreator(panelAssignment, flpMain, false);
+			customTitleBar = new CustomTitleBar(this, "Призначення", maximizeBox: false);
+			_account = account;
+			_refreshMainForm = refreshMainForm;
+			_assignmentCreator = new ControlCreator(panelAssignment, flpContent, false);
 
-			SetTheme(account.Theme);
 		}
 		private void AssignmentForm_Load(object sender, EventArgs e)
-		{// Обробник події завантаження форми
-			allItems = DataBase.GetAssignmentItems();// Беремо дані з БД
+		{
+			_allItems = DataBase.GetAssignmentItems();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, true);
+			int[] results = AssignmentSolver.HungarianAlgorithm(matrix, true);
+			SetResultItems(results);
 
+			CreateFormResultItems();
+			SetTheme(_account.Theme);
+		}
 
-			int idVacancy, idCandidate, scores;// Запис результатів в resultItems
-			for (int i = 0; i < result.Length; i++)
+		private int[,] ConvertAssignmentItemsToMatrix()
+		{
+			_vacancyIds = new List<int>();
+			_candidateIds = new List<int>();
+
+			for (int i = 0; i < _allItems.Length; i++)
+			{// Read all application and vacancy IDs
+				_vacancyIds.Add(_allItems[i].IdVacancy);
+				_candidateIds.Add(_allItems[i].IdCandidate);
+			}
+
+			_vacancyIds = _vacancyIds.Distinct().ToList();// Removing repetitions
+			_candidateIds = _candidateIds.Distinct().ToList();
+
+			// Obtaining the assignment matrix
+			int[,] matrix = new int[_candidateIds.Count, _vacancyIds.Count];
+			for (int i = 0; i < matrix.GetLength(0); i++)
+				for (int j = 0; j < matrix.GetLength(1); j++)
+					matrix[i, j] = GetScore(_vacancyIds[j], _candidateIds[i]);
+
+			return matrix;
+		}
+		private int GetScore(int idVacancy, int idCandidate)
+		{// Method that returns scores by vacancy ID and candidate ID
+			for (int i = 0; i < _allItems.Length; i++)
+				if (_allItems[i].IdVacancy == idVacancy
+					&& _allItems[i].IdCandidate == idCandidate)
+					return _allItems[i].Scores;
+
+			return -1;
+		}
+		private void SetResultItems(int[] results)
+		{// The method writes data from a one-dimensional array to _resultItems
+			int idVacancy, idCandidate, scores;
+			for (int i = 0; i < results.Length; i++)
 			{
-				if (result[i] == -1)
+				if (results[i] == -1)
 					continue;
 
-				idVacancy = vacancyIds[result[i]];
-				idCandidate = candidateIds[i];
-				scores = FindScore(idVacancy, idCandidate);
+				idVacancy = _vacancyIds[results[i]];
+				idCandidate = _candidateIds[i];
+				scores = GetScore(idVacancy, idCandidate);
 
 				if (scores < 0)
 					continue;
 
-				resultItems.Add(new AssignmentItem(idVacancy, idCandidate, scores));
+				_resultItems.Add(new AssignmentItem(idVacancy, idCandidate, scores));
 			}
-
-			CreateFormResultItems();
 		}
 
-		private int[,] ConvertAssignmentItemsToMatrix()
-		{// Метод, який повертає двовимірний масив(матрицю) цілих чисел
-			vacancyIds = new List<int>();
-			candidateIds = new List<int>();
-
-			for (int i = 0; i < allItems.Length; i++)
-			{// Записуємо всі коди заявок та вакансій
-				vacancyIds.Add(allItems[i].IdVacancy);
-				candidateIds.Add(allItems[i].IdCandidate);
-			}
-
-			vacancyIds = vacancyIds.Distinct().ToList();
-			candidateIds = candidateIds.Distinct().ToList();// Видаляємо повторення
-
-			// Знаходимо матрицю призначення
-			int[,] matrix = new int[candidateIds.Count, vacancyIds.Count];
-			for (int i = 0; i < matrix.GetLength(0); i++)
-				for (int j = 0; j < matrix.GetLength(1); j++)
-					matrix[i, j] = FindScore(vacancyIds[j], candidateIds[i]);
-
-			return matrix;
-		}
-		private int FindScore(int idVacancy, int idCandidate)
-		{// Метод, який повертає бали за кодом вакансії та кандидата
-			for (int i = 0; i < allItems.Length; i++)
-				if (allItems[i].IdVacancy == idVacancy
-					&& allItems[i].IdCandidate == idCandidate)
-					return allItems[i].Scores;
-
-			return -1;
-		}
 		private void CreateFormResultItems()
-		{// Метод створює на формі елементи з результуючими даними
-			List<Panel> panels = new List<Panel>();
-			for (int i = 0; i < resultItems.Count; i++)
+		{
+			List<Guna2GradientPanel> createdPanels = new List<Guna2GradientPanel>();
+			for (int i = 0; i < _resultItems.Count; i++)
 			{
-				FullVacancy vacancy = DataBase.GetVacancy(resultItems[i].IdVacancy);
-				Candidate candidate = DataBase.GetCandidate(resultItems[i].IdCandidate);
-				FullApplication application = DataBase.GetApplication(resultItems[i].IdVacancy,
-					resultItems[i].IdCandidate);
+				FullVacancy vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
+				Candidate candidate = DataBase.GetCandidate(_resultItems[i].IdCandidate);
+				FullApplication application = DataBase.GetApplication(
+					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
 
-				panels.Add(assignmentCreator.CreateMainPanel());
+				createdPanels.Add(_assignmentCreator.CreateMainPanelNEW());
+				_assignmentCreator.CreateLabel(labelCandidate);
+				_assignmentCreator.CreateLabel(labelVacancy);
+				_assignmentCreator.CreateLabel(labelScores,
+					$"Балів: {_resultItems[i].Scores}");
 
-				assignmentCreator.CreateLabel(labelCandidate);
-				assignmentCreator.CreateLabel(labelVacancy);
-				assignmentCreator.CreateLabel(labelScores, $"Балів: {resultItems[i].Scores}");
-
-				Guna2GradientButton buttonC = assignmentCreator.CreateButton(buttonCandidate);
-				Guna2GradientButton buttonV = assignmentCreator.CreateButton(buttonVacancy);
-				Guna2GradientButton buttonA = assignmentCreator.CreateButton(buttonApplication);
+				Guna2GradientButton buttonC = _assignmentCreator.CreateButton(buttonCandidate);
+				Guna2GradientButton buttonA = _assignmentCreator.CreateButton(
+					buttonApplication);
+				Guna2GradientButton buttonV = _assignmentCreator.CreateButton(buttonVacancy);
 
 				buttonC.Text = candidate.Surname;
 				buttonV.Text = vacancy.Position.Name;
 
-				AddEventCandidateButton_Click(buttonC, candidate);
-				AddEventVacancyButton_Click(buttonV, vacancy);
-				AddEventApplicationButton_Click(buttonA, application);
+				_buttonCandidateMap.Add(buttonC, candidate);
+				_buttonApplicationMap.Add(buttonA, application);
+				_buttonVacancyMap.Add(buttonV, vacancy);
+				ManageButtonsEvents(buttonC, buttonA, buttonV, true);
 			}
 
-			if (panels.Count <= 0)
+			if (createdPanels.Count <= 0)
 				labelEmpty.Visible = true;
 			else
-				foreach (Panel panel in panels)// Вмикаємо видимість панелям
+				foreach (Guna2GradientPanel panel in createdPanels)
 					panel.Visible = true;
 		}
-		private void AddEventCandidateButton_Click(Guna2GradientButton button, Candidate candidate)
-		{// Метод який підписується на подію натискання на кандидата
-			button.Click += (s, args) =>
-			{// Підписуємось на подію відкриття форми
-				CandidateForm cf = new CandidateForm(candidate, account);
-				cf.ShowDialog();
-			};
+
+		#region Button event handlers
+		private void ManageButtonsEvents(Guna2GradientButton buttonCandidate,
+			Guna2GradientButton buttonApplication, Guna2GradientButton buttonVacancy,
+			bool subscribe)
+		{
+			ManageCandidateButtonEvent(buttonCandidate, subscribe);
+			ManageApplicationButtonEvent(buttonApplication, subscribe);
+			ManageVacancyButtonEvent(buttonVacancy, subscribe);
 		}
-		private void AddEventVacancyButton_Click(Guna2GradientButton button, FullVacancy vacancy)
-		{// Метод який підписується на подію натискання на вакансію
-			button.Click += (s, args) =>
-			{// Підписуємось на подію відкриття форми
-				VacancyForm vf = new VacancyForm(vacancy, account, (e) => { Close(); refresh(EventArgs.Empty); });
-				vf.ShowDialog();
-			};
+		private void ManageCandidateButtonEvent(Guna2GradientButton button, bool subscribe)
+		{
+			if (subscribe)
+				button.Click += ButtonCandidate_Click;
+			else
+				button.Click -= ButtonCandidate_Click;
 		}
-		private void AddEventApplicationButton_Click(Guna2GradientButton button, FullApplication application)
-		{// Метод який підписується на подію натискання на заявку
-			button.Click += (s, args) =>
-			{// Підписуємось на подію відкриття форми
-				ApplicationForm af = new ApplicationForm(application, (e) => { button.Visible = false; refresh(EventArgs.Empty); }, account);
-				af.ShowDialog();
-			};
+		private void ManageApplicationButtonEvent(Guna2GradientButton button,
+			bool subscribe)
+		{
+			if (subscribe)
+				button.Click += ButtonApplication_Click;
+			else
+				button.Click -= ButtonApplication_Click;
+		}
+		private void ManageVacancyButtonEvent(Guna2GradientButton button, bool subscribe)
+		{
+			if (subscribe)
+				button.Click += ButtonVacancy_Click;
+			else
+				button.Click -= ButtonVacancy_Click;
 		}
 
+		private void ButtonCandidate_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Guna2GradientButton button))
+				return;
+
+			Candidate candidate = _buttonCandidateMap[button];
+			CandidateForm candidateForm = new CandidateForm(candidate, _account);
+			candidateForm.ShowDialog();
+		}
+		private void ButtonApplication_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Guna2GradientButton button))
+				return;
+
+			FullApplication application = _buttonApplicationMap[button];
+			ApplicationForm applicationForm = new ApplicationForm(application,
+				(args) =>
+				{
+					button.Visible = false;
+					_refreshMainForm(EventArgs.Empty);
+				}, _account);
+
+			applicationForm.ShowDialog();
+		}
+		private void ButtonVacancy_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Guna2GradientButton button))
+				return;
+
+			FullVacancy vacancy = _buttonVacancyMap[button];
+
+			VacancyForm vacancyForm = new VacancyForm(vacancy, _account,
+				(args) =>
+				{
+					Close();
+					_refreshMainForm(EventArgs.Empty);
+				});
+
+			vacancyForm.ShowDialog();
+		}
+		#endregion
+
 		public void SetTheme(Theme theme)
-			=> ThemeControlManager.ChangeFormTheme(this, theme);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
+			flpContent.BackColor = BackColor;
+		}
 
 		private void AssignmentForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			assignmentCreator.Dispose();
+			foreach (Guna2GradientButton button in _buttonCandidateMap.Keys)
+				ManageCandidateButtonEvent(button, false);
+			foreach (Guna2GradientButton button in _buttonApplicationMap.Keys)
+				ManageApplicationButtonEvent(button, false);
+			foreach (Guna2GradientButton button in _buttonVacancyMap.Keys)
+				ManageVacancyButtonEvent(button, false);
+
+			_buttonCandidateMap.Clear();
+			_buttonApplicationMap.Clear();
+			_buttonVacancyMap.Clear();
+
+			_assignmentCreator.Dispose();
 		}
 	}
 }
