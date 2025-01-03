@@ -12,50 +12,86 @@ using UIHelpers.Themes;
 namespace RecruitmentServer.Forms
 {
 	internal partial class CandidateForm : BaseForm, IThemeChange
-	{// Форма кандидата
+	{
 		private const int INCREASE_FORM_HEIGHT = 100;
-		private readonly int idBusinessTrip, idFamilyStatus;
-		private readonly ControlCreator languageCreator;
-		private readonly ControlCreator educationCreator;
 
-		internal CandidateForm(Candidate candidate, ServerAccount account)
-		{// Конструктор форми кандидата
+		private readonly int _idBusinessTrip, _idFamilyStatus;
+		private readonly ServerAccount _account;
+		private readonly Candidate _candidate;
+		private readonly ControlCreator _languageCreator;
+		private readonly ControlCreator _educationCreator;
+
+		internal CandidateForm(ServerAccount account, Candidate candidate)
+		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Кандидат", minimizeBox: false, maximizeBox: false);
-			labelFullName.Text = $"{candidate.Surname.ToUpper()} {candidate.Name} {candidate.FatherName}";
-			labelNationality.Text = "Громадянство: " + candidate.questionnaire.Nationality;
-			labelCity.Text = "Місце проживання: " + candidate.questionnaire.City;
-			labelBirthday.Text = "Дата народження: " + candidate.Birthday.ToString("yyyy-MM-dd");
-			richTextBoxContact.Text = $"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}";
+			customTitleBar = new CustomTitleBar(this, "Кандидат", minimizeBox: false,
+				maximizeBox: false);
+			_account = account;
+			_candidate = candidate;
+			_idBusinessTrip = _candidate.questionnaire.ID_BusinessTripOpportunity;
+			_idFamilyStatus = _candidate.questionnaire.ID_FamilyStatus;
 
-			richTextBoxAdditionalInfo.Text = candidate.questionnaire.AdditionalInfo;// Додаткова інформація
-			if (candidate.questionnaire.AdditionalInfo == null || candidate.questionnaire.AdditionalInfo.Length < 0)
+			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
+			_educationCreator = new ControlCreator(panelEducation, flpEducations);
+		}
+		private void CandidateForm_Load(object sender, EventArgs e)
+		{
+			ShowStartInfo();
+			SetTheme(_account.Theme);
+		}
+
+		private void ShowStartInfo()
+		{
+			labelFullName.Text = $"{_candidate.Surname.ToUpper()} {_candidate.Name} " +
+				$"{_candidate.FatherName}";
+			labelNationality.Text = "Громадянство: " + _candidate.questionnaire.Nationality;
+			labelCity.Text = "Місце проживання: " + _candidate.questionnaire.City;
+			labelBirthday.Text = "Дата народження: " +
+				_candidate.Birthday.ToString("yyyy-MM-dd");
+			richTextBoxContact.Text = $"Номер телефону: {_candidate.Phone}" +
+				$"\nE-mail: {_candidate.Email}";
+
+			richTextBoxAdditionalInfo.Text = _candidate.questionnaire.AdditionalInfo;
+			if (string.IsNullOrWhiteSpace(_candidate.questionnaire.AdditionalInfo))
 			{
 				labelAdditionalInfoTitle.Visible = false;
 				richTextBoxAdditionalInfo.Visible = false;
 			}
+		}
 
-			labelExperience.Text = $"Досвід роботи: {candidate.questionnaire.Experience} міс.";
-			labelReadiness.Text = $"Готовність до роботи: {candidate.questionnaire.Readiness} дн.";
-			if (candidate.questionnaire.DriverLicense)
+		private void ButtonMore_Click(object sender, EventArgs e)
+		{
+			ShowRemainingInfo();
+			Size = new Size(Width, Height + INCREASE_FORM_HEIGHT);
+			buttonMore.Visible = false;
+			panelMore.Visible = true;
+
+			panelMore.Focus();
+		}
+		private void ShowRemainingInfo()
+		{
+			labelExperience.Text = $"Досвід роботи: " +
+				$"{_candidate.questionnaire.Experience} міс.";
+			labelBusinessTrip.Text = "Можливість відряджень: " +
+				DataBase.GetBusinessTrip(_idBusinessTrip);
+			if (_candidate.questionnaire.DriverLicense)
 				labelDriverLicense.Text = "Має посвідчення водія";
 			else
 				labelDriverLicense.Text = "НЕ має посвідчення водія";
-			labelChildrenAmount.Text = "Кількість дітей: " + candidate.questionnaire.ChildrenAmount;
-			idBusinessTrip = candidate.questionnaire.ID_BusinessTripOpportunity;
-			idFamilyStatus = candidate.questionnaire.ID_FamilyStatus;
-			CreateHealth(candidate.questionnaire.CandidateHealth);
+			labelReadiness.Text = $"Готовність до роботи: " +
+				$"{_candidate.questionnaire.Readiness} дн.";
+			labelFamilyStatus.Text = "Сімейний стан: " +
+				DataBase.GetFamilyStatus(_idFamilyStatus);
+			labelChildrenAmount.Text = "Кількість дітей: " +
+				_candidate.questionnaire.ChildrenAmount;
 
-			SetTheme(account.Theme);
-
-			languageCreator = new ControlCreator(panelLanguage, flpLanguages);
-			educationCreator = new ControlCreator(panelEducation, flpEducations);
-			CreateLanguages(candidate.questionnaire.Languages);
-			CreateEducations(candidate.questionnaire.Educations);
+			ShowHealth(_candidate.questionnaire.CandidateHealth);
+			CreateLanguages(_candidate.questionnaire.Languages);
+			CreateEducations(_candidate.questionnaire.Educations);
 		}
-		internal void CreateHealth(Health health)
-		{// Метод створює інформацію про ЗДОРОВ'Я на формі
+		private void ShowHealth(Health health)
+		{
 			if (health.Smoker)
 				labelSmokerAlcohol.Text = "Є курцем, ";
 			else
@@ -64,50 +100,53 @@ namespace RecruitmentServer.Forms
 				labelSmokerAlcohol.Text += "вживає алкоголь";
 			else
 				labelSmokerAlcohol.Text += "НЕ вживає алкоголь";
-			if (health.ChronicDiseases != null && health.ChronicDiseases.Length > 0)
+			if (!string.IsNullOrWhiteSpace(health.ChronicDiseases))
 				richTextBoxChronicDiseases.Text = health.ChronicDiseases;
+			else
+			{
+				labelChronicDiseases.Text = "Хронічних захворювань немає";
+				richTextBoxChronicDiseases.Visible = false;
+			}
 		}
-		internal void CreateLanguages(List<Language> languages)
-		{// Метод створює інформацію про МОВИ на формі
+		private void CreateLanguages(List<Language> languages)
+		{
 			for (int i = 0; i < languages.Count; i++)
 			{
-				languageCreator.CreateMainPanel();
-				languageCreator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
-				languageCreator.CreateLabel(labelLanguage, "Мова: " + languages[i].Name);
-				languageCreator.CreateLabel(labelLevel, "Рівень знань: " + languages[i].Level);
+				_languageCreator.CreateMainPanelNEW();
+				_languageCreator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
+				_languageCreator.CreateLabel(labelLanguage, "Мова: " + languages[i].Name);
+				_languageCreator.CreateLabel(labelLevel, "Рівень знань: " +
+					languages[i].Level);
 			}
 		}
-		internal void CreateEducations(List<Education> educations)
-		{// Метод створює інформацію про ОСВІТИ на формі
+		private void CreateEducations(List<Education> educations)
+		{
 			for (int i = 0; i < educations.Count; i++)
 			{
-				educationCreator.CreateMainPanel();
-				educationCreator.CreateLabel(labelEducationNumber, (i + 1).ToString());
-				educationCreator.CreateLabel(labelNameInstitution, "Назва закладу: " + educations[i].NameInstitution);
-				educationCreator.CreateLabel(labelSpecialty, "Спецальність: " + educations[i].Specialty);
-				educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
+				_educationCreator.CreateMainPanelNEW();
+				_educationCreator.CreateLabel(labelEducationNumber, (i + 1).ToString());
+				_educationCreator.CreateLabel(labelNameInstitution, "Назва закладу: " +
+					educations[i].NameInstitution);
+				_educationCreator.CreateLabel(labelSpecialty, "Спецальність: " +
+					educations[i].Specialty);
+				_educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
 					DataBase.GetEducationDegree(educations[i].ID_EducationDegree));
-				educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " + educations[i].YearAdmission);
-				educationCreator.CreateLabel(labelDateEnd, "Дата закінчення: " + educations[i].DateEnd.ToString("yyyy-MM-dd"));
-				educationCreator.CreateLabel(labelEducationForm, "Форма навчання: " +
+				_educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " +
+					educations[i].YearAdmission);
+				_educationCreator.CreateLabel(labelDateEnd, "Дата закінчення: " +
+					educations[i].DateEnd.ToString("yyyy-MM-dd"));
+				_educationCreator.CreateLabel(labelEducationForm, "Форма навчання: " +
 					DataBase.GetEducationForm(educations[i].ID_EducationForm));
 			}
-		}
-
-		private void ButtonMore_Click(object sender, System.EventArgs e)
-		{// Обробник події натискання на кнопку "Більше"
-			Size = new Size(Width, Height + INCREASE_FORM_HEIGHT);
-			buttonMore.Visible = false;
-			panelMore.Visible = true;
-			labelBusinessTrip.Text = "Можливість відряджень: " + DataBase.GetBusinessTrip(idBusinessTrip);
-			labelFamilyStatus.Text = "Сімейний стан: " + DataBase.GetFamilyStatus(idFamilyStatus);
-
-			panelMore.Focus();
 		}
 
 		public void SetTheme(Theme theme)
 		{
 			ThemeControlManager.ChangeFormTheme(this, theme);
+			panelMain.BackColor = BackColor;
+			panelMore.BackColor = BackColor;
+			flpLanguages.BackColor = BackColor;
+			flpEducations.BackColor = BackColor;
 
 			switch (theme)
 			{
@@ -124,8 +163,8 @@ namespace RecruitmentServer.Forms
 
 		private void CandidateForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			languageCreator.Dispose();
-			educationCreator.Dispose();
+			_languageCreator.Dispose();
+			_educationCreator.Dispose();
 		}
 	}
 }

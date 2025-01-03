@@ -152,7 +152,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonCandidate_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Кандидат"
 			Candidate candidate = DataBase.GetCandidate(application.IdCandidate);
-			CandidateForm cf = new CandidateForm(candidate, account);
+			CandidateForm cf = new CandidateForm(account, candidate);
 			Visible = false;
 			cf.FormClosed += (s, args) =>
 			{ Visible = true; };

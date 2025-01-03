@@ -179,7 +179,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			Candidate candidate = _buttonCandidateMap[button];
-			CandidateForm candidateForm = new CandidateForm(candidate, _account);
+			CandidateForm candidateForm = new CandidateForm(_account, candidate);
 			candidateForm.ShowDialog();
 		}
 		private void ButtonApplication_Click(object sender, EventArgs e)

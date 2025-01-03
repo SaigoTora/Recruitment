@@ -42,16 +42,16 @@
 			this.labelLanguageTitle = new System.Windows.Forms.Label();
 			this.labelEducationTitle = new System.Windows.Forms.Label();
 			this.flpEducations = new System.Windows.Forms.FlowLayoutPanel();
-			this.panelEducation = new System.Windows.Forms.Panel();
+			this.panelEducation = new Guna.UI2.WinForms.Guna2GradientPanel();
 			this.labelEducationForm = new System.Windows.Forms.Label();
-			this.labelEducationDegree = new System.Windows.Forms.Label();
-			this.labelDateEnd = new System.Windows.Forms.Label();
-			this.labelYearAdmission = new System.Windows.Forms.Label();
-			this.labelSpecialty = new System.Windows.Forms.Label();
-			this.labelNameInstitution = new System.Windows.Forms.Label();
 			this.labelEducationNumber = new System.Windows.Forms.Label();
+			this.labelEducationDegree = new System.Windows.Forms.Label();
+			this.labelNameInstitution = new System.Windows.Forms.Label();
+			this.labelDateEnd = new System.Windows.Forms.Label();
+			this.labelSpecialty = new System.Windows.Forms.Label();
+			this.labelYearAdmission = new System.Windows.Forms.Label();
 			this.flpLanguages = new System.Windows.Forms.FlowLayoutPanel();
-			this.panelLanguage = new System.Windows.Forms.Panel();
+			this.panelLanguage = new Guna.UI2.WinForms.Guna2GradientPanel();
 			this.labelLevel = new System.Windows.Forms.Label();
 			this.labelLanguageNumber = new System.Windows.Forms.Label();
 			this.labelLanguage = new System.Windows.Forms.Label();
@@ -93,7 +93,7 @@
 			// 
 			// richTextBoxAdditionalInfo
 			// 
-			this.richTextBoxAdditionalInfo.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.richTextBoxAdditionalInfo.BackColor = System.Drawing.SystemColors.Control;
 			this.richTextBoxAdditionalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.richTextBoxAdditionalInfo.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxAdditionalInfo.ForeColor = System.Drawing.Color.Black;
@@ -105,7 +105,7 @@
 			this.richTextBoxAdditionalInfo.TabIndex = 7;
 			this.richTextBoxAdditionalInfo.TabStop = false;
 			this.richTextBoxAdditionalInfo.Tag = "fixedPosition";
-			this.richTextBoxAdditionalInfo.Text = "";
+			this.richTextBoxAdditionalInfo.Text = "Додаткова інформація від кандидата";
 			// 
 			// labelAdditionalInfoTitle
 			// 
@@ -168,11 +168,11 @@
 			// 
 			// richTextBoxContact
 			// 
-			this.richTextBoxContact.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.richTextBoxContact.BackColor = System.Drawing.SystemColors.Control;
 			this.richTextBoxContact.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.richTextBoxContact.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxContact.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxContact.Location = new System.Drawing.Point(12, 297);
+			this.richTextBoxContact.Location = new System.Drawing.Point(18, 297);
 			this.richTextBoxContact.MaxLength = 2048;
 			this.richTextBoxContact.Name = "richTextBoxContact";
 			this.richTextBoxContact.ReadOnly = true;
@@ -180,7 +180,7 @@
 			this.richTextBoxContact.TabIndex = 5;
 			this.richTextBoxContact.TabStop = false;
 			this.richTextBoxContact.Tag = "fixedPosition";
-			this.richTextBoxContact.Text = "Інформація";
+			this.richTextBoxContact.Text = "Контактна інформація";
 			// 
 			// labelContact
 			// 
@@ -218,7 +218,7 @@
 			this.panelMore.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panelMore.Location = new System.Drawing.Point(0, 417);
 			this.panelMore.Name = "panelMore";
-			this.panelMore.Size = new System.Drawing.Size(1354, 1320);
+			this.panelMore.Size = new System.Drawing.Size(1258, 1320);
 			this.panelMore.TabIndex = 9;
 			this.panelMore.Visible = false;
 			// 
@@ -231,7 +231,7 @@
 			this.labelLanguageHelp.Location = new System.Drawing.Point(615, 773);
 			this.labelLanguageHelp.Name = "labelLanguageHelp";
 			this.labelLanguageHelp.Size = new System.Drawing.Size(448, 18);
-			this.labelLanguageHelp.TabIndex = 50;
+			this.labelLanguageHelp.TabIndex = 13;
 			this.labelLanguageHelp.Tag = "fixedPosition";
 			this.labelLanguageHelp.Text = "(рівень знань може приймати значення від 1 до 10)";
 			// 
@@ -240,11 +240,11 @@
 			this.pictureBoxLine.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.pictureBoxLine.BackColor = System.Drawing.Color.Black;
 			this.pictureBoxLine.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.pictureBoxLine.Location = new System.Drawing.Point(294, 6);
+			this.pictureBoxLine.Location = new System.Drawing.Point(405, 6);
 			this.pictureBoxLine.Name = "pictureBoxLine";
 			this.pictureBoxLine.Size = new System.Drawing.Size(423, 2);
 			this.pictureBoxLine.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.pictureBoxLine.TabIndex = 49;
+			this.pictureBoxLine.TabIndex = 0;
 			this.pictureBoxLine.TabStop = false;
 			this.pictureBoxLine.Tag = "fixedPosition";
 			// 
@@ -257,7 +257,7 @@
 			this.labelLanguageTitle.Location = new System.Drawing.Point(565, 379);
 			this.labelLanguageTitle.Name = "labelLanguageTitle";
 			this.labelLanguageTitle.Size = new System.Drawing.Size(101, 38);
-			this.labelLanguageTitle.TabIndex = 10;
+			this.labelLanguageTitle.TabIndex = 11;
 			this.labelLanguageTitle.Tag = "fixedPosition";
 			this.labelLanguageTitle.Text = "Мова";
 			// 
@@ -270,7 +270,7 @@
 			this.labelEducationTitle.Location = new System.Drawing.Point(557, 822);
 			this.labelEducationTitle.Name = "labelEducationTitle";
 			this.labelEducationTitle.Size = new System.Drawing.Size(122, 38);
-			this.labelEducationTitle.TabIndex = 12;
+			this.labelEducationTitle.TabIndex = 14;
 			this.labelEducationTitle.Tag = "fixedPosition";
 			this.labelEducationTitle.Text = "Освіта";
 			// 
@@ -282,20 +282,27 @@
 			this.flpEducations.Location = new System.Drawing.Point(20, 860);
 			this.flpEducations.Name = "flpEducations";
 			this.flpEducations.Size = new System.Drawing.Size(1211, 450);
-			this.flpEducations.TabIndex = 13;
+			this.flpEducations.TabIndex = 15;
 			this.flpEducations.Tag = "fixedPosition";
 			// 
 			// panelEducation
 			// 
-			this.panelEducation.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelEducation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelEducation.BackColor = System.Drawing.Color.Transparent;
+			this.panelEducation.BorderRadius = 40;
 			this.panelEducation.Controls.Add(this.labelEducationForm);
-			this.panelEducation.Controls.Add(this.labelEducationDegree);
-			this.panelEducation.Controls.Add(this.labelDateEnd);
-			this.panelEducation.Controls.Add(this.labelYearAdmission);
-			this.panelEducation.Controls.Add(this.labelSpecialty);
-			this.panelEducation.Controls.Add(this.labelNameInstitution);
 			this.panelEducation.Controls.Add(this.labelEducationNumber);
-			this.panelEducation.Location = new System.Drawing.Point(3, 3);
+			this.panelEducation.Controls.Add(this.labelEducationDegree);
+			this.panelEducation.Controls.Add(this.labelNameInstitution);
+			this.panelEducation.Controls.Add(this.labelDateEnd);
+			this.panelEducation.Controls.Add(this.labelSpecialty);
+			this.panelEducation.Controls.Add(this.labelYearAdmission);
+			this.panelEducation.FillColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelEducation.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelEducation.ForeColor = System.Drawing.Color.Black;
+			this.panelEducation.Location = new System.Drawing.Point(0, 3);
+			this.panelEducation.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.panelEducation.Name = "panelEducation";
 			this.panelEducation.Size = new System.Drawing.Size(1188, 246);
 			this.panelEducation.TabIndex = 0;
@@ -308,77 +315,12 @@
 			this.labelEducationForm.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationForm.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationForm.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationForm.Location = new System.Drawing.Point(750, 164);
+			this.labelEducationForm.Location = new System.Drawing.Point(755, 164);
 			this.labelEducationForm.Name = "labelEducationForm";
 			this.labelEducationForm.Size = new System.Drawing.Size(420, 32);
 			this.labelEducationForm.TabIndex = 6;
 			this.labelEducationForm.Tag = "fixedPosition";
 			this.labelEducationForm.Text = "Форма навчання";
-			// 
-			// labelEducationDegree
-			// 
-			this.labelEducationDegree.AutoEllipsis = true;
-			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
-			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationDegree.Location = new System.Drawing.Point(100, 164);
-			this.labelEducationDegree.Name = "labelEducationDegree";
-			this.labelEducationDegree.Size = new System.Drawing.Size(600, 32);
-			this.labelEducationDegree.TabIndex = 3;
-			this.labelEducationDegree.Tag = "fixedPosition";
-			this.labelEducationDegree.Text = "Ступінь освіти";
-			// 
-			// labelDateEnd
-			// 
-			this.labelDateEnd.AutoEllipsis = true;
-			this.labelDateEnd.BackColor = System.Drawing.Color.Transparent;
-			this.labelDateEnd.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelDateEnd.ForeColor = System.Drawing.Color.Black;
-			this.labelDateEnd.Location = new System.Drawing.Point(750, 104);
-			this.labelDateEnd.Name = "labelDateEnd";
-			this.labelDateEnd.Size = new System.Drawing.Size(420, 32);
-			this.labelDateEnd.TabIndex = 5;
-			this.labelDateEnd.Tag = "fixedPosition";
-			this.labelDateEnd.Text = "Дата закінчення";
-			// 
-			// labelYearAdmission
-			// 
-			this.labelYearAdmission.AutoEllipsis = true;
-			this.labelYearAdmission.BackColor = System.Drawing.Color.Transparent;
-			this.labelYearAdmission.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelYearAdmission.ForeColor = System.Drawing.Color.Black;
-			this.labelYearAdmission.Location = new System.Drawing.Point(750, 44);
-			this.labelYearAdmission.Name = "labelYearAdmission";
-			this.labelYearAdmission.Size = new System.Drawing.Size(420, 32);
-			this.labelYearAdmission.TabIndex = 4;
-			this.labelYearAdmission.Tag = "fixedPosition";
-			this.labelYearAdmission.Text = "Рік вступу";
-			// 
-			// labelSpecialty
-			// 
-			this.labelSpecialty.AutoEllipsis = true;
-			this.labelSpecialty.BackColor = System.Drawing.Color.Transparent;
-			this.labelSpecialty.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelSpecialty.ForeColor = System.Drawing.Color.Black;
-			this.labelSpecialty.Location = new System.Drawing.Point(100, 104);
-			this.labelSpecialty.Name = "labelSpecialty";
-			this.labelSpecialty.Size = new System.Drawing.Size(600, 32);
-			this.labelSpecialty.TabIndex = 2;
-			this.labelSpecialty.Tag = "fixedPosition";
-			this.labelSpecialty.Text = "Спецальність";
-			// 
-			// labelNameInstitution
-			// 
-			this.labelNameInstitution.AutoEllipsis = true;
-			this.labelNameInstitution.BackColor = System.Drawing.Color.Transparent;
-			this.labelNameInstitution.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelNameInstitution.ForeColor = System.Drawing.Color.Black;
-			this.labelNameInstitution.Location = new System.Drawing.Point(100, 44);
-			this.labelNameInstitution.Name = "labelNameInstitution";
-			this.labelNameInstitution.Size = new System.Drawing.Size(600, 32);
-			this.labelNameInstitution.TabIndex = 1;
-			this.labelNameInstitution.Tag = "fixedPosition";
-			this.labelNameInstitution.Text = "Назва закладу";
 			// 
 			// labelEducationNumber
 			// 
@@ -386,12 +328,77 @@
 			this.labelEducationNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelEducationNumber.Font = new System.Drawing.Font("Verdana", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationNumber.Location = new System.Drawing.Point(-2, 96);
+			this.labelEducationNumber.Location = new System.Drawing.Point(12, 96);
 			this.labelEducationNumber.Name = "labelEducationNumber";
 			this.labelEducationNumber.Size = new System.Drawing.Size(45, 48);
 			this.labelEducationNumber.TabIndex = 0;
 			this.labelEducationNumber.Tag = "fixedPosition";
 			this.labelEducationNumber.Text = "1";
+			// 
+			// labelEducationDegree
+			// 
+			this.labelEducationDegree.AutoEllipsis = true;
+			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
+			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
+			this.labelEducationDegree.Location = new System.Drawing.Point(105, 164);
+			this.labelEducationDegree.Name = "labelEducationDegree";
+			this.labelEducationDegree.Size = new System.Drawing.Size(600, 32);
+			this.labelEducationDegree.TabIndex = 3;
+			this.labelEducationDegree.Tag = "fixedPosition";
+			this.labelEducationDegree.Text = "Ступінь освіти";
+			// 
+			// labelNameInstitution
+			// 
+			this.labelNameInstitution.AutoEllipsis = true;
+			this.labelNameInstitution.BackColor = System.Drawing.Color.Transparent;
+			this.labelNameInstitution.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelNameInstitution.ForeColor = System.Drawing.Color.Black;
+			this.labelNameInstitution.Location = new System.Drawing.Point(105, 44);
+			this.labelNameInstitution.Name = "labelNameInstitution";
+			this.labelNameInstitution.Size = new System.Drawing.Size(600, 32);
+			this.labelNameInstitution.TabIndex = 1;
+			this.labelNameInstitution.Tag = "fixedPosition";
+			this.labelNameInstitution.Text = "Назва закладу";
+			// 
+			// labelDateEnd
+			// 
+			this.labelDateEnd.AutoEllipsis = true;
+			this.labelDateEnd.BackColor = System.Drawing.Color.Transparent;
+			this.labelDateEnd.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelDateEnd.ForeColor = System.Drawing.Color.Black;
+			this.labelDateEnd.Location = new System.Drawing.Point(755, 104);
+			this.labelDateEnd.Name = "labelDateEnd";
+			this.labelDateEnd.Size = new System.Drawing.Size(420, 32);
+			this.labelDateEnd.TabIndex = 5;
+			this.labelDateEnd.Tag = "fixedPosition";
+			this.labelDateEnd.Text = "Дата закінчення";
+			// 
+			// labelSpecialty
+			// 
+			this.labelSpecialty.AutoEllipsis = true;
+			this.labelSpecialty.BackColor = System.Drawing.Color.Transparent;
+			this.labelSpecialty.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelSpecialty.ForeColor = System.Drawing.Color.Black;
+			this.labelSpecialty.Location = new System.Drawing.Point(105, 104);
+			this.labelSpecialty.Name = "labelSpecialty";
+			this.labelSpecialty.Size = new System.Drawing.Size(600, 32);
+			this.labelSpecialty.TabIndex = 2;
+			this.labelSpecialty.Tag = "fixedPosition";
+			this.labelSpecialty.Text = "Спецальність";
+			// 
+			// labelYearAdmission
+			// 
+			this.labelYearAdmission.AutoEllipsis = true;
+			this.labelYearAdmission.BackColor = System.Drawing.Color.Transparent;
+			this.labelYearAdmission.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelYearAdmission.ForeColor = System.Drawing.Color.Black;
+			this.labelYearAdmission.Location = new System.Drawing.Point(755, 44);
+			this.labelYearAdmission.Name = "labelYearAdmission";
+			this.labelYearAdmission.Size = new System.Drawing.Size(420, 32);
+			this.labelYearAdmission.TabIndex = 4;
+			this.labelYearAdmission.Tag = "fixedPosition";
+			this.labelYearAdmission.Text = "Рік вступу";
 			// 
 			// flpLanguages
 			// 
@@ -401,16 +408,23 @@
 			this.flpLanguages.Location = new System.Drawing.Point(190, 420);
 			this.flpLanguages.Name = "flpLanguages";
 			this.flpLanguages.Size = new System.Drawing.Size(873, 350);
-			this.flpLanguages.TabIndex = 11;
+			this.flpLanguages.TabIndex = 12;
 			this.flpLanguages.Tag = "fixedPosition";
 			// 
 			// panelLanguage
 			// 
-			this.panelLanguage.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelLanguage.BackColor = System.Drawing.Color.Transparent;
+			this.panelLanguage.BorderRadius = 40;
 			this.panelLanguage.Controls.Add(this.labelLevel);
 			this.panelLanguage.Controls.Add(this.labelLanguageNumber);
 			this.panelLanguage.Controls.Add(this.labelLanguage);
-			this.panelLanguage.Location = new System.Drawing.Point(3, 3);
+			this.panelLanguage.FillColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelLanguage.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
+			this.panelLanguage.ForeColor = System.Drawing.Color.Black;
+			this.panelLanguage.Location = new System.Drawing.Point(0, 3);
+			this.panelLanguage.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.panelLanguage.Name = "panelLanguage";
 			this.panelLanguage.Size = new System.Drawing.Size(850, 125);
 			this.panelLanguage.TabIndex = 0;
@@ -423,7 +437,7 @@
 			this.labelLevel.BackColor = System.Drawing.Color.Transparent;
 			this.labelLevel.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLevel.ForeColor = System.Drawing.Color.Black;
-			this.labelLevel.Location = new System.Drawing.Point(540, 44);
+			this.labelLevel.Location = new System.Drawing.Point(542, 44);
 			this.labelLevel.Name = "labelLevel";
 			this.labelLevel.Size = new System.Drawing.Size(180, 29);
 			this.labelLevel.TabIndex = 2;
@@ -436,7 +450,7 @@
 			this.labelLanguageNumber.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguageNumber.Font = new System.Drawing.Font("Verdana", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguageNumber.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguageNumber.Location = new System.Drawing.Point(1, 39);
+			this.labelLanguageNumber.Location = new System.Drawing.Point(12, 39);
 			this.labelLanguageNumber.Name = "labelLanguageNumber";
 			this.labelLanguageNumber.Size = new System.Drawing.Size(40, 42);
 			this.labelLanguageNumber.TabIndex = 0;
@@ -449,7 +463,7 @@
 			this.labelLanguage.BackColor = System.Drawing.Color.Transparent;
 			this.labelLanguage.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguage.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguage.Location = new System.Drawing.Point(107, 44);
+			this.labelLanguage.Location = new System.Drawing.Point(109, 44);
 			this.labelLanguage.Name = "labelLanguage";
 			this.labelLanguage.Size = new System.Drawing.Size(87, 29);
 			this.labelLanguage.TabIndex = 1;
@@ -458,7 +472,7 @@
 			// 
 			// richTextBoxChronicDiseases
 			// 
-			this.richTextBoxChronicDiseases.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.richTextBoxChronicDiseases.BackColor = System.Drawing.SystemColors.Control;
 			this.richTextBoxChronicDiseases.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.richTextBoxChronicDiseases.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxChronicDiseases.ForeColor = System.Drawing.Color.Black;
@@ -467,10 +481,10 @@
 			this.richTextBoxChronicDiseases.Name = "richTextBoxChronicDiseases";
 			this.richTextBoxChronicDiseases.ReadOnly = true;
 			this.richTextBoxChronicDiseases.Size = new System.Drawing.Size(500, 164);
-			this.richTextBoxChronicDiseases.TabIndex = 9;
+			this.richTextBoxChronicDiseases.TabIndex = 10;
 			this.richTextBoxChronicDiseases.TabStop = false;
 			this.richTextBoxChronicDiseases.Tag = "fixedPosition";
-			this.richTextBoxChronicDiseases.Text = "";
+			this.richTextBoxChronicDiseases.Text = "Хронічні захворювання";
 			// 
 			// labelChronicDiseases
 			// 
@@ -482,7 +496,7 @@
 			this.labelChronicDiseases.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelChronicDiseases.Name = "labelChronicDiseases";
 			this.labelChronicDiseases.Size = new System.Drawing.Size(312, 29);
-			this.labelChronicDiseases.TabIndex = 8;
+			this.labelChronicDiseases.TabIndex = 9;
 			this.labelChronicDiseases.Tag = "fixedPosition";
 			this.labelChronicDiseases.Text = "Хронічні захворювання:";
 			// 
@@ -496,7 +510,7 @@
 			this.labelSmokerAlcohol.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSmokerAlcohol.Name = "labelSmokerAlcohol";
 			this.labelSmokerAlcohol.Size = new System.Drawing.Size(530, 29);
-			this.labelSmokerAlcohol.TabIndex = 7;
+			this.labelSmokerAlcohol.TabIndex = 8;
 			this.labelSmokerAlcohol.Tag = "fixedPosition";
 			this.labelSmokerAlcohol.Text = "Куріння та алкоголь";
 			this.labelSmokerAlcohol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -512,7 +526,7 @@
 			this.labelHealth.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelHealth.Name = "labelHealth";
 			this.labelHealth.Size = new System.Drawing.Size(147, 35);
-			this.labelHealth.TabIndex = 6;
+			this.labelHealth.TabIndex = 7;
 			this.labelHealth.Tag = "fixedPosition";
 			this.labelHealth.Text = "Здоров’я";
 			this.labelHealth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -527,7 +541,7 @@
 			this.labelFamilyStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelFamilyStatus.Name = "labelFamilyStatus";
 			this.labelFamilyStatus.Size = new System.Drawing.Size(600, 29);
-			this.labelFamilyStatus.TabIndex = 4;
+			this.labelFamilyStatus.TabIndex = 5;
 			this.labelFamilyStatus.Tag = "fixedPosition";
 			this.labelFamilyStatus.Text = "Сімейний стан";
 			this.labelFamilyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -542,7 +556,7 @@
 			this.labelBusinessTrip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelBusinessTrip.Name = "labelBusinessTrip";
 			this.labelBusinessTrip.Size = new System.Drawing.Size(600, 29);
-			this.labelBusinessTrip.TabIndex = 1;
+			this.labelBusinessTrip.TabIndex = 2;
 			this.labelBusinessTrip.Tag = "fixedPosition";
 			this.labelBusinessTrip.Text = "Можливість відряджень";
 			this.labelBusinessTrip.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -557,7 +571,7 @@
 			this.labelChildrenAmount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelChildrenAmount.Name = "labelChildrenAmount";
 			this.labelChildrenAmount.Size = new System.Drawing.Size(600, 29);
-			this.labelChildrenAmount.TabIndex = 5;
+			this.labelChildrenAmount.TabIndex = 6;
 			this.labelChildrenAmount.Tag = "fixedPosition";
 			this.labelChildrenAmount.Text = "Кількість дітей";
 			this.labelChildrenAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -572,7 +586,7 @@
 			this.labelDriverLicense.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDriverLicense.Name = "labelDriverLicense";
 			this.labelDriverLicense.Size = new System.Drawing.Size(600, 29);
-			this.labelDriverLicense.TabIndex = 2;
+			this.labelDriverLicense.TabIndex = 3;
 			this.labelDriverLicense.Tag = "fixedPosition";
 			this.labelDriverLicense.Text = "Посвідчення водія";
 			this.labelDriverLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -587,7 +601,7 @@
 			this.labelReadiness.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelReadiness.Name = "labelReadiness";
 			this.labelReadiness.Size = new System.Drawing.Size(600, 29);
-			this.labelReadiness.TabIndex = 3;
+			this.labelReadiness.TabIndex = 4;
 			this.labelReadiness.Tag = "fixedPosition";
 			this.labelReadiness.Text = "Готовність до роботи";
 			this.labelReadiness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -602,7 +616,7 @@
 			this.labelExperience.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelExperience.Name = "labelExperience";
 			this.labelExperience.Size = new System.Drawing.Size(600, 29);
-			this.labelExperience.TabIndex = 0;
+			this.labelExperience.TabIndex = 1;
 			this.labelExperience.Tag = "fixedPosition";
 			this.labelExperience.Text = "Досвід роботи";
 			this.labelExperience.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -624,7 +638,7 @@
 			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelMain.Location = new System.Drawing.Point(0, 0);
 			this.panelMain.Name = "panelMain";
-			this.panelMain.Size = new System.Drawing.Size(1371, 501);
+			this.panelMain.Size = new System.Drawing.Size(1275, 501);
 			this.panelMain.TabIndex = 10;
 			// 
 			// buttonMore
@@ -646,7 +660,7 @@
 			this.buttonMore.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonMore.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonMore.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonMore.Location = new System.Drawing.Point(531, 377);
+			this.buttonMore.Location = new System.Drawing.Point(536, 377);
 			this.buttonMore.Name = "buttonMore";
 			this.buttonMore.PressedColor = System.Drawing.Color.White;
 			this.buttonMore.PressedDepth = 20;
@@ -661,12 +675,13 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1371, 501);
+			this.ClientSize = new System.Drawing.Size(1275, 501);
 			this.Controls.Add(this.panelMain);
 			this.Name = "CandidateForm";
 			this.ShowIcon = false;
 			this.Text = "Кандидат";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CandidateForm_FormClosed);
+			this.Load += new System.EventHandler(this.CandidateForm_Load);
 			this.panelMore.ResumeLayout(false);
 			this.panelMore.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLine)).EndInit();
@@ -703,14 +718,12 @@
         private System.Windows.Forms.RichTextBox richTextBoxChronicDiseases;
         private System.Windows.Forms.Label labelChronicDiseases;
         private System.Windows.Forms.FlowLayoutPanel flpLanguages;
-        private System.Windows.Forms.Panel panelLanguage;
         private System.Windows.Forms.Label labelLevel;
         private System.Windows.Forms.Label labelLanguageNumber;
         private System.Windows.Forms.Label labelLanguage;
         private System.Windows.Forms.Label labelLanguageTitle;
         private System.Windows.Forms.Label labelEducationTitle;
         private System.Windows.Forms.FlowLayoutPanel flpEducations;
-        private System.Windows.Forms.Panel panelEducation;
         private System.Windows.Forms.Label labelEducationForm;
         private System.Windows.Forms.Label labelEducationDegree;
         private System.Windows.Forms.Label labelDateEnd;
@@ -722,5 +735,7 @@
         private System.Windows.Forms.Label labelLanguageHelp;
 		private System.Windows.Forms.Panel panelMain;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonMore;
+		private Guna.UI2.WinForms.Guna2GradientPanel panelLanguage;
+		private Guna.UI2.WinForms.Guna2GradientPanel panelEducation;
 	}
 }
