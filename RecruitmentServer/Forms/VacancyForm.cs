@@ -99,7 +99,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonRequirementCreate_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Вимоги" для створення
-			RequirementForm reqf = new RequirementForm(requirement, account);
+			RequirementForm reqf = new RequirementForm(account, requirement);
 			Visible = false;
 			reqf.FormClosed += (s, args) =>
 			{ Visible = true; };

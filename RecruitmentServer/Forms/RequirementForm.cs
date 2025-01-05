@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using RecruitmentServer.DataModels;
 using RecruitmentServer.ServerUtilities;
+using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -13,192 +14,183 @@ using UIHelpers.Validation;
 namespace RecruitmentServer.Forms
 {
 	internal partial class RequirementForm : BaseForm, IThemeChange
-	{// Форма вакансій
-		private readonly FullRequirement requirement;// Вимоги
-		private readonly ServerAccount account;// Акаунт
+	{
+		private readonly ServerAccount _account;
+		private readonly FullRequirement _requirement;
+		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
+			new CheckBoxEventHandlers();
+		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
+			new RadioButtonEventHandlers();
 
-		internal RequirementForm(FullRequirement requirement, ServerAccount account)
-		{// Конструктор форми створення вакансії
+		internal RequirementForm(ServerAccount account, FullRequirement requirement)
+		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Вимоги", minimizeBox: false, maximizeBox: false);
+			customTitleBar = new CustomTitleBar(this, "Вимоги", minimizeBox: false,
+				maximizeBox: false);
+			_account = account;
+			_requirement = requirement;
+		}
+		private void RequirementForm_Load(object sender, EventArgs e)
+		{
 			education_DegreeTableAdapter.Fill(recruitmentDBDataSet.Education_Degree);
-			this.requirement = requirement;
-
-			if (requirement.City != null)
-			{// Якщо вимоги були вказані, то заповнюємо елементи форми
-				textBoxCity.Text = requirement.City;
-				numericUpDownAgeMin.Value = requirement.AgeMin;
-				numericUpDownAgeMax.Value = requirement.AgeMax;
-				numericUpDownExpMin.Value = requirement.ExpMin;
-				SelectDegrees();
-				checkBoxNoChronicDiseasesYes.Checked = requirement.NoChronicDiseases;
-				checkBoxDriverLicenseYes.Checked = requirement.DriverLicense;
-				checkBoxNoSmokerYes.Checked = requirement.NoSmoker;
-				checkBoxNoDrinkAlcoholYes.Checked = requirement.NoDrinkAlcohol;
-				checkBoxBusinessTripYes.Checked = requirement.BusinessTripOpportunity;
-
-				if (requirement.Student == null)// Студент
-					checkBoxStudentNull.Checked = true;
-				else if (requirement.Student.Value)
-					checkBoxStudentYes.Checked = true;
-				else
-					checkBoxStudentNo.Checked = true;
-			}
+			if (_requirement.City != null)// If the requirements were specified
+				SetFormFields(_requirement);
 			else
-			{// Якщо вимоги не були вказані
-				checkBoxDiplomaAll.Checked = true;// Вибираємо всі ступені освіти
+			{
+				listBoxDegrees.SelectedItems.Clear();
 				numericUpDownAgeMax.Value = numericUpDownAgeMax.Maximum;
 			}
 
-			this.account = account;
-			SetTheme(account.Theme);
+			_checkBoxEventHandlers.SubscribeToHoverShadow(checkBoxDiplomaAll);
+			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonNoChronicDiseasesNo,
+				radioButtonNoChronicDiseasesYes, radioButtonDriverLicenseNo,
+				radioButtonDriverLicenseYes, radioButtonNoSmokerNo, radioButtonNoSmokerYes,
+				radioButtonNoDrinkAlcoholNo, radioButtonNoDrinkAlcoholYes,
+				radioButtonBusinessTripNo, radioButtonBusinessTripYes,
+				radioButtonStudentNo, radioButtonStudentYes, radioButtonStudentNull
+				);
+			SetTheme(_account.Theme);
+		}
+
+		private void SetFormFields(FullRequirement requirement)
+		{
+			textBoxCity.Text = requirement.City;
+			numericUpDownAgeMin.Value = requirement.AgeMin;
+			numericUpDownAgeMax.Value = requirement.AgeMax;
+			numericUpDownExpMin.Value = requirement.ExpMin;
+			SelectDegrees();
+			radioButtonNoChronicDiseasesYes.Checked = requirement.NoChronicDiseases;
+			radioButtonDriverLicenseYes.Checked = requirement.DriverLicense;
+			radioButtonNoSmokerYes.Checked = requirement.NoSmoker;
+			radioButtonNoDrinkAlcoholYes.Checked = requirement.NoDrinkAlcohol;
+			radioButtonBusinessTripYes.Checked = requirement.BusinessTripOpportunity;
+
+			if (requirement.Student == null)
+				radioButtonStudentNull.Checked = true;
+			else if (requirement.Student.Value)
+				radioButtonStudentYes.Checked = true;
+			else
+				radioButtonStudentNo.Checked = true;
 		}
 		private void SelectDegrees()
-		{// Метод, який обирає потрібні ступені освіти
+		{
 			DataRowView item;
-			listBoxDegrees.SetSelected(0, false);// Знімаємо виділення для першого елемента
-			for (int i = 0; i < requirement.IdDegrees.Count; i++)
+			listBoxDegrees.SetSelected(0, false);// Deselect the first element
+			for (int i = 0; i < _requirement.IdDegrees.Count; i++)
 				for (int j = 0; j < listBoxDegrees.Items.Count; j++)
 				{
-					item = listBoxDegrees.Items[j] as DataRowView;// Отримуємо елемент
+					item = listBoxDegrees.Items[j] as DataRowView;
 
-					if (item != null && requirement.IdDegrees[i] == Convert.ToInt32(item["id"]))
+					if (item != null && _requirement.IdDegrees[i]
+						== Convert.ToInt32(item["id"]))
 					{
 						listBoxDegrees.SetSelected(j, true);
-						break;// Виходимо, якщо вибрали потрібний ступінь
+						break;
 					}
 				}
 		}
 
-		private void ButtonCreate_Click(object sender, EventArgs e)
-		{// Обробник події створення вимоги
-			if (CheckValidData())
-			{
-				bool? student = null;// Студент
-				if (checkBoxStudentNo.Checked)
-					student = false;
-				else if (checkBoxStudentYes.Checked)
-					student = true;
-
-				List<int> degrees = new List<int>();// Ступені освіти
-				foreach (DataRowView selectedItem in listBoxDegrees.SelectedItems)
-					degrees.Add(int.Parse(selectedItem[0].ToString()));
-
-				// Зміна даних та закриття форми
-				requirement.Change(textBoxCity.Text, (byte)numericUpDownAgeMin.Value,
-					(byte)numericUpDownAgeMax.Value, (int)numericUpDownExpMin.Value,
-					checkBoxDiplomaAll.Checked, checkBoxNoChronicDiseasesYes.Checked,
-					checkBoxDriverLicenseYes.Checked, checkBoxNoSmokerYes.Checked,
-					checkBoxNoDrinkAlcoholYes.Checked, checkBoxBusinessTripYes.Checked, student, degrees);
-				Close();
-			}
-		}
-		private bool CheckValidData()
-		{// Метод перевіряє та показує які дані були введені не вірно
-			ValidationFeedbackManager.ResetLabelsToDefault(account.Theme, labelCity);
-
-			Validator validator = new Validator();
-			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR, account.Theme);
-
-			return validator.IsDataValid;
-		}
-
-		private void CheckBoxDiplomaAll_CheckedChanged(object sender, EventArgs e)
-		{// Обробник події натискання на "Вибрати всі"
-			listBoxDegrees.SelectedIndexChanged -= ListBoxDegrees_SelectedIndexChanged;
-			for (int i = 0; i < listBoxDegrees.Items.Count; i++)// Обираємо всі ступені освіти
-				listBoxDegrees.SetSelected(i, checkBoxDiplomaAll.Checked);
-			listBoxDegrees.SelectedIndexChanged += ListBoxDegrees_SelectedIndexChanged;
-		}
 		private void ListBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
-		{// Обробник події натискання на ступінь освіти
-			bool allSelected = true;// Чи вибрані всі ступені
+		{
+			bool allSelected = true;
 			for (int i = 0; i < listBoxDegrees.Items.Count; i++)
 				if (!listBoxDegrees.GetSelected(i))
 					allSelected = false;
 
 			checkBoxDiplomaAll.CheckedChanged -= CheckBoxDiplomaAll_CheckedChanged;
-			if (allSelected)// Якщо всі вибрані
+			if (allSelected)
 				checkBoxDiplomaAll.Checked = true;
 			else
 				checkBoxDiplomaAll.Checked = false;
 			checkBoxDiplomaAll.CheckedChanged += CheckBoxDiplomaAll_CheckedChanged;
 		}
+		private void CheckBoxDiplomaAll_CheckedChanged(object sender, EventArgs e)
+		{
+			listBoxDegrees.SelectedIndexChanged -= ListBoxDegrees_SelectedIndexChanged;
+			for (int i = 0; i < listBoxDegrees.Items.Count; i++)
+				listBoxDegrees.SetSelected(i, checkBoxDiplomaAll.Checked);
+			listBoxDegrees.SelectedIndexChanged += ListBoxDegrees_SelectedIndexChanged;
+		}
 
-		private void CheckBoxChanger(CheckBox checkBox, CheckBox checkBoxNo, CheckBox checkBoxYes)
-		{// Метод для зміни стану CheckBox-ів (Так/Ні)
-			if (checkBox == checkBoxNo)// Якщо змінили чекбокс "Ні"
+		private void ButtonCreate_Click(object sender, EventArgs e)
+		{
+			if (CheckValidData())
 			{
-				if (checkBox.Checked) checkBoxYes.Checked = false;
-				else checkBoxYes.Checked = true;
-			}
-			else if (checkBox == checkBoxYes)// Якщо змінили чекбокс "Так"
-			{
-				if (checkBox.Checked) checkBoxNo.Checked = false;
-				else checkBoxNo.Checked = true;
-			}
-		}
-		private void CheckBoxNoChronicDiseases_CheckedChanged(object sender, EventArgs e)
-		{// Хронічні захворювання
-			if (sender is CheckBox checkBox)
-				CheckBoxChanger(checkBox, checkBoxNoChronicDiseasesNo, checkBoxNoChronicDiseasesYes);
-		}
-		private void CheckBoxDriverLicense_CheckedChanged(object sender, EventArgs e)
-		{// Посвідчення водія
-			if (sender is CheckBox checkBox)
-				CheckBoxChanger(checkBox, checkBoxDriverLicenseNo, checkBoxDriverLicenseYes);
-		}
-		private void CheckBoxNoSmoker_CheckedChanged(object sender, EventArgs e)
-		{// Курець
-			if (sender is CheckBox checkBox)
-				CheckBoxChanger(checkBox, checkBoxNoSmokerNo, checkBoxNoSmokerYes);
-		}
-		private void CheckBoxNoDrinkAlcohol_CheckedChanged(object sender, EventArgs e)
-		{// Вживання алкоголю
-			if (sender is CheckBox checkBox)
-				CheckBoxChanger(checkBox, checkBoxNoDrinkAlcoholNo, checkBoxNoDrinkAlcoholYes);
-		}
-		private void CheckBoxBusinessTrip_CheckedChanged(object sender, EventArgs e)
-		{// Можливість відряджень
-			if (sender is CheckBox checkBox)
-				CheckBoxChanger(checkBox, checkBoxBusinessTripNo, checkBoxBusinessTripYes);
-		}
-		private void CheckBoxStudent_CheckedChanged(object sender, EventArgs e)
-		{// Студент
-			if (!(sender is CheckBox checkBox))
-				return;
-			if (!checkBox.Checked)
-				checkBox.Checked = true;
+				bool? student = null;
+				if (radioButtonStudentNo.Checked)
+					student = false;
+				else if (radioButtonStudentYes.Checked)
+					student = true;
 
-			// Відписуємось від обробників подій
-			checkBoxStudentNo.CheckedChanged -= CheckBoxStudent_CheckedChanged;
-			checkBoxStudentYes.CheckedChanged -= CheckBoxStudent_CheckedChanged;
-			checkBoxStudentNull.CheckedChanged -= CheckBoxStudent_CheckedChanged;
+				List<int> degrees = new List<int>();
+				foreach (DataRowView selectedItem in listBoxDegrees.SelectedItems)
+					degrees.Add(int.Parse(selectedItem[0].ToString()));
 
-			if (checkBox == checkBoxStudentNo)
-			{// Якщо змінили чекбокс "Ні"
-				checkBoxStudentYes.Checked = false;
-				checkBoxStudentNull.Checked = false;
+				_requirement.Change(textBoxCity.Text, (byte)numericUpDownAgeMin.Value,
+					(byte)numericUpDownAgeMax.Value, (int)numericUpDownExpMin.Value,
+					checkBoxDiplomaAll.Checked, radioButtonNoChronicDiseasesYes.Checked,
+					radioButtonDriverLicenseYes.Checked, radioButtonNoSmokerYes.Checked,
+					radioButtonNoDrinkAlcoholYes.Checked, radioButtonBusinessTripYes.Checked,
+					student, degrees);
+				Close();
 			}
-			else if (checkBox == checkBoxStudentYes)
-			{// Якщо змінили чекбокс "Так"
-				checkBoxStudentNo.Checked = false;
-				checkBoxStudentNull.Checked = false;
-			}
-			else if (checkBox == checkBoxStudentNull)
-			{// Якщо змінили чекбокс "Все одно"
-				checkBoxStudentNo.Checked = false;
-				checkBoxStudentYes.Checked = false;
-			}
-
-			// Підписуємось назад на обробники подій
-			checkBoxStudentNo.CheckedChanged += CheckBoxStudent_CheckedChanged;
-			checkBoxStudentYes.CheckedChanged += CheckBoxStudent_CheckedChanged;
-			checkBoxStudentNull.CheckedChanged += CheckBoxStudent_CheckedChanged;
 		}
+		private bool CheckValidData()
+		{
+			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelCity);
+
+			Validator validator = new Validator();
+			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR,
+				_account.Theme);
+
+			return validator.IsDataValid;
+		}
+
+		#region Label focus event handlers
+		private void LabelDiplomaAll_Click(object sender, EventArgs e)
+			=> checkBoxDiplomaAll.Checked = !checkBoxDiplomaAll.Checked;
+
+		private void LabelNoChronicDiseasesNo_Click(object sender, EventArgs e)
+			=> radioButtonNoChronicDiseasesNo.Checked = true;
+		private void LabelNoChronicDiseasesYes_Click(object sender, EventArgs e)
+			=> radioButtonNoChronicDiseasesYes.Checked = true;
+
+		private void LabelDriverLicenseNo_Click(object sender, EventArgs e)
+			=> radioButtonDriverLicenseNo.Checked = true;
+		private void LabelDriverLicenseYes_Click(object sender, EventArgs e)
+			=> radioButtonDriverLicenseYes.Checked = true;
+
+		private void LabelNoSmokerNo_Click(object sender, EventArgs e)
+			=> radioButtonNoSmokerNo.Checked = true;
+		private void LabelNoSmokerYes_Click(object sender, EventArgs e)
+			=> radioButtonNoSmokerYes.Checked = true;
+
+		private void LabelNoDrinkAlcoholNo_Click(object sender, EventArgs e)
+			=> radioButtonNoDrinkAlcoholNo.Checked = true;
+		private void LabelNoDrinkAlcoholYes_Click(object sender, EventArgs e)
+			=> radioButtonNoDrinkAlcoholYes.Checked = true;
+
+		private void LabelBusinessTripNo_Click(object sender, EventArgs e)
+			=> radioButtonBusinessTripNo.Checked = true;
+		private void LabelBusinessTripYes_Click(object sender, EventArgs e)
+			=> radioButtonBusinessTripYes.Checked = true;
+
+		private void LabelStudentNo_Click(object sender, EventArgs e)
+			=> radioButtonStudentNo.Checked = true;
+		private void LabelStudentYes_Click(object sender, EventArgs e)
+			=> radioButtonStudentYes.Checked = true;
+		private void LabelStudentNull_Click(object sender, EventArgs e)
+			=> radioButtonStudentNull.Checked = true;
+		#endregion
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
+
+		private void RequirementForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			_checkBoxEventHandlers.UnsubscribeAll();
+			_radionButtonEventHandlers.UnsubscribeAll();
+		}
 	}
 }

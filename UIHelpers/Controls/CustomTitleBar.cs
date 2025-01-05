@@ -18,7 +18,7 @@ namespace UIHelpers.Controls
 
 		#region Colors
 		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultPanelColor =
-			(Color.FromArgb(235, 235, 235), Color.FromArgb(32, 32, 32));
+			(Color.FromArgb(235, 235, 235), Color.FromArgb(30, 30, 30));
 		private static readonly (Color WhiteTheme, Color BlackTheme) _pressedPanelColor =
 			(Color.FromArgb(227, 227, 227), Color.FromArgb(28, 28, 28));
 		private static readonly (Color WhiteTheme, Color BlackTheme) _defaultButtonColor =

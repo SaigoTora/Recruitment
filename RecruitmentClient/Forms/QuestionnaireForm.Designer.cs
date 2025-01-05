@@ -179,7 +179,7 @@
             0,
             0});
 			this.numericUpDownExperience.Name = "numericUpDownExperience";
-			this.numericUpDownExperience.Size = new System.Drawing.Size(75, 36);
+			this.numericUpDownExperience.Size = new System.Drawing.Size(90, 36);
 			this.numericUpDownExperience.TabIndex = 7;
 			this.numericUpDownExperience.Tag = "fixedPosition";
 			this.numericUpDownExperience.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1551,7 +1551,7 @@
 			this.textBoxCity.PlaceholderText = "";
 			this.textBoxCity.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxCity.SelectedText = "";
-			this.textBoxCity.Size = new System.Drawing.Size(260, 36);
+			this.textBoxCity.Size = new System.Drawing.Size(300, 36);
 			this.textBoxCity.TabIndex = 3;
 			this.textBoxCity.Tag = "fixedPosition";
 			this.textBoxCity.TextOffset = new System.Drawing.Point(3, 0);
