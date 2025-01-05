@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CandidateForm));
 			this.labelCity = new System.Windows.Forms.Label();
 			this.richTextBoxAdditionalInfo = new System.Windows.Forms.RichTextBox();
 			this.labelAdditionalInfoTitle = new System.Windows.Forms.Label();
@@ -677,8 +678,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1275, 501);
 			this.Controls.Add(this.panelMain);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "CandidateForm";
-			this.ShowIcon = false;
 			this.Text = "Кандидат";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CandidateForm_FormClosed);
 			this.Load += new System.EventHandler(this.CandidateForm_Load);

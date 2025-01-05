@@ -36,16 +36,25 @@ namespace RecruitmentClient.Forms
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
 		private readonly ClientAccount _account;
+		private ClientSearcher _searcher;
+		private PanelsInfo _panelsInfo = PanelsInfo.None;
+
+		private readonly ControlCreator _vacancyCreator, _applicationCreator,
+			_interviewCreator;
 		private readonly LabelEventHandlers _labelEventHandlers = new LabelEventHandlers();
 		private readonly PictureBoxEventHandlers _pictureBoxEventHandlers =
 			new PictureBoxEventHandlers();
-		private readonly int _comboBoxSortCount;
 
-		private ClientSearcher _searcher;
-		private PanelsInfo _panelsInfo = PanelsInfo.None;
-		private readonly List<Guna2GradientPanel> _createdPanels = new List<Guna2GradientPanel>();
+		private readonly List<Guna2GradientPanel> _createdPanels =
+			new List<Guna2GradientPanel>();
+		private readonly Dictionary<Guna2GradientButton, Vacancy> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, Vacancy>();
+		private readonly Dictionary<Guna2GradientButton, string> _buttonReasonRejectionMap =
+			new Dictionary<Guna2GradientButton, string>();
+
 		private int _totalItemsToDisplay;// Total number of panels required for display
 		private int _currentComboBoxDateIndex;
+		private readonly int _comboBoxSortCount;
 
 		internal MainForm(ClientAccount account)
 		{
@@ -55,6 +64,11 @@ namespace RecruitmentClient.Forms
 
 			_account = account;
 			_comboBoxSortCount = comboBoxSort.Items.Count;
+
+			_vacancyCreator = new ControlCreator(panelVacancy, flpContent, false);
+			_applicationCreator = new ControlCreator(panelApplication, flpContent, false);
+			_interviewCreator = new ControlCreator(panelInterview, flpContent, false);
+
 			flpContent.MouseWheel += FlpContent_MouseWheel;
 		}
 		private void MainForm_Load(object sender, EventArgs e)
@@ -148,13 +162,27 @@ namespace RecruitmentClient.Forms
 		{
 			_totalItemsToDisplay = 0;
 
+			UnsubscribeFromButtonEvents();
+			_vacancyCreator?.Dispose();
+			_applicationCreator?.Dispose();
+			_interviewCreator?.Dispose();
 			foreach (Guna2GradientPanel panel in _createdPanels)
 				panel.Dispose();
 			_createdPanels.Clear();
 
 			Controls.Add(labelEmpty);// Move labelEmpty so it doesn't get deleted
 			flpContent.Controls.Clear();
-			flpContent.Controls.Add(labelEmpty);//Return labelEmpty back
+			flpContent.Controls.Add(labelEmpty);// Return labelEmpty back
+		}
+		private void UnsubscribeFromButtonEvents()
+		{
+			foreach (Guna2GradientButton button in _buttonVacancyMap.Keys)
+				ManageVacancyButtonEvent(button, false);
+			foreach (Guna2GradientButton button in _buttonReasonRejectionMap.Keys)
+				ManageReasonRejectionButtonEvent(button, false);
+
+			_buttonVacancyMap?.Clear();
+			_buttonReasonRejectionMap?.Clear();
 		}
 		private void SetDefaultSearchValues()
 		{
@@ -191,7 +219,7 @@ namespace RecruitmentClient.Forms
 			SetSalarySearchVisible(true);
 			if (_panelsInfo == PanelsInfo.Application || _panelsInfo == PanelsInfo.Interview)
 				ChangePanelSearchHeight(true);
-			SetLabels(labelVacancy, labelApplication, labelInterview);
+			SetActiveLabel(labelVacancy, labelApplication, labelInterview);
 
 			if (_comboBoxSortCount > comboBoxSort.Items.Count)
 				comboBoxSort.Items.Add(newSortingElement);
@@ -204,7 +232,7 @@ namespace RecruitmentClient.Forms
 			SetSalarySearchVisible(false);
 			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
 				ChangePanelSearchHeight(false);
-			SetLabels(labelApplication, labelVacancy, labelInterview);
+			SetActiveLabel(labelApplication, labelVacancy, labelInterview);
 
 			if (_comboBoxSortCount == comboBoxSort.Items.Count)
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
@@ -217,7 +245,7 @@ namespace RecruitmentClient.Forms
 			SetSalarySearchVisible(false);
 			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
 				ChangePanelSearchHeight(false);
-			SetLabels(labelInterview, labelVacancy, labelApplication);
+			SetActiveLabel(labelInterview, labelVacancy, labelApplication);
 
 			if (_comboBoxSortCount == comboBoxSort.Items.Count)
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
@@ -244,7 +272,7 @@ namespace RecruitmentClient.Forms
 				panelSearch.Size = new Size(panelSearch.Width, panelSearch.Height -
 					SEARCH_PANEL_ADJUSTMENT);
 		}
-		private void SetLabels(Label labelShow, params Label[] labelsHide)
+		private void SetActiveLabel(Label labelShow, params Label[] labelsHide)
 		{
 			const int INCREASE_FONT_SIZE = 2;
 
@@ -279,14 +307,12 @@ namespace RecruitmentClient.Forms
 
 			List<Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
-
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
-			ControlCreator creator = new ControlCreator(panelVacancy, flpContent);
 
 			for (int i = 0; i < vacancies.Count; i++)
 			{
-				panels[i] = creator.CreateMainPanelNEW();
-				CreateVacancy(vacancies[i], creator);
+				panels[i] = _vacancyCreator.CreateMainPanel();
+				CreateVacancy(vacancies[i]);
 			}
 
 			ShowPanels(panels);
@@ -300,14 +326,12 @@ namespace RecruitmentClient.Forms
 			List<RecruitmentLibrary.ApplicationInfo.Application> applications =
 				Client.GetApplications(_account.Login, _createdPanels.Count,
 				COUNT_PANELS_ON_PAGE, _searcher);
-
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
-			ControlCreator creator = new ControlCreator(panelApplication, flpContent);
 
 			for (int i = 0; i < applications.Count; i++)
 			{
-				panels[i] = creator.CreateMainPanelNEW();
-				CreateApplication(applications[i], creator);
+				panels[i] = _applicationCreator.CreateMainPanel();
+				CreateApplication(applications[i]);
 			}
 
 			ShowPanels(panels);
@@ -320,14 +344,12 @@ namespace RecruitmentClient.Forms
 
 			List<Interview> interviews = Client.GetInterviews(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
-
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
-			ControlCreator creator = new ControlCreator(panelInterview, flpContent);
 
 			for (int i = 0; i < interviews.Count; i++)
 			{
-				panels[i] = creator.CreateMainPanelNEW();
-				CreateInterview(interviews[i], creator);
+				panels[i] = _interviewCreator.CreateMainPanel();
+				CreateInterview(interviews[i]);
 			}
 
 			ShowPanels(panels);
@@ -341,57 +363,59 @@ namespace RecruitmentClient.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(Vacancy vacancy, ControlCreator creator)
+		private void CreateVacancy(Vacancy vacancy)
 		{
 			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
 
-			creator.CreateLabel(labelPositionV, vacancy.Position.Name);
-			Label labelDescription = creator.CreateLabel(labelPositionDescriptionV, vacancy.Position.Description);
+			_vacancyCreator.CreateLabel(labelPositionV, vacancy.Position.Name);
+			Label labelDescription = _vacancyCreator.CreateLabel(labelPositionDescriptionV,
+				vacancy.Position.Description);
 			AdjustLabelLocation(labelDescription, panelVacancy);
-			creator.CreateLabel(labelSalaryV, vacancy.Salary.ToString() + $" {CURRENCY}");
-			Label labelDate = creator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
+			_vacancyCreator.CreateLabel(labelSalaryV, vacancy.Salary.ToString() +
+				$" {CURRENCY}");
+			Label labelDate = _vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
 				ConvertDateToString(vacancy.DatePublication));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
-			Guna2GradientButton button = creator.CreateButton(buttonVacancy);
-			AddEventVacancyButton_Click(button, vacancy);
+			Guna2GradientButton button = _vacancyCreator.CreateButton(buttonVacancy);
+			_buttonVacancyMap.Add(button, vacancy);
+			ManageVacancyButtonEvent(button, true);
 		}
-		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application,
-			ControlCreator creator)
+		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application)
 		{
 			const string DATE_PREFIX = "Дата і час подачі: ";
 
-			creator.CreateLabel(labelPositionA, application.Position.Name);
-			creator.CreateLabel(labelStatusA, application.Status);
-			Label labelDate = creator.CreateLabel(labelDateSubmissionA, DATE_PREFIX +
-				ConvertDateToString(application.DateSubmission));
+			_applicationCreator.CreateLabel(labelPositionA, application.Position.Name);
+			Label labelDate = _applicationCreator.CreateLabel(labelDateSubmissionA,
+				DATE_PREFIX + ConvertDateToString(application.DateSubmission));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
-			Guna2PictureBox picture = creator.CreatePictureBox(pictureBoxApplicationStatus);
+			_applicationCreator.CreateLabel(labelStatusA, application.Status);
+			Guna2PictureBox picture = _applicationCreator.CreatePictureBox(
+				pictureBoxApplicationStatus);
 			picture.FillColor = GetApplicationStatusColor(application.Status);
 
 			string reason = application.ReasonRejection;
 			if (!string.IsNullOrWhiteSpace(reason))
 			{
-				Guna2GradientButton button = creator.CreateButton(buttonReasonRejectionA);
-				button.Click += (s, args) =>
-				{
-					CustomMessageBox.Show(reason, _account.Theme, "Причина відмови",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
-				};
+				Guna2GradientButton button = _applicationCreator.CreateButton(
+					buttonReasonRejectionA);
+				_buttonReasonRejectionMap.Add(button, reason);
+				ManageReasonRejectionButtonEvent(button, true);
 			}
 		}
-		private void CreateInterview(Interview interview, ControlCreator creator)
+		private void CreateInterview(Interview interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			creator.CreateLabel(labelPositionI, interview.Position.Name);
-			creator.CreateLabel(labelStatusI, interview.Status);
-			Label labelDate = creator.CreateLabel(labelDateEventI, DATE_PREFIX + ConvertDateToString(interview.DateEvent));
+			_interviewCreator.CreateLabel(labelPositionI, interview.Position.Name);
+			_interviewCreator.CreateLabel(labelStatusI, interview.Status);
+			Label labelDate = _interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
+				ConvertDateToString(interview.DateEvent));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
-			Guna2PictureBox picture = creator.CreatePictureBox(pictureBoxInterviewStatus);
+			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(pictureBoxInterviewStatus);
 			picture.FillColor = GetInterviewStatusColor(interview.Status);
 		}
 
@@ -418,25 +442,6 @@ namespace RecruitmentClient.Forms
 			labelDate.Location = new Point(labelDate.Location.X + (labelDate.Parent.Width - panelModel.Width),
 				labelDate.Location.Y);
 		}
-		private void AddEventVacancyButton_Click(Guna2GradientButton button, Vacancy vacancy)
-		{
-			button.Click += (s, args) =>
-				{
-					try
-					{
-						VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
-							_account.Login, SelectLabel);
-						vacancyForm.ShowDialog();
-					}
-					catch (SocketException)
-					{
-						CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало."
-							+ "\nСпробуйте, будь ласка, пізніше.",
-							_account.Theme, "Помилка підключення",
-							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-					}
-				};
-		}
 		private Color GetApplicationStatusColor(string status)
 		{
 			if (status == "Прийнята")
@@ -461,6 +466,54 @@ namespace RecruitmentClient.Forms
 
 			return Color.Transparent;
 		}
+
+		#region  Button event handlers
+		private void ManageVacancyButtonEvent(Guna2GradientButton button, bool subscribe)
+		{
+			if (subscribe)
+				button.Click += ButtonVacancy_Click;
+			else
+				button.Click -= ButtonVacancy_Click;
+		}
+		private void ManageReasonRejectionButtonEvent(Guna2GradientButton button, bool subscribe)
+		{
+			if (subscribe)
+				button.Click += ButtonReasonRejection_Click;
+			else
+				button.Click -= ButtonReasonRejection_Click;
+		}
+
+
+		private void ButtonVacancy_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Guna2GradientButton button))
+				return;
+
+			Vacancy vacancy = _buttonVacancyMap[button];
+			try
+			{
+				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
+					_account.Login, SelectLabel);
+				vacancyForm.ShowDialog();
+			}
+			catch (SocketException)
+			{
+				CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
+					"не вдало.\nСпробуйте, будь ласка, пізніше.",
+					_account.Theme, "Помилка підключення",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+			}
+		}
+		private void ButtonReasonRejection_Click(object sender, EventArgs e)
+		{
+			if (!(sender is Guna2GradientButton button))
+				return;
+
+			string reasonRejection = _buttonReasonRejectionMap[button];
+			CustomMessageBox.Show(reasonRejection, _account.Theme, "Причина відмови",
+				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
+		}
+		#endregion
 		#endregion
 
 		#region Searcher
@@ -534,6 +587,7 @@ namespace RecruitmentClient.Forms
 				SCROLL_PADDING, flpContent.VerticalScroll.Minimum);
 			flpContent.AutoScrollPosition = new Point(0, newValue);
 		}
+
 		private int GetCurrentPanelHeight()
 		{
 			if (_createdPanels != null && _createdPanels.Count > 0)
@@ -543,29 +597,49 @@ namespace RecruitmentClient.Forms
 		}
 		#endregion
 
+		#region ComboBoxes
 		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (_searcher == null)
-			{
-				if (comboBoxSort.SelectedIndex == 0)
-					return;
-				Search();
-			}
-			else if ((byte)_searcher.SortOption != comboBoxSort.SelectedIndex)
-				Search();// The index is different from the previous one
+			int currentIndex = default;
+			if (_searcher != null)
+				currentIndex = (int)_searcher.SortOption;
+
+			ComboBoxSelectedIndexChanged(comboBoxSort, ref currentIndex);
 		}
 		private void ComboBoxDate_SelectedIndexChanged(object sender, EventArgs e)
+			=> ComboBoxSelectedIndexChanged(comboBoxDate, ref _currentComboBoxDateIndex,
+				DEFAULT_SEARCH_DATE);
+		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
+			int defaultIndex = 0)
 		{
 			if (_searcher == null)
-			{
-				if (comboBoxDate.SelectedIndex == DEFAULT_SEARCH_DATE)
+			{// Index selected for the first time
+				if (comboBox.SelectedIndex == defaultIndex)
 					return;
 				Search();
 			}
-			else if (_currentComboBoxDateIndex != comboBoxDate.SelectedIndex)
+			else if (currentIndex != comboBox.SelectedIndex)
 				Search();// The index is different from the previous one
-			_currentComboBoxDateIndex = comboBoxDate.SelectedIndex;
+			currentIndex = comboBox.SelectedIndex;
 		}
+
+		private void ComboBox_DropDown(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = false;
+				comboBox.CustomizableEdges.BottomRight = false;
+			}
+		}
+		private void ComboBox_DropDownClosed(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = true;
+				comboBox.CustomizableEdges.BottomRight = true;
+			}
+		}
+		#endregion
 
 		#region Salary
 		private void TextBoxSalarySearch_KeyPress(object sender, KeyPressEventArgs e)
@@ -586,8 +660,8 @@ namespace RecruitmentClient.Forms
 		private void TextBoxSearchLeave(string text, string searcherText)
 		{
 			if (searcherText == null)
-			{
-				if (text.Length == 0)
+			{// Text entered for the first time
+				if (text.Length == 0)// If nothing is entered
 					return;
 				Search();
 			}
@@ -597,11 +671,6 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Position
-		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
-		{
-			string searcherText = _searcher?.Position;
-			TextBoxSearchLeave(textBoxPositionSearch.Text, searcherText);
-		}
 		private void TextBoxPositionSearch_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
@@ -611,8 +680,13 @@ namespace RecruitmentClient.Forms
 				panelUp.Focus();
 			}
 		}
+		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
+		{
+			string searcherText = _searcher?.Position;
+			TextBoxSearchLeave(textBoxPositionSearch.Text, searcherText);
+		}
 		private void PictureBoxSearch_Click(object sender, EventArgs e)
-		{ textBoxPositionSearch.Focus(); }
+			=> textBoxPositionSearch.Focus();
 		#endregion
 		#endregion
 

@@ -7,25 +7,21 @@ namespace UIHelpers.Controls
 {
 	public class ControlCreator
 	{
-		public Panel MainPanel { get; private set; }
-		public Guna2GradientPanel MainPanelNEW { get; private set; }
+		public Guna2GradientPanel CurrentMainPanel { get; private set; }
 
+		private readonly Guna2GradientPanel _samplePanel;
 		private readonly Control _parent;
 		private readonly bool _visible;
-		private readonly List<Panel> _createdPanels = new List<Panel>();
+		private readonly List<Guna2GradientPanel> _createdPanels =
+			new List<Guna2GradientPanel>();
 		private int _number = 0;// Number for the control name
 
-		public ControlCreator(Panel panel, Control parent, bool visible = true)
+		public ControlCreator(Guna2GradientPanel samplePanel, Control parent,
+			bool visible = true)
 		{
-			MainPanel = panel;
-			_visible = visible;
+			_samplePanel = samplePanel;
 			_parent = parent;
-		}
-		public ControlCreator(Guna2GradientPanel panel, Control parent, bool visible = true)
-		{
-			MainPanelNEW = panel;
 			_visible = visible;
-			_parent = parent;
 		}
 
 		private T CreateControl<T>(T sample) where T : Control, new()
@@ -33,6 +29,8 @@ namespace UIHelpers.Controls
 			T control = new T()
 			{
 				Name = sample.Name + _number,
+				Padding = sample.Padding,
+				Margin = sample.Margin,
 				Location = sample.Location,
 				Size = sample.Size,
 				BackColor = sample.BackColor,
@@ -42,49 +40,34 @@ namespace UIHelpers.Controls
 				Anchor = sample.Anchor,
 				Tag = sample.Tag
 			};
-			MainPanel?.Controls.Add(control);
-			MainPanelNEW?.Controls.Add(control);
+			CurrentMainPanel?.Controls.Add(control);
 
 			return control;
 		}
 
-		public Panel CreateMainPanel()
+		public Guna2GradientPanel CreateMainPanel()
 		{
 			_number++;
-			Control parent = MainPanel.Parent;
+			CurrentMainPanel = CreatePanel(_samplePanel);
 
-			MainPanel = CreateControl(MainPanel);
-			MainPanel.Visible = _visible;
+			_parent.Controls.Add(CurrentMainPanel);
+			_createdPanels.Add(CurrentMainPanel);
 
-			_parent.Controls.Add(MainPanel);
-			_createdPanels.Add(MainPanel);
-
-			return MainPanel;
-		}
-		public Guna2GradientPanel CreateMainPanelNEW()
-		{
-			_number++;
-			Control parent = MainPanelNEW.Parent;
-
-			MainPanelNEW = CreatePanel(MainPanelNEW);
-
-			_parent.Controls.Add(MainPanelNEW);
-			_createdPanels.Add(MainPanelNEW);
-
-			return MainPanelNEW;
+			return CurrentMainPanel;
 		}
 		private Guna2GradientPanel CreatePanel(Guna2GradientPanel sample)
 		{
 			Guna2GradientPanel panel = CreateControl(sample);
 			panel.Visible = _visible;
-			panel.BorderRadius = MainPanelNEW.BorderRadius;
-			panel.BorderStyle = MainPanelNEW.BorderStyle;
-			panel.BorderColor = MainPanelNEW.BorderColor;
-			panel.FillColor = MainPanelNEW.FillColor;
-			panel.FillColor2 = MainPanelNEW.FillColor2;
+			panel.BorderRadius = sample.BorderRadius;
+			panel.BorderStyle = sample.BorderStyle;
+			panel.BorderColor = sample.BorderColor;
+			panel.FillColor = sample.FillColor;
+			panel.FillColor2 = sample.FillColor2;
 
 			return panel;
 		}
+
 		public Label CreateLabel(Label sample, string text = null)
 		{
 			Label label = CreateControl(sample);
@@ -96,6 +79,16 @@ namespace UIHelpers.Controls
 
 			return label;
 		}
+		public NumericUpDown CreateNumericUpDown(NumericUpDown sample)
+		{
+			NumericUpDown nud = CreateControl(sample);
+			nud.TextAlign = sample.TextAlign;
+			nud.Minimum = sample.Minimum;
+			nud.Maximum = sample.Maximum;
+
+			return nud;
+		}
+
 		public Guna2TextBox CreateTextBox(Guna2TextBox sample, string text = "")
 		{
 			Guna2TextBox textBox = CreateControl(sample);
@@ -109,7 +102,6 @@ namespace UIHelpers.Controls
 			textBox.DisabledState = sample.DisabledState;
 			textBox.FocusedState = sample.FocusedState;
 			textBox.HoverState = sample.HoverState;
-			textBox.Margin = sample.Margin;
 			textBox.PasswordChar = sample.PasswordChar;
 			textBox.PlaceholderForeColor = sample.PlaceholderForeColor;
 			textBox.PlaceholderText = sample.PlaceholderText;
@@ -123,33 +115,6 @@ namespace UIHelpers.Controls
 			textBox.Location = sample.Location;
 
 			return textBox;
-		}
-		public Guna2GradientButton CreateButton(Guna2GradientButton sample)
-		{
-			Guna2GradientButton button = CreateControl(sample);
-			button.Animated = sample.Animated;
-			button.PressedColor = sample.PressedColor;
-			button.PressedDepth = sample.PressedDepth;
-			button.BorderColor = sample.BorderColor;
-			button.BorderRadius = sample.BorderRadius;
-			button.BorderThickness = sample.BorderThickness;
-			button.FillColor = sample.FillColor;
-			button.FillColor2 = sample.FillColor2;
-			button.GradientMode = sample.GradientMode;
-			button.HoverState = sample.HoverState;
-			button.Text = sample.Text;
-
-			return button;
-		}
-
-		public NumericUpDown CreateNumericUpDown(NumericUpDown sample)
-		{
-			NumericUpDown nud = CreateControl(sample);
-			nud.TextAlign = sample.TextAlign;
-			nud.Minimum = sample.Minimum;
-			nud.Maximum = sample.Maximum;
-
-			return nud;
 		}
 		public Guna2ComboBox CreateComboBox(Guna2ComboBox sample, int selectedIndex = 0)
 		{
@@ -202,12 +167,23 @@ namespace UIHelpers.Controls
 
 			return dtp;
 		}
-		public PictureBox CreatePictureBox(PictureBox sample)
-		{
-			PictureBox pictureBox = CreateControl(sample);
-			pictureBox.Image = sample.Image;
 
-			return pictureBox;
+		public Guna2GradientButton CreateButton(Guna2GradientButton sample)
+		{
+			Guna2GradientButton button = CreateControl(sample);
+			button.Animated = sample.Animated;
+			button.PressedColor = sample.PressedColor;
+			button.PressedDepth = sample.PressedDepth;
+			button.BorderColor = sample.BorderColor;
+			button.BorderRadius = sample.BorderRadius;
+			button.BorderThickness = sample.BorderThickness;
+			button.FillColor = sample.FillColor;
+			button.FillColor2 = sample.FillColor2;
+			button.GradientMode = sample.GradientMode;
+			button.HoverState = sample.HoverState;
+			button.Text = sample.Text;
+
+			return button;
 		}
 		public Guna2PictureBox CreatePictureBox(Guna2PictureBox sample)
 		{
@@ -223,7 +199,7 @@ namespace UIHelpers.Controls
 
 		public void Dispose()
 		{
-			foreach (Panel panel in _createdPanels)
+			foreach (Guna2GradientPanel panel in _createdPanels)
 				panel.Dispose();
 		}
 	}

@@ -126,7 +126,7 @@
 			this.buttonProfile.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonProfile.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonProfile.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonProfile.Location = new System.Drawing.Point(1155, 42);
+			this.buttonProfile.Location = new System.Drawing.Point(1155, 47);
 			this.buttonProfile.Name = "buttonProfile";
 			this.buttonProfile.PressedColor = System.Drawing.Color.White;
 			this.buttonProfile.PressedDepth = 20;
@@ -155,7 +155,7 @@
 			this.pictureBoxTheme.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxTheme.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxTheme.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTheme.Image")));
-			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 45);
+			this.pictureBoxTheme.Location = new System.Drawing.Point(12, 50);
 			this.pictureBoxTheme.Name = "pictureBoxTheme";
 			this.pictureBoxTheme.Size = new System.Drawing.Size(35, 35);
 			this.pictureBoxTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -170,7 +170,7 @@
 			this.pictureBoxPasswordChange.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxPasswordChange.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxPasswordChange.Image = global::RecruitmentClient.Properties.Resources.keyB;
-			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(1105, 45);
+			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(1105, 50);
 			this.pictureBoxPasswordChange.Name = "pictureBoxPasswordChange";
 			this.pictureBoxPasswordChange.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxPasswordChange.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -185,7 +185,7 @@
 			this.pictureBoxExit.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxExit.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxExit.Image = global::RecruitmentClient.Properties.Resources.exit;
-			this.pictureBoxExit.Location = new System.Drawing.Point(1060, 45);
+			this.pictureBoxExit.Location = new System.Drawing.Point(1060, 50);
 			this.pictureBoxExit.Name = "pictureBoxExit";
 			this.pictureBoxExit.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -205,7 +205,7 @@
 			this.flpNavigation.ForeColor = System.Drawing.Color.Black;
 			this.flpNavigation.Location = new System.Drawing.Point(0, 105);
 			this.flpNavigation.Name = "flpNavigation";
-			this.flpNavigation.Padding = new System.Windows.Forms.Padding(10, 15, 15, 15);
+			this.flpNavigation.Padding = new System.Windows.Forms.Padding(10, 15, 0, 15);
 			this.flpNavigation.Size = new System.Drawing.Size(210, 601);
 			this.flpNavigation.TabIndex = 1;
 			// 
@@ -286,8 +286,8 @@
 			this.panelVacancy.FillColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelVacancy.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelVacancy.ForeColor = System.Drawing.Color.Black;
-			this.panelVacancy.Location = new System.Drawing.Point(0, 3);
-			this.panelVacancy.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.panelVacancy.Location = new System.Drawing.Point(0, 5);
+			this.panelVacancy.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelVacancy.Name = "panelVacancy";
 			this.panelVacancy.Size = new System.Drawing.Size(1134, 168);
 			this.panelVacancy.TabIndex = 0;
@@ -313,7 +313,7 @@
 			this.buttonVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonVacancy.Location = new System.Drawing.Point(27, 124);
+			this.buttonVacancy.Location = new System.Drawing.Point(25, 120);
 			this.buttonVacancy.Name = "buttonVacancy";
 			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
 			this.buttonVacancy.PressedDepth = 20;
@@ -332,7 +332,7 @@
 			this.labelDatePublicationV.Location = new System.Drawing.Point(580, 140);
 			this.labelDatePublicationV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDatePublicationV.Name = "labelDatePublicationV";
-			this.labelDatePublicationV.Size = new System.Drawing.Size(522, 25);
+			this.labelDatePublicationV.Size = new System.Drawing.Size(525, 25);
 			this.labelDatePublicationV.TabIndex = 4;
 			this.labelDatePublicationV.Tag = "fixedPosition";
 			this.labelDatePublicationV.Text = "Опубліковано";
@@ -358,7 +358,7 @@
 			this.labelSalaryV.BackColor = System.Drawing.Color.Transparent;
 			this.labelSalaryV.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalaryV.ForeColor = System.Drawing.Color.Black;
-			this.labelSalaryV.Location = new System.Drawing.Point(20, 63);
+			this.labelSalaryV.Location = new System.Drawing.Point(20, 60);
 			this.labelSalaryV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalaryV.Name = "labelSalaryV";
 			this.labelSalaryV.Size = new System.Drawing.Size(143, 32);
@@ -397,8 +397,8 @@
 			this.panelApplication.FillColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelApplication.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelApplication.ForeColor = System.Drawing.Color.Black;
-			this.panelApplication.Location = new System.Drawing.Point(0, 177);
-			this.panelApplication.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.panelApplication.Location = new System.Drawing.Point(0, 183);
+			this.panelApplication.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelApplication.Name = "panelApplication";
 			this.panelApplication.Size = new System.Drawing.Size(1134, 107);
 			this.panelApplication.TabIndex = 1;
@@ -438,7 +438,7 @@
 			this.buttonReasonRejectionA.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonReasonRejectionA.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
 			this.buttonReasonRejectionA.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-			this.buttonReasonRejectionA.Location = new System.Drawing.Point(341, 63);
+			this.buttonReasonRejectionA.Location = new System.Drawing.Point(341, 60);
 			this.buttonReasonRejectionA.Name = "buttonReasonRejectionA";
 			this.buttonReasonRejectionA.PressedColor = System.Drawing.Color.White;
 			this.buttonReasonRejectionA.PressedDepth = 20;
@@ -471,7 +471,7 @@
 			this.labelDateSubmissionA.Location = new System.Drawing.Point(580, 80);
 			this.labelDateSubmissionA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDateSubmissionA.Name = "labelDateSubmissionA";
-			this.labelDateSubmissionA.Size = new System.Drawing.Size(522, 25);
+			this.labelDateSubmissionA.Size = new System.Drawing.Size(523, 25);
 			this.labelDateSubmissionA.TabIndex = 4;
 			this.labelDateSubmissionA.Tag = "fixedPosition";
 			this.labelDateSubmissionA.Text = "Дата і час подачі";
@@ -483,7 +483,7 @@
 			this.labelStatusA.BackColor = System.Drawing.Color.Transparent;
 			this.labelStatusA.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatusA.ForeColor = System.Drawing.Color.Black;
-			this.labelStatusA.Location = new System.Drawing.Point(50, 63);
+			this.labelStatusA.Location = new System.Drawing.Point(50, 60);
 			this.labelStatusA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelStatusA.Name = "labelStatusA";
 			this.labelStatusA.Size = new System.Drawing.Size(105, 32);
@@ -504,8 +504,8 @@
 			this.panelInterview.FillColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelInterview.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelInterview.ForeColor = System.Drawing.Color.Black;
-			this.panelInterview.Location = new System.Drawing.Point(0, 290);
-			this.panelInterview.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+			this.panelInterview.Location = new System.Drawing.Point(0, 300);
+			this.panelInterview.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelInterview.Name = "panelInterview";
 			this.panelInterview.Size = new System.Drawing.Size(1134, 107);
 			this.panelInterview.TabIndex = 2;
@@ -532,7 +532,7 @@
 			this.labelStatusI.BackColor = System.Drawing.Color.Transparent;
 			this.labelStatusI.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatusI.ForeColor = System.Drawing.Color.Black;
-			this.labelStatusI.Location = new System.Drawing.Point(50, 63);
+			this.labelStatusI.Location = new System.Drawing.Point(50, 60);
 			this.labelStatusI.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelStatusI.Name = "labelStatusI";
 			this.labelStatusI.Size = new System.Drawing.Size(105, 32);
@@ -563,7 +563,7 @@
 			this.labelDateEventI.Location = new System.Drawing.Point(580, 80);
 			this.labelDateEventI.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDateEventI.Name = "labelDateEventI";
-			this.labelDateEventI.Size = new System.Drawing.Size(526, 25);
+			this.labelDateEventI.Size = new System.Drawing.Size(525, 25);
 			this.labelDateEventI.TabIndex = 3;
 			this.labelDateEventI.Tag = "fixedPosition";
 			this.labelDateEventI.Text = "Дата і час проведення";
@@ -575,7 +575,7 @@
 			this.labelEmpty.BackColor = System.Drawing.Color.Transparent;
 			this.labelEmpty.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEmpty.ForeColor = System.Drawing.Color.Black;
-			this.labelEmpty.Location = new System.Drawing.Point(2, 400);
+			this.labelEmpty.Location = new System.Drawing.Point(2, 412);
 			this.labelEmpty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelEmpty.Name = "labelEmpty";
 			this.labelEmpty.Padding = new System.Windows.Forms.Padding(12);
@@ -589,7 +589,7 @@
 			this.labelSalarySearch2.AutoSize = true;
 			this.labelSalarySearch2.Font = new System.Drawing.Font("Georgia", 20.25F);
 			this.labelSalarySearch2.ForeColor = System.Drawing.Color.Black;
-			this.labelSalarySearch2.Location = new System.Drawing.Point(460, 52);
+			this.labelSalarySearch2.Location = new System.Drawing.Point(460, 59);
 			this.labelSalarySearch2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalarySearch2.Name = "labelSalarySearch2";
 			this.labelSalarySearch2.Size = new System.Drawing.Size(37, 31);
@@ -602,7 +602,7 @@
 			this.labelSalarySearch.AutoSize = true;
 			this.labelSalarySearch.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalarySearch.ForeColor = System.Drawing.Color.Black;
-			this.labelSalarySearch.Location = new System.Drawing.Point(202, 54);
+			this.labelSalarySearch.Location = new System.Drawing.Point(202, 61);
 			this.labelSalarySearch.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalarySearch.Name = "labelSalarySearch";
 			this.labelSalarySearch.Size = new System.Drawing.Size(138, 29);
@@ -682,7 +682,7 @@
 			this.textBoxMaxSalarySearch.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxMaxSalarySearch.ForeColor = System.Drawing.Color.Black;
 			this.textBoxMaxSalarySearch.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxMaxSalarySearch.Location = new System.Drawing.Point(502, 53);
+			this.textBoxMaxSalarySearch.Location = new System.Drawing.Point(502, 60);
 			this.textBoxMaxSalarySearch.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxMaxSalarySearch.MaxLength = 6;
 			this.textBoxMaxSalarySearch.Name = "textBoxMaxSalarySearch";
@@ -715,7 +715,7 @@
 			this.textBoxMinSalarySearch.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxMinSalarySearch.ForeColor = System.Drawing.Color.Black;
 			this.textBoxMinSalarySearch.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxMinSalarySearch.Location = new System.Drawing.Point(345, 53);
+			this.textBoxMinSalarySearch.Location = new System.Drawing.Point(345, 60);
 			this.textBoxMinSalarySearch.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxMinSalarySearch.MaxLength = 6;
 			this.textBoxMinSalarySearch.Name = "textBoxMinSalarySearch";
@@ -765,7 +765,9 @@
 			this.comboBoxDate.TabIndex = 4;
 			this.comboBoxDate.Tag = "fixedPosition";
 			this.comboBoxDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.comboBoxDate.DropDown += new System.EventHandler(this.ComboBox_DropDown);
 			this.comboBoxDate.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDate_SelectedIndexChanged);
+			this.comboBoxDate.DropDownClosed += new System.EventHandler(this.ComboBox_DropDownClosed);
 			// 
 			// comboBoxSort
 			// 
@@ -798,7 +800,9 @@
 			this.comboBoxSort.TabIndex = 3;
 			this.comboBoxSort.Tag = "fixedPosition";
 			this.comboBoxSort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.comboBoxSort.DropDown += new System.EventHandler(this.ComboBox_DropDown);
 			this.comboBoxSort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSort_SelectedIndexChanged);
+			this.comboBoxSort.DropDownClosed += new System.EventHandler(this.ComboBox_DropDownClosed);
 			// 
 			// pictureBoxSearch
 			// 

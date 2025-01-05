@@ -51,7 +51,8 @@ namespace RecruitmentClient.Forms
 				_formOpenForChange = true;
 			}
 
-			_languages.Add(new LanguageFormElements(panelLanguage, labelLanguage, comboBoxLanguage, numericUpDownLevel));
+			_languages.Add(new LanguageFormElements(panelLanguage, labelLanguage,
+				comboBoxLanguage, numericUpDownLevel));
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);
 		}
@@ -150,7 +151,8 @@ namespace RecruitmentClient.Forms
 		{
 			StaticDataFromDB.SetData();
 			comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.FamilyStatuses);
-			comboBoxBusinessTripOpportunity.Items.AddRange(StaticDataFromDB.BusinessTripOpportunities);
+			comboBoxBusinessTripOpportunity.Items.AddRange(
+				StaticDataFromDB.BusinessTripOpportunities);
 		}
 		private void ResetEducationFields()
 		{
@@ -176,7 +178,7 @@ namespace RecruitmentClient.Forms
 			if (_languages.Count + 1 > MAX_LANGUAGE_COUNT)
 				return;
 
-			_languageCreator.CreateMainPanelNEW();
+			_languageCreator.CreateMainPanel();
 
 			_languageCreator.CreateLabel(labelLanguageNumber,
 				(_languages.Count + 1).ToString());
@@ -188,10 +190,10 @@ namespace RecruitmentClient.Forms
 			NumericUpDown nudLevel = _languageCreator.CreateNumericUpDown(numericUpDownLevel);
 
 			ManageComboBoxEvents(comboBoxLang, true);
-			_languages.Add(new LanguageFormElements(_languageCreator.MainPanelNEW,
+			_languages.Add(new LanguageFormElements(_languageCreator.CurrentMainPanel,
 				labelLang, comboBoxLang, nudLevel));
 			_languages[_languages.Count - 1].SetDefaultLabel(_account.Theme);
-			_languageCreator.MainPanelNEW.Focus();
+			_languageCreator.CurrentMainPanel.Focus();
 		}
 		private void ButtonRemoveLanguage_Click(object sender, EventArgs e)
 		{
@@ -248,7 +250,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateEducation()
 		{
-			_educationCreator.CreateMainPanelNEW();
+			_educationCreator.CreateMainPanel();
 			_educationCreator.CreateLabel(labelEducationNumber,
 				(_educations.Count + 1).ToString());
 			Label labelInstitution = _educationCreator.CreateLabel(labelNameInstitution,
@@ -277,12 +279,12 @@ namespace RecruitmentClient.Forms
 
 			ManageComboBoxEvents(comboBoxDegree, true);
 			ManageComboBoxEvents(comboBoxForm, true);
-			_educations.Add(new EducationFormElements(_educationCreator.MainPanelNEW,
+			_educations.Add(new EducationFormElements(_educationCreator.CurrentMainPanel,
 				labelInstitution, labelSpec, labelAdmission, labelEndDate, textBoxInstitution, textBoxSpec, nudAdmission,
 				dateEnd, comboBoxDegree, comboBoxForm));
 			_educations[_educations.Count - 1].SetDefaultLabels(_account.Theme);
 
-			_educationCreator.MainPanelNEW.Focus();
+			_educationCreator.CurrentMainPanel.Focus();
 		}
 		#endregion
 

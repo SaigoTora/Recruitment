@@ -114,7 +114,7 @@ namespace RecruitmentServer.Forms
 				FullApplication application = DataBase.GetApplication(
 					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
 
-				createdPanels.Add(_assignmentCreator.CreateMainPanelNEW());
+				createdPanels.Add(_assignmentCreator.CreateMainPanel());
 				_assignmentCreator.CreateLabel(labelCandidate);
 				_assignmentCreator.CreateLabel(labelVacancy);
 				_assignmentCreator.CreateLabel(labelScores,

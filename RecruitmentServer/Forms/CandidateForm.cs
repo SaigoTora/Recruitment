@@ -112,7 +112,7 @@ namespace RecruitmentServer.Forms
 		{
 			for (int i = 0; i < languages.Count; i++)
 			{
-				_languageCreator.CreateMainPanelNEW();
+				_languageCreator.CreateMainPanel();
 				_languageCreator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
 				_languageCreator.CreateLabel(labelLanguage, "Мова: " + languages[i].Name);
 				_languageCreator.CreateLabel(labelLevel, "Рівень знань: " +
@@ -123,7 +123,7 @@ namespace RecruitmentServer.Forms
 		{
 			for (int i = 0; i < educations.Count; i++)
 			{
-				_educationCreator.CreateMainPanelNEW();
+				_educationCreator.CreateMainPanel();
 				_educationCreator.CreateLabel(labelEducationNumber, (i + 1).ToString());
 				_educationCreator.CreateLabel(labelNameInstitution, "Назва закладу: " +
 					educations[i].NameInstitution);
