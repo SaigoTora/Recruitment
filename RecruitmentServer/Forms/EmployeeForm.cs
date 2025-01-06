@@ -10,108 +10,136 @@ using UIHelpers.Themes;
 namespace RecruitmentServer.Forms
 {
 	internal partial class EmployeeForm : BaseForm, IThemeChange
-	{// Форма співробітника
-		private readonly Employee employee;// Співробітник
-		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-		private readonly ServerAccount account;
+	{
+		private readonly ServerAccount _account;
+		private readonly Employee _employee;
+		private readonly Action<EventArgs> _actionUpdateOrDelete;
 
-		internal EmployeeForm(Employee employee, Action<EventArgs> refresh, ServerAccount account)
-		{// Конструктор форми
+		internal EmployeeForm(ServerAccount account, Employee employee,
+			Action<EventArgs> actionAfterFire)
+		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Співробітник", minimizeBox: false, maximizeBox: false);
-			this.employee = employee;
-			this.refresh = refresh;
-			this.account = account;
-
-			labelFullName.Text = $"{employee.Surname.ToUpper()} {employee.Name} {employee.FatherName}";
-			richTextBoxPosition.Text = employee.Position;
-			richTextBoxSalary.Text = employee.Salary.ToString();
-			labelCity.Text = "Місце проживання: " + employee.City.ToString();
-			labelBirthday.Text = "Дата народження: " + employee.Birthday.ToString("yyyy-MM-dd");
-			labelDateEmployment.Text = "Дата працевлаштування: " + employee.DateEmployment.ToString("yyyy-MM-dd");
-			richTextBoxContact.Text = $"Номер телефону: {employee.Phone}\nE-mail: {employee.Email}";
-			richTextBoxPosition.Focus();
-
-			SetTheme(account.Theme);
+			customTitleBar = new CustomTitleBar(this, "Співробітник", minimizeBox: false,
+				maximizeBox: false);
+			_account = account;
+			_employee = employee;
+			_actionUpdateOrDelete = actionAfterFire;
+		}
+		private void EmployeeForm_Load(object sender, EventArgs e)
+		{
+			SetFormFields(_employee);
+			SetTheme(_account.Theme);
 		}
 
-		private void RichTextBoxSalary_TextChanged(object sender, EventArgs e)
-		{// Обробник події зміни зарплатні
-			if (richTextBoxSalary.Text != employee.Salary.ToString())
+		private void SetFormFields(Employee employee)
+		{
+			labelFullName.Text = $"{employee.Surname.ToUpper()} {employee.Name} " +
+				$"{employee.FatherName}";
+			textBoxPosition.Text = employee.Position;
+			textBoxSalary.Text = employee.Salary.ToString();
+			labelCity.Text = "Місце проживання: " + employee.City.ToString();
+			labelBirthday.Text = "Дата народження: " +
+				employee.Birthday.ToString("yyyy-MM-dd");
+			labelDateEmployment.Text = "Дата працевлаштування: " +
+				employee.DateEmployment.ToString("yyyy-MM-dd");
+			richTextBoxContact.Text = $"Номер телефону: {employee.Phone}" +
+				$"\nE-mail: {employee.Email}";
+		}
+
+		#region TextBox event handlers
+		private void TextBoxSalary_TextChanged(object sender, EventArgs e)
+		{
+			if (textBoxSalary.Text != _employee.Salary.ToString())
 				buttonChangeSalary.Visible = true;
 			else
 				buttonChangeSalary.Visible = false;
 		}
-		private void ButtonChangeSalary_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Змінити зарплату" 
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити зарплату у цього\nспівробітника?",
-				account.Theme, "Зміна зарплати", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
-			buttonChangeSalary.Visible = false;
-
-			if (result == DialogResult.Yes)
-			{
-				try
-				{// Змінюємо зарплату в БД та в об'єкта
-					DataBase.ExecuteQuery($"UPDATE Employee SET salary = {richTextBoxSalary.Text.Replace(",", ".")} WHERE id = {employee.Id}");
-					employee.ChangeSalary(double.Parse(richTextBoxSalary.Text));
-				}
-				catch
-				{
-					richTextBoxSalary.Text = employee.Salary.ToString();
-					CustomMessageBox.Show("Дані були введені не вірно!", account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
-			}
-			richTextBoxSalary.Text = employee.Salary.ToString();
-		}
-
-		private void RichTextBoxPosition_TextChanged(object sender, EventArgs e)
-		{// Обробник події зміни посади
-			if (richTextBoxPosition.Text != employee.Position)
+		private void TextBoxPosition_TextChanged(object sender, EventArgs e)
+		{
+			if (textBoxPosition.Text != _employee.Position)
 				buttonChangePosition.Visible = true;
 			else
 				buttonChangePosition.Visible = false;
-
 		}
+		private void TextBoxSalary_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back
+				&& e.KeyChar != ',')
+				e.Handled = true;
+		}
+		#endregion
+
+		#region Button event handlers
 		private void ButtonChangePosition_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Змінити посаду"
-			if (richTextBoxPosition.Text.Contains(Server.SEPARATOR.ToString()))
-			{// Якщо є заборонений символ
+		{
+			if (textBoxPosition.Text.Contains(Server.SEPARATOR.ToString()))
+			{
 				CustomMessageBox.Show("В посаді не може бути заборонений символ: ¤",
-					account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					_account.Theme, "Помилка введення", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Error);
 				return;
 			}
 
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете змінити посаду у цього\nспівробітника?",
-				account.Theme, "Зміна посади", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
+				$"хочете змінити посаду?", _account.Theme, "Зміна посади",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
 			buttonChangePosition.Visible = false;
 
 			if (result == DialogResult.Yes)
 			{
 				try
-				{// Змінюємо посаду в БД та в об'єкта
-					DataBase.ExecuteQuery($"UPDATE Employee SET position = '{richTextBoxPosition.Text}' WHERE id = {employee.Id}");
-					employee.ChangePosition(richTextBoxPosition.Text);
+				{
+					DataBase.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
+					_employee.ChangePosition(textBoxPosition.Text);
+					_actionUpdateOrDelete(EventArgs.Empty);
 				}
 				catch
 				{
-					richTextBoxPosition.Text = employee.Position.ToString();
-					CustomMessageBox.Show("Дані були введені не вірно!", account.Theme, "Помилка введення",
+					CustomMessageBox.Show("Дані були введені не вірно!",
+						_account.Theme, "Помилка введення",
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 			}
-			richTextBoxPosition.Text = employee.Position.ToString();
+			textBoxPosition.Text = _employee.Position.ToString();
 		}
-
-		private void ButtonFire_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку звільнення
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені що хочете ЗВІЛЬНИТИ цього співробітника?",
-				account.Theme, "Звільнення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+		private void ButtonChangeSalary_Click(object sender, EventArgs e)
+		{
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
+				$"хочете змінити зарплату?", _account.Theme, "Зміна зарплати",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+			buttonChangeSalary.Visible = false;
 
 			if (result == DialogResult.Yes)
 			{
-				DataBase.ExecuteQuery($"DELETE FROM Employee WHERE id = {employee.Id}");
-				refresh(EventArgs.Empty);
+				try
+				{
+					DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
+						_employee.Id);
+					_employee.ChangeSalary(double.Parse(textBoxSalary.Text));
+					_actionUpdateOrDelete(EventArgs.Empty);
+				}
+				catch
+				{
+					CustomMessageBox.Show("Дані були введені не вірно!", _account.Theme,
+						"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				}
+			}
+			textBoxSalary.Text = _employee.Salary.ToString();
+		}
+		#endregion
+
+		private void ButtonFire_Click(object sender, EventArgs e)
+		{
+			DialogResult result = CustomMessageBox.Show($"Ви впевнені, " +
+				$"що хочете звільнити цього співробітника?",
+				_account.Theme, "Звільнення", CustomMessageBoxButtons.YesNo,
+				CustomMessageBoxIcon.Question);
+
+			if (result == DialogResult.Yes)
+			{
+				DataBase.DeleteEmployee(_employee.Id);
+				_actionUpdateOrDelete(EventArgs.Empty);
 				Close();
 			}
 		}

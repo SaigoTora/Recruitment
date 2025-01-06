@@ -594,7 +594,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			Employee employee = _buttonEmployeeMap[button];
-			EmployeeForm employeeForm = new EmployeeForm(employee, SelectLabel, _account);
+			EmployeeForm employeeForm = new EmployeeForm(_account, employee, SelectLabel);
 			employeeForm.ShowDialog();
 		}
 		#endregion

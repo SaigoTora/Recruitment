@@ -110,7 +110,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonEmployee_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Співробітник"
 			Employee employee = DataBase.GetEmployee(interview.Id);
-			EmployeeForm ef = new EmployeeForm(employee, (args) => { Close(); refresh(EventArgs.Empty); }, account);
+			EmployeeForm ef = new EmployeeForm(account, employee, (args) => { Close(); refresh(EventArgs.Empty); });
 			Visible = false;
 			ef.FormClosed += (s, args) =>
 			{ Visible = true; };
