@@ -14,10 +14,10 @@ namespace RecruitmentServer.Forms
 	{
 		private readonly ServerAccount _account;
 		private readonly Employee _employee;
-		private readonly Action<EventArgs> _actionUpdateOrDelete;
+		private readonly Action<EventArgs> _actionAfterChange;
 
 		internal EmployeeForm(ServerAccount account, Employee employee,
-			Action<EventArgs> actionAfterFire)
+			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
 
@@ -25,7 +25,7 @@ namespace RecruitmentServer.Forms
 				maximizeBox: false);
 			_account = account;
 			_employee = employee;
-			_actionUpdateOrDelete = actionAfterFire;
+			_actionAfterChange = actionAfterChange;
 		}
 		private void EmployeeForm_Load(object sender, EventArgs e)
 		{
@@ -87,7 +87,7 @@ namespace RecruitmentServer.Forms
 					{
 						DataBase.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
 						_employee.ChangePosition(textBoxPosition.Text);
-						_actionUpdateOrDelete(EventArgs.Empty);
+						_actionAfterChange(EventArgs.Empty);
 					}
 					catch
 					{
@@ -115,7 +115,7 @@ namespace RecruitmentServer.Forms
 						DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
 							_employee.Id);
 						_employee.ChangeSalary(double.Parse(textBoxSalary.Text));
-						_actionUpdateOrDelete(EventArgs.Empty);
+						_actionAfterChange(EventArgs.Empty);
 					}
 					catch
 					{
@@ -162,7 +162,7 @@ namespace RecruitmentServer.Forms
 			if (result == DialogResult.Yes)
 			{
 				DataBase.DeleteEmployee(_employee.Id);
-				_actionUpdateOrDelete(EventArgs.Empty);
+				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}
 		}

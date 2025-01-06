@@ -28,38 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.richTextBoxPosition = new System.Windows.Forms.RichTextBox();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VacancyForm));
 			this.labelApplicationCount = new System.Windows.Forms.Label();
 			this.labelDatePublication = new System.Windows.Forms.Label();
 			this.labelRelevance = new System.Windows.Forms.Label();
-			this.richTextBoxAdditionalInfo = new System.Windows.Forms.RichTextBox();
-			this.richTextBoxPositionDescription = new System.Windows.Forms.RichTextBox();
 			this.labelAdditionalInfoTitle = new System.Windows.Forms.Label();
 			this.labelPositionDescriptionTitle = new System.Windows.Forms.Label();
-			this.richTextBoxSalary = new System.Windows.Forms.RichTextBox();
 			this.labelSalaryTitle = new System.Windows.Forms.Label();
 			this.labelPosition = new System.Windows.Forms.Label();
 			this.buttonRequirement = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonPoints = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonDelete = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonCreate = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.textBoxPosition = new Guna.UI2.WinForms.Guna2TextBox();
+			this.textBoxSalary = new Guna.UI2.WinForms.Guna2TextBox();
+			this.richTextBoxPositionDescription = new Guna.UI2.WinForms.Guna2TextBox();
+			this.richTextBoxAdditionalInfo = new Guna.UI2.WinForms.Guna2TextBox();
 			this.SuspendLayout();
-			// 
-			// richTextBoxPosition
-			// 
-			this.richTextBoxPosition.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.richTextBoxPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richTextBoxPosition.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBoxPosition.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxPosition.Location = new System.Drawing.Point(142, 12);
-			this.richTextBoxPosition.MaxLength = 64;
-			this.richTextBoxPosition.Multiline = false;
-			this.richTextBoxPosition.Name = "richTextBoxPosition";
-			this.richTextBoxPosition.ReadOnly = true;
-			this.richTextBoxPosition.Size = new System.Drawing.Size(942, 40);
-			this.richTextBoxPosition.TabIndex = 1;
-			this.richTextBoxPosition.TabStop = false;
-			this.richTextBoxPosition.Text = "";
 			// 
 			// labelApplicationCount
 			// 
@@ -67,7 +52,7 @@
 			this.labelApplicationCount.BackColor = System.Drawing.Color.Transparent;
 			this.labelApplicationCount.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelApplicationCount.ForeColor = System.Drawing.Color.Black;
-			this.labelApplicationCount.Location = new System.Drawing.Point(12, 132);
+			this.labelApplicationCount.Location = new System.Drawing.Point(12, 145);
 			this.labelApplicationCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelApplicationCount.Name = "labelApplicationCount";
 			this.labelApplicationCount.Size = new System.Drawing.Size(216, 29);
@@ -80,58 +65,27 @@
 			this.labelDatePublication.BackColor = System.Drawing.Color.Transparent;
 			this.labelDatePublication.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDatePublication.ForeColor = System.Drawing.Color.Black;
-			this.labelDatePublication.Location = new System.Drawing.Point(752, 132);
+			this.labelDatePublication.Location = new System.Drawing.Point(679, 90);
 			this.labelDatePublication.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDatePublication.Name = "labelDatePublication";
 			this.labelDatePublication.Size = new System.Drawing.Size(501, 25);
-			this.labelDatePublication.TabIndex = 6;
+			this.labelDatePublication.TabIndex = 5;
 			this.labelDatePublication.Text = "Дата публікації:";
-			this.labelDatePublication.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.labelDatePublication.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// labelRelevance
 			// 
-			this.labelRelevance.AutoSize = true;
+			this.labelRelevance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelRelevance.BackColor = System.Drawing.Color.Transparent;
-			this.labelRelevance.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRelevance.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelRelevance.ForeColor = System.Drawing.Color.Black;
-			this.labelRelevance.Location = new System.Drawing.Point(12, 192);
+			this.labelRelevance.Location = new System.Drawing.Point(780, 145);
 			this.labelRelevance.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelRelevance.Name = "labelRelevance";
-			this.labelRelevance.Size = new System.Drawing.Size(172, 29);
-			this.labelRelevance.TabIndex = 5;
+			this.labelRelevance.Size = new System.Drawing.Size(400, 29);
+			this.labelRelevance.TabIndex = 6;
 			this.labelRelevance.Text = "Актуальність";
-			// 
-			// richTextBoxAdditionalInfo
-			// 
-			this.richTextBoxAdditionalInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.richTextBoxAdditionalInfo.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.richTextBoxAdditionalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richTextBoxAdditionalInfo.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBoxAdditionalInfo.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxAdditionalInfo.Location = new System.Drawing.Point(727, 340);
-			this.richTextBoxAdditionalInfo.MaxLength = 2048;
-			this.richTextBoxAdditionalInfo.Name = "richTextBoxAdditionalInfo";
-			this.richTextBoxAdditionalInfo.ReadOnly = true;
-			this.richTextBoxAdditionalInfo.Size = new System.Drawing.Size(525, 175);
-			this.richTextBoxAdditionalInfo.TabIndex = 10;
-			this.richTextBoxAdditionalInfo.TabStop = false;
-			this.richTextBoxAdditionalInfo.Text = "";
-			// 
-			// richTextBoxPositionDescription
-			// 
-			this.richTextBoxPositionDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.richTextBoxPositionDescription.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.richTextBoxPositionDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richTextBoxPositionDescription.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBoxPositionDescription.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxPositionDescription.Location = new System.Drawing.Point(12, 340);
-			this.richTextBoxPositionDescription.MaxLength = 2048;
-			this.richTextBoxPositionDescription.Name = "richTextBoxPositionDescription";
-			this.richTextBoxPositionDescription.ReadOnly = true;
-			this.richTextBoxPositionDescription.Size = new System.Drawing.Size(500, 175);
-			this.richTextBoxPositionDescription.TabIndex = 8;
-			this.richTextBoxPositionDescription.TabStop = false;
-			this.richTextBoxPositionDescription.Text = "";
+			this.labelRelevance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// labelAdditionalInfoTitle
 			// 
@@ -140,7 +94,7 @@
 			this.labelAdditionalInfoTitle.BackColor = System.Drawing.Color.Transparent;
 			this.labelAdditionalInfoTitle.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAdditionalInfoTitle.ForeColor = System.Drawing.Color.Black;
-			this.labelAdditionalInfoTitle.Location = new System.Drawing.Point(721, 300);
+			this.labelAdditionalInfoTitle.Location = new System.Drawing.Point(624, 225);
 			this.labelAdditionalInfoTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelAdditionalInfoTitle.Name = "labelAdditionalInfoTitle";
 			this.labelAdditionalInfoTitle.Size = new System.Drawing.Size(532, 32);
@@ -154,28 +108,12 @@
 			this.labelPositionDescriptionTitle.BackColor = System.Drawing.Color.Transparent;
 			this.labelPositionDescriptionTitle.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPositionDescriptionTitle.ForeColor = System.Drawing.Color.Black;
-			this.labelPositionDescriptionTitle.Location = new System.Drawing.Point(12, 300);
+			this.labelPositionDescriptionTitle.Location = new System.Drawing.Point(12, 225);
 			this.labelPositionDescriptionTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelPositionDescriptionTitle.Name = "labelPositionDescriptionTitle";
 			this.labelPositionDescriptionTitle.Size = new System.Drawing.Size(202, 32);
 			this.labelPositionDescriptionTitle.TabIndex = 7;
 			this.labelPositionDescriptionTitle.Text = "Опис посади:";
-			// 
-			// richTextBoxSalary
-			// 
-			this.richTextBoxSalary.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.richTextBoxSalary.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richTextBoxSalary.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBoxSalary.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxSalary.Location = new System.Drawing.Point(249, 72);
-			this.richTextBoxSalary.MaxLength = 64;
-			this.richTextBoxSalary.Multiline = false;
-			this.richTextBoxSalary.Name = "richTextBoxSalary";
-			this.richTextBoxSalary.ReadOnly = true;
-			this.richTextBoxSalary.Size = new System.Drawing.Size(835, 40);
-			this.richTextBoxSalary.TabIndex = 3;
-			this.richTextBoxSalary.TabStop = false;
-			this.richTextBoxSalary.Text = "";
 			// 
 			// labelSalaryTitle
 			// 
@@ -183,7 +121,7 @@
 			this.labelSalaryTitle.BackColor = System.Drawing.Color.Transparent;
 			this.labelSalaryTitle.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalaryTitle.ForeColor = System.Drawing.Color.Black;
-			this.labelSalaryTitle.Location = new System.Drawing.Point(12, 72);
+			this.labelSalaryTitle.Location = new System.Drawing.Point(12, 85);
 			this.labelSalaryTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSalaryTitle.Name = "labelSalaryTitle";
 			this.labelSalaryTitle.Size = new System.Drawing.Size(232, 29);
@@ -196,7 +134,7 @@
 			this.labelPosition.BackColor = System.Drawing.Color.Transparent;
 			this.labelPosition.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPosition.ForeColor = System.Drawing.Color.Black;
-			this.labelPosition.Location = new System.Drawing.Point(12, 12);
+			this.labelPosition.Location = new System.Drawing.Point(12, 25);
 			this.labelPosition.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelPosition.Name = "labelPosition";
 			this.labelPosition.Size = new System.Drawing.Size(125, 32);
@@ -223,7 +161,7 @@
 			this.buttonRequirement.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonRequirement.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonRequirement.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonRequirement.Location = new System.Drawing.Point(17, 570);
+			this.buttonRequirement.Location = new System.Drawing.Point(18, 538);
 			this.buttonRequirement.Name = "buttonRequirement";
 			this.buttonRequirement.PressedColor = System.Drawing.Color.White;
 			this.buttonRequirement.PressedDepth = 20;
@@ -252,7 +190,7 @@
 			this.buttonPoints.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonPoints.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonPoints.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonPoints.Location = new System.Drawing.Point(250, 570);
+			this.buttonPoints.Location = new System.Drawing.Point(251, 538);
 			this.buttonPoints.Name = "buttonPoints";
 			this.buttonPoints.PressedColor = System.Drawing.Color.White;
 			this.buttonPoints.PressedDepth = 20;
@@ -281,7 +219,7 @@
 			this.buttonDelete.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonDelete.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(100)))), ((int)(((byte)(90)))));
 			this.buttonDelete.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-			this.buttonDelete.Location = new System.Drawing.Point(1072, 570);
+			this.buttonDelete.Location = new System.Drawing.Point(1008, 538);
 			this.buttonDelete.Name = "buttonDelete";
 			this.buttonDelete.PressedColor = System.Drawing.Color.White;
 			this.buttonDelete.PressedDepth = 20;
@@ -312,7 +250,7 @@
 			this.buttonCreate.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonCreate.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonCreate.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonCreate.Location = new System.Drawing.Point(1072, 570);
+			this.buttonCreate.Location = new System.Drawing.Point(1008, 538);
 			this.buttonCreate.Name = "buttonCreate";
 			this.buttonCreate.PressedColor = System.Drawing.Color.White;
 			this.buttonCreate.PressedDepth = 20;
@@ -320,51 +258,184 @@
 			this.buttonCreate.TabIndex = 14;
 			this.buttonCreate.TabStop = false;
 			this.buttonCreate.Text = "Створити";
+			this.buttonCreate.Visible = false;
 			this.buttonCreate.Click += new System.EventHandler(this.ButtonCreate_Click);
+			// 
+			// textBoxPosition
+			// 
+			this.textBoxPosition.Animated = true;
+			this.textBoxPosition.AutoScroll = true;
+			this.textBoxPosition.BackColor = System.Drawing.Color.Transparent;
+			this.textBoxPosition.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.textBoxPosition.BorderRadius = 10;
+			this.textBoxPosition.BorderThickness = 2;
+			this.textBoxPosition.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBoxPosition.DefaultText = "";
+			this.textBoxPosition.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.textBoxPosition.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.textBoxPosition.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxPosition.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxPosition.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxPosition.ForeColor = System.Drawing.Color.Black;
+			this.textBoxPosition.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.textBoxPosition.Location = new System.Drawing.Point(144, 21);
+			this.textBoxPosition.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+			this.textBoxPosition.MaxLength = 64;
+			this.textBoxPosition.Name = "textBoxPosition";
+			this.textBoxPosition.PasswordChar = '\0';
+			this.textBoxPosition.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.textBoxPosition.PlaceholderText = "";
+			this.textBoxPosition.ReadOnly = true;
+			this.textBoxPosition.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxPosition.SelectedText = "";
+			this.textBoxPosition.Size = new System.Drawing.Size(1000, 40);
+			this.textBoxPosition.TabIndex = 1;
+			this.textBoxPosition.TabStop = false;
+			this.textBoxPosition.Tag = "";
+			this.textBoxPosition.TextOffset = new System.Drawing.Point(3, 0);
+			// 
+			// textBoxSalary
+			// 
+			this.textBoxSalary.Animated = true;
+			this.textBoxSalary.AutoScroll = true;
+			this.textBoxSalary.BackColor = System.Drawing.Color.Transparent;
+			this.textBoxSalary.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.textBoxSalary.BorderRadius = 10;
+			this.textBoxSalary.BorderThickness = 2;
+			this.textBoxSalary.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBoxSalary.DefaultText = "";
+			this.textBoxSalary.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.textBoxSalary.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.textBoxSalary.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxSalary.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxSalary.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxSalary.ForeColor = System.Drawing.Color.Black;
+			this.textBoxSalary.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.textBoxSalary.Location = new System.Drawing.Point(251, 80);
+			this.textBoxSalary.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+			this.textBoxSalary.MaxLength = 10;
+			this.textBoxSalary.Name = "textBoxSalary";
+			this.textBoxSalary.PasswordChar = '\0';
+			this.textBoxSalary.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.textBoxSalary.PlaceholderText = "";
+			this.textBoxSalary.ReadOnly = true;
+			this.textBoxSalary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxSalary.SelectedText = "";
+			this.textBoxSalary.Size = new System.Drawing.Size(155, 40);
+			this.textBoxSalary.TabIndex = 3;
+			this.textBoxSalary.TabStop = false;
+			this.textBoxSalary.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxSalary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalary_KeyPress);
+			// 
+			// richTextBoxPositionDescription
+			// 
+			this.richTextBoxPositionDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.richTextBoxPositionDescription.Animated = true;
+			this.richTextBoxPositionDescription.BackColor = System.Drawing.Color.Transparent;
+			this.richTextBoxPositionDescription.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.richTextBoxPositionDescription.BorderRadius = 12;
+			this.richTextBoxPositionDescription.BorderThickness = 2;
+			this.richTextBoxPositionDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.richTextBoxPositionDescription.DefaultText = "";
+			this.richTextBoxPositionDescription.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.richTextBoxPositionDescription.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.richTextBoxPositionDescription.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.richTextBoxPositionDescription.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.richTextBoxPositionDescription.ForeColor = System.Drawing.Color.Black;
+			this.richTextBoxPositionDescription.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.richTextBoxPositionDescription.Location = new System.Drawing.Point(18, 265);
+			this.richTextBoxPositionDescription.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+			this.richTextBoxPositionDescription.MaxLength = 2048;
+			this.richTextBoxPositionDescription.Multiline = true;
+			this.richTextBoxPositionDescription.Name = "richTextBoxPositionDescription";
+			this.richTextBoxPositionDescription.PasswordChar = '\0';
+			this.richTextBoxPositionDescription.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.richTextBoxPositionDescription.PlaceholderText = "";
+			this.richTextBoxPositionDescription.ReadOnly = true;
+			this.richTextBoxPositionDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.richTextBoxPositionDescription.SelectedText = "";
+			this.richTextBoxPositionDescription.Size = new System.Drawing.Size(550, 240);
+			this.richTextBoxPositionDescription.TabIndex = 8;
+			this.richTextBoxPositionDescription.TabStop = false;
+			this.richTextBoxPositionDescription.TextOffset = new System.Drawing.Point(3, 0);
+			// 
+			// richTextBoxAdditionalInfo
+			// 
+			this.richTextBoxAdditionalInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.richTextBoxAdditionalInfo.Animated = true;
+			this.richTextBoxAdditionalInfo.BackColor = System.Drawing.Color.Transparent;
+			this.richTextBoxAdditionalInfo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.richTextBoxAdditionalInfo.BorderRadius = 12;
+			this.richTextBoxAdditionalInfo.BorderThickness = 2;
+			this.richTextBoxAdditionalInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.richTextBoxAdditionalInfo.DefaultText = "";
+			this.richTextBoxAdditionalInfo.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.richTextBoxAdditionalInfo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.richTextBoxAdditionalInfo.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.richTextBoxAdditionalInfo.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.richTextBoxAdditionalInfo.ForeColor = System.Drawing.Color.Black;
+			this.richTextBoxAdditionalInfo.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.richTextBoxAdditionalInfo.Location = new System.Drawing.Point(630, 265);
+			this.richTextBoxAdditionalInfo.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+			this.richTextBoxAdditionalInfo.MaxLength = 2048;
+			this.richTextBoxAdditionalInfo.Multiline = true;
+			this.richTextBoxAdditionalInfo.Name = "richTextBoxAdditionalInfo";
+			this.richTextBoxAdditionalInfo.PasswordChar = '\0';
+			this.richTextBoxAdditionalInfo.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.richTextBoxAdditionalInfo.PlaceholderText = "За потреби вкажіть додаткову інформацію";
+			this.richTextBoxAdditionalInfo.ReadOnly = true;
+			this.richTextBoxAdditionalInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.richTextBoxAdditionalInfo.SelectedText = "";
+			this.richTextBoxAdditionalInfo.Size = new System.Drawing.Size(550, 240);
+			this.richTextBoxAdditionalInfo.TabIndex = 10;
+			this.richTextBoxAdditionalInfo.TabStop = false;
+			this.richTextBoxAdditionalInfo.TextOffset = new System.Drawing.Point(3, 0);
 			// 
 			// VacancyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1264, 627);
+			this.ClientSize = new System.Drawing.Size(1200, 600);
+			this.Controls.Add(this.richTextBoxAdditionalInfo);
+			this.Controls.Add(this.richTextBoxPositionDescription);
+			this.Controls.Add(this.textBoxSalary);
+			this.Controls.Add(this.textBoxPosition);
 			this.Controls.Add(this.buttonPoints);
 			this.Controls.Add(this.buttonRequirement);
 			this.Controls.Add(this.labelPosition);
-			this.Controls.Add(this.richTextBoxPosition);
 			this.Controls.Add(this.labelApplicationCount);
 			this.Controls.Add(this.labelDatePublication);
 			this.Controls.Add(this.labelRelevance);
-			this.Controls.Add(this.richTextBoxAdditionalInfo);
-			this.Controls.Add(this.richTextBoxPositionDescription);
 			this.Controls.Add(this.labelAdditionalInfoTitle);
 			this.Controls.Add(this.labelPositionDescriptionTitle);
-			this.Controls.Add(this.richTextBoxSalary);
 			this.Controls.Add(this.labelSalaryTitle);
-			this.Controls.Add(this.buttonDelete);
 			this.Controls.Add(this.buttonCreate);
+			this.Controls.Add(this.buttonDelete);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "VacancyForm";
-			this.ShowIcon = false;
 			this.Text = "Вакансія";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VacancyForm_FormClosed);
+			this.Load += new System.EventHandler(this.VacancyForm_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox richTextBoxPosition;
         private System.Windows.Forms.Label labelApplicationCount;
         private System.Windows.Forms.Label labelDatePublication;
         private System.Windows.Forms.Label labelRelevance;
-        private System.Windows.Forms.RichTextBox richTextBoxAdditionalInfo;
-        private System.Windows.Forms.RichTextBox richTextBoxPositionDescription;
         private System.Windows.Forms.Label labelAdditionalInfoTitle;
         private System.Windows.Forms.Label labelPositionDescriptionTitle;
-        private System.Windows.Forms.RichTextBox richTextBoxSalary;
         private System.Windows.Forms.Label labelSalaryTitle;
         private System.Windows.Forms.Label labelPosition;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonRequirement;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonPoints;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonDelete;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonCreate;
+		private Guna.UI2.WinForms.Guna2TextBox textBoxPosition;
+		private Guna.UI2.WinForms.Guna2TextBox textBoxSalary;
+		private Guna.UI2.WinForms.Guna2TextBox richTextBoxPositionDescription;
+		private Guna.UI2.WinForms.Guna2TextBox richTextBoxAdditionalInfo;
 	}
 }

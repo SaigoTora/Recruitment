@@ -204,7 +204,7 @@ namespace RecruitmentServer.Forms
 
 			FullVacancy vacancy = _buttonVacancyMap[button];
 
-			VacancyForm vacancyForm = new VacancyForm(vacancy, _account,
+			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				(args) =>
 				{
 					Close();

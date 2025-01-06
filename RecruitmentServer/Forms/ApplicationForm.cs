@@ -143,7 +143,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Вакансія"
 			FullVacancy vacancy = DataBase.GetVacancy(application.IdVacancy);
-			VacancyForm vf = new VacancyForm(vacancy, account, isDeleteButtonVisible: false);
+			VacancyForm vf = new VacancyForm(account, vacancy, isDeleteButtonVisible: false);
 			Visible = false;
 			vf.FormClosed += (s, args) =>
 			{ Visible = true; };

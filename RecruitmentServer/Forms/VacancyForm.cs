@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.ApplicationInfo;
@@ -12,186 +14,279 @@ using UIHelpers.Validation;
 namespace RecruitmentServer.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
-	{// Форма вакансії
-		private const int DECREASE_FORM_HEIGHT = 130;
-		private readonly FullRequirement requirement = new FullRequirement();// Вимоги
-		private readonly ServerAccount account;// Акаунт
-
-		private FullVacancy vacancy;// Вакансія
-		private Points points = new Points();// Бали
-		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
+	{
+		private readonly ServerAccount _account;
+		private FullVacancy _vacancy;
+		private readonly FullRequirement _requirement = new FullRequirement();
+		private Points _points = new Points();
+		private readonly Action<EventArgs> _actionAfterChange;
 
 		private VacancyForm()
 		{
 			InitializeComponent();
-			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false, maximizeBox: false);
+			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false,
+				maximizeBox: false);
 		}
-		internal VacancyForm(ServerAccount account, Action<EventArgs> refresh)
+		internal VacancyForm(ServerAccount account, Action<EventArgs> actionAfterChange)
 			: this()
-		{// Конструктор форми створення вакансії
+		{// Constructor for creating a vacancy
+			_account = account;
+			_actionAfterChange = actionAfterChange;
 
-			// Зменшуємо розмір форми
+			ConfigureFormForVacancyCreation();
+		}
+		internal VacancyForm(ServerAccount account, FullVacancy vacancy,
+			Action<EventArgs> actionAfterChange = null, bool isDeleteButtonVisible = true)
+			: this()
+		{// Constructor for viewing vacancies
+			_account = account;
+			_vacancy = vacancy;
+			_actionAfterChange = actionAfterChange;
+
+			ConfigureFormForVacancyViewing(vacancy, isDeleteButtonVisible);
+		}
+		private void VacancyForm_Load(object sender, EventArgs e)
+		{
+			SetTheme(_account.Theme);
+
+			if (_vacancy != null && labelRelevance.Visible)
+				labelRelevance.ForeColor = GetRelevanceColor(_vacancy.Relevance);
+		}
+
+		private void ConfigureFormForVacancyCreation()
+		{
+			const int DECREASE_FORM_HEIGHT = 70;
+
 			Size = new System.Drawing.Size(Width, Height - DECREASE_FORM_HEIGHT);
-			this.refresh = refresh;// Встановлюємо значення для створення вакансії
+			textBoxPosition.ReadOnly = false;
+			textBoxSalary.ReadOnly = false;
 			labelApplicationCount.Visible = false;
-			labelRelevance.Visible = false;
 			labelDatePublication.Visible = false;
-
-			richTextBoxPosition.ReadOnly = false;
-			richTextBoxSalary.ReadOnly = false;
+			labelRelevance.Visible = false;
 			richTextBoxPositionDescription.ReadOnly = false;
 			richTextBoxAdditionalInfo.ReadOnly = false;
+			buttonCreate.Visible = true;
 
-			richTextBoxPosition.TabStop = true;
-			richTextBoxSalary.TabStop = true;
+			textBoxPosition.TabStop = true;
+			textBoxSalary.TabStop = true;
 			richTextBoxPositionDescription.TabStop = true;
 			richTextBoxAdditionalInfo.TabStop = true;
-			richTextBoxPosition.Focus();
+			textBoxPosition.Focus();
 
-			buttonRequirement.Click += ButtonRequirementCreate_Click;
-			buttonPoints.Click += ButtonPointsCreate_Click;
-
-			this.account = account;
-			SetTheme(account.Theme);
+			ManageButtonForCreateEvents(true);
 		}
-		internal VacancyForm(FullVacancy vacancy, ServerAccount account, Action<EventArgs> refresh = null, bool isDeleteButtonVisible = true)
-			: this()
-		{// Конструктор форми перегляду вакансії
-			this.refresh = refresh;
-			buttonCreate.Visible = false;// Встановлюємо значення для перегляду вакансії
-			this.vacancy = vacancy;
-			richTextBoxPosition.Text = vacancy.Position.Name;
-			richTextBoxSalary.Text = vacancy.Salary.ToString();
-			labelApplicationCount.Text = "Кількість заявок: " + vacancy.ApplicationCount.ToString();
-			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";// Актуальність
-																				// Якщо вакансія актуальна та можна включити видимість кнопки видалення
-			if (vacancy.Relevance && isDeleteButtonVisible)
-				buttonDelete.Visible = true;
+		private void ConfigureFormForVacancyViewing(FullVacancy vacancy,
+			bool isDeleteButtonVisible)
+		{
+			textBoxPosition.Text = vacancy.Position.Name;
+			textBoxSalary.Text = vacancy.Salary.ToString();
+			labelApplicationCount.Text = "Кількість заявок: " +
+				vacancy.ApplicationCount.ToString();
+			labelDatePublication.Text = "Дата публікації: " +
+				vacancy.DatePublication.ToString("yyyy-MM-dd");
+			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";
 			labelRelevance.Text = relevance;
 			richTextBoxPositionDescription.Text = vacancy.Position.Description;
 			richTextBoxAdditionalInfo.Text = vacancy.Info;
-			labelDatePublication.Text = "Дата публікації: " + vacancy.DatePublication.ToString("yyyy-MM-dd");
+			if (vacancy.Relevance && isDeleteButtonVisible)
+				buttonDelete.Visible = true;
 
-			buttonRequirement.Click += ButtonRequirementShow_Click;
-			buttonPoints.Click += ButtonPointsShow_Click;
+			textBoxPosition.BorderThickness = 0;
+			textBoxSalary.BorderThickness = 0;
+			ConfigureRichTextBoxForViewing(richTextBoxPositionDescription);
+			ConfigureRichTextBoxForViewing(richTextBoxAdditionalInfo);
 
-			this.account = account;
-			SetTheme(account.Theme);
-			richTextBoxPosition.BackColor = BackColor;
-			richTextBoxSalary.BackColor = BackColor;
+			ManageButtonForViewEvents(true);
+		}
+		private Color GetRelevanceColor(bool relevance)
+		{
+			(Color Yes, Color No) =
+				(Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97));
+			if (relevance)
+				return Yes;
+			else
+				return No;
+		}
+		private void ConfigureRichTextBoxForViewing(Guna2TextBox richTextBox)
+		{
+			richTextBox.BorderThickness = 0;
+			richTextBox.PlaceholderText = string.Empty;
+		}
+		private void ManageButtonForCreateEvents(bool subscribe)
+		{
+			if (subscribe)
+			{
+				buttonRequirement.Click += ButtonRequirementCreate_Click;
+				buttonPoints.Click += ButtonPointsCreate_Click;
+			}
+			else
+			{
+				buttonRequirement.Click -= ButtonRequirementCreate_Click;
+				buttonPoints.Click -= ButtonPointsCreate_Click;
+			}
+		}
+		private void ManageButtonForViewEvents(bool subscribe)
+		{
+			if (subscribe)
+			{
+				buttonRequirement.Click += ButtonRequirementShow_Click;
+				buttonPoints.Click += ButtonPointsShow_Click;
+			}
+			else
+			{
+				buttonRequirement.Click -= ButtonRequirementShow_Click;
+				buttonPoints.Click -= ButtonPointsShow_Click;
+			}
 		}
 
+		private void TextBoxSalary_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back
+				&& e.KeyChar != ',')
+				e.Handled = true;
+		}
+
+		#region Button event handlers
 		private void ButtonRequirementShow_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Вимоги" для перегляду
-		 // Отримуємо дані з БД
-			string requirement = DataBase.GetRequirement(vacancy.IdRequirement).ToString();
-			string educationDegrees = DataBase.GetRequirementEducationDegree(vacancy.IdRequirement);
+		{
+			string requirement = DataBase.GetRequirement(_vacancy.IdRequirement).ToString();
+			string educationDegrees = DataBase.GetRequirementEducationDegree(
+				_vacancy.IdRequirement);
 
 			if (educationDegrees != null && educationDegrees != string.Empty)
-			{// Якщо є вимоги до ступенів освіти
-				if (requirement != string.Empty)// Якщо до цього був текст
+			{
+				if (requirement != string.Empty)
 					requirement += "\n\n";
 				requirement += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
 			}
+			if (requirement == string.Empty)
+				requirement = "Вимог немає.";
 
-			CustomMessageBox.Show(requirement, account.Theme, "Вимоги",
+			CustomMessageBox.Show(requirement, _account.Theme, "Вимоги",
 				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private void ButtonRequirementCreate_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Вимоги" для створення
-			RequirementForm reqf = new RequirementForm(account, requirement);
+		{
+			RequirementForm requirementForm = new RequirementForm(_account, _requirement);
 			Visible = false;
-			reqf.FormClosed += (s, args) =>
-			{ Visible = true; };
-			reqf.ShowDialog();
+			requirementForm.FormClosed += (s, args) => { Visible = true; };
+			requirementForm.ShowDialog();
 		}
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
-		{// Обробник події зміни балів
-			points = DataBase.GetPoints(vacancy.IdPoint);// Отримуємо дані з БД
-			PointsForm pf = new PointsForm(account, points, true);
+		{
+			_points = DataBase.GetPoints(_vacancy.IdPoint);
+
+			PointsForm pointsForm = new PointsForm(_account, _points, true);
 			Visible = false;
-			pf.FormClosed += (s, args) =>
-			{ Visible = true; };
-			pf.ShowDialog();
+			pointsForm.FormClosed += (s, args) => { Visible = true; };
+			pointsForm.ShowDialog();
 		}
 		private void ButtonPointsCreate_Click(object sender, EventArgs e)
-		{// Обробник події створення балів
-			PointsForm pf = new PointsForm(account, points, false);
+		{
+			PointsForm pointsForm = new PointsForm(_account, _points, false);
 			Visible = false;
-			pf.FormClosed += (s, args) =>
-			{ Visible = true; };
-			pf.ShowDialog();
+			pointsForm.FormClosed += (s, args) => { Visible = true; };
+			pointsForm.ShowDialog();
 		}
 
 		private void ButtonCreate_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку створення вакансії
+		{
 			if (CheckValidData())
 			{
-				// Створюємо в БД бали, вимоги та вакансію
-				int idPoint = DataBase.CreatePoints(points);
-				int idRequirement = DataBase.CreateRequirement(requirement);
+				int pointId = DataBase.CreatePoints(_points);
+				int requirementId = DataBase.CreateRequirement(_requirement);
+				Position position = new Position(textBoxPosition.Text,
+					richTextBoxPositionDescription.Text);
 
-				Position position = new Position(richTextBoxPosition.Text, richTextBoxPositionDescription.Text);
-				vacancy = new FullVacancy(0, position, double.Parse(richTextBoxSalary.Text),
-					DateTime.UtcNow, richTextBoxAdditionalInfo.Text, true, 0, idPoint, idRequirement);
-				DataBase.CreateVacancy(vacancy);
+				_vacancy = new FullVacancy(0, position, double.Parse(textBoxSalary.Text),
+					DateTime.UtcNow, richTextBoxAdditionalInfo.Text, true, 0, pointId,
+					requirementId);
+				DataBase.CreateVacancy(_vacancy);
 
-				refresh(EventArgs.Empty);// Перезавантажуємо головну форму
+				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}
 		}
+		private void ButtonDelete_Click(object sender, EventArgs e)
+		{
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете видалити " +
+				"цю вакансію?\nПри видаленні вакансії також будуть видалені всі заявки та " +
+				"співбесіди, які пов'язані з цією вакансією", _account.Theme, "Видалення",
+				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+
+			if (result == DialogResult.Yes)
+			{
+				DataBase.DeleteVacancy(_vacancy.Id);
+				_actionAfterChange(EventArgs.Empty);
+				Close();
+			}
+		}
+
 		private bool CheckValidData()
-		{// Метод перевіряє та показує які дані були введені не вірно
-			ValidationFeedbackManager.ResetLabelsToDefault(account.Theme, labelPosition, labelSalaryTitle, labelPositionDescriptionTitle,
-				labelAdditionalInfoTitle);// Встановлюємо значення label-ів за замовчуванням
+		{
+			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelPosition,
+				labelSalaryTitle, labelPositionDescriptionTitle,
+				labelAdditionalInfoTitle);
 
 			Validator validator = new Validator();
-			validator.CheckBannedChar(labelPosition, richTextBoxPosition.Text, Server.SEPARATOR, account.Theme);// Посада
-			validator.CheckMinLength(labelPosition, richTextBoxPosition, 3, account.Theme);
-			validator.CheckSymbols(labelSalaryTitle, richTextBoxSalary, account.Theme, ValidLanguage.None, "0123456789,");// Зарплата
-			validator.CheckMinLength(labelSalaryTitle, richTextBoxSalary, 1, account.Theme);
-			validator.CheckBannedChar(labelPositionDescriptionTitle, richTextBoxPositionDescription.Text, Server.SEPARATOR, account.Theme);// Опис
-			validator.CheckBannedChar(labelAdditionalInfoTitle, richTextBoxAdditionalInfo.Text, Server.SEPARATOR, account.Theme);// Додаткова інформація
+			validator.CheckBannedChar(labelPosition, textBoxPosition.Text, Server.SEPARATOR,
+				_account.Theme);
+			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
+			validator.CheckSymbols(labelSalaryTitle, textBoxSalary, _account.Theme,
+				ValidLanguage.None, "0123456789,");
+			validator.CheckMinLength(labelSalaryTitle, textBoxSalary, 1, _account.Theme);
+
+			validator.CheckBannedChar(labelPositionDescriptionTitle,
+				richTextBoxPositionDescription.Text, Server.SEPARATOR, _account.Theme);
+			validator.CheckBannedChar(labelAdditionalInfoTitle,
+				richTextBoxAdditionalInfo.Text, Server.SEPARATOR, _account.Theme);
 
 			bool isDataValid = validator.IsDataValid;
-			if (requirement.City == null)
-			{// Якщо не заповнили вимоги
-				if (isDataValid)
-				{
-					buttonRequirement.Focus();
-					CustomMessageBox.Show("Дані були введені не вірно!\nВимоги також потрібно заповнити.",
-						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
-				isDataValid = false;
-			}
-			if (points.Degrees == null)
-			{// Якщо не заповнили бали
-				if (isDataValid)
-				{
-					buttonPoints.Focus();
-					CustomMessageBox.Show("Дані були введені не вірно!\nБали також потрібно заповнити.",
-						account.Theme, "Помилка введення", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
-				isDataValid = false;
-			}
+			ValidateRequirements(ref isDataValid);
+			ValidatePoints(ref isDataValid);
 
 			return isDataValid;
 		}
-		private void ButtonDelete_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку видалення вакансії
-			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете видалити цю вакансію?\n" +
-				"При видаленні вакансії також будуть видалені всі заявки та співбесіди, які пов'язані з цією вакансією",
-					account.Theme, "Видалення", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
-			if (result == DialogResult.Yes)
-			{
-				DataBase.DeleteVacancy(vacancy.Id);
-				refresh(EventArgs.Empty);
-				Close();
+		private void ValidateRequirements(ref bool isDataValid)
+		{
+			if (_requirement.City == null)
+			{// If the requirements are not filled in
+				if (isDataValid)
+				{
+					buttonRequirement.Focus();
+					CustomMessageBox.Show("Дані були введені не вірно!" +
+						"\nВимоги також потрібно заповнити.",
+						_account.Theme, "Помилка введення",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				}
+				isDataValid = false;
 			}
 		}
+		private void ValidatePoints(ref bool isDataValid)
+		{
+			if (_points.Degrees == null)
+			{// If the points are not filled in
+				if (isDataValid)
+				{
+					buttonPoints.Focus();
+					CustomMessageBox.Show("Дані були введені не вірно!" +
+						"\nБали також потрібно заповнити.",
+						_account.Theme, "Помилка введення",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				}
+				isDataValid = false;
+			}
+		}
+		#endregion
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
+
+		private void VacancyForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			ManageButtonForCreateEvents(false);
+			ManageButtonForViewEvents(false);
+		}
 	}
 }

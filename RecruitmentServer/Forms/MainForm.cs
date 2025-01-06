@@ -566,7 +566,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			FullVacancy vacancy = _buttonVacancyMap[button];
-			VacancyForm vacancyForm = new VacancyForm(vacancy, _account, SelectLabel);
+			VacancyForm vacancyForm = new VacancyForm(_account, vacancy, SelectLabel);
 			vacancyForm.ShowDialog();
 		}
 		private void ButtonApplication_Click(object sender, EventArgs e)
