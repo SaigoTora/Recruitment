@@ -233,7 +233,7 @@
 			this.labelTitle.BackColor = System.Drawing.Color.Transparent;
 			this.labelTitle.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelTitle.ForeColor = System.Drawing.Color.Black;
-			this.labelTitle.Location = new System.Drawing.Point(0, 20);
+			this.labelTitle.Location = new System.Drawing.Point(0, 12);
 			this.labelTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(1264, 40);

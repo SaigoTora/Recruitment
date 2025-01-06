@@ -117,7 +117,7 @@
 			this.labelNationality.BackColor = System.Drawing.Color.Transparent;
 			this.labelNationality.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNationality.ForeColor = System.Drawing.Color.Black;
-			this.labelNationality.Location = new System.Drawing.Point(12, 61);
+			this.labelNationality.Location = new System.Drawing.Point(12, 60);
 			this.labelNationality.Name = "labelNationality";
 			this.labelNationality.Size = new System.Drawing.Size(218, 32);
 			this.labelNationality.TabIndex = 0;
@@ -130,7 +130,7 @@
 			this.labelCity.BackColor = System.Drawing.Color.Transparent;
 			this.labelCity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelCity.ForeColor = System.Drawing.Color.Black;
-			this.labelCity.Location = new System.Drawing.Point(12, 121);
+			this.labelCity.Location = new System.Drawing.Point(12, 120);
 			this.labelCity.Name = "labelCity";
 			this.labelCity.Size = new System.Drawing.Size(446, 32);
 			this.labelCity.TabIndex = 2;
@@ -144,7 +144,7 @@
 			this.labelChildrenAmount.BackColor = System.Drawing.Color.Transparent;
 			this.labelChildrenAmount.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChildrenAmount.ForeColor = System.Drawing.Color.Black;
-			this.labelChildrenAmount.Location = new System.Drawing.Point(820, 541);
+			this.labelChildrenAmount.Location = new System.Drawing.Point(820, 540);
 			this.labelChildrenAmount.Name = "labelChildrenAmount";
 			this.labelChildrenAmount.Size = new System.Drawing.Size(229, 32);
 			this.labelChildrenAmount.TabIndex = 21;
@@ -156,7 +156,7 @@
 			this.numericUpDownChildrenAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numericUpDownChildrenAmount.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownChildrenAmount.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownChildrenAmount.Location = new System.Drawing.Point(1055, 539);
+			this.numericUpDownChildrenAmount.Location = new System.Drawing.Point(1055, 538);
 			this.numericUpDownChildrenAmount.Maximum = new decimal(new int[] {
             99,
             0,
@@ -172,7 +172,7 @@
 			// 
 			this.numericUpDownExperience.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownExperience.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownExperience.Location = new System.Drawing.Point(395, 269);
+			this.numericUpDownExperience.Location = new System.Drawing.Point(395, 268);
 			this.numericUpDownExperience.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -190,7 +190,7 @@
 			this.labelExperience.BackColor = System.Drawing.Color.Transparent;
 			this.labelExperience.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExperience.ForeColor = System.Drawing.Color.Black;
-			this.labelExperience.Location = new System.Drawing.Point(12, 271);
+			this.labelExperience.Location = new System.Drawing.Point(12, 270);
 			this.labelExperience.Name = "labelExperience";
 			this.labelExperience.Size = new System.Drawing.Size(377, 32);
 			this.labelExperience.TabIndex = 6;
@@ -201,7 +201,7 @@
 			// 
 			this.numericUpDownReadiness.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownReadiness.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownReadiness.Location = new System.Drawing.Point(696, 329);
+			this.numericUpDownReadiness.Location = new System.Drawing.Point(696, 328);
 			this.numericUpDownReadiness.Maximum = new decimal(new int[] {
             14,
             0,
@@ -229,7 +229,7 @@
 			this.labelReadiness.BackColor = System.Drawing.Color.Transparent;
 			this.labelReadiness.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelReadiness.ForeColor = System.Drawing.Color.Black;
-			this.labelReadiness.Location = new System.Drawing.Point(12, 331);
+			this.labelReadiness.Location = new System.Drawing.Point(12, 330);
 			this.labelReadiness.Name = "labelReadiness";
 			this.labelReadiness.Size = new System.Drawing.Size(678, 32);
 			this.labelReadiness.TabIndex = 8;
@@ -242,7 +242,7 @@
 			this.labelDriverLicense.BackColor = System.Drawing.Color.Transparent;
 			this.labelDriverLicense.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDriverLicense.ForeColor = System.Drawing.Color.Black;
-			this.labelDriverLicense.Location = new System.Drawing.Point(12, 391);
+			this.labelDriverLicense.Location = new System.Drawing.Point(12, 390);
 			this.labelDriverLicense.Name = "labelDriverLicense";
 			this.labelDriverLicense.Size = new System.Drawing.Size(458, 32);
 			this.labelDriverLicense.TabIndex = 10;
@@ -256,7 +256,7 @@
 			this.labelFamilyStatus.BackColor = System.Drawing.Color.Transparent;
 			this.labelFamilyStatus.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelFamilyStatus.ForeColor = System.Drawing.Color.Black;
-			this.labelFamilyStatus.Location = new System.Drawing.Point(820, 481);
+			this.labelFamilyStatus.Location = new System.Drawing.Point(820, 480);
 			this.labelFamilyStatus.Name = "labelFamilyStatus";
 			this.labelFamilyStatus.Size = new System.Drawing.Size(225, 32);
 			this.labelFamilyStatus.TabIndex = 19;
@@ -269,7 +269,7 @@
 			this.labelBusinessTripOpportunity.BackColor = System.Drawing.Color.Transparent;
 			this.labelBusinessTripOpportunity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
-			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(12, 181);
+			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(12, 180);
 			this.labelBusinessTripOpportunity.Name = "labelBusinessTripOpportunity";
 			this.labelBusinessTripOpportunity.Size = new System.Drawing.Size(356, 32);
 			this.labelBusinessTripOpportunity.TabIndex = 4;
@@ -282,7 +282,7 @@
 			this.labelChronicDiseases.BackColor = System.Drawing.Color.Transparent;
 			this.labelChronicDiseases.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseases.ForeColor = System.Drawing.Color.Black;
-			this.labelChronicDiseases.Location = new System.Drawing.Point(12, 601);
+			this.labelChronicDiseases.Location = new System.Drawing.Point(12, 600);
 			this.labelChronicDiseases.Name = "labelChronicDiseases";
 			this.labelChronicDiseases.Size = new System.Drawing.Size(352, 32);
 			this.labelChronicDiseases.TabIndex = 16;
@@ -295,7 +295,7 @@
 			this.labelSmoker.BackColor = System.Drawing.Color.Transparent;
 			this.labelSmoker.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSmoker.ForeColor = System.Drawing.Color.Black;
-			this.labelSmoker.Location = new System.Drawing.Point(12, 481);
+			this.labelSmoker.Location = new System.Drawing.Point(12, 480);
 			this.labelSmoker.Name = "labelSmoker";
 			this.labelSmoker.Size = new System.Drawing.Size(213, 32);
 			this.labelSmoker.TabIndex = 12;
@@ -308,7 +308,7 @@
 			this.labelDrinkAlcohol.BackColor = System.Drawing.Color.Transparent;
 			this.labelDrinkAlcohol.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDrinkAlcohol.ForeColor = System.Drawing.Color.Black;
-			this.labelDrinkAlcohol.Location = new System.Drawing.Point(12, 541);
+			this.labelDrinkAlcohol.Location = new System.Drawing.Point(12, 540);
 			this.labelDrinkAlcohol.Name = "labelDrinkAlcohol";
 			this.labelDrinkAlcohol.Size = new System.Drawing.Size(492, 32);
 			this.labelDrinkAlcohol.TabIndex = 14;
@@ -827,7 +827,7 @@
 			this.labelChronicDiseasesInfo.BackColor = System.Drawing.Color.Transparent;
 			this.labelChronicDiseasesInfo.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseasesInfo.ForeColor = System.Drawing.Color.Black;
-			this.labelChronicDiseasesInfo.Location = new System.Drawing.Point(54, 632);
+			this.labelChronicDiseasesInfo.Location = new System.Drawing.Point(54, 631);
 			this.labelChronicDiseasesInfo.Name = "labelChronicDiseasesInfo";
 			this.labelChronicDiseasesInfo.Size = new System.Drawing.Size(306, 23);
 			this.labelChronicDiseasesInfo.TabIndex = 17;
@@ -914,7 +914,7 @@
 			this.comboBoxBusinessTripOpportunity.IntegralHeight = false;
 			this.comboBoxBusinessTripOpportunity.ItemHeight = 30;
 			this.comboBoxBusinessTripOpportunity.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.comboBoxBusinessTripOpportunity.Location = new System.Drawing.Point(374, 179);
+			this.comboBoxBusinessTripOpportunity.Location = new System.Drawing.Point(374, 178);
 			this.comboBoxBusinessTripOpportunity.MaxDropDownItems = 15;
 			this.comboBoxBusinessTripOpportunity.MaxLength = 64;
 			this.comboBoxBusinessTripOpportunity.Name = "comboBoxBusinessTripOpportunity";
@@ -945,7 +945,7 @@
 			this.comboBoxFamilyStatus.IntegralHeight = false;
 			this.comboBoxFamilyStatus.ItemHeight = 30;
 			this.comboBoxFamilyStatus.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.comboBoxFamilyStatus.Location = new System.Drawing.Point(1058, 479);
+			this.comboBoxFamilyStatus.Location = new System.Drawing.Point(1058, 478);
 			this.comboBoxFamilyStatus.MaxDropDownItems = 15;
 			this.comboBoxFamilyStatus.MaxLength = 64;
 			this.comboBoxFamilyStatus.Name = "comboBoxFamilyStatus";
@@ -1166,7 +1166,7 @@
             "Ямайка",
             "Японія"});
 			this.comboBoxNationality.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.comboBoxNationality.Location = new System.Drawing.Point(236, 59);
+			this.comboBoxNationality.Location = new System.Drawing.Point(236, 58);
 			this.comboBoxNationality.MaxDropDownItems = 15;
 			this.comboBoxNationality.MaxLength = 64;
 			this.comboBoxNationality.Name = "comboBoxNationality";
@@ -1189,7 +1189,7 @@
 			this.guna2GroupBox3.FillColor = System.Drawing.Color.Transparent;
 			this.guna2GroupBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.guna2GroupBox3.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox3.Location = new System.Drawing.Point(535, 541);
+			this.guna2GroupBox3.Location = new System.Drawing.Point(535, 540);
 			this.guna2GroupBox3.Name = "guna2GroupBox3";
 			this.guna2GroupBox3.Size = new System.Drawing.Size(180, 33);
 			this.guna2GroupBox3.TabIndex = 15;
@@ -1285,7 +1285,7 @@
 			this.guna2GroupBox2.FillColor = System.Drawing.Color.Transparent;
 			this.guna2GroupBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.guna2GroupBox2.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox2.Location = new System.Drawing.Point(256, 481);
+			this.guna2GroupBox2.Location = new System.Drawing.Point(256, 480);
 			this.guna2GroupBox2.Name = "guna2GroupBox2";
 			this.guna2GroupBox2.Size = new System.Drawing.Size(180, 33);
 			this.guna2GroupBox2.TabIndex = 13;
@@ -1381,7 +1381,7 @@
 			this.guna2GroupBox1.FillColor = System.Drawing.Color.Transparent;
 			this.guna2GroupBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.guna2GroupBox1.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox1.Location = new System.Drawing.Point(501, 391);
+			this.guna2GroupBox1.Location = new System.Drawing.Point(501, 390);
 			this.guna2GroupBox1.Name = "guna2GroupBox1";
 			this.guna2GroupBox1.Size = new System.Drawing.Size(180, 33);
 			this.guna2GroupBox1.TabIndex = 11;
@@ -1510,7 +1510,7 @@
 			this.richTextBoxChronicDiseases.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxChronicDiseases.ForeColor = System.Drawing.Color.Black;
 			this.richTextBoxChronicDiseases.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.richTextBoxChronicDiseases.Location = new System.Drawing.Point(370, 601);
+			this.richTextBoxChronicDiseases.Location = new System.Drawing.Point(370, 600);
 			this.richTextBoxChronicDiseases.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.richTextBoxChronicDiseases.MaxLength = 256;
 			this.richTextBoxChronicDiseases.Multiline = true;
@@ -1542,7 +1542,7 @@
 			this.textBoxCity.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxCity.ForeColor = System.Drawing.Color.Black;
 			this.textBoxCity.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxCity.Location = new System.Drawing.Point(464, 119);
+			this.textBoxCity.Location = new System.Drawing.Point(464, 118);
 			this.textBoxCity.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxCity.MaxLength = 64;
 			this.textBoxCity.Name = "textBoxCity";

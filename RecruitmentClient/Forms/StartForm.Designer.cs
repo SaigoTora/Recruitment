@@ -56,7 +56,7 @@
 			this.labelLogin.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelLogin.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLogin.ForeColor = System.Drawing.Color.Black;
-			this.labelLogin.Location = new System.Drawing.Point(40, 49);
+			this.labelLogin.Location = new System.Drawing.Point(40, 50);
 			this.labelLogin.Name = "labelLogin";
 			this.labelLogin.Size = new System.Drawing.Size(99, 32);
 			this.labelLogin.TabIndex = 1;
@@ -73,7 +73,7 @@
 			this.labelPassword.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelPassword.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPassword.ForeColor = System.Drawing.Color.Black;
-			this.labelPassword.Location = new System.Drawing.Point(12, 127);
+			this.labelPassword.Location = new System.Drawing.Point(12, 128);
 			this.labelPassword.Name = "labelPassword";
 			this.labelPassword.Size = new System.Drawing.Size(127, 32);
 			this.labelPassword.TabIndex = 3;
@@ -89,7 +89,7 @@
 			this.labelPassword2.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelPassword2.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPassword2.ForeColor = System.Drawing.Color.Black;
-			this.labelPassword2.Location = new System.Drawing.Point(12, 205);
+			this.labelPassword2.Location = new System.Drawing.Point(12, 206);
 			this.labelPassword2.Name = "labelPassword2";
 			this.labelPassword2.Size = new System.Drawing.Size(237, 32);
 			this.labelPassword2.TabIndex = 6;
@@ -131,7 +131,7 @@
 			this.pictureBoxShowPwd.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxShowPwd.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxShowPwd.Image = global::RecruitmentClient.Properties.Resources.eyeClB;
-			this.pictureBoxShowPwd.Location = new System.Drawing.Point(405, 129);
+			this.pictureBoxShowPwd.Location = new System.Drawing.Point(405, 130);
 			this.pictureBoxShowPwd.Name = "pictureBoxShowPwd";
 			this.pictureBoxShowPwd.Size = new System.Drawing.Size(28, 28);
 			this.pictureBoxShowPwd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -250,7 +250,7 @@
 			this.textBoxLogin.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxLogin.ForeColor = System.Drawing.Color.Black;
 			this.textBoxLogin.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxLogin.Location = new System.Drawing.Point(145, 45);
+			this.textBoxLogin.Location = new System.Drawing.Point(145, 46);
 			this.textBoxLogin.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxLogin.MaxLength = 16;
 			this.textBoxLogin.Name = "textBoxLogin";
@@ -282,7 +282,7 @@
 			this.textBoxPassword.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPassword.ForeColor = System.Drawing.Color.Black;
 			this.textBoxPassword.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxPassword.Location = new System.Drawing.Point(145, 123);
+			this.textBoxPassword.Location = new System.Drawing.Point(145, 124);
 			this.textBoxPassword.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxPassword.MaxLength = 16;
 			this.textBoxPassword.Name = "textBoxPassword";
@@ -314,7 +314,7 @@
 			this.textBoxPassword2.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPassword2.ForeColor = System.Drawing.Color.Black;
 			this.textBoxPassword2.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxPassword2.Location = new System.Drawing.Point(255, 203);
+			this.textBoxPassword2.Location = new System.Drawing.Point(255, 204);
 			this.textBoxPassword2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxPassword2.MaxLength = 16;
 			this.textBoxPassword2.Name = "textBoxPassword2";
@@ -337,7 +337,7 @@
 			this.labelRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelRememberMe.ForeColor = System.Drawing.Color.Black;
-			this.labelRememberMe.Location = new System.Drawing.Point(12, 209);
+			this.labelRememberMe.Location = new System.Drawing.Point(12, 210);
 			this.labelRememberMe.Name = "labelRememberMe";
 			this.labelRememberMe.Size = new System.Drawing.Size(320, 23);
 			this.labelRememberMe.TabIndex = 8;
@@ -357,7 +357,7 @@
 			this.checkBoxRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.checkBoxRememberMe.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.checkBoxRememberMe.ForeColor = System.Drawing.Color.Transparent;
-			this.checkBoxRememberMe.Location = new System.Drawing.Point(338, 212);
+			this.checkBoxRememberMe.Location = new System.Drawing.Point(338, 213);
 			this.checkBoxRememberMe.Name = "checkBoxRememberMe";
 			this.checkBoxRememberMe.ShadowDecoration.BorderRadius = 2;
 			this.checkBoxRememberMe.ShadowDecoration.Depth = 150;

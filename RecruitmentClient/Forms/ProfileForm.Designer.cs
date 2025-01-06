@@ -56,7 +56,7 @@
 			this.labelSurname.BackColor = System.Drawing.Color.Transparent;
 			this.labelSurname.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSurname.ForeColor = System.Drawing.Color.Black;
-			this.labelSurname.Location = new System.Drawing.Point(126, 27);
+			this.labelSurname.Location = new System.Drawing.Point(126, 25);
 			this.labelSurname.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelSurname.Name = "labelSurname";
 			this.labelSurname.Size = new System.Drawing.Size(157, 32);
@@ -71,7 +71,7 @@
 			this.labelName.BackColor = System.Drawing.Color.Transparent;
 			this.labelName.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelName.ForeColor = System.Drawing.Color.Black;
-			this.labelName.Location = new System.Drawing.Point(204, 87);
+			this.labelName.Location = new System.Drawing.Point(204, 85);
 			this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(79, 32);
@@ -86,7 +86,7 @@
 			this.labelFatherName.BackColor = System.Drawing.Color.Transparent;
 			this.labelFatherName.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelFatherName.ForeColor = System.Drawing.Color.Black;
-			this.labelFatherName.Location = new System.Drawing.Point(93, 147);
+			this.labelFatherName.Location = new System.Drawing.Point(93, 145);
 			this.labelFatherName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelFatherName.Name = "labelFatherName";
 			this.labelFatherName.Size = new System.Drawing.Size(190, 32);
@@ -101,7 +101,7 @@
 			this.labelPhone.BackColor = System.Drawing.Color.Transparent;
 			this.labelPhone.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPhone.ForeColor = System.Drawing.Color.Black;
-			this.labelPhone.Location = new System.Drawing.Point(25, 207);
+			this.labelPhone.Location = new System.Drawing.Point(25, 205);
 			this.labelPhone.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelPhone.Name = "labelPhone";
 			this.labelPhone.Size = new System.Drawing.Size(258, 32);
@@ -116,7 +116,7 @@
 			this.labelPhoneStart.BackColor = System.Drawing.Color.Transparent;
 			this.labelPhoneStart.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPhoneStart.ForeColor = System.Drawing.Color.Black;
-			this.labelPhoneStart.Location = new System.Drawing.Point(283, 209);
+			this.labelPhoneStart.Location = new System.Drawing.Point(283, 207);
 			this.labelPhoneStart.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelPhoneStart.Name = "labelPhoneStart";
 			this.labelPhoneStart.Size = new System.Drawing.Size(64, 28);
@@ -131,7 +131,7 @@
 			this.labelBirthday.BackColor = System.Drawing.Color.Transparent;
 			this.labelBirthday.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBirthday.ForeColor = System.Drawing.Color.Black;
-			this.labelBirthday.Location = new System.Drawing.Point(11, 267);
+			this.labelBirthday.Location = new System.Drawing.Point(11, 265);
 			this.labelBirthday.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelBirthday.Name = "labelBirthday";
 			this.labelBirthday.Size = new System.Drawing.Size(272, 32);
@@ -146,7 +146,7 @@
 			this.labelEmail.BackColor = System.Drawing.Color.Transparent;
 			this.labelEmail.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEmail.ForeColor = System.Drawing.Color.Black;
-			this.labelEmail.Location = new System.Drawing.Point(172, 329);
+			this.labelEmail.Location = new System.Drawing.Point(172, 327);
 			this.labelEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelEmail.Name = "labelEmail";
 			this.labelEmail.Size = new System.Drawing.Size(111, 32);
@@ -232,7 +232,7 @@
 			this.textBoxSurname.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxSurname.ForeColor = System.Drawing.Color.Black;
 			this.textBoxSurname.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxSurname.Location = new System.Drawing.Point(288, 25);
+			this.textBoxSurname.Location = new System.Drawing.Point(288, 23);
 			this.textBoxSurname.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxSurname.MaxLength = 64;
 			this.textBoxSurname.Name = "textBoxSurname";
@@ -264,7 +264,7 @@
 			this.textBoxName.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxName.ForeColor = System.Drawing.Color.Black;
 			this.textBoxName.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxName.Location = new System.Drawing.Point(288, 85);
+			this.textBoxName.Location = new System.Drawing.Point(288, 83);
 			this.textBoxName.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxName.MaxLength = 64;
 			this.textBoxName.Name = "textBoxName";
@@ -296,7 +296,7 @@
 			this.textBoxFatherName.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxFatherName.ForeColor = System.Drawing.Color.Black;
 			this.textBoxFatherName.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxFatherName.Location = new System.Drawing.Point(288, 145);
+			this.textBoxFatherName.Location = new System.Drawing.Point(288, 143);
 			this.textBoxFatherName.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxFatherName.MaxLength = 64;
 			this.textBoxFatherName.Name = "textBoxFatherName";
@@ -328,7 +328,7 @@
 			this.textBoxPhone1.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPhone1.ForeColor = System.Drawing.Color.Black;
 			this.textBoxPhone1.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxPhone1.Location = new System.Drawing.Point(352, 205);
+			this.textBoxPhone1.Location = new System.Drawing.Point(352, 203);
 			this.textBoxPhone1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxPhone1.MaxLength = 3;
 			this.textBoxPhone1.Name = "textBoxPhone1";
@@ -361,7 +361,7 @@
 			this.textBoxPhone2.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPhone2.ForeColor = System.Drawing.Color.Black;
 			this.textBoxPhone2.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxPhone2.Location = new System.Drawing.Point(416, 205);
+			this.textBoxPhone2.Location = new System.Drawing.Point(416, 203);
 			this.textBoxPhone2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxPhone2.MaxLength = 3;
 			this.textBoxPhone2.Name = "textBoxPhone2";
@@ -394,7 +394,7 @@
 			this.textBoxPhone3.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxPhone3.ForeColor = System.Drawing.Color.Black;
 			this.textBoxPhone3.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxPhone3.Location = new System.Drawing.Point(480, 205);
+			this.textBoxPhone3.Location = new System.Drawing.Point(480, 203);
 			this.textBoxPhone3.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxPhone3.MaxLength = 3;
 			this.textBoxPhone3.Name = "textBoxPhone3";
@@ -427,7 +427,7 @@
 			this.textBoxEmail.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxEmail.ForeColor = System.Drawing.Color.Black;
 			this.textBoxEmail.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxEmail.Location = new System.Drawing.Point(288, 328);
+			this.textBoxEmail.Location = new System.Drawing.Point(288, 326);
 			this.textBoxEmail.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxEmail.MaxLength = 64;
 			this.textBoxEmail.Name = "textBoxEmail";
@@ -453,7 +453,7 @@
 			this.dateTimePickerBirthday.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dateTimePickerBirthday.ForeColor = System.Drawing.Color.Black;
 			this.dateTimePickerBirthday.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-			this.dateTimePickerBirthday.Location = new System.Drawing.Point(288, 265);
+			this.dateTimePickerBirthday.Location = new System.Drawing.Point(288, 263);
 			this.dateTimePickerBirthday.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
 			this.dateTimePickerBirthday.MinDate = new System.DateTime(1920, 1, 1, 0, 0, 0, 0);
 			this.dateTimePickerBirthday.Name = "dateTimePickerBirthday";

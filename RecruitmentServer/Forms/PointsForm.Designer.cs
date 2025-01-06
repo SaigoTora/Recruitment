@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PointsForm));
 			this.NUDAgeUnder18 = new System.Windows.Forms.NumericUpDown();
 			this.labelAgeUnder18 = new System.Windows.Forms.Label();
 			this.NUDAge18_30 = new System.Windows.Forms.NumericUpDown();
@@ -58,11 +59,11 @@
 			this.NUDExpOver3 = new System.Windows.Forms.NumericUpDown();
 			this.labelExpOver3 = new System.Windows.Forms.Label();
 			this.recruitmentDBDataSet = new RecruitmentServer.RecruitmentDB();
-			this.comboBoxDegrees = new System.Windows.Forms.ComboBox();
 			this.educationDegreeBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.education_DegreeTableAdapter = new RecruitmentServer.RecruitmentDBTableAdapters.Education_DegreeTableAdapter();
 			this.NUDDegree = new System.Windows.Forms.NumericUpDown();
 			this.buttonCreate = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.comboBoxDegrees = new Guna.UI2.WinForms.Guna2ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeUnder18)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAge18_30)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeOver50)).BeginInit();
@@ -86,7 +87,7 @@
 			// 
 			this.NUDAgeUnder18.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDAgeUnder18.ForeColor = System.Drawing.Color.Black;
-			this.NUDAgeUnder18.Location = new System.Drawing.Point(428, 8);
+			this.NUDAgeUnder18.Location = new System.Drawing.Point(428, 21);
 			this.NUDAgeUnder18.Maximum = new decimal(new int[] {
             10,
             0,
@@ -103,7 +104,7 @@
 			this.labelAgeUnder18.BackColor = System.Drawing.Color.Transparent;
 			this.labelAgeUnder18.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeUnder18.ForeColor = System.Drawing.Color.Black;
-			this.labelAgeUnder18.Location = new System.Drawing.Point(12, 12);
+			this.labelAgeUnder18.Location = new System.Drawing.Point(12, 25);
 			this.labelAgeUnder18.Name = "labelAgeUnder18";
 			this.labelAgeUnder18.Size = new System.Drawing.Size(136, 29);
 			this.labelAgeUnder18.TabIndex = 0;
@@ -113,7 +114,7 @@
 			// 
 			this.NUDAge18_30.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDAge18_30.ForeColor = System.Drawing.Color.Black;
-			this.NUDAge18_30.Location = new System.Drawing.Point(428, 68);
+			this.NUDAge18_30.Location = new System.Drawing.Point(428, 81);
 			this.NUDAge18_30.Maximum = new decimal(new int[] {
             10,
             0,
@@ -130,7 +131,7 @@
 			this.labelAge18_30.BackColor = System.Drawing.Color.Transparent;
 			this.labelAge18_30.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAge18_30.ForeColor = System.Drawing.Color.Black;
-			this.labelAge18_30.Location = new System.Drawing.Point(12, 72);
+			this.labelAge18_30.Location = new System.Drawing.Point(12, 85);
 			this.labelAge18_30.Name = "labelAge18_30";
 			this.labelAge18_30.Size = new System.Drawing.Size(217, 29);
 			this.labelAge18_30.TabIndex = 2;
@@ -140,7 +141,7 @@
 			// 
 			this.NUDAgeOver50.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDAgeOver50.ForeColor = System.Drawing.Color.Black;
-			this.NUDAgeOver50.Location = new System.Drawing.Point(428, 188);
+			this.NUDAgeOver50.Location = new System.Drawing.Point(428, 201);
 			this.NUDAgeOver50.Maximum = new decimal(new int[] {
             10,
             0,
@@ -157,7 +158,7 @@
 			this.labelAgeOver50.BackColor = System.Drawing.Color.Transparent;
 			this.labelAgeOver50.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeOver50.ForeColor = System.Drawing.Color.Black;
-			this.labelAgeOver50.Location = new System.Drawing.Point(12, 192);
+			this.labelAgeOver50.Location = new System.Drawing.Point(12, 205);
 			this.labelAgeOver50.Name = "labelAgeOver50";
 			this.labelAgeOver50.Size = new System.Drawing.Size(191, 29);
 			this.labelAgeOver50.TabIndex = 6;
@@ -167,7 +168,7 @@
 			// 
 			this.NUDAge30_50.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDAge30_50.ForeColor = System.Drawing.Color.Black;
-			this.NUDAge30_50.Location = new System.Drawing.Point(428, 128);
+			this.NUDAge30_50.Location = new System.Drawing.Point(428, 141);
 			this.NUDAge30_50.Maximum = new decimal(new int[] {
             10,
             0,
@@ -184,7 +185,7 @@
 			this.labelAge30_50.BackColor = System.Drawing.Color.Transparent;
 			this.labelAge30_50.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAge30_50.ForeColor = System.Drawing.Color.Black;
-			this.labelAge30_50.Location = new System.Drawing.Point(12, 132);
+			this.labelAge30_50.Location = new System.Drawing.Point(12, 145);
 			this.labelAge30_50.Name = "labelAge30_50";
 			this.labelAge30_50.Size = new System.Drawing.Size(217, 29);
 			this.labelAge30_50.TabIndex = 4;
@@ -194,7 +195,7 @@
 			// 
 			this.NUDExp1_3.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDExp1_3.ForeColor = System.Drawing.Color.Black;
-			this.NUDExp1_3.Location = new System.Drawing.Point(428, 368);
+			this.NUDExp1_3.Location = new System.Drawing.Point(428, 381);
 			this.NUDExp1_3.Maximum = new decimal(new int[] {
             10,
             0,
@@ -211,7 +212,7 @@
 			this.labelExp1_3.BackColor = System.Drawing.Color.Transparent;
 			this.labelExp1_3.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExp1_3.ForeColor = System.Drawing.Color.Black;
-			this.labelExp1_3.Location = new System.Drawing.Point(12, 372);
+			this.labelExp1_3.Location = new System.Drawing.Point(12, 385);
 			this.labelExp1_3.Name = "labelExp1_3";
 			this.labelExp1_3.Size = new System.Drawing.Size(399, 29);
 			this.labelExp1_3.TabIndex = 12;
@@ -221,7 +222,7 @@
 			// 
 			this.NUDExpUnderYear.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDExpUnderYear.ForeColor = System.Drawing.Color.Black;
-			this.NUDExpUnderYear.Location = new System.Drawing.Point(428, 308);
+			this.NUDExpUnderYear.Location = new System.Drawing.Point(428, 321);
 			this.NUDExpUnderYear.Maximum = new decimal(new int[] {
             10,
             0,
@@ -238,7 +239,7 @@
 			this.labelExpUnderYear.BackColor = System.Drawing.Color.Transparent;
 			this.labelExpUnderYear.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpUnderYear.ForeColor = System.Drawing.Color.Black;
-			this.labelExpUnderYear.Location = new System.Drawing.Point(12, 312);
+			this.labelExpUnderYear.Location = new System.Drawing.Point(12, 325);
 			this.labelExpUnderYear.Name = "labelExpUnderYear";
 			this.labelExpUnderYear.Size = new System.Drawing.Size(355, 29);
 			this.labelExpUnderYear.TabIndex = 10;
@@ -248,7 +249,7 @@
 			// 
 			this.NUDExpNone.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDExpNone.ForeColor = System.Drawing.Color.Black;
-			this.NUDExpNone.Location = new System.Drawing.Point(428, 248);
+			this.NUDExpNone.Location = new System.Drawing.Point(428, 261);
 			this.NUDExpNone.Maximum = new decimal(new int[] {
             10,
             0,
@@ -265,7 +266,7 @@
 			this.labelExpNone.BackColor = System.Drawing.Color.Transparent;
 			this.labelExpNone.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpNone.ForeColor = System.Drawing.Color.Black;
-			this.labelExpNone.Location = new System.Drawing.Point(12, 252);
+			this.labelExpNone.Location = new System.Drawing.Point(12, 265);
 			this.labelExpNone.Name = "labelExpNone";
 			this.labelExpNone.Size = new System.Drawing.Size(295, 29);
 			this.labelExpNone.TabIndex = 8;
@@ -276,7 +277,7 @@
 			this.NUDBusinessTripOpportunity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDBusinessTripOpportunity.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
-			this.NUDBusinessTripOpportunity.Location = new System.Drawing.Point(1068, 368);
+			this.NUDBusinessTripOpportunity.Location = new System.Drawing.Point(1067, 381);
 			this.NUDBusinessTripOpportunity.Maximum = new decimal(new int[] {
             10,
             0,
@@ -294,7 +295,7 @@
 			this.labelBusinessTripOpportunity.BackColor = System.Drawing.Color.Transparent;
 			this.labelBusinessTripOpportunity.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
-			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(600, 372);
+			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(599, 385);
 			this.labelBusinessTripOpportunity.Name = "labelBusinessTripOpportunity";
 			this.labelBusinessTripOpportunity.Size = new System.Drawing.Size(338, 29);
 			this.labelBusinessTripOpportunity.TabIndex = 26;
@@ -305,7 +306,7 @@
 			this.NUDNoDrinkAlcohol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDNoDrinkAlcohol.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDNoDrinkAlcohol.ForeColor = System.Drawing.Color.Black;
-			this.NUDNoDrinkAlcohol.Location = new System.Drawing.Point(1068, 308);
+			this.NUDNoDrinkAlcohol.Location = new System.Drawing.Point(1067, 321);
 			this.NUDNoDrinkAlcohol.Maximum = new decimal(new int[] {
             10,
             0,
@@ -323,7 +324,7 @@
 			this.labelNoDrinkAlcohol.BackColor = System.Drawing.Color.Transparent;
 			this.labelNoDrinkAlcohol.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoDrinkAlcohol.ForeColor = System.Drawing.Color.Black;
-			this.labelNoDrinkAlcohol.Location = new System.Drawing.Point(600, 312);
+			this.labelNoDrinkAlcohol.Location = new System.Drawing.Point(599, 325);
 			this.labelNoDrinkAlcohol.Name = "labelNoDrinkAlcohol";
 			this.labelNoDrinkAlcohol.Size = new System.Drawing.Size(274, 29);
 			this.labelNoDrinkAlcohol.TabIndex = 24;
@@ -334,7 +335,7 @@
 			this.NUDNoSmoker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDNoSmoker.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDNoSmoker.ForeColor = System.Drawing.Color.Black;
-			this.NUDNoSmoker.Location = new System.Drawing.Point(1068, 248);
+			this.NUDNoSmoker.Location = new System.Drawing.Point(1067, 261);
 			this.NUDNoSmoker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -352,7 +353,7 @@
 			this.labelNoSmoker.BackColor = System.Drawing.Color.Transparent;
 			this.labelNoSmoker.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoSmoker.ForeColor = System.Drawing.Color.Black;
-			this.labelNoSmoker.Location = new System.Drawing.Point(600, 252);
+			this.labelNoSmoker.Location = new System.Drawing.Point(599, 265);
 			this.labelNoSmoker.Name = "labelNoSmoker";
 			this.labelNoSmoker.Size = new System.Drawing.Size(150, 29);
 			this.labelNoSmoker.TabIndex = 22;
@@ -363,7 +364,7 @@
 			this.NUDDriverLicense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDDriverLicense.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDDriverLicense.ForeColor = System.Drawing.Color.Black;
-			this.NUDDriverLicense.Location = new System.Drawing.Point(1068, 188);
+			this.NUDDriverLicense.Location = new System.Drawing.Point(1067, 201);
 			this.NUDDriverLicense.Maximum = new decimal(new int[] {
             10,
             0,
@@ -381,7 +382,7 @@
 			this.labelDriverLicense.BackColor = System.Drawing.Color.Transparent;
 			this.labelDriverLicense.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDriverLicense.ForeColor = System.Drawing.Color.Black;
-			this.labelDriverLicense.Location = new System.Drawing.Point(600, 192);
+			this.labelDriverLicense.Location = new System.Drawing.Point(599, 205);
 			this.labelDriverLicense.Name = "labelDriverLicense";
 			this.labelDriverLicense.Size = new System.Drawing.Size(375, 29);
 			this.labelDriverLicense.TabIndex = 20;
@@ -392,7 +393,7 @@
 			this.NUDNoChronicDiseases.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDNoChronicDiseases.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDNoChronicDiseases.ForeColor = System.Drawing.Color.Black;
-			this.NUDNoChronicDiseases.Location = new System.Drawing.Point(1068, 128);
+			this.NUDNoChronicDiseases.Location = new System.Drawing.Point(1067, 141);
 			this.NUDNoChronicDiseases.Maximum = new decimal(new int[] {
             10,
             0,
@@ -410,7 +411,7 @@
 			this.labelNoChronicDiseases.BackColor = System.Drawing.Color.Transparent;
 			this.labelNoChronicDiseases.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoChronicDiseases.ForeColor = System.Drawing.Color.Black;
-			this.labelNoChronicDiseases.Location = new System.Drawing.Point(600, 132);
+			this.labelNoChronicDiseases.Location = new System.Drawing.Point(599, 145);
 			this.labelNoChronicDiseases.Name = "labelNoChronicDiseases";
 			this.labelNoChronicDiseases.Size = new System.Drawing.Size(462, 29);
 			this.labelNoChronicDiseases.TabIndex = 18;
@@ -421,7 +422,7 @@
 			this.NUDDiploma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDDiploma.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDDiploma.ForeColor = System.Drawing.Color.Black;
-			this.NUDDiploma.Location = new System.Drawing.Point(1068, 68);
+			this.NUDDiploma.Location = new System.Drawing.Point(1067, 81);
 			this.NUDDiploma.Maximum = new decimal(new int[] {
             10,
             0,
@@ -439,7 +440,7 @@
 			this.labelDiploma.BackColor = System.Drawing.Color.Transparent;
 			this.labelDiploma.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDiploma.ForeColor = System.Drawing.Color.Black;
-			this.labelDiploma.Location = new System.Drawing.Point(600, 72);
+			this.labelDiploma.Location = new System.Drawing.Point(599, 85);
 			this.labelDiploma.Name = "labelDiploma";
 			this.labelDiploma.Size = new System.Drawing.Size(258, 29);
 			this.labelDiploma.TabIndex = 16;
@@ -450,7 +451,7 @@
 			this.NUDExpOver3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.NUDExpOver3.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDExpOver3.ForeColor = System.Drawing.Color.Black;
-			this.NUDExpOver3.Location = new System.Drawing.Point(1068, 8);
+			this.NUDExpOver3.Location = new System.Drawing.Point(1067, 21);
 			this.NUDExpOver3.Maximum = new decimal(new int[] {
             10,
             0,
@@ -468,7 +469,7 @@
 			this.labelExpOver3.BackColor = System.Drawing.Color.Transparent;
 			this.labelExpOver3.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpOver3.ForeColor = System.Drawing.Color.Black;
-			this.labelExpOver3.Location = new System.Drawing.Point(600, 12);
+			this.labelExpOver3.Location = new System.Drawing.Point(599, 25);
 			this.labelExpOver3.Name = "labelExpOver3";
 			this.labelExpOver3.Size = new System.Drawing.Size(388, 29);
 			this.labelExpOver3.TabIndex = 14;
@@ -478,25 +479,6 @@
 			// 
 			this.recruitmentDBDataSet.DataSetName = "RecruitmentDBDataSet";
 			this.recruitmentDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
-			// comboBoxDegrees
-			// 
-			this.comboBoxDegrees.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.comboBoxDegrees.DataSource = this.educationDegreeBindingSource;
-			this.comboBoxDegrees.DisplayMember = "degree";
-			this.comboBoxDegrees.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxDegrees.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.comboBoxDegrees.ForeColor = System.Drawing.Color.Black;
-			this.comboBoxDegrees.FormattingEnabled = true;
-			this.comboBoxDegrees.IntegralHeight = false;
-			this.comboBoxDegrees.Location = new System.Drawing.Point(12, 475);
-			this.comboBoxDegrees.MaxDropDownItems = 6;
-			this.comboBoxDegrees.MaxLength = 64;
-			this.comboBoxDegrees.Name = "comboBoxDegrees";
-			this.comboBoxDegrees.Size = new System.Drawing.Size(399, 36);
-			this.comboBoxDegrees.TabIndex = 28;
-			this.comboBoxDegrees.ValueMember = "id";
-			this.comboBoxDegrees.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDegrees_SelectedIndexChanged);
 			// 
 			// educationDegreeBindingSource
 			// 
@@ -509,9 +491,10 @@
 			// 
 			// NUDDegree
 			// 
+			this.NUDDegree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.NUDDegree.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NUDDegree.ForeColor = System.Drawing.Color.Black;
-			this.NUDDegree.Location = new System.Drawing.Point(428, 475);
+			this.NUDDegree.Location = new System.Drawing.Point(428, 485);
 			this.NUDDegree.Maximum = new decimal(new int[] {
             10,
             0,
@@ -543,7 +526,7 @@
 			this.buttonCreate.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonCreate.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonCreate.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonCreate.Location = new System.Drawing.Point(1072, 545);
+			this.buttonCreate.Location = new System.Drawing.Point(942, 548);
 			this.buttonCreate.Name = "buttonCreate";
 			this.buttonCreate.PressedColor = System.Drawing.Color.White;
 			this.buttonCreate.PressedDepth = 20;
@@ -553,14 +536,48 @@
 			this.buttonCreate.Text = "Створити";
 			this.buttonCreate.Click += new System.EventHandler(this.ButtonCreate_Click);
 			// 
+			// comboBoxDegrees
+			// 
+			this.comboBoxDegrees.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.comboBoxDegrees.Animated = true;
+			this.comboBoxDegrees.BackColor = System.Drawing.Color.Transparent;
+			this.comboBoxDegrees.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.comboBoxDegrees.BorderRadius = 8;
+			this.comboBoxDegrees.BorderThickness = 2;
+			this.comboBoxDegrees.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.comboBoxDegrees.DataSource = this.educationDegreeBindingSource;
+			this.comboBoxDegrees.DisplayMember = "degree";
+			this.comboBoxDegrees.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.comboBoxDegrees.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxDegrees.FillColor = System.Drawing.Color.LightGray;
+			this.comboBoxDegrees.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.comboBoxDegrees.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.comboBoxDegrees.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.comboBoxDegrees.ForeColor = System.Drawing.Color.Black;
+			this.comboBoxDegrees.FormattingEnabled = true;
+			this.comboBoxDegrees.IntegralHeight = false;
+			this.comboBoxDegrees.ItemHeight = 30;
+			this.comboBoxDegrees.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.comboBoxDegrees.Location = new System.Drawing.Point(17, 485);
+			this.comboBoxDegrees.MaxDropDownItems = 6;
+			this.comboBoxDegrees.MaxLength = 64;
+			this.comboBoxDegrees.Name = "comboBoxDegrees";
+			this.comboBoxDegrees.Size = new System.Drawing.Size(300, 36);
+			this.comboBoxDegrees.TabIndex = 28;
+			this.comboBoxDegrees.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.comboBoxDegrees.ValueMember = "id";
+			this.comboBoxDegrees.DropDown += new System.EventHandler(this.ComboBox_DropDown);
+			this.comboBoxDegrees.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDegrees_SelectedIndexChanged);
+			this.comboBoxDegrees.DropDownClosed += new System.EventHandler(this.ComboBox_DropDownClosed);
+			// 
 			// PointsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1264, 602);
+			this.ClientSize = new System.Drawing.Size(1140, 610);
+			this.Controls.Add(this.comboBoxDegrees);
 			this.Controls.Add(this.buttonCreate);
 			this.Controls.Add(this.NUDDegree);
-			this.Controls.Add(this.comboBoxDegrees);
 			this.Controls.Add(this.NUDBusinessTripOpportunity);
 			this.Controls.Add(this.labelBusinessTripOpportunity);
 			this.Controls.Add(this.NUDNoDrinkAlcohol);
@@ -589,8 +606,8 @@
 			this.Controls.Add(this.labelAge18_30);
 			this.Controls.Add(this.NUDAgeUnder18);
 			this.Controls.Add(this.labelAgeUnder18);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "PointsForm";
-			this.ShowIcon = false;
 			this.Text = "Бали";
 			this.Load += new System.EventHandler(this.PointsForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.NUDAgeUnder18)).EndInit();
@@ -645,10 +662,10 @@
         private System.Windows.Forms.NumericUpDown NUDExpOver3;
         private System.Windows.Forms.Label labelExpOver3;
         private RecruitmentDB recruitmentDBDataSet;
-        private System.Windows.Forms.ComboBox comboBoxDegrees;
         private System.Windows.Forms.BindingSource educationDegreeBindingSource;
         private RecruitmentDBTableAdapters.Education_DegreeTableAdapter education_DegreeTableAdapter;
         private System.Windows.Forms.NumericUpDown NUDDegree;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonCreate;
+		private Guna.UI2.WinForms.Guna2ComboBox comboBoxDegrees;
 	}
 }

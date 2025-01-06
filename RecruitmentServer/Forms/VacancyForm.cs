@@ -109,7 +109,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{// Обробник події зміни балів
 			points = DataBase.GetPoints(vacancy.IdPoint);// Отримуємо дані з БД
-			PointsForm pf = new PointsForm(points, true, account);
+			PointsForm pf = new PointsForm(account, points, true);
 			Visible = false;
 			pf.FormClosed += (s, args) =>
 			{ Visible = true; };
@@ -117,7 +117,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonPointsCreate_Click(object sender, EventArgs e)
 		{// Обробник події створення балів
-			PointsForm pf = new PointsForm(points, false, account);
+			PointsForm pf = new PointsForm(account, points, false);
 			Visible = false;
 			pf.FormClosed += (s, args) =>
 			{ Visible = true; };

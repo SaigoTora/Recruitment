@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Data;
 using System.Windows.Forms;
 
@@ -11,49 +12,66 @@ using UIHelpers.Themes;
 namespace RecruitmentServer.Forms
 {
 	internal partial class PointsForm : BaseForm, IThemeChange
-	{// Форма балів
-		private readonly Points points;// Об'єкт, який зберігає інформацію про кількість балів
-		private PointDegree[] degrees;// Масив, який зберігає інформацію про кількість балів для ступенів освіти
+	{
+		private readonly ServerAccount _account;
+		private readonly Points _points;
+		private PointDegree[] _degreesPoints;
 
-		internal PointsForm(Points points, bool isForView, ServerAccount account)
-		{// Конструктор форми
+		internal PointsForm(ServerAccount account, Points points, bool isFormForView)
+		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Бали", minimizeBox: false, maximizeBox: false);
-			this.points = points;
+			customTitleBar = new CustomTitleBar(this, "Бали", minimizeBox: false,
+				maximizeBox: false);
+			_account = account;
+			_points = points;
 
-			if (isForView)// Якщо форма відкрита для перегляду
-			{// То зміна даних забороняється
+			if (isFormForView)
+			{
 				buttonCreate.Visible = false;
-				NUDAgeUnder18.Enabled = false;
-				NUDAge18_30.Enabled = false;
-				NUDAge30_50.Enabled = false;
-				NUDAgeOver50.Enabled = false;
-				NUDExpNone.Enabled = false;
-				NUDExpUnderYear.Enabled = false;
-				NUDExp1_3.Enabled = false;
-				NUDExpOver3.Enabled = false;
-				NUDDiploma.Enabled = false;
-				NUDNoChronicDiseases.Enabled = false;
-				NUDDriverLicense.Enabled = false;
-				NUDNoSmoker.Enabled = false;
-				NUDNoDrinkAlcohol.Enabled = false;
-				NUDBusinessTripOpportunity.Enabled = false;
-				NUDDegree.Enabled = false;
+				SetAllNumericUpDownEnabled(false);
 			}
 			if (points.Degrees != null)
-			{// Заповнюємо масив degrees
-				degrees = new PointDegree[points.Degrees.Length];
-				for (int i = 0; i < points.Degrees.Length; i++)
-					degrees[i] = points.Degrees[i];
-			}
-			SetTheme(account.Theme);
+				FillDegreesFromPoints(points);
 		}
 		private void PointsForm_Load(object sender, EventArgs e)
-		{// Обробник події завантаження форми
+		{
 			education_DegreeTableAdapter.Fill(recruitmentDBDataSet.Education_Degree);
+			SetFormFields(_points);
 
-			// Зчитуємо дані з points
+			if (_degreesPoints == null)
+				FillDegreesFromComboBox();
+
+			comboBoxDegrees.SelectedIndex = 1;
+			SetTheme(_account.Theme);
+		}
+
+		private void FillDegreesFromPoints(Points points)
+		{
+			_degreesPoints = new PointDegree[points.Degrees.Length];
+			for (int i = 0; i < points.Degrees.Length; i++)
+				_degreesPoints[i] = points.Degrees[i];
+		}
+		private void FillDegreesFromComboBox()
+		{
+			DataRowView item;
+			_degreesPoints = new PointDegree[comboBoxDegrees.Items.Count];
+			for (int i = 0; i < comboBoxDegrees.Items.Count; i++)
+			{
+				item = comboBoxDegrees.Items[i] as DataRowView;
+
+				PointDegree pointDegree = new PointDegree(int.Parse(item[0].ToString()), 0);
+				_degreesPoints[i] = pointDegree;
+			}
+		}
+		private void SetAllNumericUpDownEnabled(bool enabled)
+		{
+			foreach (Control control in this.Controls)
+				if (control is NumericUpDown)
+					control.Enabled = enabled;
+		}
+		private void SetFormFields(Points points)
+		{
 			NUDAgeUnder18.Value = points.AgeUnder18;
 			NUDAge18_30.Value = points.Age18_30;
 			NUDAge30_50.Value = points.Age30_50;
@@ -68,58 +86,65 @@ namespace RecruitmentServer.Forms
 			NUDNoSmoker.Value = points.NoSmoker;
 			NUDNoDrinkAlcohol.Value = points.NoDrinkAlcohol;
 			NUDBusinessTripOpportunity.Value = points.BusinessTripOpportunity;
-
-			if (degrees == null)
-			{// Заповнюємо масив degrees
-				DataRowView item;
-				degrees = new PointDegree[comboBoxDegrees.Items.Count];
-				for (int i = 0; i < comboBoxDegrees.Items.Count; i++)
-				{// Цикл по елементам comboBoxDegrees
-					item = comboBoxDegrees.Items[i] as DataRowView;// Отримуємо елемент
-
-					PointDegree pd = new PointDegree(int.Parse(item[0].ToString()), 0);
-					degrees[i] = pd;
-				}
-			}
-			else// Обираємо перший елемент, щоб він змінився
-				ComboBoxDegrees_SelectedIndexChanged(comboBoxDegrees, EventArgs.Empty);
 		}
 
+		#region Degrees event handlers
+		private void NUDDegree_ValueChanged(object sender, EventArgs e)
+		{
+			int id = int.Parse(comboBoxDegrees.SelectedValue.ToString());
+			int index = FindDegreeIndexById(id);
+
+			if (index >= 0)
+				_degreesPoints[index] = new PointDegree(id, (int)NUDDegree.Value);
+		}
+		private void ComboBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			int id = int.Parse(comboBoxDegrees.SelectedValue.ToString());
+			int index = FindDegreeIndexById(id);
+
+			if (index >= 0)
+				NUDDegree.Value = _degreesPoints[index].Point;
+			else
+				NUDDegree.Value = 0;
+		}
+		private int FindDegreeIndexById(int id)
+		{
+			for (int i = 0; i < _degreesPoints.Length; i++)
+				if (_degreesPoints[i].IdDegree == id)
+					return i;
+
+			return -1;
+		}
+
+		private void ComboBox_DropDown(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = false;
+				comboBox.CustomizableEdges.BottomRight = false;
+			}
+		}
+		private void ComboBox_DropDownClosed(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = true;
+				comboBox.CustomizableEdges.BottomRight = true;
+			}
+		}
+		#endregion
+
 		private void ButtonCreate_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку створення вакансії
-			points.Change((int)NUDAgeUnder18.Value, (int)NUDAge18_30.Value,
+		{
+			_points.Change((int)NUDAgeUnder18.Value, (int)NUDAge18_30.Value,
 				(int)NUDAge30_50.Value, (int)NUDAgeOver50.Value, (int)NUDExpNone.Value,
 				(int)NUDExpUnderYear.Value, (int)NUDExp1_3.Value, (int)NUDExpOver3.Value,
 				(int)NUDDiploma.Value, (int)NUDNoChronicDiseases.Value,
 				(int)NUDDriverLicense.Value, (int)NUDNoSmoker.Value,
-				(int)NUDNoDrinkAlcohol.Value, (int)NUDBusinessTripOpportunity.Value, degrees);
+				(int)NUDNoDrinkAlcohol.Value, (int)NUDBusinessTripOpportunity.Value,
+				_degreesPoints);
 
 			Close();
-		}
-
-		private int GetIndexDegreeById(int id)
-		{// Метод знаходить індекс degrees за його Id
-			for (int i = 0; i < degrees.Length; i++)
-				if (degrees[i].IdDegree == id)
-					return i;
-
-			return -1;// Якщо не було знайдено
-		}
-		private void NUDDegree_ValueChanged(object sender, EventArgs e)
-		{// Обробник події зміни кількості балів для ступеня освіти
-			int id = int.Parse(comboBoxDegrees.SelectedValue.ToString());
-			int index = GetIndexDegreeById(id);
-			if (index >= 0)
-				degrees[index] = new PointDegree(id, (int)NUDDegree.Value);
-		}
-		private void ComboBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
-		{// Обробник події для зміни ступеня освіти
-			int id = int.Parse(comboBoxDegrees.SelectedValue.ToString());
-			int index = GetIndexDegreeById(id);
-			if (index >= 0)
-				NUDDegree.Value = degrees[index].Point;
-			else
-				NUDDegree.Value = 0;
 		}
 
 		public void SetTheme(Theme theme)
