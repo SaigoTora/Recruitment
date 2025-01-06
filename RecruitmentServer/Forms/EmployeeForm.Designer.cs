@@ -281,14 +281,14 @@
 			this.textBoxSalary.HoverState.BorderColor = System.Drawing.Color.Black;
 			this.textBoxSalary.Location = new System.Drawing.Point(251, 145);
 			this.textBoxSalary.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-			this.textBoxSalary.MaxLength = 18;
+			this.textBoxSalary.MaxLength = 10;
 			this.textBoxSalary.Name = "textBoxSalary";
 			this.textBoxSalary.PasswordChar = '\0';
 			this.textBoxSalary.PlaceholderForeColor = System.Drawing.Color.DarkGray;
 			this.textBoxSalary.PlaceholderText = "";
 			this.textBoxSalary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxSalary.SelectedText = "";
-			this.textBoxSalary.Size = new System.Drawing.Size(150, 40);
+			this.textBoxSalary.Size = new System.Drawing.Size(155, 40);
 			this.textBoxSalary.TabIndex = 4;
 			this.textBoxSalary.TextOffset = new System.Drawing.Point(3, 0);
 			this.textBoxSalary.TextChanged += new System.EventHandler(this.TextBoxSalary_TextChanged);

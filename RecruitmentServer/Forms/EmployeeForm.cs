@@ -6,6 +6,7 @@ using RecruitmentServer.ServerUtilities;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using UIHelpers.Validation;
 
 namespace RecruitmentServer.Forms
 {
@@ -73,59 +74,81 @@ namespace RecruitmentServer.Forms
 		#region Button event handlers
 		private void ButtonChangePosition_Click(object sender, EventArgs e)
 		{
-			if (textBoxPosition.Text.Contains(Server.SEPARATOR.ToString()))
+			if (CheckValidPosition())
 			{
-				CustomMessageBox.Show("В посаді не може бути заборонений символ: ¤",
-					_account.Theme, "Помилка введення", CustomMessageBoxButtons.OK,
-					CustomMessageBoxIcon.Error);
-				return;
-			}
+				DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
+					$"хочете змінити посаду?", _account.Theme, "Зміна посади",
+					CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+				buttonChangePosition.Visible = false;
 
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
-				$"хочете змінити посаду?", _account.Theme, "Зміна посади",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
-			buttonChangePosition.Visible = false;
-
-			if (result == DialogResult.Yes)
-			{
-				try
+				if (result == DialogResult.Yes)
 				{
-					DataBase.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
-					_employee.ChangePosition(textBoxPosition.Text);
-					_actionUpdateOrDelete(EventArgs.Empty);
-				}
-				catch
-				{
-					CustomMessageBox.Show("Дані були введені не вірно!",
-						_account.Theme, "Помилка введення",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					try
+					{
+						DataBase.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
+						_employee.ChangePosition(textBoxPosition.Text);
+						_actionUpdateOrDelete(EventArgs.Empty);
+					}
+					catch
+					{
+						CustomMessageBox.Show("Дані були введені не вірно!",
+							_account.Theme, "Помилка введення",
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					}
 				}
 			}
 			textBoxPosition.Text = _employee.Position.ToString();
 		}
 		private void ButtonChangeSalary_Click(object sender, EventArgs e)
 		{
-			DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
-				$"хочете змінити зарплату?", _account.Theme, "Зміна зарплати",
-				CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
-			buttonChangeSalary.Visible = false;
-
-			if (result == DialogResult.Yes)
+			if (CheckValidSalary())
 			{
-				try
+				DialogResult result = CustomMessageBox.Show($"Ви впевнені, що " +
+					$"хочете змінити зарплату?", _account.Theme, "Зміна зарплати",
+					CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Question);
+				buttonChangeSalary.Visible = false;
+
+				if (result == DialogResult.Yes)
 				{
-					DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
-						_employee.Id);
-					_employee.ChangeSalary(double.Parse(textBoxSalary.Text));
-					_actionUpdateOrDelete(EventArgs.Empty);
-				}
-				catch
-				{
-					CustomMessageBox.Show("Дані були введені не вірно!", _account.Theme,
-						"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					try
+					{
+						DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
+							_employee.Id);
+						_employee.ChangeSalary(double.Parse(textBoxSalary.Text));
+						_actionUpdateOrDelete(EventArgs.Empty);
+					}
+					catch
+					{
+						CustomMessageBox.Show("Дані були введені не вірно!",
+							_account.Theme, "Помилка",
+							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					}
 				}
 			}
 			textBoxSalary.Text = _employee.Salary.ToString();
+		}
+
+		private bool CheckValidPosition()
+		{
+			Validator validator = new Validator();
+			Label labelPosition = new Label() { Text = "Посада" };
+			validator.CheckBannedChar(labelPosition, textBoxPosition.Text,
+				Server.SEPARATOR, _account.Theme);
+			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
+
+			return validator.IsDataValid;
+		}
+		private bool CheckValidSalary()
+		{
+			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme,
+				labelSalaryTitle);
+
+			Validator validator = new Validator();
+			validator.CheckSymbols(labelSalaryTitle, textBoxSalary, _account.Theme,
+				ValidLanguage.None, "0123456789,");
+			validator.CheckMinLength(labelSalaryTitle, textBoxSalary, 1, _account.Theme);
+
+			return validator.IsDataValid;
 		}
 		#endregion
 
