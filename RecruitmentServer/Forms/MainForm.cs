@@ -575,8 +575,8 @@ namespace RecruitmentServer.Forms
 				return;
 
 			FullApplication application = _buttonApplicationMap[button];
-			ApplicationForm applicationForm = new ApplicationForm(application,
-				SelectLabel, _account);
+			ApplicationForm applicationForm = new ApplicationForm(_account, application,
+				SelectLabel);
 			applicationForm.ShowDialog();
 		}
 		private void ButtonInterview_Click(object sender, EventArgs e)

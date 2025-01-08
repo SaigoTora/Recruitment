@@ -71,17 +71,17 @@
 			this.comboBoxBusinessTripOpportunity = new Guna.UI2.WinForms.Guna2ComboBox();
 			this.comboBoxFamilyStatus = new Guna.UI2.WinForms.Guna2ComboBox();
 			this.comboBoxNationality = new Guna.UI2.WinForms.Guna2ComboBox();
-			this.guna2GroupBox3 = new Guna.UI2.WinForms.Guna2GroupBox();
+			this.groupBoxDrinkAlcohol = new Guna.UI2.WinForms.Guna2GroupBox();
 			this.labelDrinkAlcoholYes = new System.Windows.Forms.Label();
 			this.labelDrinkAlcoholNo = new System.Windows.Forms.Label();
 			this.radioButtonDrinkAlcoholYes = new Guna.UI2.WinForms.Guna2CustomRadioButton();
 			this.radioButtonDrinkAlcoholNo = new Guna.UI2.WinForms.Guna2CustomRadioButton();
-			this.guna2GroupBox2 = new Guna.UI2.WinForms.Guna2GroupBox();
+			this.groupBoxSmoker = new Guna.UI2.WinForms.Guna2GroupBox();
 			this.labelSmokerYes = new System.Windows.Forms.Label();
 			this.labelSmokerNo = new System.Windows.Forms.Label();
 			this.radioButtonSmokerYes = new Guna.UI2.WinForms.Guna2CustomRadioButton();
 			this.radioButtonSmokerNo = new Guna.UI2.WinForms.Guna2CustomRadioButton();
-			this.guna2GroupBox1 = new Guna.UI2.WinForms.Guna2GroupBox();
+			this.groupBoxDriverLicense = new Guna.UI2.WinForms.Guna2GroupBox();
 			this.labelDriverLicenseYes = new System.Windows.Forms.Label();
 			this.labelDriverLicenseNo = new System.Windows.Forms.Label();
 			this.radioButtonDriverLicenseYes = new Guna.UI2.WinForms.Guna2CustomRadioButton();
@@ -106,9 +106,9 @@
 			this.panelEducation.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearAdmission)).BeginInit();
 			this.panelMain.SuspendLayout();
-			this.guna2GroupBox3.SuspendLayout();
-			this.guna2GroupBox2.SuspendLayout();
-			this.guna2GroupBox1.SuspendLayout();
+			this.groupBoxDrinkAlcohol.SuspendLayout();
+			this.groupBoxSmoker.SuspendLayout();
+			this.groupBoxDriverLicense.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// labelNationality
@@ -857,9 +857,9 @@
 			this.panelMain.Controls.Add(this.comboBoxBusinessTripOpportunity);
 			this.panelMain.Controls.Add(this.comboBoxFamilyStatus);
 			this.panelMain.Controls.Add(this.comboBoxNationality);
-			this.panelMain.Controls.Add(this.guna2GroupBox3);
-			this.panelMain.Controls.Add(this.guna2GroupBox2);
-			this.panelMain.Controls.Add(this.guna2GroupBox1);
+			this.panelMain.Controls.Add(this.groupBoxDrinkAlcohol);
+			this.panelMain.Controls.Add(this.groupBoxSmoker);
+			this.panelMain.Controls.Add(this.groupBoxDriverLicense);
 			this.panelMain.Controls.Add(this.richTextBoxAdditionalInfo);
 			this.panelMain.Controls.Add(this.richTextBoxChronicDiseases);
 			this.panelMain.Controls.Add(this.textBoxCity);
@@ -1177,23 +1177,23 @@
 			this.comboBoxNationality.DropDown += new System.EventHandler(this.ComboBox_DropDown);
 			this.comboBoxNationality.DropDownClosed += new System.EventHandler(this.ComboBox_DropDownClosed);
 			// 
-			// guna2GroupBox3
+			// groupBoxDrinkAlcohol
 			// 
-			this.guna2GroupBox3.BorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox3.Controls.Add(this.labelDrinkAlcoholYes);
-			this.guna2GroupBox3.Controls.Add(this.labelDrinkAlcoholNo);
-			this.guna2GroupBox3.Controls.Add(this.radioButtonDrinkAlcoholYes);
-			this.guna2GroupBox3.Controls.Add(this.radioButtonDrinkAlcoholNo);
-			this.guna2GroupBox3.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox3.CustomBorderThickness = new System.Windows.Forms.Padding(0);
-			this.guna2GroupBox3.FillColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.guna2GroupBox3.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox3.Location = new System.Drawing.Point(535, 540);
-			this.guna2GroupBox3.Name = "guna2GroupBox3";
-			this.guna2GroupBox3.Size = new System.Drawing.Size(180, 33);
-			this.guna2GroupBox3.TabIndex = 15;
-			this.guna2GroupBox3.Text = "guna2GroupBox3";
+			this.groupBoxDrinkAlcohol.BorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxDrinkAlcohol.Controls.Add(this.labelDrinkAlcoholYes);
+			this.groupBoxDrinkAlcohol.Controls.Add(this.labelDrinkAlcoholNo);
+			this.groupBoxDrinkAlcohol.Controls.Add(this.radioButtonDrinkAlcoholYes);
+			this.groupBoxDrinkAlcohol.Controls.Add(this.radioButtonDrinkAlcoholNo);
+			this.groupBoxDrinkAlcohol.CustomBorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxDrinkAlcohol.CustomBorderThickness = new System.Windows.Forms.Padding(0);
+			this.groupBoxDrinkAlcohol.FillColor = System.Drawing.Color.Transparent;
+			this.groupBoxDrinkAlcohol.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.groupBoxDrinkAlcohol.ForeColor = System.Drawing.Color.Transparent;
+			this.groupBoxDrinkAlcohol.Location = new System.Drawing.Point(535, 540);
+			this.groupBoxDrinkAlcohol.Name = "groupBoxDrinkAlcohol";
+			this.groupBoxDrinkAlcohol.Size = new System.Drawing.Size(180, 33);
+			this.groupBoxDrinkAlcohol.TabIndex = 15;
+			this.groupBoxDrinkAlcohol.Text = "guna2GroupBox3";
 			// 
 			// labelDrinkAlcoholYes
 			// 
@@ -1273,23 +1273,23 @@
 			this.radioButtonDrinkAlcoholNo.UncheckedState.FillColor = System.Drawing.Color.Transparent;
 			this.radioButtonDrinkAlcoholNo.UncheckedState.InnerOffset = 1;
 			// 
-			// guna2GroupBox2
+			// groupBoxSmoker
 			// 
-			this.guna2GroupBox2.BorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox2.Controls.Add(this.labelSmokerYes);
-			this.guna2GroupBox2.Controls.Add(this.labelSmokerNo);
-			this.guna2GroupBox2.Controls.Add(this.radioButtonSmokerYes);
-			this.guna2GroupBox2.Controls.Add(this.radioButtonSmokerNo);
-			this.guna2GroupBox2.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox2.CustomBorderThickness = new System.Windows.Forms.Padding(0);
-			this.guna2GroupBox2.FillColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.guna2GroupBox2.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox2.Location = new System.Drawing.Point(256, 480);
-			this.guna2GroupBox2.Name = "guna2GroupBox2";
-			this.guna2GroupBox2.Size = new System.Drawing.Size(180, 33);
-			this.guna2GroupBox2.TabIndex = 13;
-			this.guna2GroupBox2.Text = "guna2GroupBox2";
+			this.groupBoxSmoker.BorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxSmoker.Controls.Add(this.labelSmokerYes);
+			this.groupBoxSmoker.Controls.Add(this.labelSmokerNo);
+			this.groupBoxSmoker.Controls.Add(this.radioButtonSmokerYes);
+			this.groupBoxSmoker.Controls.Add(this.radioButtonSmokerNo);
+			this.groupBoxSmoker.CustomBorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxSmoker.CustomBorderThickness = new System.Windows.Forms.Padding(0);
+			this.groupBoxSmoker.FillColor = System.Drawing.Color.Transparent;
+			this.groupBoxSmoker.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.groupBoxSmoker.ForeColor = System.Drawing.Color.Transparent;
+			this.groupBoxSmoker.Location = new System.Drawing.Point(256, 480);
+			this.groupBoxSmoker.Name = "groupBoxSmoker";
+			this.groupBoxSmoker.Size = new System.Drawing.Size(180, 33);
+			this.groupBoxSmoker.TabIndex = 13;
+			this.groupBoxSmoker.Text = "guna2GroupBox2";
 			// 
 			// labelSmokerYes
 			// 
@@ -1369,23 +1369,23 @@
 			this.radioButtonSmokerNo.UncheckedState.FillColor = System.Drawing.Color.Transparent;
 			this.radioButtonSmokerNo.UncheckedState.InnerOffset = 1;
 			// 
-			// guna2GroupBox1
+			// groupBoxDriverLicense
 			// 
-			this.guna2GroupBox1.BorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox1.Controls.Add(this.labelDriverLicenseYes);
-			this.guna2GroupBox1.Controls.Add(this.labelDriverLicenseNo);
-			this.guna2GroupBox1.Controls.Add(this.radioButtonDriverLicenseYes);
-			this.guna2GroupBox1.Controls.Add(this.radioButtonDriverLicenseNo);
-			this.guna2GroupBox1.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox1.CustomBorderThickness = new System.Windows.Forms.Padding(0);
-			this.guna2GroupBox1.FillColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.guna2GroupBox1.ForeColor = System.Drawing.Color.Transparent;
-			this.guna2GroupBox1.Location = new System.Drawing.Point(501, 390);
-			this.guna2GroupBox1.Name = "guna2GroupBox1";
-			this.guna2GroupBox1.Size = new System.Drawing.Size(180, 33);
-			this.guna2GroupBox1.TabIndex = 11;
-			this.guna2GroupBox1.Text = "guna2GroupBox1";
+			this.groupBoxDriverLicense.BorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxDriverLicense.Controls.Add(this.labelDriverLicenseYes);
+			this.groupBoxDriverLicense.Controls.Add(this.labelDriverLicenseNo);
+			this.groupBoxDriverLicense.Controls.Add(this.radioButtonDriverLicenseYes);
+			this.groupBoxDriverLicense.Controls.Add(this.radioButtonDriverLicenseNo);
+			this.groupBoxDriverLicense.CustomBorderColor = System.Drawing.Color.Transparent;
+			this.groupBoxDriverLicense.CustomBorderThickness = new System.Windows.Forms.Padding(0);
+			this.groupBoxDriverLicense.FillColor = System.Drawing.Color.Transparent;
+			this.groupBoxDriverLicense.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.groupBoxDriverLicense.ForeColor = System.Drawing.Color.Transparent;
+			this.groupBoxDriverLicense.Location = new System.Drawing.Point(501, 390);
+			this.groupBoxDriverLicense.Name = "groupBoxDriverLicense";
+			this.groupBoxDriverLicense.Size = new System.Drawing.Size(180, 33);
+			this.groupBoxDriverLicense.TabIndex = 11;
+			this.groupBoxDriverLicense.Text = "guna2GroupBox1";
 			// 
 			// labelDriverLicenseYes
 			// 
@@ -1778,12 +1778,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearAdmission)).EndInit();
 			this.panelMain.ResumeLayout(false);
 			this.panelMain.PerformLayout();
-			this.guna2GroupBox3.ResumeLayout(false);
-			this.guna2GroupBox3.PerformLayout();
-			this.guna2GroupBox2.ResumeLayout(false);
-			this.guna2GroupBox2.PerformLayout();
-			this.guna2GroupBox1.ResumeLayout(false);
-			this.guna2GroupBox1.PerformLayout();
+			this.groupBoxDrinkAlcohol.ResumeLayout(false);
+			this.groupBoxDrinkAlcohol.PerformLayout();
+			this.groupBoxSmoker.ResumeLayout(false);
+			this.groupBoxSmoker.PerformLayout();
+			this.groupBoxDriverLicense.ResumeLayout(false);
+			this.groupBoxDriverLicense.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1835,17 +1835,17 @@
 		private Guna.UI2.WinForms.Guna2TextBox textBoxNameInstitution;
 		private Guna.UI2.WinForms.Guna2TextBox textBoxSpecialty;
 		private Guna.UI2.WinForms.Guna2DateTimePicker dateTimePickerDateEnd;
-		private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox1;
+		private Guna.UI2.WinForms.Guna2GroupBox groupBoxDriverLicense;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonDriverLicenseNo;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonDriverLicenseYes;
 		private System.Windows.Forms.Label labelDriverLicenseNo;
 		private System.Windows.Forms.Label labelDriverLicenseYes;
-		private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox2;
+		private Guna.UI2.WinForms.Guna2GroupBox groupBoxSmoker;
 		private System.Windows.Forms.Label labelSmokerYes;
 		private System.Windows.Forms.Label labelSmokerNo;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonSmokerYes;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonSmokerNo;
-		private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox3;
+		private Guna.UI2.WinForms.Guna2GroupBox groupBoxDrinkAlcohol;
 		private System.Windows.Forms.Label labelDrinkAlcoholYes;
 		private System.Windows.Forms.Label labelDrinkAlcoholNo;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonDrinkAlcoholYes;

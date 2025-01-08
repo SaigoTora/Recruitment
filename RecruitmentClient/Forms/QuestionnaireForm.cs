@@ -255,10 +255,12 @@ namespace RecruitmentClient.Forms
 				(_educations.Count + 1).ToString());
 			Label labelInstitution = _educationCreator.CreateLabel(labelNameInstitution,
 				labelNameInstitution.Text);
-			Label labelSpec = _educationCreator.CreateLabel(labelSpecialty, labelSpecialty.Text);
+			Label labelSpec = _educationCreator.CreateLabel(labelSpecialty,
+				labelSpecialty.Text);
 			Label labelAdmission = _educationCreator.CreateLabel(labelYearAdmission,
 				labelYearAdmission.Text);
-			Label labelEndDate = _educationCreator.CreateLabel(labelDateEnd, labelDateEnd.Text);
+			Label labelEndDate = _educationCreator.CreateLabel(labelDateEnd,
+				labelDateEnd.Text);
 			_educationCreator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
 			_educationCreator.CreateLabel(labelEducationForm, labelEducationForm.Text);
 
@@ -266,7 +268,8 @@ namespace RecruitmentClient.Forms
 				CreateTextBox(textBoxNameInstitution);
 			Guna2TextBox textBoxSpec = _educationCreator.CreateTextBox(textBoxSpecialty);
 
-			NumericUpDown nudAdmission = _educationCreator.CreateNumericUpDown(numericUpDownYearAdmission);
+			NumericUpDown nudAdmission = _educationCreator.CreateNumericUpDown(
+				numericUpDownYearAdmission);
 			nudAdmission.Value = _defaultYearAdmission;
 
 			Guna2ComboBox comboBoxDegree = _educationCreator.
@@ -345,16 +348,20 @@ namespace RecruitmentClient.Forms
 		{
 			List<Language> languages = new List<Language>(MAX_LANGUAGE_COUNT);
 			for (int i = 0; i < _languages.Count; i++)
-				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(), (int)_languages[i].NUDLevel.Value));
+				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(),
+					(int)_languages[i].NUDLevel.Value));
 
 			return languages;
 		}
 		private List<Education> ReadEducationsFromForm()
 		{
 			List<Education> educations = new List<Education>(MAX_EDUCATION_COUNT);
-			for (int i = 0; i < _educations.Count; i++)// Зчитуємо освіти з форми
-				educations.Add(new Education(_educations[i].TextBoxNameInstitution.Text, _educations[i].TextBoxSpecialty.Text,
-					(int)_educations[i].NUD_YearAdmission.Value, _educations[i].DTP_DateEnd.Value, _educations[i].CB_EducationDegree.SelectedIndex + 1,
+			for (int i = 0; i < _educations.Count; i++)
+				educations.Add(new Education(_educations[i].TextBoxNameInstitution.Text,
+					_educations[i].TextBoxSpecialty.Text,
+					(int)_educations[i].NUD_YearAdmission.Value,
+					_educations[i].DTP_DateEnd.Value,
+					_educations[i].CB_EducationDegree.SelectedIndex + 1,
 					_educations[i].CB_EducationForm.SelectedIndex + 1));
 
 			return educations;
@@ -417,11 +424,15 @@ namespace RecruitmentClient.Forms
 		{
 			for (int i = 0; i < _languages.Count; i++)
 				for (int j = i + 1; j < _languages.Count; j++)
-					if (_languages[i].ComboBoxName.SelectedIndex == _languages[j].ComboBoxName.SelectedIndex)
+					if (_languages[i].ComboBoxName.SelectedIndex
+						== _languages[j].ComboBoxName.SelectedIndex)
 					{
-						ValidationFeedbackManager.HighlightInvalidLabel(_languages[i].LabelName, "Список мов не може зберігати дві однакові мови.",
+						ValidationFeedbackManager.HighlightInvalidLabel(
+							_languages[i].LabelName, "Список мов не може " +
+							"зберігати дві однакові мови.",
 							_account.Theme, ref isDataValid);
-						ValidationFeedbackManager.HighlightInvalidLabel(_languages[j].LabelName);
+						ValidationFeedbackManager.HighlightInvalidLabel(
+							_languages[j].LabelName);
 						break;
 					}
 		}
@@ -431,9 +442,12 @@ namespace RecruitmentClient.Forms
 				for (int j = i + 1; j < _educations.Count; j++)
 					if (_educations[i].Equals(_educations[j]))
 					{
-						ValidationFeedbackManager.HighlightInvalidLabel(_educations[i].LabelNameInstitution,
-							"Список освіт не може зберігати дві однакові освіти.", _account.Theme, ref isDataValid);
-						ValidationFeedbackManager.HighlightInvalidLabel(_educations[j].LabelNameInstitution);
+						ValidationFeedbackManager.HighlightInvalidLabel(
+							_educations[i].LabelNameInstitution,
+							"Список освіт не може зберігати дві однакові освіти.",
+							_account.Theme, ref isDataValid);
+						ValidationFeedbackManager.HighlightInvalidLabel(
+							_educations[j].LabelNameInstitution);
 						break;
 					}
 		}

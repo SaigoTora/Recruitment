@@ -101,7 +101,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{// Обробник події натискання на кнопку "Заявка"
 			FullApplication application = DataBase.GetApplication(interview.IdApplication);
-			ApplicationForm af = new ApplicationForm(application, null, account);
+			ApplicationForm af = new ApplicationForm(account, application, null);
 			Visible = false;
 			af.FormClosed += (s, args) =>
 			{ Visible = true; };

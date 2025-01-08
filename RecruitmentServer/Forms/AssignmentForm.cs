@@ -188,12 +188,12 @@ namespace RecruitmentServer.Forms
 				return;
 
 			FullApplication application = _buttonApplicationMap[button];
-			ApplicationForm applicationForm = new ApplicationForm(application,
+			ApplicationForm applicationForm = new ApplicationForm(_account, application,
 				(args) =>
 				{
 					button.Visible = false;
 					_refreshMainForm(EventArgs.Empty);
-				}, _account);
+				});
 
 			applicationForm.ShowDialog();
 		}

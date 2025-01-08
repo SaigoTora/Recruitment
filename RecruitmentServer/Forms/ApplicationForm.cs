@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
@@ -12,55 +13,57 @@ using UIHelpers.Validation;
 namespace RecruitmentServer.Forms
 {
 	internal partial class ApplicationForm : BaseForm, IThemeChange
-	{// Форма заявки
-		private const int MIN_HOURS_WAIT_TO_EVENT = 12;// Через скільки годин можна буде запланувати співбесіду
+	{
+		private readonly ServerAccount _account;
+		private readonly FullApplication _application;
+		private readonly Action<EventArgs> _actionAfterChange;
 
-		private readonly FullApplication application;// Заявка
-		private readonly ServerAccount account;// Акаунт
-
-		private readonly Action<EventArgs> refresh;// Перезавантаження головної форми
-
-		internal ApplicationForm(FullApplication application, Action<EventArgs> refresh, ServerAccount account)
-		{// Конструктор форми створення вакансії
+		internal ApplicationForm(ServerAccount account, FullApplication application,
+			Action<EventArgs> actionAfterChange)
+		{
 			InitializeComponent();
-			customTitleBar = new CustomTitleBar(this, $"Заявка ({application.Status})", minimizeBox: false, maximizeBox: false);
+
+			customTitleBar = new CustomTitleBar(this, $"Заявка ({application.Status})",
+				minimizeBox: false, maximizeBox: false);
+			_account = account;
+			_application = application;
+			_actionAfterChange = actionAfterChange;
+		}
+		private void ApplicationForm_Load(object sender, EventArgs e)
+		{
 			application_StatusTableAdapter.Fill(recruitmentDBDataSet.Application_Status);
+			SetFormFields(_application);
+			SetTheme(_account.Theme);
+		}
 
-			this.application = application;
-			this.refresh = refresh;
-
-			richTextBoxPosition.Text = application.Position.Name;
+		private void SetFormFields(FullApplication application)
+		{
+			textBoxPosition.Text = application.Position.Name;
 			labelScores.Text = "Балів: " + application.Scores;
-			labelDatePublication.Text = "Дата і час подачі: " + application.DateSubmission.ToString("d MMMM yyyy HH:mm");
+			labelDatePublication.Text = "Дата і час подачі: " +
+				application.DateSubmission.ToString("d MMMM yyyy HH:mm");
 
-			// Додаткова інформація
 			if (application.AdditionalInfo != null && application.AdditionalInfo.Length > 0)
 				richTextBoxAdditionalInfo.Text = application.AdditionalInfo;
 
-			if (application.ReasonRejection != null && application.ReasonRejection.Length > 0)
-			{// Якщо є причина відмови
+			if (application.ReasonRejection != null
+				&& application.ReasonRejection.Length > 0)
 				buttonReasonRejection.Visible = true;
-				buttonReasonRejection.Click += (sender, e) =>
-				{
-					CustomMessageBox.Show(application.ReasonRejection, account.Theme, "Причина відмови",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
-				};
-			}
 
 			if (application.Status != "В очікуванні")
-			{// Вимикаємо функцію зміну статусу, якщо статус НЕ "В очікуванні"
+			{
 				labelStatus.Visible = false;
 				comboBoxDecision.Visible = false;
 				buttonApply.Visible = false;
 			}
 
-			this.account = account;
-			SetTheme(account.Theme);
-		}
-		private void ApplicationForm_Load(object sender, EventArgs e)
-		{// Обробник події завантаження форми
-			if (comboBoxDecision.Visible)// Обираємо перший елемент, щоб він змінився
+			if (comboBoxDecision.Visible)// Select the first element to change it
 				ComboBoxDecision_SelectedIndexChanged(comboBoxDecision, EventArgs.Empty);
+
+			SetDefaultInterviewDateValues();
+		}
+		private void SetDefaultInterviewDateValues()
+		{
 			dateTimePickerInterview.MinDate = DateTime.Now;
 			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1);
 			dateTimePickerInterview.Value = DateTime.Now.AddDays(7);
@@ -68,51 +71,110 @@ namespace RecruitmentServer.Forms
 			numericUpDownMinutes.Value = DateTime.Now.Minute;
 		}
 
+		#region Event handlers
+		#region Buttons
+		private void ButtonVacancy_Click(object sender, EventArgs e)
+		{
+			FullVacancy vacancy = DataBase.GetVacancy(_application.IdVacancy);
+			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
+				isDeleteButtonVisible: false);
+			Visible = false;
+			vacancyForm.FormClosed += (s, args) => { Visible = true; };
+			vacancyForm.ShowDialog();
+		}
+		private void ButtonCandidate_Click(object sender, EventArgs e)
+		{
+			Candidate candidate = DataBase.GetCandidate(_application.IdCandidate);
+			CandidateForm candidateForm = new CandidateForm(_account, candidate);
+			Visible = false;
+			candidateForm.FormClosed += (s, args) => { Visible = true; };
+			candidateForm.ShowDialog();
+		}
 		private void ButtonApply_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Застосувати"
+		{
 			if (comboBoxDecision.Text == "Відхилена")
-			{// Перевірка причини відмови на заборонений символ
+			{
 				Validator validator = new Validator();
-				validator.CheckBannedChar(labelReason, richTextBoxReason.Text, Server.SEPARATOR, account.Theme);
+				validator.CheckBannedChar(labelReason, richTextBoxReason.Text,
+					Server.SEPARATOR, _account.Theme);
 				if (!validator.IsDataValid)
 					return;
 			}
-			DateTime dateTime = new DateTime();
+			DateTime dateTime = new DateTime(dateTimePickerInterview.Value.Year,
+				dateTimePickerInterview.Value.Month, dateTimePickerInterview.Value.Day,
+				(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
 			if (comboBoxDecision.Text == "Прийнята")
-			{// Перевірка дати співбесіди
-				dateTime = new DateTime(dateTimePickerInterview.Value.Year,
-						dateTimePickerInterview.Value.Month, dateTimePickerInterview.Value.Day,
-						(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
-				if (DateTime.Now.AddHours(MIN_HOURS_WAIT_TO_EVENT) > dateTime)
-				{
-					CustomMessageBox.Show("Ви не можете створити співбесіду в такий час.\n" +
-						$"Проведення співбесіди не повинно відбуватися раніше,\nніж через {MIN_HOURS_WAIT_TO_EVENT} год. після прийняття заявки.",
-						account.Theme, "Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+			{
+				bool isDateValid = CheckValidInterviewDate(dateTime);
+				if (!isDateValid)
 					return;
-				}
 			}
 
-			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити статус заявки?\nПісля цього змінити статус буде неможливо.",
-				account.Theme, "Зміна статусу", CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
+			DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити " +
+				"статус заявки?\nПісля цього змінити статус буде неможливо.",
+				_account.Theme, "Зміна статусу", CustomMessageBoxButtons.YesNo,
+				CustomMessageBoxIcon.Question);
+
 			if (result == DialogResult.Yes)
 			{
-				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-				DataBase.SetApplicationStatus(application.Id, idStatus, richTextBoxReason.Text);
-				if (comboBoxDecision.Text == "Прийнята")
-				{// Створення співбесіди
-					DataBase.CreateInterview(application.Id, dateTime.ToUniversalTime());
-					Candidate candidate = DataBase.GetCandidate(application.IdCandidate);
-					CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
-						$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",
-						account.Theme, "Контактна інформація", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
-				}
-
-				refresh(EventArgs.Empty);// Перезавантажуємо головну форму
+				ChangeApplicationStatus(dateTime);
+				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}
 		}
+		private void ButtonReasonRejection_Click(object sender, EventArgs e)
+		{
+			CustomMessageBox.Show(_application.ReasonRejection, _account.Theme,
+				"Причина відмови", CustomMessageBoxButtons.OK,
+				CustomMessageBoxIcon.Information);
+		}
+
+		private bool CheckValidInterviewDate(DateTime dateTime)
+		{
+			const int MIN_HOURS_WARNING = 12;
+
+			if (DateTime.Now >= dateTime)
+			{
+				CustomMessageBox.Show("Ви не можете встановити час, який раніше за поточний!",
+					_account.Theme, "Помилка", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Error, 440);
+				return false;
+			}
+			if (DateTime.Now.AddHours(MIN_HOURS_WARNING) > dateTime)
+			{
+				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете створити співбесіду " +
+					$"на цей час?\nРекомендується проводити її не раніше, ніж через " +
+					$"{MIN_HOURS_WARNING} годин після прийняття заявки.",
+					_account.Theme, "Увага", CustomMessageBoxButtons.YesNo,
+					CustomMessageBoxIcon.Warning, 430);
+
+				if (result != DialogResult.Yes)
+					return false;
+			}
+			return true;
+		}
+		private void ChangeApplicationStatus(DateTime dateTime)
+		{
+			int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
+			DataBase.SetApplicationStatus(_application.Id, idStatus,
+				richTextBoxReason.Text);
+
+			if (comboBoxDecision.Text == "Прийнята")
+			{
+				DataBase.CreateInterview(_application.Id, dateTime.ToUniversalTime());
+				Candidate candidate = DataBase.GetCandidate(_application.IdCandidate);
+
+				CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
+					$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",
+					_account.Theme, "Контактна інформація", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Information);
+			}
+		}
+		#endregion
+
+		#region ComboBox
 		private void ComboBoxDecision_SelectedIndexChanged(object sender, EventArgs e)
-		{// Обробник події для зміни статусу заявки в comboBoxDecision
+		{
 			if (comboBoxDecision.Text == "В очікуванні")
 				buttonApply.Visible = false;
 			else
@@ -140,26 +202,30 @@ namespace RecruitmentServer.Forms
 				panelInterview.Visible = false;
 		}
 
-		private void ButtonVacancy_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Вакансія"
-			FullVacancy vacancy = DataBase.GetVacancy(application.IdVacancy);
-			VacancyForm vf = new VacancyForm(account, vacancy, isDeleteButtonVisible: false);
-			Visible = false;
-			vf.FormClosed += (s, args) =>
-			{ Visible = true; };
-			vf.ShowDialog();
+		private void ComboBox_DropDown(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = false;
+				comboBox.CustomizableEdges.BottomRight = false;
+			}
 		}
-		private void ButtonCandidate_Click(object sender, EventArgs e)
-		{// Обробник події натискання на кнопку "Кандидат"
-			Candidate candidate = DataBase.GetCandidate(application.IdCandidate);
-			CandidateForm cf = new CandidateForm(account, candidate);
-			Visible = false;
-			cf.FormClosed += (s, args) =>
-			{ Visible = true; };
-			cf.ShowDialog();
+		private void ComboBox_DropDownClosed(object sender, EventArgs e)
+		{
+			if (sender is Guna2ComboBox comboBox)
+			{
+				comboBox.CustomizableEdges.BottomLeft = true;
+				comboBox.CustomizableEdges.BottomRight = true;
+			}
 		}
+		#endregion
+		#endregion
 
 		public void SetTheme(Theme theme)
-			=> ThemeControlManager.ChangeFormTheme(this, theme);
+		{
+			ThemeControlManager.ChangeFormTheme(this, theme);
+
+			panelInterview.BackColor = BackColor;
+		}
 	}
 }
