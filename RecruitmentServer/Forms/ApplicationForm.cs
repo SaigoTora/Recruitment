@@ -142,9 +142,9 @@ namespace RecruitmentServer.Forms
 			}
 			if (DateTime.Now.AddHours(MIN_HOURS_WARNING) > dateTime)
 			{
-				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете створити співбесіду " +
-					$"на цей час?\nРекомендується проводити її не раніше, ніж через " +
-					$"{MIN_HOURS_WARNING} годин після прийняття заявки.",
+				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете " +
+					"створити співбесіду на цей час?\nРекомендується проводити її " +
+					$"не раніше, ніж через {MIN_HOURS_WARNING} годин після прийняття заявки.",
 					_account.Theme, "Увага", CustomMessageBoxButtons.YesNo,
 					CustomMessageBoxIcon.Warning, 430);
 

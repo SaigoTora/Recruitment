@@ -585,7 +585,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			FullInterview interview = _buttonInterviewMap[button];
-			InterviewForm interviewForm = new InterviewForm(interview, SelectLabel, _account);
+			InterviewForm interviewForm = new InterviewForm(_account, interview, SelectLabel);
 			interviewForm.ShowDialog();
 		}
 		private void ButtonEmployee_Click(object sender, EventArgs e)
