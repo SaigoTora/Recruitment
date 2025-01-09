@@ -95,6 +95,7 @@ namespace RecruitmentServer.Forms
 			textBoxSalary.BorderThickness = 0;
 			ConfigureRichTextBoxForViewing(richTextBoxPositionDescription);
 			ConfigureRichTextBoxForViewing(richTextBoxAdditionalInfo);
+			ConfigureLabelsForViewing();
 
 			ManageButtonForViewEvents(true);
 		}
@@ -111,6 +112,18 @@ namespace RecruitmentServer.Forms
 		{
 			richTextBox.BorderThickness = 0;
 			richTextBox.PlaceholderText = string.Empty;
+		}
+		private void ConfigureLabelsForViewing()
+		{
+			labelPosition.Cursor = Cursors.Default;
+			labelSalaryTitle.Cursor = Cursors.Default;
+			labelPositionDescriptionTitle.Cursor = Cursors.Default;
+			labelAdditionalInfoTitle.Cursor = Cursors.Default;
+
+			labelPosition.Click -= LabelPosition_Click;
+			labelSalaryTitle.Click -= LabelSalaryTitle_Click;
+			labelPositionDescriptionTitle.Click -= LabelPositionDescriptionTitle_Click;
+			labelAdditionalInfoTitle.Click -= LabelAdditionalInfoTitle_Click;
 		}
 		private void ManageButtonForCreateEvents(bool subscribe)
 		{
@@ -278,6 +291,17 @@ namespace RecruitmentServer.Forms
 				isDataValid = false;
 			}
 		}
+		#endregion
+
+		#region Label focus event handlers
+		private void LabelPosition_Click(object sender, EventArgs e)
+			=> textBoxPosition.Focus();
+		private void LabelSalaryTitle_Click(object sender, EventArgs e)
+			=> textBoxSalary.Focus();
+		private void LabelPositionDescriptionTitle_Click(object sender, EventArgs e)
+			=> richTextBoxPositionDescription.Focus();
+		private void LabelAdditionalInfoTitle_Click(object sender, EventArgs e)
+			=> richTextBoxAdditionalInfo.Focus();
 		#endregion
 
 		public void SetTheme(Theme theme)

@@ -25,7 +25,8 @@ namespace RecruitmentClient.Forms
 		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false, maximizeBox: false);
+			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false,
+				maximizeBox: false);
 			_vacancy = vacancy;
 			_login = login;
 			_refresh = refresh;
@@ -73,6 +74,8 @@ namespace RecruitmentClient.Forms
 				richTextBox.Text = text;
 		}
 
+		private void LabelClientAdditionalInfoTitle_Click(object sender, EventArgs e)
+			=> richTextBoxClientAdditionalInfo.Focus();
 		private void ButtonRequirements_Click(object sender, EventArgs e)
 		{
 			CustomMessageBox.Show(_requirements, _currentTheme, "Вимоги",
@@ -113,5 +116,6 @@ namespace RecruitmentClient.Forms
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
+
 	}
 }

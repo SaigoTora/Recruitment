@@ -47,6 +47,7 @@
 			// 
 			this.labelSalaryTitle.AutoSize = true;
 			this.labelSalaryTitle.BackColor = System.Drawing.Color.Transparent;
+			this.labelSalaryTitle.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelSalaryTitle.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalaryTitle.ForeColor = System.Drawing.Color.Black;
 			this.labelSalaryTitle.Location = new System.Drawing.Point(12, 150);
@@ -56,6 +57,7 @@
 			this.labelSalaryTitle.TabIndex = 3;
 			this.labelSalaryTitle.Text = "Зарплата(в грн.):";
 			this.labelSalaryTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.labelSalaryTitle.Click += new System.EventHandler(this.LabelSalaryTitle_Click);
 			// 
 			// labelContact
 			// 

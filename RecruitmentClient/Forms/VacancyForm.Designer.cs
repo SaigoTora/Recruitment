@@ -88,6 +88,7 @@
 			this.labelClientAdditionalInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelClientAdditionalInfoTitle.AutoSize = true;
 			this.labelClientAdditionalInfoTitle.BackColor = System.Drawing.Color.Transparent;
+			this.labelClientAdditionalInfoTitle.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelClientAdditionalInfoTitle.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelClientAdditionalInfoTitle.ForeColor = System.Drawing.Color.Black;
 			this.labelClientAdditionalInfoTitle.Location = new System.Drawing.Point(12, 490);
@@ -96,6 +97,7 @@
 			this.labelClientAdditionalInfoTitle.Size = new System.Drawing.Size(419, 32);
 			this.labelClientAdditionalInfoTitle.TabIndex = 8;
 			this.labelClientAdditionalInfoTitle.Text = "Ваша додаткова інформація:";
+			this.labelClientAdditionalInfoTitle.Click += new System.EventHandler(this.LabelClientAdditionalInfoTitle_Click);
 			// 
 			// labelDatePublication
 			// 

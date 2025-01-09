@@ -30,6 +30,7 @@ namespace RecruitmentServer.Forms
 			{
 				buttonCreate.Visible = false;
 				SetAllNumericUpDownEnabled(false);
+				SetAllLabelsCursor(Cursors.Default);
 			}
 			if (points.Degrees != null)
 				FillDegreesFromPoints(points);
@@ -70,6 +71,13 @@ namespace RecruitmentServer.Forms
 				if (control is NumericUpDown)
 					control.Enabled = enabled;
 		}
+		private void SetAllLabelsCursor(Cursor cursor)
+		{
+			foreach (Control control in this.Controls)
+				if (control is Label label)
+					label.Cursor = cursor;
+		}
+
 		private void SetFormFields(Points points)
 		{
 			NUDAgeUnder18.Value = points.AgeUnder18;
@@ -132,6 +140,38 @@ namespace RecruitmentServer.Forms
 				comboBox.CustomizableEdges.BottomRight = true;
 			}
 		}
+		#endregion
+
+		#region Label focus event handlers
+		private void LabelAgeUnder18_Click(object sender, EventArgs e)
+			=> NUDAgeUnder18.Focus();
+		private void LabelAge18_30_Click(object sender, EventArgs e)
+			=> NUDAge18_30.Focus();
+		private void LabelAge30_50_Click(object sender, EventArgs e)
+			=> NUDAge30_50.Focus();
+		private void LabelAgeOver50_Click(object sender, EventArgs e)
+			=> NUDAgeOver50.Focus();
+		private void LabelExpNone_Click(object sender, EventArgs e)
+			=> NUDExpNone.Focus();
+		private void LabelExpUnderYear_Click(object sender, EventArgs e)
+			=> NUDExpUnderYear.Focus();
+		private void LabelExp1_3_Click(object sender, EventArgs e)
+			=> NUDExp1_3.Focus();
+
+		private void LabelExpOver3_Click(object sender, EventArgs e)
+			=> NUDExpOver3.Focus();
+		private void LabelDiploma_Click(object sender, EventArgs e)
+			=> NUDDiploma.Focus();
+		private void LabelNoChronicDiseases_Click(object sender, EventArgs e)
+			=> NUDNoChronicDiseases.Focus();
+		private void LabelDriverLicense_Click(object sender, EventArgs e)
+			=> NUDDriverLicense.Focus();
+		private void LabelNoSmoker_Click(object sender, EventArgs e)
+			=> NUDNoSmoker.Focus();
+		private void LabelNoDrinkAlcohol_Click(object sender, EventArgs e)
+			=> NUDNoDrinkAlcohol.Focus();
+		private void LabelBusinessTripOpportunity_Click(object sender, EventArgs e)
+			=> NUDBusinessTripOpportunity.Focus();
 		#endregion
 
 		private void ButtonCreate_Click(object sender, EventArgs e)

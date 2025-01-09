@@ -92,6 +92,7 @@
 			this.labelAdditionalInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelAdditionalInfoTitle.AutoSize = true;
 			this.labelAdditionalInfoTitle.BackColor = System.Drawing.Color.Transparent;
+			this.labelAdditionalInfoTitle.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAdditionalInfoTitle.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAdditionalInfoTitle.ForeColor = System.Drawing.Color.Black;
 			this.labelAdditionalInfoTitle.Location = new System.Drawing.Point(624, 225);
@@ -100,12 +101,14 @@
 			this.labelAdditionalInfoTitle.Size = new System.Drawing.Size(532, 32);
 			this.labelAdditionalInfoTitle.TabIndex = 9;
 			this.labelAdditionalInfoTitle.Text = "Додаткова інформація про вакансію:";
+			this.labelAdditionalInfoTitle.Click += new System.EventHandler(this.LabelAdditionalInfoTitle_Click);
 			// 
 			// labelPositionDescriptionTitle
 			// 
 			this.labelPositionDescriptionTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelPositionDescriptionTitle.AutoSize = true;
 			this.labelPositionDescriptionTitle.BackColor = System.Drawing.Color.Transparent;
+			this.labelPositionDescriptionTitle.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelPositionDescriptionTitle.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPositionDescriptionTitle.ForeColor = System.Drawing.Color.Black;
 			this.labelPositionDescriptionTitle.Location = new System.Drawing.Point(12, 225);
@@ -114,11 +117,13 @@
 			this.labelPositionDescriptionTitle.Size = new System.Drawing.Size(202, 32);
 			this.labelPositionDescriptionTitle.TabIndex = 7;
 			this.labelPositionDescriptionTitle.Text = "Опис посади:";
+			this.labelPositionDescriptionTitle.Click += new System.EventHandler(this.LabelPositionDescriptionTitle_Click);
 			// 
 			// labelSalaryTitle
 			// 
 			this.labelSalaryTitle.AutoSize = true;
 			this.labelSalaryTitle.BackColor = System.Drawing.Color.Transparent;
+			this.labelSalaryTitle.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelSalaryTitle.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalaryTitle.ForeColor = System.Drawing.Color.Black;
 			this.labelSalaryTitle.Location = new System.Drawing.Point(12, 85);
@@ -127,11 +132,13 @@
 			this.labelSalaryTitle.Size = new System.Drawing.Size(232, 29);
 			this.labelSalaryTitle.TabIndex = 2;
 			this.labelSalaryTitle.Text = "Зарплата(в грн.):";
+			this.labelSalaryTitle.Click += new System.EventHandler(this.LabelSalaryTitle_Click);
 			// 
 			// labelPosition
 			// 
 			this.labelPosition.AutoSize = true;
 			this.labelPosition.BackColor = System.Drawing.Color.Transparent;
+			this.labelPosition.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelPosition.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPosition.ForeColor = System.Drawing.Color.Black;
 			this.labelPosition.Location = new System.Drawing.Point(12, 25);
@@ -140,6 +147,7 @@
 			this.labelPosition.Size = new System.Drawing.Size(125, 32);
 			this.labelPosition.TabIndex = 0;
 			this.labelPosition.Text = "Посада:";
+			this.labelPosition.Click += new System.EventHandler(this.LabelPosition_Click);
 			// 
 			// buttonRequirement
 			// 

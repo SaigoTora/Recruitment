@@ -120,6 +120,7 @@
 			this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelStatus.AutoSize = true;
 			this.labelStatus.BackColor = System.Drawing.Color.Transparent;
+			this.labelStatus.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelStatus.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatus.ForeColor = System.Drawing.Color.Black;
 			this.labelStatus.Location = new System.Drawing.Point(539, 440);
@@ -128,12 +129,14 @@
 			this.labelStatus.Size = new System.Drawing.Size(106, 29);
 			this.labelStatus.TabIndex = 10;
 			this.labelStatus.Text = "Статус:";
+			this.labelStatus.Click += new System.EventHandler(this.LabelStatus_Click);
 			// 
 			// labelReason
 			// 
 			this.labelReason.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelReason.AutoSize = true;
 			this.labelReason.BackColor = System.Drawing.Color.Transparent;
+			this.labelReason.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelReason.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelReason.ForeColor = System.Drawing.Color.Black;
 			this.labelReason.Location = new System.Drawing.Point(602, 132);
@@ -143,12 +146,14 @@
 			this.labelReason.TabIndex = 6;
 			this.labelReason.Text = "Причина відмови:";
 			this.labelReason.Visible = false;
+			this.labelReason.Click += new System.EventHandler(this.LabelReason_Click);
 			// 
 			// labelDate
 			// 
 			this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelDate.AutoSize = true;
 			this.labelDate.BackColor = System.Drawing.Color.Transparent;
+			this.labelDate.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelDate.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDate.ForeColor = System.Drawing.Color.Black;
 			this.labelDate.Location = new System.Drawing.Point(5, 11);
@@ -158,6 +163,7 @@
 			this.labelDate.TabIndex = 0;
 			this.labelDate.Tag = "fixedPosition";
 			this.labelDate.Text = "Дата і час співбесіди:";
+			this.labelDate.Click += new System.EventHandler(this.LabelDate_Click);
 			// 
 			// numericUpDownHours
 			// 
@@ -225,8 +231,8 @@
 			// 
 			this.panelInterview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelInterview.BackColor = System.Drawing.Color.Transparent;
-			this.panelInterview.Controls.Add(this.dateTimePickerInterview);
 			this.panelInterview.Controls.Add(this.labelDate);
+			this.panelInterview.Controls.Add(this.dateTimePickerInterview);
 			this.panelInterview.Controls.Add(this.labelMinutes);
 			this.panelInterview.Controls.Add(this.labelHours);
 			this.panelInterview.Controls.Add(this.numericUpDownHours);
@@ -521,20 +527,20 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1150, 500);
+			this.Controls.Add(this.panelInterview);
 			this.Controls.Add(this.buttonApply);
 			this.Controls.Add(this.richTextBoxAdditionalInfo);
 			this.Controls.Add(this.comboBoxDecision);
 			this.Controls.Add(this.textBoxPosition);
 			this.Controls.Add(this.buttonCandidate);
 			this.Controls.Add(this.buttonVacancy);
-			this.Controls.Add(this.labelReason);
 			this.Controls.Add(this.labelStatus);
 			this.Controls.Add(this.labelDatePublication);
 			this.Controls.Add(this.labelAdditionalInfoTitle);
 			this.Controls.Add(this.labelScores);
-			this.Controls.Add(this.panelInterview);
 			this.Controls.Add(this.buttonReasonRejection);
 			this.Controls.Add(this.richTextBoxReason);
+			this.Controls.Add(this.labelReason);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ApplicationForm";
 			this.Text = "Заявка";

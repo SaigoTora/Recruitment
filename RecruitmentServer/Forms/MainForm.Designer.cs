@@ -783,6 +783,7 @@
 			// 
 			this.labelMinMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelMinMax.AutoEllipsis = true;
+			this.labelMinMax.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelMinMax.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelMinMax.ForeColor = System.Drawing.Color.Black;
 			this.labelMinMax.Location = new System.Drawing.Point(67, 61);
@@ -793,6 +794,7 @@
 			this.labelMinMax.Tag = "fixedPosition";
 			this.labelMinMax.Text = "Мін/макс:";
 			this.labelMinMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.labelMinMax.Click += new System.EventHandler(this.LabelMinMax_Click);
 			// 
 			// panelSearch
 			// 
@@ -1028,6 +1030,7 @@
 			this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelStatus.AutoEllipsis = true;
 			this.labelStatus.AutoSize = true;
+			this.labelStatus.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelStatus.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatus.ForeColor = System.Drawing.Color.Black;
 			this.labelStatus.Location = new System.Drawing.Point(688, 59);
@@ -1038,6 +1041,7 @@
 			this.labelStatus.Tag = "fixedPosition";
 			this.labelStatus.Text = "Статус:";
 			this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.labelStatus.Click += new System.EventHandler(this.LabelStatus_Click);
 			// 
 			// pictureBoxSearch
 			// 

@@ -225,6 +225,13 @@ namespace RecruitmentServer.Forms
 			}
 		}
 		#endregion
+
+		#region Label focus event handlers
+		private void LabelStatus_Click(object sender, EventArgs e)
+			=> comboBoxDecision.DroppedDown = true;
+		private void LabelDate_Click(object sender, EventArgs e)
+			=> dateTimePickerInterview.PerformClick();
+		#endregion
 		#endregion
 
 		public void SetTheme(Theme theme)

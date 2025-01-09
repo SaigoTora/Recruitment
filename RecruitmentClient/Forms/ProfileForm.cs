@@ -138,6 +138,21 @@ namespace RecruitmentClient.Forms
 			}
 		}
 
+		#region Label focus event handlers
+		private void LabelSurname_Click(object sender, EventArgs e)
+			=> textBoxSurname.Focus();
+		private void LabelName_Click(object sender, EventArgs e)
+			=> textBoxName.Focus();
+		private void LabelFatherName_Click(object sender, EventArgs e)
+			=> textBoxFatherName.Focus();
+		private void LabelPhone_Click(object sender, EventArgs e)
+			=> textBoxPhone1.Focus();
+		private void LabelBirthday_Click(object sender, EventArgs e)
+			=> dateTimePickerBirthday.PerformClick();
+		private void LabelEmail_Click(object sender, EventArgs e)
+			=> textBoxEmail.Focus();
+		#endregion
+
 		private void TextBoxPhone_TextChanged(object sender, EventArgs e)
 		{
 			if (sender is Guna2TextBox textBox

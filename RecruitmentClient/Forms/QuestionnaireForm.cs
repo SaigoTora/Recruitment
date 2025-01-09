@@ -52,7 +52,7 @@ namespace RecruitmentClient.Forms
 			}
 
 			_languages.Add(new LanguageFormElements(panelLanguage, labelLanguage,
-				comboBoxLanguage, numericUpDownLevel));
+				comboBoxLanguage, labelLevel, numericUpDownLevel));
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);
 		}
@@ -183,15 +183,17 @@ namespace RecruitmentClient.Forms
 			_languageCreator.CreateLabel(labelLanguageNumber,
 				(_languages.Count + 1).ToString());
 			Label labelLang = _languageCreator.CreateLabel(labelLanguage);
-			_languageCreator.CreateLabel(labelLevel);
+			Label labelLvl = _languageCreator.CreateLabel(labelLevel);
 
 			Guna2ComboBox comboBoxLang = _languageCreator.CreateComboBox(comboBoxLanguage,
 				comboBoxLanguage.FindString(DEFAULT_LANGUAGE));
 			NumericUpDown nudLevel = _languageCreator.CreateNumericUpDown(numericUpDownLevel);
 
 			ManageComboBoxEvents(comboBoxLang, true);
-			_languages.Add(new LanguageFormElements(_languageCreator.CurrentMainPanel,
-				labelLang, comboBoxLang, nudLevel));
+			var language = new LanguageFormElements(_languageCreator.CurrentMainPanel,
+				labelLang, comboBoxLang, labelLvl, nudLevel);
+			_languages.Add(language);
+			ManageLanguageFocusEvents(language, true);
 			_languages[_languages.Count - 1].SetDefaultLabel(_account.Theme);
 			_languageCreator.CurrentMainPanel.Focus();
 		}
@@ -201,10 +203,31 @@ namespace RecruitmentClient.Forms
 			{
 				int index = _languages.Count - 1;
 
+				ManageComboBoxEvents(_languages[index].ComboBoxName, false);
+				ManageLanguageFocusEvents(_languages[index], false);
 				_languages[index].PanelMain.Dispose();
 				_languages.RemoveAt(index);
 
 				_languages[index - 1].PanelMain.Focus();
+			}
+		}
+
+		private void ManageLanguageFocusEvents(LanguageFormElements language, bool subscribe)
+		{
+			void LabelName_Click(object sender, EventArgs e)
+				=> language.ComboBoxName.DroppedDown = true;
+			void LabelLevel_Click(object sender, EventArgs e)
+				=> language.NUDLevel.Focus();
+
+			if (subscribe)
+			{
+				language.LabelName.Click += LabelName_Click;
+				language.LabelLevel.Click += LabelLevel_Click;
+			}
+			else
+			{
+				language.LabelName.Click -= LabelName_Click;
+				language.LabelLevel.Click -= LabelLevel_Click;
 			}
 		}
 		#endregion
@@ -217,7 +240,8 @@ namespace RecruitmentClient.Forms
 			else if (_educations.Count == 0)
 			{
 				_educations.Add(new EducationFormElements(panelEducation,
-					labelNameInstitution, labelSpecialty, labelYearAdmission,
+					labelNameInstitution, labelSpecialty, labelEducationDegree,
+					labelYearAdmission, labelDateEnd,
 					labelDateEnd, textBoxNameInstitution, textBoxSpecialty,
 					numericUpDownYearAdmission, dateTimePickerDateEnd,
 					comboBoxEducationDegree, comboBoxEducationForm));
@@ -234,6 +258,9 @@ namespace RecruitmentClient.Forms
 			{
 				int index = _educations.Count - 1;
 
+				ManageComboBoxEvents(_educations[index].CB_EducationDegree, false);
+				ManageComboBoxEvents(_educations[index].CB_EducationForm, false);
+				ManageEducationFocusEvents(_educations[index], false);
 				_educations[index].PanelMain.Dispose();
 				_educations.RemoveAt(index);
 
@@ -261,8 +288,8 @@ namespace RecruitmentClient.Forms
 				labelYearAdmission.Text);
 			Label labelEndDate = _educationCreator.CreateLabel(labelDateEnd,
 				labelDateEnd.Text);
-			_educationCreator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
-			_educationCreator.CreateLabel(labelEducationForm, labelEducationForm.Text);
+			Label labelDegree = _educationCreator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
+			Label labelForm = _educationCreator.CreateLabel(labelEducationForm, labelEducationForm.Text);
 
 			Guna2TextBox textBoxInstitution = _educationCreator.
 				CreateTextBox(textBoxNameInstitution);
@@ -282,12 +309,51 @@ namespace RecruitmentClient.Forms
 
 			ManageComboBoxEvents(comboBoxDegree, true);
 			ManageComboBoxEvents(comboBoxForm, true);
-			_educations.Add(new EducationFormElements(_educationCreator.CurrentMainPanel,
-				labelInstitution, labelSpec, labelAdmission, labelEndDate, textBoxInstitution, textBoxSpec, nudAdmission,
-				dateEnd, comboBoxDegree, comboBoxForm));
+			EducationFormElements education = new EducationFormElements(
+				_educationCreator.CurrentMainPanel, labelInstitution, labelSpec,
+				labelDegree, labelAdmission, labelEndDate, labelForm,
+				textBoxInstitution, textBoxSpec, nudAdmission,
+				dateEnd, comboBoxDegree, comboBoxForm);
+			_educations.Add(education);
+			ManageEducationFocusEvents(education, true);
 			_educations[_educations.Count - 1].SetDefaultLabels(_account.Theme);
 
 			_educationCreator.CurrentMainPanel.Focus();
+		}
+		private void ManageEducationFocusEvents(EducationFormElements education, bool subscribe)
+		{
+			void LabelNameInstitution_Click(object sender, EventArgs e)
+				=> education.TextBoxNameInstitution.Focus();
+			void LabelSpecialty_Click(object sender, EventArgs e)
+				=> education.TextBoxSpecialty.Focus();
+			void LabelEducationDegree_Click(object sender, EventArgs e)
+				=> education.CB_EducationDegree.DroppedDown = true;
+			void LabelYearAdmission_Click(object sender, EventArgs e)
+				=> education.NUD_YearAdmission.Focus();
+			void LabelDateEnd_Click(object sender, EventArgs e)
+				=> education.DTP_DateEnd.PerformClick();
+			void LabelEducationForm_Click(object sender, EventArgs e)
+				=> education.CB_EducationForm.DroppedDown = true;
+
+
+			if (subscribe)
+			{
+				education.LabelNameInstitution.Click += LabelNameInstitution_Click;
+				education.LabelSpecialty.Click += LabelSpecialty_Click;
+				education.LabelEducationDegree.Click += LabelEducationDegree_Click;
+				education.LabelYearAdmission.Click += LabelYearAdmission_Click;
+				education.LabelDateEnd.Click += LabelDateEnd_Click;
+				education.LabelEducationForm.Click += LabelEducationForm_Click;
+			}
+			else
+			{
+				education.LabelNameInstitution.Click -= LabelNameInstitution_Click;
+				education.LabelSpecialty.Click -= LabelSpecialty_Click;
+				education.LabelEducationDegree.Click -= LabelEducationDegree_Click;
+				education.LabelYearAdmission.Click -= LabelYearAdmission_Click;
+				education.LabelDateEnd.Click -= LabelDateEnd_Click;
+				education.LabelEducationForm.Click -= LabelEducationForm_Click;
+			}
 		}
 		#endregion
 
@@ -484,6 +550,16 @@ namespace RecruitmentClient.Forms
 		}
 
 		#region Label focus event handlers
+		private void LabelNationality_Click(object sender, EventArgs e)
+			=> comboBoxNationality.DroppedDown = true;
+		private void LabelCity_Click(object sender, EventArgs e)
+			=> textBoxCity.Focus();
+		private void LabelBusinessTripOpportunity_Click(object sender, EventArgs e)
+			=> comboBoxBusinessTripOpportunity.DroppedDown = true;
+		private void LabelExperience_Click(object sender, EventArgs e)
+			=> numericUpDownExperience.Focus();
+		private void LabelReadiness_Click(object sender, EventArgs e)
+			=> numericUpDownReadiness.Focus();
 		private void LabelDriverLicenseNo_Click(object sender, EventArgs e)
 			=> radioButtonDriverLicenseNo.Checked = true;
 		private void LabelDriverLicenseYes_Click(object sender, EventArgs e)
@@ -493,11 +569,35 @@ namespace RecruitmentClient.Forms
 			=> radioButtonSmokerNo.Checked = true;
 		private void LabelSmokerYes_Click(object sender, EventArgs e)
 			=> radioButtonSmokerYes.Checked = true;
-
 		private void LabelDrinkAlcoholNo_Click(object sender, EventArgs e)
 			=> radioButtonDrinkAlcoholNo.Checked = true;
 		private void LabelDrinkAlcoholYes_Click(object sender, EventArgs e)
 			=> radioButtonDrinkAlcoholYes.Checked = true;
+		private void LabelChronicDiseases_Click(object sender, EventArgs e)
+			=> richTextBoxChronicDiseases.Focus();
+		private void LabelFamilyStatus_Click(object sender, EventArgs e)
+			=> comboBoxFamilyStatus.DroppedDown = true;
+		private void LabelChildrenAmount_Click(object sender, EventArgs e)
+			=> numericUpDownChildrenAmount.Focus();
+
+		private void LabelLanguage_Click(object sender, EventArgs e)
+			=> comboBoxLanguage.DroppedDown = true;
+		private void LabelLevel_Click(object sender, EventArgs e)
+			=> numericUpDownLevel.Focus();
+		private void LabelNameInstitution_Click(object sender, EventArgs e)
+			=> textBoxNameInstitution.Focus();
+		private void LabelSpecialty_Click(object sender, EventArgs e)
+			=> textBoxSpecialty.Focus();
+		private void LabelEducationDegree_Click(object sender, EventArgs e)
+			=> comboBoxEducationDegree.DroppedDown = true;
+		private void LabelYearAdmission_Click(object sender, EventArgs e)
+			=> numericUpDownYearAdmission.Focus();
+		private void LabelDateEnd_Click(object sender, EventArgs e)
+			=> dateTimePickerDateEnd.PerformClick();
+		private void LabelEducationForm_Click(object sender, EventArgs e)
+			=> comboBoxEducationForm.DroppedDown = true;
+		private void LabelAdditionalInfo_Click(object sender, EventArgs e)
+			=> richTextBoxAdditionalInfo.Focus();
 		#endregion
 
 		public void SetTheme(Theme theme)
@@ -530,7 +630,10 @@ namespace RecruitmentClient.Forms
 		private void DisposeLanguages()
 		{
 			foreach (LanguageFormElements language in _languages)
+			{
 				ManageComboBoxEvents(language.ComboBoxName, false);
+				ManageLanguageFocusEvents(language, false);
+			}
 
 			_languageCreator.Dispose();
 			_languages.Clear();
@@ -541,6 +644,7 @@ namespace RecruitmentClient.Forms
 			{
 				ManageComboBoxEvents(education.CB_EducationDegree, false);
 				ManageComboBoxEvents(education.CB_EducationForm, false);
+				ManageEducationFocusEvents(education, false);
 			}
 
 			_educationCreator.Dispose();

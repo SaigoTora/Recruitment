@@ -600,6 +600,7 @@
 			// labelSalarySearch
 			// 
 			this.labelSalarySearch.AutoSize = true;
+			this.labelSalarySearch.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelSalarySearch.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSalarySearch.ForeColor = System.Drawing.Color.Black;
 			this.labelSalarySearch.Location = new System.Drawing.Point(202, 61);
@@ -609,6 +610,7 @@
 			this.labelSalarySearch.TabIndex = 5;
 			this.labelSalarySearch.Tag = "fixedPosition";
 			this.labelSalarySearch.Text = "Зарплата:";
+			this.labelSalarySearch.Click += new System.EventHandler(this.LabelSalarySearch_Click);
 			// 
 			// panelSearch
 			// 

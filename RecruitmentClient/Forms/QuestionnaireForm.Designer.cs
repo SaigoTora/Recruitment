@@ -115,6 +115,7 @@
 			// 
 			this.labelNationality.AutoSize = true;
 			this.labelNationality.BackColor = System.Drawing.Color.Transparent;
+			this.labelNationality.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelNationality.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNationality.ForeColor = System.Drawing.Color.Black;
 			this.labelNationality.Location = new System.Drawing.Point(12, 60);
@@ -123,11 +124,13 @@
 			this.labelNationality.TabIndex = 0;
 			this.labelNationality.Tag = "fixedPosition";
 			this.labelNationality.Text = "Громадянство:";
+			this.labelNationality.Click += new System.EventHandler(this.LabelNationality_Click);
 			// 
 			// labelCity
 			// 
 			this.labelCity.AutoSize = true;
 			this.labelCity.BackColor = System.Drawing.Color.Transparent;
+			this.labelCity.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelCity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelCity.ForeColor = System.Drawing.Color.Black;
 			this.labelCity.Location = new System.Drawing.Point(12, 120);
@@ -136,12 +139,14 @@
 			this.labelCity.TabIndex = 2;
 			this.labelCity.Tag = "fixedPosition";
 			this.labelCity.Text = "Населений пункт проживання:";
+			this.labelCity.Click += new System.EventHandler(this.LabelCity_Click);
 			// 
 			// labelChildrenAmount
 			// 
 			this.labelChildrenAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelChildrenAmount.AutoSize = true;
 			this.labelChildrenAmount.BackColor = System.Drawing.Color.Transparent;
+			this.labelChildrenAmount.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelChildrenAmount.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChildrenAmount.ForeColor = System.Drawing.Color.Black;
 			this.labelChildrenAmount.Location = new System.Drawing.Point(820, 540);
@@ -150,6 +155,7 @@
 			this.labelChildrenAmount.TabIndex = 21;
 			this.labelChildrenAmount.Tag = "fixedPosition";
 			this.labelChildrenAmount.Text = "Кількість дітей:";
+			this.labelChildrenAmount.Click += new System.EventHandler(this.LabelChildrenAmount_Click);
 			// 
 			// numericUpDownChildrenAmount
 			// 
@@ -188,6 +194,7 @@
 			// 
 			this.labelExperience.AutoSize = true;
 			this.labelExperience.BackColor = System.Drawing.Color.Transparent;
+			this.labelExperience.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExperience.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExperience.ForeColor = System.Drawing.Color.Black;
 			this.labelExperience.Location = new System.Drawing.Point(12, 270);
@@ -196,6 +203,7 @@
 			this.labelExperience.TabIndex = 6;
 			this.labelExperience.Tag = "fixedPosition";
 			this.labelExperience.Text = "Досвід роботи(в місяцях):";
+			this.labelExperience.Click += new System.EventHandler(this.LabelExperience_Click);
 			// 
 			// numericUpDownReadiness
 			// 
@@ -227,6 +235,7 @@
 			// 
 			this.labelReadiness.AutoSize = true;
 			this.labelReadiness.BackColor = System.Drawing.Color.Transparent;
+			this.labelReadiness.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelReadiness.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelReadiness.ForeColor = System.Drawing.Color.Black;
 			this.labelReadiness.Location = new System.Drawing.Point(12, 330);
@@ -235,6 +244,7 @@
 			this.labelReadiness.TabIndex = 8;
 			this.labelReadiness.Tag = "fixedPosition";
 			this.labelReadiness.Text = "Через скільки днів Ви будете готові до роботи:";
+			this.labelReadiness.Click += new System.EventHandler(this.LabelReadiness_Click);
 			// 
 			// labelDriverLicense
 			// 
@@ -254,6 +264,7 @@
 			this.labelFamilyStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelFamilyStatus.AutoSize = true;
 			this.labelFamilyStatus.BackColor = System.Drawing.Color.Transparent;
+			this.labelFamilyStatus.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelFamilyStatus.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelFamilyStatus.ForeColor = System.Drawing.Color.Black;
 			this.labelFamilyStatus.Location = new System.Drawing.Point(820, 480);
@@ -262,11 +273,13 @@
 			this.labelFamilyStatus.TabIndex = 19;
 			this.labelFamilyStatus.Tag = "fixedPosition";
 			this.labelFamilyStatus.Text = "Сімейний стан:";
+			this.labelFamilyStatus.Click += new System.EventHandler(this.LabelFamilyStatus_Click);
 			// 
 			// labelBusinessTripOpportunity
 			// 
 			this.labelBusinessTripOpportunity.AutoSize = true;
 			this.labelBusinessTripOpportunity.BackColor = System.Drawing.Color.Transparent;
+			this.labelBusinessTripOpportunity.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelBusinessTripOpportunity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
 			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(12, 180);
@@ -275,11 +288,13 @@
 			this.labelBusinessTripOpportunity.TabIndex = 4;
 			this.labelBusinessTripOpportunity.Tag = "fixedPosition";
 			this.labelBusinessTripOpportunity.Text = "Можливість відряджень:";
+			this.labelBusinessTripOpportunity.Click += new System.EventHandler(this.LabelBusinessTripOpportunity_Click);
 			// 
 			// labelChronicDiseases
 			// 
 			this.labelChronicDiseases.AutoSize = true;
 			this.labelChronicDiseases.BackColor = System.Drawing.Color.Transparent;
+			this.labelChronicDiseases.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelChronicDiseases.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseases.ForeColor = System.Drawing.Color.Black;
 			this.labelChronicDiseases.Location = new System.Drawing.Point(12, 600);
@@ -288,6 +303,7 @@
 			this.labelChronicDiseases.TabIndex = 16;
 			this.labelChronicDiseases.Tag = "fixedPosition";
 			this.labelChronicDiseases.Text = "Хронічні захворювання:";
+			this.labelChronicDiseases.Click += new System.EventHandler(this.LabelChronicDiseases_Click);
 			// 
 			// labelSmoker
 			// 
@@ -319,6 +335,7 @@
 			// 
 			this.labelAdditionalInfo.AutoSize = true;
 			this.labelAdditionalInfo.BackColor = System.Drawing.Color.Transparent;
+			this.labelAdditionalInfo.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAdditionalInfo.Font = new System.Drawing.Font("Georgia", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAdditionalInfo.ForeColor = System.Drawing.Color.Black;
 			this.labelAdditionalInfo.Location = new System.Drawing.Point(12, 1805);
@@ -327,6 +344,7 @@
 			this.labelAdditionalInfo.TabIndex = 31;
 			this.labelAdditionalInfo.Tag = "fixedPosition";
 			this.labelAdditionalInfo.Text = "За бажанням вкажіть додаткову інформацію:";
+			this.labelAdditionalInfo.Click += new System.EventHandler(this.LabelAdditionalInfo_Click);
 			// 
 			// flpLanguages
 			// 
@@ -485,6 +503,7 @@
 			// 
 			this.labelLanguage.AutoSize = true;
 			this.labelLanguage.BackColor = System.Drawing.Color.Transparent;
+			this.labelLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelLanguage.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguage.ForeColor = System.Drawing.Color.Black;
 			this.labelLanguage.Location = new System.Drawing.Point(107, 49);
@@ -493,11 +512,13 @@
 			this.labelLanguage.TabIndex = 1;
 			this.labelLanguage.Tag = "fixedPosition";
 			this.labelLanguage.Text = "Мова:";
+			this.labelLanguage.Click += new System.EventHandler(this.LabelLanguage_Click);
 			// 
 			// labelLevel
 			// 
 			this.labelLevel.AutoSize = true;
 			this.labelLevel.BackColor = System.Drawing.Color.Transparent;
+			this.labelLevel.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelLevel.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLevel.ForeColor = System.Drawing.Color.Black;
 			this.labelLevel.Location = new System.Drawing.Point(516, 49);
@@ -506,6 +527,7 @@
 			this.labelLevel.TabIndex = 3;
 			this.labelLevel.Tag = "fixedPosition";
 			this.labelLevel.Text = "Рівень знань:";
+			this.labelLevel.Click += new System.EventHandler(this.LabelLevel_Click);
 			// 
 			// flpEducations
 			// 
@@ -581,6 +603,7 @@
 			// 
 			this.labelSpecialty.AutoSize = true;
 			this.labelSpecialty.BackColor = System.Drawing.Color.Transparent;
+			this.labelSpecialty.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelSpecialty.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSpecialty.ForeColor = System.Drawing.Color.Black;
 			this.labelSpecialty.Location = new System.Drawing.Point(96, 104);
@@ -589,6 +612,7 @@
 			this.labelSpecialty.TabIndex = 3;
 			this.labelSpecialty.Tag = "fixedPosition";
 			this.labelSpecialty.Text = "Спецальність:";
+			this.labelSpecialty.Click += new System.EventHandler(this.LabelSpecialty_Click);
 			// 
 			// comboBoxEducationDegree
 			// 
@@ -667,6 +691,7 @@
 			// 
 			this.labelNameInstitution.AutoSize = true;
 			this.labelNameInstitution.BackColor = System.Drawing.Color.Transparent;
+			this.labelNameInstitution.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelNameInstitution.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNameInstitution.ForeColor = System.Drawing.Color.Black;
 			this.labelNameInstitution.Location = new System.Drawing.Point(75, 44);
@@ -675,6 +700,7 @@
 			this.labelNameInstitution.TabIndex = 1;
 			this.labelNameInstitution.Tag = "fixedPosition";
 			this.labelNameInstitution.Text = "Назва закладу:";
+			this.labelNameInstitution.Click += new System.EventHandler(this.LabelNameInstitution_Click);
 			// 
 			// textBoxSpecialty
 			// 
@@ -713,6 +739,7 @@
 			// 
 			this.labelYearAdmission.AutoSize = true;
 			this.labelYearAdmission.BackColor = System.Drawing.Color.Transparent;
+			this.labelYearAdmission.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelYearAdmission.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelYearAdmission.ForeColor = System.Drawing.Color.Black;
 			this.labelYearAdmission.Location = new System.Drawing.Point(707, 44);
@@ -721,6 +748,7 @@
 			this.labelYearAdmission.TabIndex = 7;
 			this.labelYearAdmission.Tag = "fixedPosition";
 			this.labelYearAdmission.Text = "Рік вступу:";
+			this.labelYearAdmission.Click += new System.EventHandler(this.LabelYearAdmission_Click);
 			// 
 			// textBoxNameInstitution
 			// 
@@ -786,6 +814,7 @@
 			// 
 			this.labelEducationForm.AutoSize = true;
 			this.labelEducationForm.BackColor = System.Drawing.Color.Transparent;
+			this.labelEducationForm.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEducationForm.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationForm.ForeColor = System.Drawing.Color.Black;
 			this.labelEducationForm.Location = new System.Drawing.Point(617, 164);
@@ -794,11 +823,13 @@
 			this.labelEducationForm.TabIndex = 11;
 			this.labelEducationForm.Tag = "fixedPosition";
 			this.labelEducationForm.Text = "Форма навчання:";
+			this.labelEducationForm.Click += new System.EventHandler(this.LabelEducationForm_Click);
 			// 
 			// labelDateEnd
 			// 
 			this.labelDateEnd.AutoSize = true;
 			this.labelDateEnd.BackColor = System.Drawing.Color.Transparent;
+			this.labelDateEnd.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelDateEnd.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDateEnd.ForeColor = System.Drawing.Color.Black;
 			this.labelDateEnd.Location = new System.Drawing.Point(621, 104);
@@ -807,11 +838,13 @@
 			this.labelDateEnd.TabIndex = 9;
 			this.labelDateEnd.Tag = "fixedPosition";
 			this.labelDateEnd.Text = "Дата закінчення:";
+			this.labelDateEnd.Click += new System.EventHandler(this.LabelDateEnd_Click);
 			// 
 			// labelEducationDegree
 			// 
 			this.labelEducationDegree.AutoSize = true;
 			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
+			this.labelEducationDegree.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
 			this.labelEducationDegree.Location = new System.Drawing.Point(82, 164);
@@ -820,11 +853,13 @@
 			this.labelEducationDegree.TabIndex = 5;
 			this.labelEducationDegree.Tag = "fixedPosition";
 			this.labelEducationDegree.Text = "Ступінь освіти:";
+			this.labelEducationDegree.Click += new System.EventHandler(this.LabelEducationDegree_Click);
 			// 
 			// labelChronicDiseasesInfo
 			// 
 			this.labelChronicDiseasesInfo.AutoSize = true;
 			this.labelChronicDiseasesInfo.BackColor = System.Drawing.Color.Transparent;
+			this.labelChronicDiseasesInfo.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelChronicDiseasesInfo.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelChronicDiseasesInfo.ForeColor = System.Drawing.Color.Black;
 			this.labelChronicDiseasesInfo.Location = new System.Drawing.Point(54, 631);
@@ -833,6 +868,7 @@
 			this.labelChronicDiseasesInfo.TabIndex = 17;
 			this.labelChronicDiseasesInfo.Tag = "fixedPosition";
 			this.labelChronicDiseasesInfo.Text = "(залиште пустим якщо немає)";
+			this.labelChronicDiseasesInfo.Click += new System.EventHandler(this.LabelChronicDiseases_Click);
 			// 
 			// labelEducation
 			// 

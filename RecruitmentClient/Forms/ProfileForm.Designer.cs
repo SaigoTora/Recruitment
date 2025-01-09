@@ -54,6 +54,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelSurname.AutoSize = true;
 			this.labelSurname.BackColor = System.Drawing.Color.Transparent;
+			this.labelSurname.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelSurname.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelSurname.ForeColor = System.Drawing.Color.Black;
 			this.labelSurname.Location = new System.Drawing.Point(126, 25);
@@ -62,6 +63,7 @@
 			this.labelSurname.Size = new System.Drawing.Size(157, 32);
 			this.labelSurname.TabIndex = 0;
 			this.labelSurname.Text = "Прізвище:";
+			this.labelSurname.Click += new System.EventHandler(this.LabelSurname_Click);
 			// 
 			// labelName
 			// 
@@ -69,6 +71,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelName.AutoSize = true;
 			this.labelName.BackColor = System.Drawing.Color.Transparent;
+			this.labelName.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelName.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelName.ForeColor = System.Drawing.Color.Black;
 			this.labelName.Location = new System.Drawing.Point(204, 85);
@@ -77,6 +80,7 @@
 			this.labelName.Size = new System.Drawing.Size(79, 32);
 			this.labelName.TabIndex = 2;
 			this.labelName.Text = "І’мя:";
+			this.labelName.Click += new System.EventHandler(this.LabelName_Click);
 			// 
 			// labelFatherName
 			// 
@@ -84,6 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelFatherName.AutoSize = true;
 			this.labelFatherName.BackColor = System.Drawing.Color.Transparent;
+			this.labelFatherName.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelFatherName.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelFatherName.ForeColor = System.Drawing.Color.Black;
 			this.labelFatherName.Location = new System.Drawing.Point(93, 145);
@@ -92,6 +97,7 @@
 			this.labelFatherName.Size = new System.Drawing.Size(190, 32);
 			this.labelFatherName.TabIndex = 4;
 			this.labelFatherName.Text = "По-батькові:";
+			this.labelFatherName.Click += new System.EventHandler(this.LabelFatherName_Click);
 			// 
 			// labelPhone
 			// 
@@ -99,6 +105,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPhone.AutoSize = true;
 			this.labelPhone.BackColor = System.Drawing.Color.Transparent;
+			this.labelPhone.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelPhone.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelPhone.ForeColor = System.Drawing.Color.Black;
 			this.labelPhone.Location = new System.Drawing.Point(25, 205);
@@ -107,6 +114,7 @@
 			this.labelPhone.Size = new System.Drawing.Size(258, 32);
 			this.labelPhone.TabIndex = 6;
 			this.labelPhone.Text = "Номер телефону:";
+			this.labelPhone.Click += new System.EventHandler(this.LabelPhone_Click);
 			// 
 			// labelPhoneStart
 			// 
@@ -129,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelBirthday.AutoSize = true;
 			this.labelBirthday.BackColor = System.Drawing.Color.Transparent;
+			this.labelBirthday.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelBirthday.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBirthday.ForeColor = System.Drawing.Color.Black;
 			this.labelBirthday.Location = new System.Drawing.Point(11, 265);
@@ -137,6 +146,7 @@
 			this.labelBirthday.Size = new System.Drawing.Size(272, 32);
 			this.labelBirthday.TabIndex = 11;
 			this.labelBirthday.Text = "Дата народження:";
+			this.labelBirthday.Click += new System.EventHandler(this.LabelBirthday_Click);
 			// 
 			// labelEmail
 			// 
@@ -144,6 +154,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelEmail.AutoSize = true;
 			this.labelEmail.BackColor = System.Drawing.Color.Transparent;
+			this.labelEmail.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEmail.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEmail.ForeColor = System.Drawing.Color.Black;
 			this.labelEmail.Location = new System.Drawing.Point(172, 327);
@@ -152,6 +163,7 @@
 			this.labelEmail.Size = new System.Drawing.Size(111, 32);
 			this.labelEmail.TabIndex = 13;
 			this.labelEmail.Text = "E-mail:";
+			this.labelEmail.Click += new System.EventHandler(this.LabelEmail_Click);
 			// 
 			// buttonQuestionnairе
 			// 

@@ -48,6 +48,11 @@ namespace RecruitmentServer.Forms
 				$"\nE-mail: {employee.Email}";
 		}
 
+		#region Label focus event handlers
+		private void LabelSalaryTitle_Click(object sender, EventArgs e)
+			=> textBoxSalary.Focus();
+		#endregion
+
 		#region TextBox event handlers
 		private void TextBoxSalary_TextChanged(object sender, EventArgs e)
 		{

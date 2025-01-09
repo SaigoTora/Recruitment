@@ -718,6 +718,8 @@ namespace RecruitmentServer.Forms
 		#endregion
 
 		#region ComboBoxes
+		private void LabelStatus_Click(object sender, EventArgs e)
+			=> comboBoxStatus.DroppedDown = true;
 		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
 			=> ComboBoxSelectedIndexChanged(comboBoxSort, ref _currentComboBoxSortIndex);
 		private void ComboBoxDate_SelectedIndexChanged(object sender, EventArgs e)
@@ -755,12 +757,11 @@ namespace RecruitmentServer.Forms
 				comboBox.CustomizableEdges.BottomRight = true;
 			}
 		}
-
-
-
 		#endregion
 
 		#region Minimum and maximum
+		private void LabelMinMax_Click(object sender, EventArgs e)
+			=> textBoxMin.Focus();
 		private void TextBoxMinMaxSearch_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
@@ -862,6 +863,8 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 			Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 		}
+
+
 
 		public void SetTheme(Theme theme)
 		{

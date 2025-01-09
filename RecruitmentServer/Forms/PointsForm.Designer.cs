@@ -102,6 +102,7 @@
 			// 
 			this.labelAgeUnder18.AutoSize = true;
 			this.labelAgeUnder18.BackColor = System.Drawing.Color.Transparent;
+			this.labelAgeUnder18.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAgeUnder18.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeUnder18.ForeColor = System.Drawing.Color.Black;
 			this.labelAgeUnder18.Location = new System.Drawing.Point(12, 25);
@@ -109,6 +110,7 @@
 			this.labelAgeUnder18.Size = new System.Drawing.Size(136, 29);
 			this.labelAgeUnder18.TabIndex = 0;
 			this.labelAgeUnder18.Text = "Вік до 18:";
+			this.labelAgeUnder18.Click += new System.EventHandler(this.LabelAgeUnder18_Click);
 			// 
 			// NUDAge18_30
 			// 
@@ -129,6 +131,7 @@
 			// 
 			this.labelAge18_30.AutoSize = true;
 			this.labelAge18_30.BackColor = System.Drawing.Color.Transparent;
+			this.labelAge18_30.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAge18_30.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAge18_30.ForeColor = System.Drawing.Color.Black;
 			this.labelAge18_30.Location = new System.Drawing.Point(12, 85);
@@ -136,6 +139,7 @@
 			this.labelAge18_30.Size = new System.Drawing.Size(217, 29);
 			this.labelAge18_30.TabIndex = 2;
 			this.labelAge18_30.Text = "Вік від 18 до 30:";
+			this.labelAge18_30.Click += new System.EventHandler(this.LabelAge18_30_Click);
 			// 
 			// NUDAgeOver50
 			// 
@@ -156,6 +160,7 @@
 			// 
 			this.labelAgeOver50.AutoSize = true;
 			this.labelAgeOver50.BackColor = System.Drawing.Color.Transparent;
+			this.labelAgeOver50.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAgeOver50.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeOver50.ForeColor = System.Drawing.Color.Black;
 			this.labelAgeOver50.Location = new System.Drawing.Point(12, 205);
@@ -163,6 +168,7 @@
 			this.labelAgeOver50.Size = new System.Drawing.Size(191, 29);
 			this.labelAgeOver50.TabIndex = 6;
 			this.labelAgeOver50.Text = "Вік більше 50:";
+			this.labelAgeOver50.Click += new System.EventHandler(this.LabelAgeOver50_Click);
 			// 
 			// NUDAge30_50
 			// 
@@ -183,6 +189,7 @@
 			// 
 			this.labelAge30_50.AutoSize = true;
 			this.labelAge30_50.BackColor = System.Drawing.Color.Transparent;
+			this.labelAge30_50.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAge30_50.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAge30_50.ForeColor = System.Drawing.Color.Black;
 			this.labelAge30_50.Location = new System.Drawing.Point(12, 145);
@@ -190,6 +197,7 @@
 			this.labelAge30_50.Size = new System.Drawing.Size(217, 29);
 			this.labelAge30_50.TabIndex = 4;
 			this.labelAge30_50.Text = "Вік від 30 до 50:";
+			this.labelAge30_50.Click += new System.EventHandler(this.LabelAge30_50_Click);
 			// 
 			// NUDExp1_3
 			// 
@@ -210,6 +218,7 @@
 			// 
 			this.labelExp1_3.AutoSize = true;
 			this.labelExp1_3.BackColor = System.Drawing.Color.Transparent;
+			this.labelExp1_3.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExp1_3.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExp1_3.ForeColor = System.Drawing.Color.Black;
 			this.labelExp1_3.Location = new System.Drawing.Point(12, 385);
@@ -217,6 +226,7 @@
 			this.labelExp1_3.Size = new System.Drawing.Size(399, 29);
 			this.labelExp1_3.TabIndex = 12;
 			this.labelExp1_3.Text = "Досвід роботи від 1 до 3 років:";
+			this.labelExp1_3.Click += new System.EventHandler(this.LabelExp1_3_Click);
 			// 
 			// NUDExpUnderYear
 			// 
@@ -237,6 +247,7 @@
 			// 
 			this.labelExpUnderYear.AutoSize = true;
 			this.labelExpUnderYear.BackColor = System.Drawing.Color.Transparent;
+			this.labelExpUnderYear.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExpUnderYear.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpUnderYear.ForeColor = System.Drawing.Color.Black;
 			this.labelExpUnderYear.Location = new System.Drawing.Point(12, 325);
@@ -244,6 +255,7 @@
 			this.labelExpUnderYear.Size = new System.Drawing.Size(355, 29);
 			this.labelExpUnderYear.TabIndex = 10;
 			this.labelExpUnderYear.Text = "Досвід роботи менше року:";
+			this.labelExpUnderYear.Click += new System.EventHandler(this.LabelExpUnderYear_Click);
 			// 
 			// NUDExpNone
 			// 
@@ -264,6 +276,7 @@
 			// 
 			this.labelExpNone.AutoSize = true;
 			this.labelExpNone.BackColor = System.Drawing.Color.Transparent;
+			this.labelExpNone.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExpNone.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpNone.ForeColor = System.Drawing.Color.Black;
 			this.labelExpNone.Location = new System.Drawing.Point(12, 265);
@@ -271,6 +284,7 @@
 			this.labelExpNone.Size = new System.Drawing.Size(295, 29);
 			this.labelExpNone.TabIndex = 8;
 			this.labelExpNone.Text = "Немає досвіду роботи:";
+			this.labelExpNone.Click += new System.EventHandler(this.LabelExpNone_Click);
 			// 
 			// NUDBusinessTripOpportunity
 			// 
@@ -293,6 +307,7 @@
 			this.labelBusinessTripOpportunity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelBusinessTripOpportunity.AutoSize = true;
 			this.labelBusinessTripOpportunity.BackColor = System.Drawing.Color.Transparent;
+			this.labelBusinessTripOpportunity.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelBusinessTripOpportunity.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelBusinessTripOpportunity.ForeColor = System.Drawing.Color.Black;
 			this.labelBusinessTripOpportunity.Location = new System.Drawing.Point(599, 385);
@@ -300,6 +315,7 @@
 			this.labelBusinessTripOpportunity.Size = new System.Drawing.Size(338, 29);
 			this.labelBusinessTripOpportunity.TabIndex = 26;
 			this.labelBusinessTripOpportunity.Text = "Є можливість відряджень:";
+			this.labelBusinessTripOpportunity.Click += new System.EventHandler(this.LabelBusinessTripOpportunity_Click);
 			// 
 			// NUDNoDrinkAlcohol
 			// 
@@ -322,6 +338,7 @@
 			this.labelNoDrinkAlcohol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelNoDrinkAlcohol.AutoSize = true;
 			this.labelNoDrinkAlcohol.BackColor = System.Drawing.Color.Transparent;
+			this.labelNoDrinkAlcohol.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelNoDrinkAlcohol.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoDrinkAlcohol.ForeColor = System.Drawing.Color.Black;
 			this.labelNoDrinkAlcohol.Location = new System.Drawing.Point(599, 325);
@@ -329,6 +346,7 @@
 			this.labelNoDrinkAlcohol.Size = new System.Drawing.Size(274, 29);
 			this.labelNoDrinkAlcohol.TabIndex = 24;
 			this.labelNoDrinkAlcohol.Text = "Не вживає алкоголь:";
+			this.labelNoDrinkAlcohol.Click += new System.EventHandler(this.LabelNoDrinkAlcohol_Click);
 			// 
 			// NUDNoSmoker
 			// 
@@ -351,6 +369,7 @@
 			this.labelNoSmoker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelNoSmoker.AutoSize = true;
 			this.labelNoSmoker.BackColor = System.Drawing.Color.Transparent;
+			this.labelNoSmoker.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelNoSmoker.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoSmoker.ForeColor = System.Drawing.Color.Black;
 			this.labelNoSmoker.Location = new System.Drawing.Point(599, 265);
@@ -358,6 +377,7 @@
 			this.labelNoSmoker.Size = new System.Drawing.Size(150, 29);
 			this.labelNoSmoker.TabIndex = 22;
 			this.labelNoSmoker.Text = "Не курець:";
+			this.labelNoSmoker.Click += new System.EventHandler(this.LabelNoSmoker_Click);
 			// 
 			// NUDDriverLicense
 			// 
@@ -380,6 +400,7 @@
 			this.labelDriverLicense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelDriverLicense.AutoSize = true;
 			this.labelDriverLicense.BackColor = System.Drawing.Color.Transparent;
+			this.labelDriverLicense.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelDriverLicense.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDriverLicense.ForeColor = System.Drawing.Color.Black;
 			this.labelDriverLicense.Location = new System.Drawing.Point(599, 205);
@@ -387,6 +408,7 @@
 			this.labelDriverLicense.Size = new System.Drawing.Size(375, 29);
 			this.labelDriverLicense.TabIndex = 20;
 			this.labelDriverLicense.Text = "Наявність посвідчення водія:";
+			this.labelDriverLicense.Click += new System.EventHandler(this.LabelDriverLicense_Click);
 			// 
 			// NUDNoChronicDiseases
 			// 
@@ -409,6 +431,7 @@
 			this.labelNoChronicDiseases.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelNoChronicDiseases.AutoSize = true;
 			this.labelNoChronicDiseases.BackColor = System.Drawing.Color.Transparent;
+			this.labelNoChronicDiseases.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelNoChronicDiseases.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelNoChronicDiseases.ForeColor = System.Drawing.Color.Black;
 			this.labelNoChronicDiseases.Location = new System.Drawing.Point(599, 145);
@@ -416,6 +439,7 @@
 			this.labelNoChronicDiseases.Size = new System.Drawing.Size(462, 29);
 			this.labelNoChronicDiseases.TabIndex = 18;
 			this.labelNoChronicDiseases.Text = "Відсутність хронічних захворювань:";
+			this.labelNoChronicDiseases.Click += new System.EventHandler(this.LabelNoChronicDiseases_Click);
 			// 
 			// NUDDiploma
 			// 
@@ -438,6 +462,7 @@
 			this.labelDiploma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelDiploma.AutoSize = true;
 			this.labelDiploma.BackColor = System.Drawing.Color.Transparent;
+			this.labelDiploma.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelDiploma.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDiploma.ForeColor = System.Drawing.Color.Black;
 			this.labelDiploma.Location = new System.Drawing.Point(599, 85);
@@ -445,6 +470,7 @@
 			this.labelDiploma.Size = new System.Drawing.Size(258, 29);
 			this.labelDiploma.TabIndex = 16;
 			this.labelDiploma.Text = "Наявність диплому:";
+			this.labelDiploma.Click += new System.EventHandler(this.LabelDiploma_Click);
 			// 
 			// NUDExpOver3
 			// 
@@ -467,6 +493,7 @@
 			this.labelExpOver3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelExpOver3.AutoSize = true;
 			this.labelExpOver3.BackColor = System.Drawing.Color.Transparent;
+			this.labelExpOver3.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExpOver3.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpOver3.ForeColor = System.Drawing.Color.Black;
 			this.labelExpOver3.Location = new System.Drawing.Point(599, 25);
@@ -474,6 +501,7 @@
 			this.labelExpOver3.Size = new System.Drawing.Size(388, 29);
 			this.labelExpOver3.TabIndex = 14;
 			this.labelExpOver3.Text = "Досвід роботи більше 3 років:";
+			this.labelExpOver3.Click += new System.EventHandler(this.LabelExpOver3_Click);
 			// 
 			// recruitmentDBDataSet
 			// 

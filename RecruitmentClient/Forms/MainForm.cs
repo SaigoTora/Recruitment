@@ -642,6 +642,8 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Salary
+		private void LabelSalarySearch_Click(object sender, EventArgs e)
+			=> textBoxMinSalarySearch.Focus();
 		private void TextBoxSalarySearch_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)

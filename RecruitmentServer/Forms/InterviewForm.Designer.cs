@@ -73,6 +73,7 @@
 			// 
 			this.labelStatus.AutoSize = true;
 			this.labelStatus.BackColor = System.Drawing.Color.Transparent;
+			this.labelStatus.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelStatus.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStatus.ForeColor = System.Drawing.Color.Black;
 			this.labelStatus.Location = new System.Drawing.Point(12, 132);
@@ -81,6 +82,7 @@
 			this.labelStatus.Size = new System.Drawing.Size(106, 29);
 			this.labelStatus.TabIndex = 2;
 			this.labelStatus.Text = "Статус:";
+			this.labelStatus.Click += new System.EventHandler(this.LabelStatus_Click);
 			// 
 			// interviewStatusBindingSource
 			// 
@@ -141,6 +143,7 @@
 			this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelDate.AutoSize = true;
 			this.labelDate.BackColor = System.Drawing.Color.Transparent;
+			this.labelDate.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelDate.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDate.ForeColor = System.Drawing.Color.Black;
 			this.labelDate.Location = new System.Drawing.Point(3, 3);
@@ -150,6 +153,7 @@
 			this.labelDate.TabIndex = 0;
 			this.labelDate.Tag = "fixedPosition";
 			this.labelDate.Text = "Дата і час співбесіди:";
+			this.labelDate.Click += new System.EventHandler(this.LabelDate_Click);
 			// 
 			// labelMinutes
 			// 

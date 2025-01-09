@@ -148,6 +148,16 @@ namespace RecruitmentServer.Forms
 		}
 
 		#region Label focus event handlers
+		private void LabelCity_Click(object sender, EventArgs e)
+			=> textBoxCity.Focus();
+		private void LabelAgeMin_Click(object sender, EventArgs e)
+			=> numericUpDownAgeMin.Focus();
+		private void LabelAgeMax_Click(object sender, EventArgs e)
+			=> numericUpDownAgeMax.Focus();
+		private void LabelExpMin_Click(object sender, EventArgs e)
+			=> numericUpDownExpMin.Focus();
+		private void LabelEducationDegree_Click(object sender, EventArgs e)
+			=> listBoxDegrees.Focus();
 		private void LabelDiplomaAll_Click(object sender, EventArgs e)
 			=> checkBoxDiplomaAll.Checked = !checkBoxDiplomaAll.Checked;
 

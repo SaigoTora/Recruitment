@@ -104,6 +104,7 @@
 			// 
 			this.labelCity.AutoSize = true;
 			this.labelCity.BackColor = System.Drawing.Color.Transparent;
+			this.labelCity.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelCity.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelCity.ForeColor = System.Drawing.Color.Black;
 			this.labelCity.Location = new System.Drawing.Point(12, 25);
@@ -111,6 +112,7 @@
 			this.labelCity.Size = new System.Drawing.Size(446, 32);
 			this.labelCity.TabIndex = 0;
 			this.labelCity.Text = "Населений пункт проживання:";
+			this.labelCity.Click += new System.EventHandler(this.LabelCity_Click);
 			// 
 			// numericUpDownAgeMin
 			// 
@@ -141,6 +143,7 @@
 			// 
 			this.labelAge.AutoSize = true;
 			this.labelAge.BackColor = System.Drawing.Color.Transparent;
+			this.labelAge.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAge.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAge.ForeColor = System.Drawing.Color.Black;
 			this.labelAge.Location = new System.Drawing.Point(12, 85);
@@ -148,6 +151,7 @@
 			this.labelAge.Size = new System.Drawing.Size(68, 32);
 			this.labelAge.TabIndex = 3;
 			this.labelAge.Text = "Вік:";
+			this.labelAge.Click += new System.EventHandler(this.LabelAgeMin_Click);
 			// 
 			// numericUpDownAgeMax
 			// 
@@ -178,6 +182,7 @@
 			// 
 			this.labelAgeMax.AutoSize = true;
 			this.labelAgeMax.BackColor = System.Drawing.Color.Transparent;
+			this.labelAgeMax.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAgeMax.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeMax.ForeColor = System.Drawing.Color.Black;
 			this.labelAgeMax.Location = new System.Drawing.Point(250, 85);
@@ -185,6 +190,7 @@
 			this.labelAgeMax.Size = new System.Drawing.Size(47, 32);
 			this.labelAgeMax.TabIndex = 6;
 			this.labelAgeMax.Text = "до";
+			this.labelAgeMax.Click += new System.EventHandler(this.LabelAgeMax_Click);
 			// 
 			// numericUpDownExpMin
 			// 
@@ -205,6 +211,7 @@
 			// 
 			this.labelExpMin.AutoSize = true;
 			this.labelExpMin.BackColor = System.Drawing.Color.Transparent;
+			this.labelExpMin.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelExpMin.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelExpMin.ForeColor = System.Drawing.Color.Black;
 			this.labelExpMin.Location = new System.Drawing.Point(12, 145);
@@ -212,6 +219,7 @@
 			this.labelExpMin.Size = new System.Drawing.Size(556, 32);
 			this.labelExpMin.TabIndex = 8;
 			this.labelExpMin.Text = "Мінімальний досвід роботи(в місяцях):";
+			this.labelExpMin.Click += new System.EventHandler(this.LabelExpMin_Click);
 			// 
 			// labelCandidateMustHave
 			// 
@@ -301,6 +309,7 @@
 			// 
 			this.labelEducationDegree.AutoSize = true;
 			this.labelEducationDegree.BackColor = System.Drawing.Color.Transparent;
+			this.labelEducationDegree.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
 			this.labelEducationDegree.Location = new System.Drawing.Point(12, 205);
@@ -308,6 +317,7 @@
 			this.labelEducationDegree.Size = new System.Drawing.Size(409, 32);
 			this.labelEducationDegree.TabIndex = 10;
 			this.labelEducationDegree.Text = "Мати ступінь/ступені освіти:";
+			this.labelEducationDegree.Click += new System.EventHandler(this.LabelEducationDegree_Click);
 			// 
 			// listBoxDegrees
 			// 
@@ -1079,6 +1089,7 @@
 			// 
 			this.labelAgeMin.AutoSize = true;
 			this.labelAgeMin.BackColor = System.Drawing.Color.Transparent;
+			this.labelAgeMin.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAgeMin.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeMin.ForeColor = System.Drawing.Color.Black;
 			this.labelAgeMin.Location = new System.Drawing.Point(110, 85);
@@ -1086,6 +1097,7 @@
 			this.labelAgeMin.Size = new System.Drawing.Size(54, 32);
 			this.labelAgeMin.TabIndex = 4;
 			this.labelAgeMin.Text = "від";
+			this.labelAgeMin.Click += new System.EventHandler(this.LabelAgeMin_Click);
 			// 
 			// RequirementForm
 			// 
