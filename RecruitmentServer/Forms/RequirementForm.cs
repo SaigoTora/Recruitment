@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -15,14 +14,14 @@ namespace RecruitmentServer.Forms
 {
 	internal partial class RequirementForm : BaseForm, IThemeChange
 	{
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private readonly FullRequirement _requirement;
 		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
 			new CheckBoxEventHandlers();
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
 
-		internal RequirementForm(ServerAccount account, FullRequirement requirement)
+		internal RequirementForm(Account account, FullRequirement requirement)
 		{
 			InitializeComponent();
 

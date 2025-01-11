@@ -77,8 +77,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModels\AssignmentItem.cs" />
-    <Compile Include="DataModels\FullInterview.cs" />
+    <Compile Include="Models\AssignmentItem.cs" />
+    <Compile Include="Models\FullInterview.cs" />
     <Compile Include="Forms\InterviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,20 +96,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RecruitmentDB.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ServerUtilities\ServerAccount.cs" />
-    <Compile Include="ServerUtilities\DataBase.cs" />
-    <Compile Include="DataModels\FullApplication.cs" />
-    <Compile Include="DataModels\FullRequirement.cs" />
-    <Compile Include="DataModels\FullVacancy.cs" />
-    <Compile Include="DataModels\PointDegree.cs" />
-    <Compile Include="DataModels\Points.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\DataBase.cs" />
+    <Compile Include="Models\FullApplication.cs" />
+    <Compile Include="Models\FullRequirement.cs" />
+    <Compile Include="Models\FullVacancy.cs" />
+    <Compile Include="Models\PointDegree.cs" />
+    <Compile Include="Models\Points.cs" />
     <Compile Include="Forms\RequirementForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\RequirementForm.Designer.cs">
       <DependentUpon>RequirementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServerUtilities\ServerSearcher.cs" />
+    <Compile Include="Utilities\ServerUtilities\ServerSearcher.cs" />
     <Compile Include="Forms\PointsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,7 +142,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerUtilities\Server.cs" />
+    <Compile Include="Models\Server.cs" />
     <Compile Include="Forms\EmployeeForm.cs">
       <SubType>Form</SubType>
     </Compile>

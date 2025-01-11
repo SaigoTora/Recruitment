@@ -1,4 +1,4 @@
-﻿namespace RecruitmentServer.DataModels
+﻿namespace RecruitmentServer.Models
 {
     internal class PointDegree
     {// Клас, який зберігає інформацію про ступінь освіти та кількість балів за цей ступінь

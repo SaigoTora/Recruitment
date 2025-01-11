@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -24,11 +23,11 @@ namespace RecruitmentServer.Forms
 			(Color.FromArgb(255, 235, 100), Color.FromArgb(220, 70, 70));
 
 
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private readonly FullInterview _interview;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal InterviewForm(ServerAccount account, FullInterview interview,
+		internal InterviewForm(Account account, FullInterview interview,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();

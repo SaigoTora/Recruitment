@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -15,7 +14,7 @@ namespace RecruitmentServer.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private FullVacancy _vacancy;
 		private readonly FullRequirement _requirement = new FullRequirement();
 		private Points _points = new Points();
@@ -27,7 +26,7 @@ namespace RecruitmentServer.Forms
 			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false,
 				maximizeBox: false);
 		}
-		internal VacancyForm(ServerAccount account, Action<EventArgs> actionAfterChange)
+		internal VacancyForm(Account account, Action<EventArgs> actionAfterChange)
 			: this()
 		{// Constructor for creating a vacancy
 			_account = account;
@@ -35,7 +34,7 @@ namespace RecruitmentServer.Forms
 
 			ConfigureFormForVacancyCreation();
 		}
-		internal VacancyForm(ServerAccount account, FullVacancy vacancy,
+		internal VacancyForm(Account account, FullVacancy vacancy,
 			Action<EventArgs> actionAfterChange = null, bool isDeleteButtonVisible = true)
 			: this()
 		{// Constructor for viewing vacancies

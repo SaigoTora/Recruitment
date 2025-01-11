@@ -1,4 +1,4 @@
-﻿namespace RecruitmentServer.DataModels
+﻿namespace RecruitmentServer.Models
 {
     internal class AssignmentItem
     {// Клас для вирішення задачі про призначення

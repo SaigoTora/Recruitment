@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Forms;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 
 namespace RecruitmentServer
 {
@@ -23,7 +23,7 @@ namespace RecruitmentServer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ServerAccount account = Serializator.Deserialize<ServerAccount>(SerializePath, EncryptKey) ?? new ServerAccount();
+            Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey) ?? new Account();
             Application.Run(new MainForm(account));
         }
     }

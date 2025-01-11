@@ -6,8 +6,7 @@ using System.Windows.Forms;
 
 using RecruitmentLibrary;
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -16,7 +15,7 @@ namespace RecruitmentServer.Forms
 {
 	internal partial class AssignmentForm : BaseForm, IThemeChange
 	{
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private AssignmentItem[] _allItems;
 		private List<int> _vacancyIds = new List<int>();
 		private List<int> _candidateIds = new List<int>();
@@ -32,7 +31,7 @@ namespace RecruitmentServer.Forms
 		private readonly Dictionary<Guna2GradientButton, FullVacancy>
 			_buttonVacancyMap = new Dictionary<Guna2GradientButton, FullVacancy>();
 
-		internal AssignmentForm(ServerAccount account, Action<EventArgs> refreshMainForm)
+		internal AssignmentForm(Account account, Action<EventArgs> refreshMainForm)
 		{
 			InitializeComponent();
 

@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.DataModels;
+using RecruitmentServer.Utilities.ServerUtilities;
 
-namespace RecruitmentServer.ServerUtilities
+namespace RecruitmentServer.Models
 {
 	internal static class DataBase
 	{

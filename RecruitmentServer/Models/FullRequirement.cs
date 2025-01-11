@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using RecruitmentLibrary.ApplicationInfo;
 
-namespace RecruitmentServer.DataModels
+namespace RecruitmentServer.Models
 {
     internal class FullRequirement : Requirement
     {// Клас з повною інформацією про вимоги

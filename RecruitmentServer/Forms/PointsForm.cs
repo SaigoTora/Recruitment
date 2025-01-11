@@ -3,8 +3,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -13,11 +12,11 @@ namespace RecruitmentServer.Forms
 {
 	internal partial class PointsForm : BaseForm, IThemeChange
 	{
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private readonly Points _points;
 		private PointDegree[] _degreesPoints;
 
-		internal PointsForm(ServerAccount account, Points points, bool isFormForView)
+		internal PointsForm(Account account, Points points, bool isFormForView)
 		{
 			InitializeComponent();
 

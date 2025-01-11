@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -12,11 +12,11 @@ namespace RecruitmentServer.Forms
 {
 	internal partial class EmployeeForm : BaseForm, IThemeChange
 	{
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private readonly Employee _employee;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal EmployeeForm(ServerAccount account, Employee employee,
+		internal EmployeeForm(Account account, Employee employee,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();

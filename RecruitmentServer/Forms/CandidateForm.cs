@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -16,12 +16,12 @@ namespace RecruitmentServer.Forms
 		private const int INCREASE_FORM_HEIGHT = 100;
 
 		private readonly int _idBusinessTrip, _idFamilyStatus;
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private readonly Candidate _candidate;
 		private readonly ControlCreator _languageCreator;
 		private readonly ControlCreator _educationCreator;
 
-		internal CandidateForm(ServerAccount account, Candidate candidate)
+		internal CandidateForm(Account account, Candidate candidate)
 		{
 			InitializeComponent();
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using RecruitmentLibrary.ApplicationInfo;
 
-namespace RecruitmentServer.DataModels
+namespace RecruitmentServer.Models
 {
     internal class FullVacancy : Vacancy
     {// Клас з повною інформацією про вакансію

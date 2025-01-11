@@ -1,7 +1,7 @@
 ﻿using System;
 using RecruitmentLibrary.ApplicationInfo;
 
-namespace RecruitmentServer.DataModels
+namespace RecruitmentServer.Models
 {
     internal class FullInterview : Interview
     {// Клас з повною інформацією про співбесіду

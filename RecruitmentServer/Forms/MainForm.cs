@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 
 using RecruitmentLibrary.PersonInfo;
-using RecruitmentServer.DataModels;
-using RecruitmentServer.ServerUtilities;
+using RecruitmentServer.Models;
+using RecruitmentServer.Utilities.ServerUtilities;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -34,7 +34,7 @@ namespace RecruitmentServer.Forms
 			_statusColor = (Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97),
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
-		private readonly ServerAccount _account;
+		private readonly Account _account;
 		private ServerSearcher _searcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
@@ -59,7 +59,7 @@ namespace RecruitmentServer.Forms
 		private int _currentComboBoxDateIndex, _currentComboBoxStatusIndex,
 		_currentComboBoxSortIndex;
 
-		internal MainForm(ServerAccount account)
+		internal MainForm(Account account)
 		{
 			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			IsResizable = true;
@@ -777,12 +777,12 @@ namespace RecruitmentServer.Forms
 		}
 		private void TextBoxMinSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.Min.ToString();
+			string searcherText = _searcher?.MinValue.ToString();
 			TextBoxSearchLeave(textBoxMin.Text, searcherText);
 		}
 		private void TextBoxMaxSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.Max.ToString();
+			string searcherText = _searcher?.MaxValue.ToString();
 			TextBoxSearchLeave(textBoxMax.Text, searcherText);
 		}
 		private void TextBoxSearchLeave(string text, string searcherText)

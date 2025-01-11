@@ -1,4 +1,4 @@
-﻿namespace RecruitmentServer.DataModels
+﻿namespace RecruitmentServer.Models
 {
     internal class Points
     {// Клас для зберігання інформації про бали
