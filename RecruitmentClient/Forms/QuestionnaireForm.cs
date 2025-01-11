@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentClient.ClientUtilities;
-using RecruitmentClient.FormUtilities;
+using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.ClientUtilities;
+using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
@@ -24,7 +25,7 @@ namespace RecruitmentClient.Forms
 
 		private readonly int _defaultYearAdmission = DateTime.Today.Year - 4;
 
-		private readonly ClientAccount _account;
+		private readonly Account _account;
 		private readonly Questionnaire _oldQuestionnaire = null;
 		private readonly bool _formOpenForChange = false;
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
@@ -37,7 +38,7 @@ namespace RecruitmentClient.Forms
 			new List<EducationFormElements>(MAX_EDUCATION_COUNT);
 		private readonly ControlCreator _educationCreator;
 
-		internal QuestionnaireForm(ClientAccount account, StartForm startForm)
+		internal QuestionnaireForm(Account account, StartForm startForm)
 		{
 			customTitleBar = new CustomTitleBar(this, "Анкета",
 				Properties.Resources.questionnaire, minimizeBox: false);

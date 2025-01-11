@@ -40,7 +40,7 @@
 			this.buttonSend = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.richTextBoxClientAdditionalInfo = new Guna.UI2.WinForms.Guna2TextBox();
 			this.buttonRequirements = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.labelPosition = new System.Windows.Forms.RichTextBox();
+			this.richTextBoxPosition = new System.Windows.Forms.RichTextBox();
 			this.SuspendLayout();
 			// 
 			// labelSalaryTitle
@@ -248,28 +248,28 @@
 			this.buttonRequirements.Visible = false;
 			this.buttonRequirements.Click += new System.EventHandler(this.ButtonRequirements_Click);
 			// 
-			// labelPosition
+			// richTextBoxPosition
 			// 
-			this.labelPosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.labelPosition.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelPosition.ForeColor = System.Drawing.Color.Black;
-			this.labelPosition.Location = new System.Drawing.Point(12, 12);
-			this.labelPosition.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.labelPosition.MaxLength = 2048;
-			this.labelPosition.Name = "labelPosition";
-			this.labelPosition.ReadOnly = true;
-			this.labelPosition.Size = new System.Drawing.Size(835, 40);
-			this.labelPosition.TabIndex = 0;
-			this.labelPosition.TabStop = false;
-			this.labelPosition.Text = "Посада";
+			this.richTextBoxPosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.richTextBoxPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richTextBoxPosition.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.richTextBoxPosition.ForeColor = System.Drawing.Color.Black;
+			this.richTextBoxPosition.Location = new System.Drawing.Point(12, 12);
+			this.richTextBoxPosition.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.richTextBoxPosition.MaxLength = 2048;
+			this.richTextBoxPosition.Name = "richTextBoxPosition";
+			this.richTextBoxPosition.ReadOnly = true;
+			this.richTextBoxPosition.Size = new System.Drawing.Size(835, 40);
+			this.richTextBoxPosition.TabIndex = 0;
+			this.richTextBoxPosition.TabStop = false;
+			this.richTextBoxPosition.Text = "Посада";
 			// 
 			// VacancyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1264, 755);
-			this.Controls.Add(this.labelPosition);
+			this.Controls.Add(this.richTextBoxPosition);
 			this.Controls.Add(this.buttonRequirements);
 			this.Controls.Add(this.buttonSend);
 			this.Controls.Add(this.richTextBoxSalary);
@@ -302,6 +302,6 @@
 		private Guna.UI2.WinForms.Guna2GradientButton buttonSend;
 		private Guna.UI2.WinForms.Guna2TextBox richTextBoxClientAdditionalInfo;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonRequirements;
-		private System.Windows.Forms.RichTextBox labelPosition;
+		private System.Windows.Forms.RichTextBox richTextBoxPosition;
 	}
 }

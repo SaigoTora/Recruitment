@@ -63,13 +63,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientUtilities\ClientAccount.cs" />
-    <Compile Include="ClientUtilities\StaticDataFromDB.cs" />
-    <Compile Include="ClientUtilities\Client.cs" />
-    <Compile Include="ClientUtilities\ClientSearcher.cs" />
-    <Compile Include="FormUtilities\ClientUnique.cs" />
-    <Compile Include="FormUtilities\EducationFormElements.cs" />
-    <Compile Include="FormUtilities\LanguageFormElements.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Utilities\ClientUtilities\StaticDataFromDB.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Utilities\ClientUtilities\ClientSearcher.cs" />
+    <Compile Include="Utilities\FormUtilities\ClientUniqueChecker.cs" />
+    <Compile Include="Utilities\FormUtilities\EducationFormElements.cs" />
+    <Compile Include="Utilities\FormUtilities\LanguageFormElements.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

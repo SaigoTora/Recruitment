@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 
-namespace RecruitmentClient.FormUtilities
+namespace RecruitmentClient.Utilities.FormUtilities
 {
 	internal class EducationFormElements
 	{
@@ -52,7 +52,8 @@ namespace RecruitmentClient.FormUtilities
 		internal void SetDefaultLabels(Theme theme)
 		{
 			ValidationFeedbackManager.ResetLabelsToDefault(theme, LabelNameInstitution,
-				LabelSpecialty, LabelEducationDegree, LabelYearAdmission, LabelDateEnd, LabelEducationForm);
+				LabelSpecialty, LabelEducationDegree, LabelYearAdmission, LabelDateEnd,
+				LabelEducationForm);
 		}
 
 		public override bool Equals(object obj)

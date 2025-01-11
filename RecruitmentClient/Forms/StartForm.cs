@@ -4,8 +4,8 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using RecruitmentClient.ClientUtilities;
-using RecruitmentClient.FormUtilities;
+using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
@@ -22,7 +22,7 @@ namespace RecruitmentClient.Forms
 
 		internal bool NeedToRemember { get; private set; }
 
-		private readonly ClientAccount _account = new ClientAccount();
+		private readonly Account _account = new Account();
 		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
 			new CheckBoxEventHandlers();
 		private readonly LabelEventHandlers _labelEventHandlers = new LabelEventHandlers();
@@ -40,7 +40,7 @@ namespace RecruitmentClient.Forms
 			customTitleBar = new CustomTitleBar(this, "Вхід",
 				Properties.Resources.login, maximizeBox: false);
 		}
-		internal StartForm(ClientAccount account)
+		internal StartForm(Account account)
 		{// Constructor for password change
 			InitializeComponent();
 
@@ -115,7 +115,7 @@ namespace RecruitmentClient.Forms
 			if (CheckValidInputData())
 				try
 				{
-					if (ClientUnique.LoginIsUnique(labelLogin,
+					if (ClientUniqueChecker.IsLoginUnique(labelLogin,
 						textBoxLogin.Text, _account.Theme))
 					{
 						_account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);

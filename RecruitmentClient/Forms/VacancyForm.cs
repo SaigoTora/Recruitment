@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentClient.ClientUtilities;
+using RecruitmentClient.Models;
 using RecruitmentLibrary.ApplicationInfo;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -20,7 +20,7 @@ namespace RecruitmentClient.Forms
 
 		private string _requirements;
 
-		internal VacancyForm(ClientAccount account, Vacancy vacancy,
+		internal VacancyForm(Account account, Vacancy vacancy,
 			string login, Action<EventArgs> refresh)
 		{
 			InitializeComponent();
@@ -34,7 +34,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void VacancyForm_Load(object sender, EventArgs e)
 		{
-			labelPosition.Text = _vacancy.Position.Name;
+			richTextBoxPosition.Text = _vacancy.Position.Name;
 			richTextBoxSalary.Text = _vacancy.Salary.ToString() + " грн.";
 			labelDatePublication.Text = "Дата публікації: " +
 				_vacancy.DatePublication.ToString("yyyy-MM-dd");

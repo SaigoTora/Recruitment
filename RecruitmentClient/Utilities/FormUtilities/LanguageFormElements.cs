@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 
-namespace RecruitmentClient.FormUtilities
+namespace RecruitmentClient.Utilities.FormUtilities
 {
 	internal class LanguageFormElements
 	{

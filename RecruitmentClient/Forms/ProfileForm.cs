@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 
-using RecruitmentClient.ClientUtilities;
-using RecruitmentClient.FormUtilities;
+using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -16,11 +16,11 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class ProfileForm : BaseForm, IThemeChange
 	{
-		private readonly ClientAccount _account;
+		private readonly Account _account;
 		private readonly StartForm _startForm;
 		private readonly Candidate _oldCandidate;
 
-		internal ProfileForm(ClientAccount account)
+		internal ProfileForm(Account account)
 		{// Constructor for changing data
 			InitializeComponent();
 
@@ -35,7 +35,7 @@ namespace RecruitmentClient.Forms
 				SetFormData(_account);
 			}
 		}
-		internal ProfileForm(ClientAccount account, StartForm startForm)
+		internal ProfileForm(Account account, StartForm startForm)
 			: this(account)
 		{// Constructor for creation
 			_startForm = startForm;
@@ -50,7 +50,7 @@ namespace RecruitmentClient.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void SetFormData(ClientAccount account)
+		private void SetFormData(Account account)
 		{
 			textBoxSurname.Text = account.candidate.Surname;
 			textBoxName.Text = account.candidate.Name;
@@ -71,10 +71,10 @@ namespace RecruitmentClient.Forms
 		}
 		private bool CheckUniquePhoneAndEmail()
 		{
-			return (ClientUnique.PhoneIsUnique(labelPhone, _account.Login,
+			return (ClientUniqueChecker.IsPhoneNumberUnique(labelPhone, _account.Login,
 						$"{labelPhoneStart.Text}{textBoxPhone1.Text}{textBoxPhone2.Text}" +
 						$"{textBoxPhone3.Text}", _account.Theme)
-						&& ClientUnique.EmailIsUnique(labelEmail, _account.Login,
+						&& ClientUniqueChecker.IsEmailUnique(labelEmail, _account.Login,
 						textBoxEmail.Text, _account.Theme));
 		}
 		private bool CheckValidData()
@@ -219,7 +219,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CreateCandidate()
 		{
-			if (!ClientUnique.LoginIsUnique(new Label() { Text = "Логін" },
+			if (!ClientUniqueChecker.IsLoginUnique(new Label() { Text = "Логін" },
 				_account.Login, _account.Theme))
 				return;
 

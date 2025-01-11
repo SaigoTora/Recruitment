@@ -6,7 +6,8 @@ using System.Drawing;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentClient.ClientUtilities;
+using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
@@ -35,7 +36,7 @@ namespace RecruitmentClient.Forms
 			_statusColor = (Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97),
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
-		private readonly ClientAccount _account;
+		private readonly Account _account;
 		private ClientSearcher _searcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
@@ -56,7 +57,7 @@ namespace RecruitmentClient.Forms
 		private int _currentComboBoxDateIndex;
 		private readonly int _comboBoxSortCount;
 
-		internal MainForm(ClientAccount account)
+		internal MainForm(Account account)
 		{
 			customTitleBar = new CustomTitleBar(this, "Головна", Properties.Resources.main);
 			IsResizable = true;

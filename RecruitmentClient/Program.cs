@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-using RecruitmentClient.ClientUtilities;
 using RecruitmentClient.Forms;
+using RecruitmentClient.Models;
 using RecruitmentLibrary.PersonInfo;
 using UIHelpers.Forms;
 
@@ -25,7 +25,7 @@ namespace RecruitmentClient
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			ClientAccount account = Serializator.Deserialize<ClientAccount>(SerializePath, EncryptKey);
+			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey);
 			if (account != null)// Якщо дані вже у пам’яті
 			{
 				try
