@@ -697,6 +697,7 @@
 			this.textBoxMaxSalarySearch.TabIndex = 8;
 			this.textBoxMaxSalarySearch.Tag = "fixedPosition";
 			this.textBoxMaxSalarySearch.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxMaxSalarySearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSalarySearch_KeyDown);
 			this.textBoxMaxSalarySearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalarySearch_KeyPress);
 			this.textBoxMaxSalarySearch.Leave += new System.EventHandler(this.TextBoxMaxSalarySearch_Leave);
 			// 
@@ -730,6 +731,7 @@
 			this.textBoxMinSalarySearch.TabIndex = 6;
 			this.textBoxMinSalarySearch.Tag = "fixedPosition";
 			this.textBoxMinSalarySearch.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxMinSalarySearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSalarySearch_KeyDown);
 			this.textBoxMinSalarySearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalarySearch_KeyPress);
 			this.textBoxMinSalarySearch.Leave += new System.EventHandler(this.TextBoxMinSalarySearch_Leave);
 			// 

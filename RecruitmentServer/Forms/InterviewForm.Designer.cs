@@ -47,7 +47,7 @@
 			this.buttonEmployee = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonChangeApply = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonApply = new Guna.UI2.WinForms.Guna2GradientButton();
-			this.richTextBoxPosition = new Guna.UI2.WinForms.Guna2TextBox();
+			this.textBoxPosition = new Guna.UI2.WinForms.Guna2TextBox();
 			this.comboBoxDecision = new Guna.UI2.WinForms.Guna2ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.interviewStatusBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).BeginInit();
@@ -371,39 +371,39 @@
 			this.buttonApply.Visible = false;
 			this.buttonApply.Click += new System.EventHandler(this.ButtonApply_Click);
 			// 
-			// richTextBoxPosition
+			// textBoxPosition
 			// 
-			this.richTextBoxPosition.Animated = true;
-			this.richTextBoxPosition.AutoScroll = true;
-			this.richTextBoxPosition.BackColor = System.Drawing.Color.Transparent;
-			this.richTextBoxPosition.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-			this.richTextBoxPosition.BorderRadius = 10;
-			this.richTextBoxPosition.BorderThickness = 0;
-			this.richTextBoxPosition.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.richTextBoxPosition.DefaultText = "";
-			this.richTextBoxPosition.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-			this.richTextBoxPosition.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-			this.richTextBoxPosition.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.richTextBoxPosition.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.richTextBoxPosition.FillColor = System.Drawing.SystemColors.ControlLight;
-			this.richTextBoxPosition.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBoxPosition.ForeColor = System.Drawing.Color.Black;
-			this.richTextBoxPosition.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.richTextBoxPosition.Location = new System.Drawing.Point(12, 12);
-			this.richTextBoxPosition.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-			this.richTextBoxPosition.MaxLength = 64;
-			this.richTextBoxPosition.Name = "richTextBoxPosition";
-			this.richTextBoxPosition.PasswordChar = '\0';
-			this.richTextBoxPosition.PlaceholderForeColor = System.Drawing.Color.DarkGray;
-			this.richTextBoxPosition.PlaceholderText = "";
-			this.richTextBoxPosition.ReadOnly = true;
-			this.richTextBoxPosition.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.richTextBoxPosition.SelectedText = "";
-			this.richTextBoxPosition.Size = new System.Drawing.Size(724, 40);
-			this.richTextBoxPosition.TabIndex = 0;
-			this.richTextBoxPosition.TabStop = false;
-			this.richTextBoxPosition.Tag = "";
-			this.richTextBoxPosition.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxPosition.Animated = true;
+			this.textBoxPosition.AutoScroll = true;
+			this.textBoxPosition.BackColor = System.Drawing.Color.Transparent;
+			this.textBoxPosition.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.textBoxPosition.BorderRadius = 10;
+			this.textBoxPosition.BorderThickness = 0;
+			this.textBoxPosition.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBoxPosition.DefaultText = "";
+			this.textBoxPosition.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.textBoxPosition.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.textBoxPosition.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxPosition.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxPosition.FillColor = System.Drawing.SystemColors.ControlLight;
+			this.textBoxPosition.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxPosition.ForeColor = System.Drawing.Color.Black;
+			this.textBoxPosition.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.textBoxPosition.Location = new System.Drawing.Point(12, 12);
+			this.textBoxPosition.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+			this.textBoxPosition.MaxLength = 64;
+			this.textBoxPosition.Name = "textBoxPosition";
+			this.textBoxPosition.PasswordChar = '\0';
+			this.textBoxPosition.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.textBoxPosition.PlaceholderText = "";
+			this.textBoxPosition.ReadOnly = true;
+			this.textBoxPosition.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxPosition.SelectedText = "";
+			this.textBoxPosition.Size = new System.Drawing.Size(724, 40);
+			this.textBoxPosition.TabIndex = 0;
+			this.textBoxPosition.TabStop = false;
+			this.textBoxPosition.Tag = "";
+			this.textBoxPosition.TextOffset = new System.Drawing.Point(3, 0);
 			// 
 			// comboBoxDecision
 			// 
@@ -446,7 +446,7 @@
 			this.ClientSize = new System.Drawing.Size(750, 265);
 			this.Controls.Add(this.panelDate);
 			this.Controls.Add(this.comboBoxDecision);
-			this.Controls.Add(this.richTextBoxPosition);
+			this.Controls.Add(this.textBoxPosition);
 			this.Controls.Add(this.buttonChangeApply);
 			this.Controls.Add(this.buttonApplication);
 			this.Controls.Add(this.labelStatus);
@@ -487,7 +487,7 @@
 		private Guna.UI2.WinForms.Guna2GradientButton buttonEmployee;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonChangeApply;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonApply;
-		private Guna.UI2.WinForms.Guna2TextBox richTextBoxPosition;
+		private Guna.UI2.WinForms.Guna2TextBox textBoxPosition;
 		private Guna.UI2.WinForms.Guna2ComboBox comboBoxDecision;
 		private Guna.UI2.WinForms.Guna2DateTimePicker dateTimePickerInterview;
 	}

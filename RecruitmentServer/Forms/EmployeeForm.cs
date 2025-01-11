@@ -54,6 +54,35 @@ namespace RecruitmentServer.Forms
 		#endregion
 
 		#region TextBox event handlers
+		private void TextBoxPosition_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				if (buttonChangePosition.Visible)
+					buttonChangePosition.PerformClick();
+				else
+					textBoxSalary.Focus();
+			}
+		}
+		private void TextBoxSalary_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				if (buttonChangeSalary.Visible)
+					buttonChangeSalary.PerformClick();
+				else
+					textBoxPosition.Focus();
+			}
+		}
+		private void TextBoxSalary_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back
+				&& e.KeyChar != ',')
+				e.Handled = true;
+		}
+
 		private void TextBoxSalary_TextChanged(object sender, EventArgs e)
 		{
 			if (textBoxSalary.Text != _employee.Salary.ToString())
@@ -67,12 +96,6 @@ namespace RecruitmentServer.Forms
 				buttonChangePosition.Visible = true;
 			else
 				buttonChangePosition.Visible = false;
-		}
-		private void TextBoxSalary_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back
-				&& e.KeyChar != ',')
-				e.Handled = true;
 		}
 		#endregion
 

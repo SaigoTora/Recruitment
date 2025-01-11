@@ -50,8 +50,6 @@
 			// 
 			// labelSurname
 			// 
-			this.labelSurname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelSurname.AutoSize = true;
 			this.labelSurname.BackColor = System.Drawing.Color.Transparent;
 			this.labelSurname.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -67,8 +65,6 @@
 			// 
 			// labelName
 			// 
-			this.labelName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelName.AutoSize = true;
 			this.labelName.BackColor = System.Drawing.Color.Transparent;
 			this.labelName.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -84,8 +80,6 @@
 			// 
 			// labelFatherName
 			// 
-			this.labelFatherName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelFatherName.AutoSize = true;
 			this.labelFatherName.BackColor = System.Drawing.Color.Transparent;
 			this.labelFatherName.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -101,8 +95,6 @@
 			// 
 			// labelPhone
 			// 
-			this.labelPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPhone.AutoSize = true;
 			this.labelPhone.BackColor = System.Drawing.Color.Transparent;
 			this.labelPhone.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -118,8 +110,6 @@
 			// 
 			// labelPhoneStart
 			// 
-			this.labelPhoneStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPhoneStart.AutoSize = true;
 			this.labelPhoneStart.BackColor = System.Drawing.Color.Transparent;
 			this.labelPhoneStart.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -133,8 +123,6 @@
 			// 
 			// labelBirthday
 			// 
-			this.labelBirthday.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelBirthday.AutoSize = true;
 			this.labelBirthday.BackColor = System.Drawing.Color.Transparent;
 			this.labelBirthday.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -150,8 +138,6 @@
 			// 
 			// labelEmail
 			// 
-			this.labelEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelEmail.AutoSize = true;
 			this.labelEmail.BackColor = System.Drawing.Color.Transparent;
 			this.labelEmail.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -185,7 +171,7 @@
 			this.buttonQuestionnairе.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonQuestionnairе.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
 			this.buttonQuestionnairе.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
-			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 416);
+			this.buttonQuestionnairе.Location = new System.Drawing.Point(12, 413);
 			this.buttonQuestionnairе.Name = "buttonQuestionnairе";
 			this.buttonQuestionnairе.PressedColor = System.Drawing.Color.White;
 			this.buttonQuestionnairе.PressedDepth = 20;
@@ -215,7 +201,7 @@
 			this.buttonApply.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonApply.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonApply.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonApply.Location = new System.Drawing.Point(616, 416);
+			this.buttonApply.Location = new System.Drawing.Point(563, 413);
 			this.buttonApply.Name = "buttonApply";
 			this.buttonApply.PressedColor = System.Drawing.Color.White;
 			this.buttonApply.PressedDepth = 20;
@@ -227,8 +213,6 @@
 			// 
 			// textBoxSurname
 			// 
-			this.textBoxSurname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxSurname.Animated = true;
 			this.textBoxSurname.AutoScroll = true;
 			this.textBoxSurname.BackColor = System.Drawing.Color.Transparent;
@@ -256,11 +240,10 @@
 			this.textBoxSurname.Size = new System.Drawing.Size(235, 36);
 			this.textBoxSurname.TabIndex = 1;
 			this.textBoxSurname.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxSurname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// textBoxName
 			// 
-			this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxName.Animated = true;
 			this.textBoxName.AutoScroll = true;
 			this.textBoxName.BackColor = System.Drawing.Color.Transparent;
@@ -288,11 +271,10 @@
 			this.textBoxName.Size = new System.Drawing.Size(235, 36);
 			this.textBoxName.TabIndex = 3;
 			this.textBoxName.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// textBoxFatherName
 			// 
-			this.textBoxFatherName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxFatherName.Animated = true;
 			this.textBoxFatherName.AutoScroll = true;
 			this.textBoxFatherName.BackColor = System.Drawing.Color.Transparent;
@@ -320,11 +302,10 @@
 			this.textBoxFatherName.Size = new System.Drawing.Size(235, 36);
 			this.textBoxFatherName.TabIndex = 5;
 			this.textBoxFatherName.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxFatherName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// textBoxPhone1
 			// 
-			this.textBoxPhone1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPhone1.Animated = true;
 			this.textBoxPhone1.AutoScroll = true;
 			this.textBoxPhone1.BackColor = System.Drawing.Color.Transparent;
@@ -352,12 +333,11 @@
 			this.textBoxPhone1.Size = new System.Drawing.Size(58, 36);
 			this.textBoxPhone1.TabIndex = 8;
 			this.textBoxPhone1.TextChanged += new System.EventHandler(this.TextBoxPhone_TextChanged);
+			this.textBoxPhone1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			this.textBoxPhone1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPhone_KeyPress);
 			// 
 			// textBoxPhone2
 			// 
-			this.textBoxPhone2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPhone2.Animated = true;
 			this.textBoxPhone2.AutoScroll = true;
 			this.textBoxPhone2.BackColor = System.Drawing.Color.Transparent;
@@ -385,12 +365,11 @@
 			this.textBoxPhone2.Size = new System.Drawing.Size(58, 36);
 			this.textBoxPhone2.TabIndex = 9;
 			this.textBoxPhone2.TextChanged += new System.EventHandler(this.TextBoxPhone_TextChanged);
+			this.textBoxPhone2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			this.textBoxPhone2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPhone_KeyPress);
 			// 
 			// textBoxPhone3
 			// 
-			this.textBoxPhone3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPhone3.Animated = true;
 			this.textBoxPhone3.AutoScroll = true;
 			this.textBoxPhone3.BackColor = System.Drawing.Color.Transparent;
@@ -418,12 +397,11 @@
 			this.textBoxPhone3.Size = new System.Drawing.Size(58, 36);
 			this.textBoxPhone3.TabIndex = 10;
 			this.textBoxPhone3.TextChanged += new System.EventHandler(this.TextBoxPhone_TextChanged);
+			this.textBoxPhone3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			this.textBoxPhone3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPhone_KeyPress);
 			// 
 			// textBoxEmail
 			// 
-			this.textBoxEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxEmail.Animated = true;
 			this.textBoxEmail.AutoScroll = true;
 			this.textBoxEmail.BackColor = System.Drawing.Color.Transparent;
@@ -451,11 +429,10 @@
 			this.textBoxEmail.Size = new System.Drawing.Size(350, 34);
 			this.textBoxEmail.TabIndex = 14;
 			this.textBoxEmail.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxEmail_KeyDown);
 			// 
 			// dateTimePickerBirthday
 			// 
-			this.dateTimePickerBirthday.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dateTimePickerBirthday.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
 			this.dateTimePickerBirthday.BorderRadius = 10;
 			this.dateTimePickerBirthday.BorderThickness = 2;
@@ -479,7 +456,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(803, 478);
+			this.ClientSize = new System.Drawing.Size(750, 475);
 			this.Controls.Add(this.dateTimePickerBirthday);
 			this.Controls.Add(this.textBoxEmail);
 			this.Controls.Add(this.textBoxPhone3);

@@ -294,18 +294,17 @@ namespace RecruitmentClient.Forms
 			Guna2TextBox textBoxInstitution = _educationCreator.
 				CreateTextBox(textBoxNameInstitution);
 			Guna2TextBox textBoxSpec = _educationCreator.CreateTextBox(textBoxSpecialty);
+			Guna2ComboBox comboBoxDegree = _educationCreator.
+				CreateComboBox(comboBoxEducationDegree, 1);
 
 			NumericUpDown nudAdmission = _educationCreator.CreateNumericUpDown(
 				numericUpDownYearAdmission);
 			nudAdmission.Value = _defaultYearAdmission;
-
-			Guna2ComboBox comboBoxDegree = _educationCreator.
-				CreateComboBox(comboBoxEducationDegree, 1);
+			Guna2DateTimePicker dateEnd = _educationCreator.
+				CreateDateTimePicker(dateTimePickerDateEnd, DateTime.Today);
 			Guna2ComboBox comboBoxForm = _educationCreator.
 				CreateComboBox(comboBoxEducationForm);
 
-			Guna2DateTimePicker dateEnd = _educationCreator.
-				CreateDateTimePicker(dateTimePickerDateEnd, DateTime.Today);
 
 			ManageComboBoxEvents(comboBoxDegree, true);
 			ManageComboBoxEvents(comboBoxForm, true);
@@ -344,6 +343,8 @@ namespace RecruitmentClient.Forms
 				education.LabelYearAdmission.Click += LabelYearAdmission_Click;
 				education.LabelDateEnd.Click += LabelDateEnd_Click;
 				education.LabelEducationForm.Click += LabelEducationForm_Click;
+				education.TextBoxNameInstitution.KeyDown += TextBox_KeyDown;
+				education.TextBoxSpecialty.KeyDown += TextBox_KeyDown;
 			}
 			else
 			{
@@ -353,6 +354,8 @@ namespace RecruitmentClient.Forms
 				education.LabelYearAdmission.Click -= LabelYearAdmission_Click;
 				education.LabelDateEnd.Click -= LabelDateEnd_Click;
 				education.LabelEducationForm.Click -= LabelEducationForm_Click;
+				education.TextBoxNameInstitution.KeyDown -= TextBox_KeyDown;
+				education.TextBoxSpecialty.KeyDown -= TextBox_KeyDown;
 			}
 		}
 		#endregion
@@ -598,6 +601,17 @@ namespace RecruitmentClient.Forms
 			=> comboBoxEducationForm.DroppedDown = true;
 		private void LabelAdditionalInfo_Click(object sender, EventArgs e)
 			=> richTextBoxAdditionalInfo.Focus();
+		#endregion
+
+		#region TextBox event handlers
+		private void TextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
+		}
 		#endregion
 
 		public void SetTheme(Theme theme)

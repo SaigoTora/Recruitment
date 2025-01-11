@@ -76,12 +76,12 @@ namespace RecruitmentServer.Forms
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			SetDefaultSearchValues();
-			_ = Server.StartAsync();
-
 			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication, labelInterview, labelEmployee);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
 				pictureBoxDown, pictureBoxUp, pictureBoxTheme);
 			SetTheme(_account.Theme);
+
+			_ = Server.StartAsync();
 		}
 
 		private void ButtonAssignment_Click(object sender, EventArgs e)
@@ -762,6 +762,14 @@ namespace RecruitmentServer.Forms
 		#region Minimum and maximum
 		private void LabelMinMax_Click(object sender, EventArgs e)
 			=> textBoxMin.Focus();
+		private void TextBoxMin_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
+		}
 		private void TextBoxMinMaxSearch_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
@@ -863,8 +871,6 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 			Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 		}
-
-
 
 		public void SetTheme(Theme theme)
 		{

@@ -63,6 +63,7 @@ namespace RecruitmentClient.Forms
 			Icon = Properties.Resources.profile;
 			textBoxLogin.Text = _account.Login;
 			textBoxLogin.ReadOnly = true;
+			textBoxLogin.BorderThickness = 0;
 			ActiveControl = textBoxPassword;
 
 			labelPassword.Text = "Старий пароль:";
@@ -410,6 +411,44 @@ namespace RecruitmentClient.Forms
 			=> textBoxPassword2.Focus();
 		private void LabelRememberMe_Click(object sender, EventArgs e)
 			=> checkBoxRememberMe.Checked = !checkBoxRememberMe.Checked;
+		#endregion
+
+		#region TextBox event handlers
+		private void TextBoxLogin_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				textBoxPassword.Focus();
+			}
+		}
+		private void TextBoxPassword_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				if (textBoxPassword2.Visible)
+					textBoxPassword2.Focus();
+				else
+					ClickNextButton();
+			}
+		}
+		private void TextBoxPassword2_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				ClickNextButton();
+			}
+
+		}
+		private void ClickNextButton()
+		{
+			if (buttonLogin.Visible)
+				buttonLogin.PerformClick();
+			else if (buttonRegisterContinue.Visible)
+				buttonRegisterContinue.PerformClick();
+		}
 		#endregion
 
 		#region Theme

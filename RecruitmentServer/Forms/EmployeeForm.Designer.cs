@@ -263,6 +263,7 @@
 			this.textBoxPosition.Tag = "";
 			this.textBoxPosition.TextOffset = new System.Drawing.Point(3, 0);
 			this.textBoxPosition.TextChanged += new System.EventHandler(this.TextBoxPosition_TextChanged);
+			this.textBoxPosition.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxPosition_KeyDown);
 			// 
 			// textBoxSalary
 			// 
@@ -294,6 +295,7 @@
 			this.textBoxSalary.TabIndex = 4;
 			this.textBoxSalary.TextOffset = new System.Drawing.Point(3, 0);
 			this.textBoxSalary.TextChanged += new System.EventHandler(this.TextBoxSalary_TextChanged);
+			this.textBoxSalary.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSalary_KeyDown);
 			this.textBoxSalary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalary_KeyPress);
 			// 
 			// EmployeeForm

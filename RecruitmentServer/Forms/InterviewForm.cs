@@ -48,7 +48,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void SetFormFields(FullInterview interview)
 		{
-			richTextBoxPosition.Text = interview.Position.Name;
+			textBoxPosition.Text = interview.Position.Name;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
 				interview.DateEvent.ToString("d MMMM yyyy HH:mm");
 

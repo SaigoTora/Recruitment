@@ -883,6 +883,7 @@
 			this.textBoxMax.TabIndex = 8;
 			this.textBoxMax.Tag = "fixedPosition";
 			this.textBoxMax.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxMax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxMin_KeyDown);
 			this.textBoxMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxMinMaxSearch_KeyPress);
 			this.textBoxMax.Leave += new System.EventHandler(this.TextBoxMaxSearch_Leave);
 			// 
@@ -916,6 +917,7 @@
 			this.textBoxMin.TabIndex = 6;
 			this.textBoxMin.Tag = "fixedPosition";
 			this.textBoxMin.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxMin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxMin_KeyDown);
 			this.textBoxMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxMinMaxSearch_KeyPress);
 			this.textBoxMin.Leave += new System.EventHandler(this.TextBoxMinSearch_Leave);
 			// 

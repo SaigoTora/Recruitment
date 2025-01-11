@@ -49,8 +49,6 @@
 			// 
 			// labelLogin
 			// 
-			this.labelLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelLogin.AutoSize = true;
 			this.labelLogin.BackColor = System.Drawing.Color.Transparent;
 			this.labelLogin.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -66,8 +64,6 @@
 			// 
 			// labelPassword
 			// 
-			this.labelPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPassword.AutoSize = true;
 			this.labelPassword.BackColor = System.Drawing.Color.Transparent;
 			this.labelPassword.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -82,8 +78,6 @@
 			// 
 			// labelPassword2
 			// 
-			this.labelPassword2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelPassword2.AutoSize = true;
 			this.labelPassword2.BackColor = System.Drawing.Color.Transparent;
 			this.labelPassword2.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -233,8 +227,6 @@
 			// 
 			// textBoxLogin
 			// 
-			this.textBoxLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxLogin.Animated = true;
 			this.textBoxLogin.AutoScroll = true;
 			this.textBoxLogin.BackColor = System.Drawing.Color.Transparent;
@@ -262,11 +254,10 @@
 			this.textBoxLogin.Size = new System.Drawing.Size(250, 40);
 			this.textBoxLogin.TabIndex = 2;
 			this.textBoxLogin.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxLogin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxLogin_KeyDown);
 			// 
 			// textBoxPassword
 			// 
-			this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPassword.Animated = true;
 			this.textBoxPassword.AutoScroll = true;
 			this.textBoxPassword.BackColor = System.Drawing.Color.Transparent;
@@ -294,11 +285,10 @@
 			this.textBoxPassword.Size = new System.Drawing.Size(250, 40);
 			this.textBoxPassword.TabIndex = 4;
 			this.textBoxPassword.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxPassword_KeyDown);
 			// 
 			// textBoxPassword2
 			// 
-			this.textBoxPassword2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPassword2.Animated = true;
 			this.textBoxPassword2.AutoScroll = true;
 			this.textBoxPassword2.BackColor = System.Drawing.Color.Transparent;
@@ -327,11 +317,10 @@
 			this.textBoxPassword2.TabIndex = 7;
 			this.textBoxPassword2.TextOffset = new System.Drawing.Point(3, 0);
 			this.textBoxPassword2.Visible = false;
+			this.textBoxPassword2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxPassword2_KeyDown);
 			// 
 			// labelRememberMe
 			// 
-			this.labelRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelRememberMe.AutoSize = true;
 			this.labelRememberMe.BackColor = System.Drawing.Color.Transparent;
 			this.labelRememberMe.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -346,8 +335,6 @@
 			// 
 			// checkBoxRememberMe
 			// 
-			this.checkBoxRememberMe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBoxRememberMe.Animated = true;
 			this.checkBoxRememberMe.BackColor = System.Drawing.Color.Transparent;
 			this.checkBoxRememberMe.CheckedState.BorderColor = System.Drawing.Color.Black;

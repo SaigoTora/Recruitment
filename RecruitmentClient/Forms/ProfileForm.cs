@@ -159,6 +159,22 @@ namespace RecruitmentClient.Forms
 				&& textBox.Text.Length == textBox.MaxLength)
 				ProcessTabKey(true);
 		}
+		private void TextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
+		}
+		private void TextBoxEmail_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				buttonApply.PerformClick();
+			}
+		}
 		private void TextBoxPhone_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)

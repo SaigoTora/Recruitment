@@ -422,6 +422,7 @@
 			this.textBoxCity.TabIndex = 1;
 			this.textBoxCity.Tag = "";
 			this.textBoxCity.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxCity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// checkBoxDiplomaAll
 			// 

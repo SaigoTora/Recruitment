@@ -649,6 +649,15 @@ namespace RecruitmentClient.Forms
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
 				e.Handled = true;
 		}
+		private void TextBoxSalarySearch_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
+		}
+
 		private void TextBoxMinSalarySearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.MinSalary.ToString();

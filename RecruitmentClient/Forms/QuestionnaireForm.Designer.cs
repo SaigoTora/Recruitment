@@ -734,6 +734,7 @@
 			this.textBoxSpecialty.TabIndex = 4;
 			this.textBoxSpecialty.Tag = "fixedPosition";
 			this.textBoxSpecialty.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxSpecialty.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// labelYearAdmission
 			// 
@@ -783,6 +784,7 @@
 			this.textBoxNameInstitution.TabIndex = 2;
 			this.textBoxNameInstitution.Tag = "fixedPosition";
 			this.textBoxNameInstitution.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxNameInstitution.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// numericUpDownYearAdmission
 			// 
@@ -1533,6 +1535,7 @@
 			// 
 			// richTextBoxChronicDiseases
 			// 
+			this.richTextBoxChronicDiseases.AcceptsReturn = true;
 			this.richTextBoxChronicDiseases.Animated = true;
 			this.richTextBoxChronicDiseases.BackColor = System.Drawing.Color.Transparent;
 			this.richTextBoxChronicDiseases.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
@@ -1560,6 +1563,7 @@
 			this.richTextBoxChronicDiseases.TabIndex = 18;
 			this.richTextBoxChronicDiseases.Tag = "fixedPosition";
 			this.richTextBoxChronicDiseases.TextOffset = new System.Drawing.Point(3, 0);
+			this.richTextBoxChronicDiseases.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// textBoxCity
 			// 
@@ -1591,6 +1595,7 @@
 			this.textBoxCity.TabIndex = 3;
 			this.textBoxCity.Tag = "fixedPosition";
 			this.textBoxCity.TextOffset = new System.Drawing.Point(3, 0);
+			this.textBoxCity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			// 
 			// buttonLanguageHelp
 			// 

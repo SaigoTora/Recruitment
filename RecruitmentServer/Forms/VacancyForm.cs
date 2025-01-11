@@ -293,6 +293,17 @@ namespace RecruitmentServer.Forms
 		}
 		#endregion
 
+		#region TextBox event handlers
+		private void TextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
+		}
+		#endregion
+
 		#region Label focus event handlers
 		private void LabelPosition_Click(object sender, EventArgs e)
 			=> textBoxPosition.Focus();
