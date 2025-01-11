@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -8,23 +9,26 @@ using RecruitmentServer.Models;
 
 namespace RecruitmentServer
 {
-    internal static class Program
-    {
-        // Шлях зберігання текстового файлу
-        internal static string SerializePath = $"{Environment.CurrentDirectory}\\account_info.txt";
-        internal static readonly string EncryptKey = "u7FhN3bDwY2cS5mR";// Ключ для шифрування
-        /// <summary>
-        /// Головна точка входу для програми.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            CultureInfo.CurrentCulture = new CultureInfo("uk-UA");
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+	internal static class Program
+	{
+		internal static string SerializePath = $"{Environment.CurrentDirectory}\\" +
+			$"{ConfigurationManager.AppSettings["serializePath"]}";
+		internal static readonly string EncryptKey =
+			ConfigurationManager.AppSettings["encryptKey"];
 
-            Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey) ?? new Account();
-            Application.Run(new MainForm(account));
-        }
-    }
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
+		static void Main()
+		{
+			CultureInfo.CurrentCulture = new CultureInfo("uk-UA");
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+
+			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey)
+				?? new Account();
+			Application.Run(new MainForm(account));
+		}
+	}
 }

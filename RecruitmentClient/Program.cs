@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Net.Sockets;
 using System.Windows.Forms;
@@ -12,11 +13,13 @@ namespace RecruitmentClient
 {
 	internal static class Program
 	{
-		// Шлях зберігання текстового файлу
-		internal static string SerializePath = $"{Environment.CurrentDirectory}\\account_info.txt";
-		internal static readonly string EncryptKey = "kE7rQ1wA5pU3jM8o";// Ключ для шифрування
+		internal static string SerializePath = $"{Environment.CurrentDirectory}\\" +
+			$"{ConfigurationManager.AppSettings["serializePath"]}";
+		internal static readonly string EncryptKey =
+			ConfigurationManager.AppSettings["encryptKey"];
+
 		/// <summary>
-		/// Головна точка входу для програми.
+		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
 		static void Main()
@@ -26,20 +29,21 @@ namespace RecruitmentClient
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey);
-			if (account != null)// Якщо дані вже у пам’яті
+			if (account != null)
 			{
 				try
 				{ account.candidate = Client.GetCandidate(account.Login, account.Password); }
 				catch (SocketException)
 				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, запустити програму пізніше.", account.Theme, "Помилка підключення",
+					CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
+						"не вдало.\nСпробуйте, будь ласка, запустити програму пізніше.",
+						account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 					return;
 				}
 				Application.Run(new MainForm(account));
 			}
-			else// Якщо дані ще не були запам’ятовані
+			else
 				Application.Run(new StartForm());
 		}
 	}
