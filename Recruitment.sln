@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentSolverTests", "As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIHelpers", "UIHelpers\UIHelpers.csproj", "{49F42A8B-4E71-4075-987B-66CD7D258EC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{AB1C077B-D981-4D31-BFE9-C87F466A151F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{49F42A8B-4E71-4075-987B-66CD7D258EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49F42A8B-4E71-4075-987B-66CD7D258EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49F42A8B-4E71-4075-987B-66CD7D258EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB1C077B-D981-4D31-BFE9-C87F466A151F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1C077B-D981-4D31-BFE9-C87F466A151F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1C077B-D981-4D31-BFE9-C87F466A151F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1C077B-D981-4D31-BFE9-C87F466A151F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
