@@ -7,12 +7,12 @@ using System.Windows.Forms;
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentClient.Utilities.FormUtilities;
-using RecruitmentLibrary.PersonInfo;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Models;
 
 namespace RecruitmentClient.Forms
 {
@@ -26,7 +26,7 @@ namespace RecruitmentClient.Forms
 		private readonly int _defaultYearAdmission = DateTime.Today.Year - 4;
 
 		private readonly Account _account;
-		private readonly Questionnaire _oldQuestionnaire = null;
+		private readonly RecruitmentLibrary.PersonInfo.Questionnaire _oldQuestionnaire = null;
 		private readonly bool _formOpenForChange = false;
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
@@ -48,7 +48,7 @@ namespace RecruitmentClient.Forms
 			_account = account;
 			if (startForm == null)
 			{
-				_oldQuestionnaire = new Questionnaire(_account.candidate.questionnaire);
+				_oldQuestionnaire = new RecruitmentLibrary.PersonInfo.Questionnaire(_account.candidate.questionnaire);
 				_formOpenForChange = true;
 			}
 
@@ -69,7 +69,7 @@ namespace RecruitmentClient.Forms
 
 			if (_account.candidate.questionnaire == null)
 			{
-				_account.candidate.questionnaire = new Questionnaire();
+				_account.candidate.questionnaire = new RecruitmentLibrary.PersonInfo.Questionnaire();
 				comboBoxNationality.SelectedIndex =
 					comboBoxNationality.FindString(DEFAULT_NATIONALITY);
 				comboBoxLanguage.SelectedIndex =
@@ -84,7 +84,7 @@ namespace RecruitmentClient.Forms
 				radioButtonDrinkAlcoholNo, radioButtonDrinkAlcoholYes);
 		}
 
-		private void SetFormFields(Questionnaire q)
+		private void SetFormFields(RecruitmentLibrary.PersonInfo.Questionnaire q)
 		{
 			comboBoxNationality.SelectedIndex = comboBoxNationality.FindString(q.Nationality);
 			textBoxCity.Text = q.City;
@@ -143,9 +143,9 @@ namespace RecruitmentClient.Forms
 				_educations[i].NUD_YearAdmission.Value = educations[i].YearAdmission;
 				_educations[i].DTP_DateEnd.Value = educations[i].DateEnd;
 				_educations[i].CB_EducationDegree.SelectedIndex =
-					educations[i].ID_EducationDegree - 1;
+					educations[i].IdEducationDegree - 1;
 				_educations[i].CB_EducationForm.SelectedIndex =
-					educations[i].ID_EducationForm - 1;
+					educations[i].IdEducationForm - 1;
 			}
 		}
 		private void SetComboBoxItems()
@@ -406,7 +406,7 @@ namespace RecruitmentClient.Forms
 			List<Education> educations = ReadEducationsFromForm();
 
 			_account.candidate.questionnaire =
-				new Questionnaire(comboBoxNationality.SelectedItem.ToString(),
+				new RecruitmentLibrary.PersonInfo.Questionnaire(comboBoxNationality.SelectedItem.ToString(),
 				textBoxCity.Text, (int)numericUpDownChildrenAmount.Value,
 				(int)numericUpDownExperience.Value, radioButtonDriverLicenseYes.Checked,
 				(int)numericUpDownReadiness.Value, richTextBoxAdditionalInfo.Text,

@@ -77,7 +77,7 @@ namespace RecruitmentClient.Models
 		}
 
 		// Методи для отримання даних від серверу
-		private static List<Language> GetLanguages(string login)
+		private static List<SharedModels.Models.Language> GetLanguages(string login)
 		{// Метод повертає список мов кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT name,level " +
 				$"FROM Language " +
@@ -87,13 +87,13 @@ namespace RecruitmentClient.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE login = '{login}'))");
 
-			List<Language> languages = new List<Language>();
+			List<SharedModels.Models.Language> languages = new List<SharedModels.Models.Language>();
 			for (int i = 0; i < list.Length; i += 2)
-				languages.Add(new Language(list[i], Int32.Parse(list[i + 1])));
+				languages.Add(new SharedModels.Models.Language(list[i], Int32.Parse(list[i + 1])));
 
 			return languages;
 		}
-		private static List<Education> GetEducations(string login)
+		private static List<SharedModels.Models.Education> GetEducations(string login)
 		{// Метод повертає список освіт кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT name_institution,specialty,year_admission,date_end, " +
 				$"id_education_degree,id_education_form " +
@@ -103,12 +103,12 @@ namespace RecruitmentClient.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE login = '{login}'))");
 
-			List<Education> educations = new List<Education>();
+			List<SharedModels.Models.Education> educations = new List<SharedModels.Models.Education>();
 			if (list.Length < 6)
 				return educations;
 
 			for (int i = 0; i < list.Length; i += 6)
-				educations.Add(new Education(list[i], list[i + 1],
+				educations.Add(new SharedModels.Models.Education(list[i], list[i + 1],
 					Int32.Parse(list[i + 2]), DateTime.Parse(list[i + 3]),
 					Int32.Parse(list[i + 4]), Int32.Parse(list[i + 5])));
 
@@ -344,7 +344,7 @@ namespace RecruitmentClient.Models
 				SendToServer(message + $" WHERE id = (SELECT id_health FROM Questionnaire " +
 					$"WHERE id = (SELECT id_questionnaire FROM Candidate WHERE login = '{login}'))");
 		}
-		private static void ChangeLanguages(string login, List<Language> oldL, List<Language> newL)
+		private static void ChangeLanguages(string login, List<SharedModels.Models.Language> oldL, List<SharedModels.Models.Language> newL)
 		{// Метод, який змінює мови на сервері
 			int n = Math.Min(oldL.Count, newL.Count);
 			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
@@ -368,7 +368,7 @@ namespace RecruitmentClient.Models
 				SendToServer(CreateLanguages(newL.GetRange(oldL.Count, newL.Count - oldL.Count),
 					$"(SELECT id_questionnaire FROM Candidate WHERE login = '{login}')"));
 		}
-		private static void ChangeEducations(string login, List<Education> oldE, List<Education> newE)
+		private static void ChangeEducations(string login, List<SharedModels.Models.Education> oldE, List<SharedModels.Models.Education> newE)
 		{// Метод, який змінює освіти на сервері
 			int n = Math.Min(oldE.Count, newE.Count);
 			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
@@ -380,15 +380,15 @@ namespace RecruitmentClient.Models
 				message += Change("specialty", oldE[i].Specialty, newE[i].Specialty);
 				message += Change("year_admission", oldE[i].YearAdmission, newE[i].YearAdmission);
 				message += Change("date_end", oldE[i].DateEnd.ToString("yyyy-MM-dd"), newE[i].DateEnd.ToString("yyyy-MM-dd"));
-				message += Change("id_education_degree", oldE[i].ID_EducationDegree, newE[i].ID_EducationDegree);
-				message += Change("id_education_form", oldE[i].ID_EducationForm, newE[i].ID_EducationForm);
+				message += Change("id_education_degree", oldE[i].IdEducationDegree, newE[i].IdEducationDegree);
+				message += Change("id_education_form", oldE[i].IdEducationForm, newE[i].IdEducationForm);
 				message = message.TrimEnd(',');// Видаляємо останню кому
 
 				if (message != "UPDATE Education SET")// Якщо потрібно змінити дані
 					SendToServer(message + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
 						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
 						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].ID_EducationDegree} AND id_education_form = {oldE[i].ID_EducationForm}");
+						$" {oldE[i].IdEducationDegree} AND id_education_form = {oldE[i].IdEducationForm}");
 			}
 
 			if (oldE.Count > newE.Count)// Якщо кількість освіт зменшилась
@@ -396,7 +396,7 @@ namespace RecruitmentClient.Models
 					SendToServer("DELETE FROM Education" + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
 						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
 						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].ID_EducationDegree} AND id_education_form = {oldE[i].ID_EducationForm}");
+						$" {oldE[i].IdEducationDegree} AND id_education_form = {oldE[i].IdEducationForm}");
 
 			else if (oldE.Count < newE.Count)// Якщо кількість освіт збільшилась
 				SendToServer(CreateEducations(newE.GetRange(oldE.Count, newE.Count - oldE.Count),
@@ -446,25 +446,25 @@ namespace RecruitmentClient.Models
 		}
 
 		// Методи для створення даних на сервері
-		private static string CreateLanguages(List<Language> languages, string idQuestionnaire)
+		private static string CreateLanguages(List<SharedModels.Models.Language> languages, string idQuestionnaire)
 		{// Метод який повертає запит створення мов
 			string res = string.Empty;
 
-			foreach (Language item in languages)
+			foreach (SharedModels.Models.Language item in languages)
 				res += $"INSERT INTO Language(name,level,id_questionnaire) " +
 				$"values('{item.Name}',{item.Level},{idQuestionnaire}) ";
 
 			return res;
 		}
-		private static string CreateEducations(List<Education> educations, string idQuestionnaire)
+		private static string CreateEducations(List<SharedModels.Models.Education> educations, string idQuestionnaire)
 		{// Метод який повертає запит створення освіт
 			string res = string.Empty;
 
-			foreach (Education item in educations)
+			foreach (SharedModels.Models.Education item in educations)
 				res += $"INSERT INTO Education(name_institution,specialty,year_admission," +
 					$"date_end,id_questionnaire,id_education_degree,id_education_form) " +
 					$"values('{item.NameInstitution}','{item.Specialty}',{item.YearAdmission}," +
-					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.ID_EducationDegree},{item.ID_EducationForm}) ";
+					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.IdEducationDegree},{item.IdEducationForm}) ";
 
 			return res;
 		}

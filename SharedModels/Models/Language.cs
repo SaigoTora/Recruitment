@@ -1,24 +1,28 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Language")]
-    public partial class Language
-    {
-        public int id { get; set; }
+	[Table("Language")]
+	public partial class Language
+	{
+		public int Id { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Name { get; private set; }
+		public int Level { get; private set; }
+		public int IdQuestionnaire { get; private set; }
+		public virtual Questionnaire Questionnaire { get; private set; }
 
-        [Required]
-        [StringLength(64)]
-        public string name { get; set; }
-
-        public int level { get; set; }
-
-        public int id_questionnaire { get; set; }
-
-        public virtual Questionnaire Questionnaire { get; set; }
-    }
+		public Language(string name, int level)
+		{
+			Name = name;
+			Level = level;
+		}
+		public Language(Language language)
+		{
+			Name = language.Name;
+			Level = language.Level;
+		}
+	}
 }

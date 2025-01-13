@@ -270,7 +270,7 @@ namespace RecruitmentServer.Models
 
 			return new Candidate(GetItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3), GetDateItem(dt, 0, 4), GetItem(dt, 0, 5), q);
 		}
-		internal static List<Language> GetLanguages(int idCandidate)
+		internal static List<SharedModels.Models.Language> GetLanguages(int idCandidate)
 		{// Метод повертає список мов кандидата
 			DataTable dt = ExecuteReturnQuery($"SELECT name,level " +
 				$"FROM Language " +
@@ -280,13 +280,13 @@ namespace RecruitmentServer.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE Candidate.id = {idCandidate}))");
 
-			List<Language> languages = new List<Language>();
+			List<SharedModels.Models.Language> languages = new List<SharedModels.Models.Language>();
 			for (int i = 0; i < dt.Rows.Count; i++)
-				languages.Add(new Language(GetItem(dt, i, 0), GetIntItem(dt, i, 1)));
+				languages.Add(new SharedModels.Models.Language(GetItem(dt, i, 0), GetIntItem(dt, i, 1)));
 
 			return languages;
 		}
-		internal static List<Education> GetEducations(int idCandidate)
+		internal static List<SharedModels.Models.Education> GetEducations(int idCandidate)
 		{// Метод повертає список освіт кандидата
 			DataTable dt = ExecuteReturnQuery($"SELECT name_institution,specialty,year_admission,date_end, " +
 				$"id_education_degree,id_education_form " +
@@ -296,10 +296,10 @@ namespace RecruitmentServer.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE Candidate.id = {idCandidate}))");
 
-			List<Education> educations = new List<Education>();
+			List<SharedModels.Models.Education> educations = new List<SharedModels.Models.Education>();
 
 			for (int i = 0; i < dt.Rows.Count; i++)
-				educations.Add(new Education(GetItem(dt, i, 0), GetItem(dt, i, 1),
+				educations.Add(new SharedModels.Models.Education(GetItem(dt, i, 0), GetItem(dt, i, 1),
 					GetIntItem(dt, i, 2), GetDateItem(dt, i, 3),
 					GetIntItem(dt, i, 4), GetIntItem(dt, i, 5)));
 

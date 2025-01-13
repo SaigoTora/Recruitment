@@ -109,7 +109,7 @@ namespace RecruitmentServer.Forms
 				richTextBoxChronicDiseases.Visible = false;
 			}
 		}
-		private void CreateLanguages(List<RecruitmentLibrary.PersonInfo.Language> languages)
+		private void CreateLanguages(List<Language> languages)
 		{
 			for (int i = 0; i < languages.Count; i++)
 			{
@@ -120,7 +120,7 @@ namespace RecruitmentServer.Forms
 					languages[i].Level);
 			}
 		}
-		private void CreateEducations(List<RecruitmentLibrary.PersonInfo.Education> educations)
+		private void CreateEducations(List<Education> educations)
 		{
 			for (int i = 0; i < educations.Count; i++)
 			{
@@ -131,13 +131,13 @@ namespace RecruitmentServer.Forms
 				_educationCreator.CreateLabel(labelSpecialty, "Спецальність: " +
 					educations[i].Specialty);
 				_educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
-					DataBase.GetEducationDegree(educations[i].ID_EducationDegree));
+					DataBase.GetEducationDegree(educations[i].IdEducationDegree));
 				_educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " +
 					educations[i].YearAdmission);
 				_educationCreator.CreateLabel(labelDateEnd, "Дата закінчення: " +
 					educations[i].DateEnd.ToString("yyyy-MM-dd"));
 				_educationCreator.CreateLabel(labelEducationForm, "Форма навчання: " +
-					DataBase.GetEducationForm(educations[i].ID_EducationForm));
+					DataBase.GetEducationForm(educations[i].IdEducationForm));
 			}
 		}
 
