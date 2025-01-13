@@ -53,8 +53,8 @@ namespace RecruitmentServer.Forms
 			_buttonApplicationMap = new Dictionary<Guna2GradientButton, FullApplication>();
 		private readonly Dictionary<Guna2GradientButton, ViewInterview> _buttonInterviewMap =
 			new Dictionary<Guna2GradientButton, ViewInterview>();
-		private readonly Dictionary<Guna2GradientButton, RecruitmentLibrary.PersonInfo.Employee> _buttonEmployeeMap =
-			new Dictionary<Guna2GradientButton, RecruitmentLibrary.PersonInfo.Employee>();
+		private readonly Dictionary<Guna2GradientButton, Employee> _buttonEmployeeMap =
+			new Dictionary<Guna2GradientButton, Employee>();
 
 		private int _totalItemsToDisplay;// Total number of panels required for display
 		private int _currentComboBoxDateIndex, _currentComboBoxStatusIndex,
@@ -386,7 +386,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<RecruitmentLibrary.PersonInfo.Employee> employees = DataBase.GetEmployees(_createdPanels.Count,
+			List<Employee> employees = DataBase.GetEmployees(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[employees.Count];
 
@@ -465,11 +465,11 @@ namespace RecruitmentServer.Forms
 			_buttonInterviewMap.Add(button, interview);
 			ManageInterviewButtonEvent(button, true);
 		}
-		private void CreateEmployee(RecruitmentLibrary.PersonInfo.Employee employee)
+		private void CreateEmployee(Employee employee)
 		{
 			const string DATE_PREFIX = "Дата працевлаштування: ";
 
-			_employeeCreator.CreateLabel(labelPositionE, employee.Position);
+			_employeeCreator.CreateLabel(labelPositionE, employee.PositionName);
 			_employeeCreator.CreateLabel(labelFullName, $"{employee.Surname} {employee.Name}" +
 				$" {employee.FatherName}");
 			_employeeCreator.CreateLabel(labelDateEmploymentE, DATE_PREFIX +
@@ -594,7 +594,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			RecruitmentLibrary.PersonInfo.Employee employee = _buttonEmployeeMap[button];
+			Employee employee = _buttonEmployeeMap[button];
 			EmployeeForm employeeForm = new EmployeeForm(_account, employee, SelectLabel);
 			employeeForm.ShowDialog();
 		}

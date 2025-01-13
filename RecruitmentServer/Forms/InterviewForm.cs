@@ -80,7 +80,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonEmployee_Click(object sender, EventArgs e)
 		{
-			RecruitmentLibrary.PersonInfo.Employee employee = DataBase.GetEmployee(_interview.Id);
+			Employee employee = DataBase.GetEmployee(_interview.Id);
 			EmployeeForm employeeForm = new EmployeeForm(_account, employee, (args) =>
 			{ Close(); _actionAfterChange(EventArgs.Empty); });
 			Visible = false;

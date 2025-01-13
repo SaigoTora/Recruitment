@@ -410,9 +410,9 @@ namespace RecruitmentServer.Models
 
 			return GetIntItem(dt, 0, 0);
 		}
-		internal static List<Employee> GetEmployees(int offset, int amount, ServerSearcher searcher)
+		internal static List<SharedModels.Models.Employee> GetEmployees(int offset, int amount, ServerSearcher searcher)
 		{// Метод, який повертає список співробітників
-			List<Employee> employees = new List<Employee>();
+			List<SharedModels.Models.Employee> employees = new List<SharedModels.Models.Employee>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -422,30 +422,32 @@ namespace RecruitmentServer.Models
 			else
 			{ orderBy = "ORDER BY date_employment DESC"; }
 
-			DataTable dt = ExecuteReturnQuery($"SELECT id, surname, name, father_name,phone," +
-				$"birthday,email,position_name,city,salary,date_employment " +
+			DataTable dt = ExecuteReturnQuery($"SELECT id, surname, name, father_name, " +
+				$"position_name, city, phone, birthday, email, salary, date_employment " +
 				$"FROM Employee {condition}{orderBy} " +
 				$"OFFSET {offset} ROWS FETCH NEXT {amount} ROWS ONLY");
 
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
 				// Записуємо елемент
-				employees.Add(new Employee(GetIntItem(dt, i, 0), GetItem(dt, i, 1), GetItem(dt, i, 2), GetItem(dt, i, 3),
-					GetItem(dt, i, 4), GetDateItem(dt, i, 5), GetItem(dt, i, 6), GetItem(dt, i, 7),
-					GetItem(dt, i, 8), Double.Parse(GetItem(dt, i, 9)), GetDateItem(dt, i, 10)));
+				employees.Add(new SharedModels.Models.Employee(GetIntItem(dt, i, 0), GetItem(dt, i, 1), 
+					GetItem(dt, i, 2), GetItem(dt, i, 3), GetItem(dt, i, 4), GetItem(dt, i, 5),
+					GetItem(dt, i, 6), GetDateItem(dt, i, 7), GetItem(dt, i, 8), 
+					Decimal.Parse(GetItem(dt, i, 9)), GetDateItem(dt, i, 10)));
 			}
 
 			return employees;
 		}
-		internal static Employee GetEmployee(int idInterview)
+		internal static SharedModels.Models.Employee GetEmployee(int idInterview)
 		{// Метод, який повертає співробітника за кодом
-			DataTable dt = ExecuteReturnQuery($"SELECT id, surname, name, father_name,phone," +
-	$"birthday,email,position_name,city,salary,date_employment " +
-	$"FROM Employee WHERE id_interview = {idInterview}");
+			DataTable dt = ExecuteReturnQuery($"SELECT id, surname, name, father_name, " +
+				$"position_name, city, phone, birthday, email, salary, date_employment " +
+				$"FROM Employee WHERE id_interview = {idInterview}");
 
-			Employee employee = new Employee(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3),
-					GetItem(dt, 0, 4), GetDateItem(dt, 0, 5), GetItem(dt, 0, 6), GetItem(dt, 0, 7),
-					GetItem(dt, 0, 8), Double.Parse(GetItem(dt, 0, 9)), GetDateItem(dt, 0, 10));
+			SharedModels.Models.Employee employee = new SharedModels.Models.Employee(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), 
+				GetItem(dt, 0, 2), GetItem(dt, 0, 3), GetItem(dt, 0, 4), GetItem(dt, 0, 5),
+				GetItem(dt, 0, 6), GetDateItem(dt, 0, 7), GetItem(dt, 0, 8),
+				Decimal.Parse(GetItem(dt, 0, 9)), GetDateItem(dt, 0, 10));
 
 			return employee;
 		}

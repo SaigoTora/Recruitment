@@ -58,7 +58,6 @@
     <Compile Include="PersonInfo\Serializator.cs" />
     <Compile Include="PersonInfo\Candidate.cs" />
     <Compile Include="PersonInfo\Education.cs" />
-    <Compile Include="PersonInfo\Employee.cs" />
     <Compile Include="PersonInfo\Health.cs" />
     <Compile Include="PersonInfo\Language.cs" />
     <Compile Include="PersonInfo\Person.cs" />

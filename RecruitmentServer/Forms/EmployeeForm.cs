@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -37,8 +37,8 @@ namespace RecruitmentServer.Forms
 		{
 			labelFullName.Text = $"{employee.Surname.ToUpper()} {employee.Name} " +
 				$"{employee.FatherName}";
-			textBoxPosition.Text = employee.Position;
-			textBoxSalary.Text = employee.Salary.ToString();
+			textBoxPosition.Text = employee.PositionName;
+			textBoxSalary.Text = $"{employee.Salary:0.##}";
 			labelCity.Text = "Місце проживання: " + employee.City.ToString();
 			labelBirthday.Text = "Дата народження: " +
 				employee.Birthday.ToString("yyyy-MM-dd");
@@ -92,7 +92,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void TextBoxPosition_TextChanged(object sender, EventArgs e)
 		{
-			if (textBoxPosition.Text != _employee.Position)
+			if (textBoxPosition.Text != _employee.PositionName)
 				buttonChangePosition.Visible = true;
 			else
 				buttonChangePosition.Visible = false;
@@ -125,7 +125,7 @@ namespace RecruitmentServer.Forms
 					}
 				}
 			}
-			textBoxPosition.Text = _employee.Position.ToString();
+			textBoxPosition.Text = _employee.PositionName.ToString();
 		}
 		private void ButtonChangeSalary_Click(object sender, EventArgs e)
 		{
@@ -142,7 +142,7 @@ namespace RecruitmentServer.Forms
 					{
 						DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
 							_employee.Id);
-						_employee.ChangeSalary(double.Parse(textBoxSalary.Text));
+						_employee.ChangeSalary(decimal.Parse(textBoxSalary.Text));
 						_actionAfterChange(EventArgs.Empty);
 					}
 					catch
@@ -153,7 +153,7 @@ namespace RecruitmentServer.Forms
 					}
 				}
 			}
-			textBoxSalary.Text = _employee.Salary.ToString();
+			textBoxSalary.Text = $"{_employee.Salary:0.##}";
 		}
 
 		private bool CheckValidPosition()

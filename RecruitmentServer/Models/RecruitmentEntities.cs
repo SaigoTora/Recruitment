@@ -87,7 +87,7 @@ namespace RecruitmentServer.Models
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Employee>()
-				.Property(e => e.salary)
+				.Property(e => e.Salary)
 				.HasPrecision(19, 4);
 
 			modelBuilder.Entity<Family_Status>()
@@ -104,7 +104,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Interview>()
 				.HasMany(e => e.Employee)
 				.WithOptional(e => e.Interview)
-				.HasForeignKey(e => e.id_interview)
+				.HasForeignKey(e => e.IdInterview)
 				.WillCascadeOnDelete();
 
 			modelBuilder.Entity<InterviewStatus>()

@@ -1,54 +1,60 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Employee")]
-    public partial class Employee
-    {
-        public int id { get; set; }
+	[Table("Employee")]
+	public partial class Employee
+	{
+		public int Id { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Surname { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Name { get; private set; }
+		[StringLength(64)]
+		public string FatherName { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string PositionName { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string City { get; private set; }
+		[Required]
+		[StringLength(16)]
+		public string Phone { get; private set; }
+		[Column(TypeName = "date")]
+		public DateTime Birthday { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Email { get; private set; }
+		[Column(TypeName = "money")]
+		public decimal Salary { get; private set; }
+		[Column(TypeName = "date")]
+		public DateTime DateEmployment { get; private set; }
+		public int? IdInterview { get; private set; }
+		public virtual Interview Interview { get; private set; }
 
-        [Required]
-        [StringLength(64)]
-        public string surname { get; set; }
+		public Employee(int id, string surname, string name, string fatherName, string position,
+			string city, string phone, DateTime birthday, string email, decimal salary,
+			DateTime dateEmployment)
+		{
+			Surname = surname;
+			Name = name;
+			FatherName = fatherName;
+			Phone = phone;
+			Birthday = birthday;
+			Email = email;
+			Id = id;
+			PositionName = position;
+			City = city;
+			Salary = salary;
+			DateEmployment = dateEmployment;
+		}
 
-        [Required]
-        [StringLength(64)]
-        public string name { get; set; }
-
-        [StringLength(64)]
-        public string father_name { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string position_name { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string city { get; set; }
-
-        [Required]
-        [StringLength(16)]
-        public string phone { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime birthday { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string email { get; set; }
-
-        [Column(TypeName = "money")]
-        public decimal salary { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime date_employment { get; set; }
-
-        public int? id_interview { get; set; }
-
-        public virtual Interview Interview { get; set; }
-    }
+		public void ChangeSalary(decimal newSalary) => Salary = newSalary;
+		public void ChangePosition(string newPosition) => PositionName = newPosition;
+	}
 }
