@@ -17,7 +17,7 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Education> Education { get; set; }
 		public virtual DbSet<Education_Degree> Education_Degree { get; set; }
 		public virtual DbSet<Education_Form> Education_Form { get; set; }
-		public virtual DbSet<EducationDegree_Point> EducationDegree_Point { get; set; }
+		public virtual DbSet<SharedModels.Models.EducationDegreePoint> EducationDegree_Point { get; set; }
 		public virtual DbSet<EducationDegree_Requirement> EducationDegree_Requirement { get; set; }
 		public virtual DbSet<Employee> Employee { get; set; }
 		public virtual DbSet<Family_Status> Family_Status { get; set; }
@@ -71,7 +71,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Education_Degree>()
 				.HasMany(e => e.EducationDegree_Point)
 				.WithRequired(e => e.Education_Degree)
-				.HasForeignKey(e => e.id_education_degree)
+				.HasForeignKey(e => e.IdEducationDegree)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Education_Degree>()
@@ -116,7 +116,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Point>()
 				.HasMany(e => e.EducationDegree_Point)
 				.WithRequired(e => e.Point)
-				.HasForeignKey(e => e.id_point);
+				.HasForeignKey(e => e.IdPoint);
 
 			modelBuilder.Entity<Point>()
 				.HasMany(e => e.Vacancy)

@@ -105,9 +105,9 @@ namespace RecruitmentServer.Models
 			if (points.Degrees != null)
 			{
 				for (int i = 0; i < points.Degrees.Length; i++)
-					if (points.Degrees[i].Point != 0)
+					if (points.Degrees[i].Points != 0)
 						command += $"INSERT INTO EducationDegree_Point(points,id_point,id_education_degree) " +
-							$"values({points.Degrees[i].Point},{idPoints},{points.Degrees[i].IdDegree}) ";
+							$"values({points.Degrees[i].Points},{idPoints},{points.Degrees[i].IdEducationDegree}) ";
 				if (command != string.Empty)
 					ExecuteQuery(command);
 			}
@@ -346,9 +346,9 @@ namespace RecruitmentServer.Models
 		{// Метод, який повертає бали
 			DataTable dt = ExecuteReturnQuery($"SELECT id_education_degree,points FROM EducationDegree_Point " +
 				$"WHERE id_point = {idPoint}");
-			PointDegree[] degrees = new PointDegree[dt.Rows.Count];
+			SharedModels.Models.EducationDegreePoint[] degrees = new SharedModels.Models.EducationDegreePoint[dt.Rows.Count];
 			for (int i = 0; i < degrees.Length; i++)
-				degrees[i] = new PointDegree(GetIntItem(dt, i, 0), GetIntItem(dt, i, 1));
+				degrees[i] = new SharedModels.Models.EducationDegreePoint(GetIntItem(dt, i, 0), GetIntItem(dt, i, 1));
 
 
 			dt = ExecuteReturnQuery($"SELECT age_under_18,age_18_30,age_30_50,age_over_50," +

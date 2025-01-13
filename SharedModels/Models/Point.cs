@@ -12,7 +12,7 @@ namespace SharedModels.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Point()
         {
-            EducationDegree_Point = new HashSet<EducationDegree_Point>();
+            EducationDegree_Point = new HashSet<EducationDegreePoint>();
             Vacancy = new HashSet<Vacancy>();
         }
 
@@ -47,7 +47,7 @@ namespace SharedModels.Models
         public int business_trip_opportunity { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EducationDegree_Point> EducationDegree_Point { get; set; }
+        public virtual ICollection<EducationDegreePoint> EducationDegree_Point { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacancy> Vacancy { get; set; }

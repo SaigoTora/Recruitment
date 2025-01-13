@@ -58,7 +58,7 @@
     <Compile Include="Models\Business_Trip_Opportunity.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Education.cs" />
-    <Compile Include="Models\EducationDegree_Point.cs" />
+    <Compile Include="Models\EducationDegreePoint.cs" />
     <Compile Include="Models\EducationDegree_Requirement.cs" />
     <Compile Include="Models\Education_Degree.cs" />
     <Compile Include="Models\Education_Form.cs" />

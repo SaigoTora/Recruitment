@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -14,7 +15,7 @@ namespace RecruitmentServer.Forms
 	{
 		private readonly Account _account;
 		private readonly Points _points;
-		private PointDegree[] _degreesPoints;
+		private EducationDegreePoint[] _degreesPoints;
 
 		internal PointsForm(Account account, Points points, bool isFormForView)
 		{
@@ -48,19 +49,19 @@ namespace RecruitmentServer.Forms
 
 		private void FillDegreesFromPoints(Points points)
 		{
-			_degreesPoints = new PointDegree[points.Degrees.Length];
+			_degreesPoints = new EducationDegreePoint[points.Degrees.Length];
 			for (int i = 0; i < points.Degrees.Length; i++)
 				_degreesPoints[i] = points.Degrees[i];
 		}
 		private void FillDegreesFromComboBox()
 		{
 			DataRowView item;
-			_degreesPoints = new PointDegree[comboBoxDegrees.Items.Count];
+			_degreesPoints = new EducationDegreePoint[comboBoxDegrees.Items.Count];
 			for (int i = 0; i < comboBoxDegrees.Items.Count; i++)
 			{
 				item = comboBoxDegrees.Items[i] as DataRowView;
 
-				PointDegree pointDegree = new PointDegree(int.Parse(item[0].ToString()), 0);
+				EducationDegreePoint pointDegree = new EducationDegreePoint(int.Parse(item[0].ToString()), 0);
 				_degreesPoints[i] = pointDegree;
 			}
 		}
@@ -102,7 +103,7 @@ namespace RecruitmentServer.Forms
 			int index = FindDegreeIndexById(id);
 
 			if (index >= 0)
-				_degreesPoints[index] = new PointDegree(id, (int)NUDDegree.Value);
+				_degreesPoints[index] = new EducationDegreePoint(id, (int)NUDDegree.Value);
 		}
 		private void ComboBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -110,14 +111,14 @@ namespace RecruitmentServer.Forms
 			int index = FindDegreeIndexById(id);
 
 			if (index >= 0)
-				NUDDegree.Value = _degreesPoints[index].Point;
+				NUDDegree.Value = _degreesPoints[index].Points;
 			else
 				NUDDegree.Value = 0;
 		}
 		private int FindDegreeIndexById(int id)
 		{
 			for (int i = 0; i < _degreesPoints.Length; i++)
-				if (_degreesPoints[i].IdDegree == id)
+				if (_degreesPoints[i].IdEducationDegree == id)
 					return i;
 
 			return -1;

@@ -12,7 +12,7 @@ namespace SharedModels.Models
         public Education_Degree()
         {
             Education = new HashSet<Education>();
-            EducationDegree_Point = new HashSet<EducationDegree_Point>();
+            EducationDegree_Point = new HashSet<EducationDegreePoint>();
             EducationDegree_Requirement = new HashSet<EducationDegree_Requirement>();
         }
 
@@ -26,7 +26,7 @@ namespace SharedModels.Models
         public virtual ICollection<Education> Education { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EducationDegree_Point> EducationDegree_Point { get; set; }
+        public virtual ICollection<EducationDegreePoint> EducationDegree_Point { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EducationDegree_Requirement> EducationDegree_Requirement { get; set; }
