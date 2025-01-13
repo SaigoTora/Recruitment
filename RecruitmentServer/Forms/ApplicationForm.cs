@@ -15,10 +15,10 @@ namespace RecruitmentServer.Forms
 	internal partial class ApplicationForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private readonly FullApplication _application;
+		private readonly ViewApplication _application;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal ApplicationForm(Account account, FullApplication application,
+		internal ApplicationForm(Account account, ViewApplication application,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
@@ -36,9 +36,9 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void SetFormFields(FullApplication application)
+		private void SetFormFields(ViewApplication application)
 		{
-			textBoxPosition.Text = application.Position.Name;
+			textBoxPosition.Text = application.PositionName;
 			labelScores.Text = "Балів: " + application.Scores;
 			labelDatePublication.Text = "Дата і час подачі: " +
 				application.DateSubmission.ToString("d MMMM yyyy HH:mm");
@@ -75,7 +75,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{
-			FullVacancy vacancy = DataBase.GetVacancy(_application.IdVacancy);
+			ViewVacancy vacancy = DataBase.GetVacancy(_application.IdVacancy);
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				isDeleteButtonVisible: false);
 			Visible = false;

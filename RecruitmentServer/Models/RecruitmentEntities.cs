@@ -11,7 +11,7 @@ namespace RecruitmentServer.Models
 		}
 
 		public virtual DbSet<Application> Application { get; set; }
-		public virtual DbSet<Application_Status> Application_Status { get; set; }
+		public virtual DbSet<ApplicationStatus> Application_Status { get; set; }
 		public virtual DbSet<BusinessTripOpportunity> Business_Trip_Opportunity { get; set; }
 		public virtual DbSet<Candidate> Candidate { get; set; }
 		public virtual DbSet<Education> Education { get; set; }
@@ -30,13 +30,13 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Questionnaire> Questionnaire { get; set; }
 		public virtual DbSet<Requirement> Requirement { get; set; }
 		public virtual DbSet<Vacancy> Vacancy { get; set; }
-		public virtual DbSet<View_Application> View_Application { get; set; }
+		public virtual DbSet<ViewApplication> View_Application { get; set; }
 		public virtual DbSet<View_Education> View_Education { get; set; }
 		public virtual DbSet<ViewInterview> View_Interview { get; set; }
 		public virtual DbSet<View_Point> View_Point { get; set; }
 		public virtual DbSet<View_Questionnaire> View_Questionnaire { get; set; }
 		public virtual DbSet<View_Requirement> View_Requirement { get; set; }
-		public virtual DbSet<View_Vacancy> View_Vacancy { get; set; }
+		public virtual DbSet<ViewVacancy> View_Vacancy { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -45,10 +45,10 @@ namespace RecruitmentServer.Models
 				.WithRequired(e => e.Application)
 				.HasForeignKey(e => e.IdApplication);
 
-			modelBuilder.Entity<Application_Status>()
+			modelBuilder.Entity<ApplicationStatus>()
 				.HasMany(e => e.Application)
-				.WithRequired(e => e.Application_Status)
-				.HasForeignKey(e => e.id_application_status)
+				.WithRequired(e => e.ApplicationStatus)
+				.HasForeignKey(e => e.IdApplicationStatus)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<BusinessTripOpportunity>()
@@ -60,7 +60,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Candidate>()
 				.HasMany(e => e.Application)
 				.WithRequired(e => e.Candidate)
-				.HasForeignKey(e => e.id_candidate);
+				.HasForeignKey(e => e.IdCandidate);
 
 			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.Education)
@@ -121,12 +121,12 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Point>()
 				.HasMany(e => e.Vacancy)
 				.WithRequired(e => e.Point)
-				.HasForeignKey(e => e.id_point);
+				.HasForeignKey(e => e.IdPoint);
 
 			modelBuilder.Entity<Position>()
 				.HasMany(e => e.Vacancy)
 				.WithRequired(e => e.Position)
-				.HasForeignKey(e => e.id_position);
+				.HasForeignKey(e => e.IdPosition);
 
 			modelBuilder.Entity<Questionnaire>()
 				.HasMany(e => e.Candidate)
@@ -151,19 +151,19 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Requirement>()
 				.HasMany(e => e.Vacancy)
 				.WithRequired(e => e.Requirement)
-				.HasForeignKey(e => e.id_requirement);
+				.HasForeignKey(e => e.IdRequirement);
 
 			modelBuilder.Entity<Vacancy>()
-				.Property(e => e.salary)
+				.Property(e => e.Salary)
 				.HasPrecision(19, 4);
 
 			modelBuilder.Entity<Vacancy>()
 				.HasMany(e => e.Application)
 				.WithRequired(e => e.Vacancy)
-				.HasForeignKey(e => e.id_vacancy);
+				.HasForeignKey(e => e.IdVacancy);
 
-			modelBuilder.Entity<View_Vacancy>()
-				.Property(e => e.salary)
+			modelBuilder.Entity<ViewVacancy>()
+				.Property(e => e.Salary)
 				.HasPrecision(19, 4);
 		}
 	}

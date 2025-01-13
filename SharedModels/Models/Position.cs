@@ -1,29 +1,25 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Position")]
-    public partial class Position
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Position()
-        {
-            Vacancy = new HashSet<Vacancy>();
-        }
+	[Table("Position")]
+	public partial class Position
+	{
+		public int Id { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Name { get; private set; }
+		public string Description { get; private set; }
+		public virtual ICollection<Vacancy> Vacancy { get; private set; }
 
-        public int id { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string name { get; set; }
-
-        public string description { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy> Vacancy { get; set; }
-    }
+		public Position()
+			=> Vacancy = new HashSet<Vacancy>();
+		public Position(string name, string description)
+		{
+			Name = name;
+			Description = description;
+		}
+	}
 }

@@ -85,7 +85,7 @@ namespace RecruitmentServer.Forms
 
 		private void TextBoxSalary_TextChanged(object sender, EventArgs e)
 		{
-			if (textBoxSalary.Text != _employee.Salary.ToString())
+			if (textBoxSalary.Text != $"{_employee.Salary:0.##}")
 				buttonChangeSalary.Visible = true;
 			else
 				buttonChangeSalary.Visible = false;

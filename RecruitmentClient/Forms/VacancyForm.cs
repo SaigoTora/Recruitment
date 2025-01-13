@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
-using RecruitmentLibrary.ApplicationInfo;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -13,14 +13,14 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
-		private readonly Vacancy _vacancy;
+		private readonly ViewVacancy _vacancy;
 		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
 		private readonly Theme _currentTheme;
 
 		private string _requirements;
 
-		internal VacancyForm(Account account, Vacancy vacancy,
+		internal VacancyForm(Account account, ViewVacancy vacancy,
 			string login, Action<EventArgs> refresh)
 		{
 			InitializeComponent();
@@ -34,12 +34,12 @@ namespace RecruitmentClient.Forms
 		}
 		private void VacancyForm_Load(object sender, EventArgs e)
 		{
-			richTextBoxPosition.Text = _vacancy.Position.Name;
-			richTextBoxSalary.Text = _vacancy.Salary.ToString() + " грн.";
+			richTextBoxPosition.Text = _vacancy.PositionName;
+			richTextBoxSalary.Text = $"{_vacancy.Salary:0.##}" + " грн.";
 			labelDatePublication.Text = "Дата публікації: " +
 				_vacancy.DatePublication.ToString("yyyy-MM-dd");
 
-			SetupInformation(_vacancy.Position.Description, labelPositionDescriptionTitle,
+			SetupInformation(_vacancy.PositionDescription, labelPositionDescriptionTitle,
 				richTextBoxPositionDescription);
 			SetupInformation(_vacancy.Info,
 				labelAdditionalInfoTitle, richTextBoxAdditionalInfo);

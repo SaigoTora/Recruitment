@@ -72,7 +72,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{
-			FullApplication application = DataBase.GetApplication(_interview.IdApplication);
+			ViewApplication application = DataBase.GetApplication(_interview.IdApplication);
 			ApplicationForm applicationForm = new ApplicationForm(_account, application, null);
 			Visible = false;
 			applicationForm.FormClosed += (s, args) => { Visible = true; };

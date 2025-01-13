@@ -1,44 +1,27 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Application")]
-    public partial class Application
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Application()
-        {
-            Interview = new HashSet<Interview>();
-        }
+	[Table("Application")]
+	public partial class Application
+	{
+		public int Id { get; private set; }
+		[Column(TypeName = "datetime2")]
+		public DateTime DateSubmission { get; private set; }
+		public int Scores { get; private set; }
+		public string AdditionalInfo { get; private set; }
+		public string ReasonRejection { get; private set; }
+		public int IdApplicationStatus { get; private set; }
+		public int IdCandidate { get; private set; }
+		public int IdVacancy { get; private set; }
+		public virtual ApplicationStatus ApplicationStatus { get; private set; }
+		public virtual Candidate Candidate { get; private set; }
+		public virtual Vacancy Vacancy { get; private set; }
+		public virtual ICollection<Interview> Interview { get; private set; }
 
-        public int id { get; set; }
-
-        [Column(TypeName = "datetime2")]
-        public DateTime date_submission { get; set; }
-
-        public int scores { get; set; }
-
-        public string additional_info { get; set; }
-
-        public string reason_rejection { get; set; }
-
-        public int id_application_status { get; set; }
-
-        public int id_candidate { get; set; }
-
-        public int id_vacancy { get; set; }
-
-        public virtual Application_Status Application_Status { get; set; }
-
-        public virtual Candidate Candidate { get; set; }
-
-        public virtual Vacancy Vacancy { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Interview> Interview { get; set; }
-    }
+		public Application()
+			=> Interview = new HashSet<Interview>();
+	}
 }

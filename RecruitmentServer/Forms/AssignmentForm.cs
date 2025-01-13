@@ -26,10 +26,10 @@ namespace RecruitmentServer.Forms
 
 		private readonly Dictionary<Guna2GradientButton, Candidate>
 			_buttonCandidateMap = new Dictionary<Guna2GradientButton, Candidate>();
-		private readonly Dictionary<Guna2GradientButton, FullApplication>
-			_buttonApplicationMap = new Dictionary<Guna2GradientButton, FullApplication>();
-		private readonly Dictionary<Guna2GradientButton, FullVacancy>
-			_buttonVacancyMap = new Dictionary<Guna2GradientButton, FullVacancy>();
+		private readonly Dictionary<Guna2GradientButton, ViewApplication>
+			_buttonApplicationMap = new Dictionary<Guna2GradientButton, ViewApplication>();
+		private readonly Dictionary<Guna2GradientButton, ViewVacancy>
+			_buttonVacancyMap = new Dictionary<Guna2GradientButton, ViewVacancy>();
 
 		internal AssignmentForm(Account account, Action<EventArgs> refreshMainForm)
 		{
@@ -108,9 +108,9 @@ namespace RecruitmentServer.Forms
 			List<Guna2GradientPanel> createdPanels = new List<Guna2GradientPanel>();
 			for (int i = 0; i < _resultItems.Count; i++)
 			{
-				FullVacancy vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
+				ViewVacancy vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
 				Candidate candidate = DataBase.GetCandidate(_resultItems[i].IdCandidate);
-				FullApplication application = DataBase.GetApplication(
+				ViewApplication application = DataBase.GetApplication(
 					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
 
 				createdPanels.Add(_assignmentCreator.CreateMainPanel());
@@ -125,7 +125,7 @@ namespace RecruitmentServer.Forms
 				Guna2GradientButton buttonV = _assignmentCreator.CreateButton(buttonVacancy);
 
 				buttonC.Text = candidate.Surname;
-				buttonV.Text = vacancy.Position.Name;
+				buttonV.Text = vacancy.PositionName;
 
 				_buttonCandidateMap.Add(buttonC, candidate);
 				_buttonApplicationMap.Add(buttonA, application);
@@ -186,7 +186,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			FullApplication application = _buttonApplicationMap[button];
+			ViewApplication application = _buttonApplicationMap[button];
 			ApplicationForm applicationForm = new ApplicationForm(_account, application,
 				(args) =>
 				{
@@ -201,7 +201,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			FullVacancy vacancy = _buttonVacancyMap[button];
+			ViewVacancy vacancy = _buttonVacancyMap[button];
 
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				(args) =>

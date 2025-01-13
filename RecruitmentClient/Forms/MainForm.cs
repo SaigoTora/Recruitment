@@ -49,8 +49,8 @@ namespace RecruitmentClient.Forms
 
 		private readonly List<Guna2GradientPanel> _createdPanels =
 			new List<Guna2GradientPanel>();
-		private readonly Dictionary<Guna2GradientButton, RecruitmentLibrary.ApplicationInfo.Vacancy> _buttonVacancyMap =
-			new Dictionary<Guna2GradientButton, RecruitmentLibrary.ApplicationInfo.Vacancy>();
+		private readonly Dictionary<Guna2GradientButton, ViewVacancy> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, ViewVacancy>();
 		private readonly Dictionary<Guna2GradientButton, string> _buttonReasonRejectionMap =
 			new Dictionary<Guna2GradientButton, string>();
 
@@ -307,7 +307,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<RecruitmentLibrary.ApplicationInfo.Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
+			List<ViewVacancy> vacancies = Client.GetFreeVacancies(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -325,7 +325,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<RecruitmentLibrary.ApplicationInfo.Application> applications =
+			List<ViewApplication> applications =
 				Client.GetApplications(_account.Login, _createdPanels.Count,
 				COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -365,16 +365,16 @@ namespace RecruitmentClient.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(RecruitmentLibrary.ApplicationInfo.Vacancy vacancy)
+		private void CreateVacancy(ViewVacancy vacancy)
 		{
 			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
 
-			_vacancyCreator.CreateLabel(labelPositionV, vacancy.Position.Name);
+			_vacancyCreator.CreateLabel(labelPositionV, vacancy.PositionName);
 			Label labelDescription = _vacancyCreator.CreateLabel(labelPositionDescriptionV,
-				vacancy.Position.Description);
+				vacancy.PositionDescription);
 			AdjustLabelLocation(labelDescription, panelVacancy);
-			_vacancyCreator.CreateLabel(labelSalaryV, vacancy.Salary.ToString() +
+			_vacancyCreator.CreateLabel(labelSalaryV, $"{vacancy.Salary:0.##}" +
 				$" {CURRENCY}");
 			Label labelDate = _vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
 				ConvertDateToString(vacancy.DatePublication));
@@ -384,11 +384,11 @@ namespace RecruitmentClient.Forms
 			_buttonVacancyMap.Add(button, vacancy);
 			ManageVacancyButtonEvent(button, true);
 		}
-		private void CreateApplication(RecruitmentLibrary.ApplicationInfo.Application application)
+		private void CreateApplication(ViewApplication application)
 		{
 			const string DATE_PREFIX = "Дата і час подачі: ";
 
-			_applicationCreator.CreateLabel(labelPositionA, application.Position.Name);
+			_applicationCreator.CreateLabel(labelPositionA, application.PositionName);
 			Label labelDate = _applicationCreator.CreateLabel(labelDateSubmissionA,
 				DATE_PREFIX + ConvertDateToString(application.DateSubmission));
 			AdjustLabelLocation(labelDate, panelVacancy);
@@ -492,7 +492,7 @@ namespace RecruitmentClient.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			RecruitmentLibrary.ApplicationInfo.Vacancy vacancy = _buttonVacancyMap[button];
+			ViewVacancy vacancy = _buttonVacancyMap[button];
 			try
 			{
 				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,

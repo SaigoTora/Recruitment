@@ -149,9 +149,9 @@ namespace RecruitmentClient.Models
 				"WHERE id_vacancy = View_Vacancy.id AND id_candidate = " +
 				$"(SELECT id FROM Candidate WHERE login = '{login}')) = 0 {condition}")[0]);
 		}
-		internal static List<Vacancy> GetFreeVacancies(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<SharedModels.Models.ViewVacancy> GetFreeVacancies(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список актуальних вакансій, на які ще не відправляв заявки користувач
-			List<Vacancy> vacancies = new List<Vacancy>();
+			List<SharedModels.Models.ViewVacancy> vacancies = new List<SharedModels.Models.ViewVacancy>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -171,9 +171,7 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 6)
 			{
-				Position position = new Position(arr[i + 1], arr[i + 2]);
-				vacancies.Add(new Vacancy(Int32.Parse(arr[i]), position,
-					Double.Parse(arr[i + 3]), DateTime.Parse(arr[i + 4]).ToLocalTime(), arr[i + 5]));
+				vacancies.Add(new SharedModels.Models.ViewVacancy(Int32.Parse(arr[i]), arr[i + 1], arr[i + 2], Decimal.Parse(arr[i + 3]), DateTime.Parse(arr[i + 4]).ToLocalTime(), arr[i + 5]));
 			}
 
 			return vacancies;
@@ -187,9 +185,9 @@ namespace RecruitmentClient.Models
 			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}') {condition}")[0]);
 		}
-		internal static List<Application> GetApplications(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<SharedModels.Models.ViewApplication> GetApplications(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
-			List<Application> applications = new List<Application>();
+			List<SharedModels.Models.ViewApplication> applications = new List<SharedModels.Models.ViewApplication>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -209,8 +207,9 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 5)
 			{
-				Position position = new Position(arr[i], arr[i + 1]);
-				applications.Add(new Application(position, arr[i + 2],
+				SharedModels.Models.Position position = new SharedModels.Models.Position();
+				applications.Add(new SharedModels.Models.ViewApplication(arr[i], arr[i + 1],
+					arr[i + 2],
 					DateTime.Parse(arr[i + 3]).ToLocalTime(), arr[i + 4]));
 			}
 

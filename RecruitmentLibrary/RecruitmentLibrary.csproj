@@ -49,10 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationInfo\Application.cs" />
-    <Compile Include="ApplicationInfo\Position.cs" />
     <Compile Include="ApplicationInfo\Searcher.cs" />
-    <Compile Include="ApplicationInfo\Vacancy.cs" />
     <Compile Include="AssignmentSolver.cs" />
     <Compile Include="PersonInfo\Serializator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
