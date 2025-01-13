@@ -1,6 +1,7 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
@@ -14,17 +15,17 @@ namespace RecruitmentServer.Forms
 	internal partial class PointsForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private readonly Points _points;
+		private readonly Point _point;
 		private EducationDegreePoint[] _degreesPoints;
 
-		internal PointsForm(Account account, Points points, bool isFormForView)
+		internal PointsForm(Account account, Point point, bool isFormForView)
 		{
 			InitializeComponent();
 
 			customTitleBar = new CustomTitleBar(this, "Бали", minimizeBox: false,
 				maximizeBox: false);
 			_account = account;
-			_points = points;
+			_point = point;
 
 			if (isFormForView)
 			{
@@ -32,13 +33,13 @@ namespace RecruitmentServer.Forms
 				SetAllNumericUpDownEnabled(false);
 				SetAllLabelsCursor(Cursors.Default);
 			}
-			if (points.Degrees != null)
-				FillDegreesFromPoints(points);
+			if (point.Degrees != null)
+				FillDegreesFromPoints(point);
 		}
 		private void PointsForm_Load(object sender, EventArgs e)
 		{
 			education_DegreeTableAdapter.Fill(recruitmentDBDataSet.Education_Degree);
-			SetFormFields(_points);
+			SetFormFields(_point);
 
 			if (_degreesPoints == null)
 				FillDegreesFromComboBox();
@@ -47,12 +48,8 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void FillDegreesFromPoints(Points points)
-		{
-			_degreesPoints = new EducationDegreePoint[points.Degrees.Length];
-			for (int i = 0; i < points.Degrees.Length; i++)
-				_degreesPoints[i] = points.Degrees[i];
-		}
+		private void FillDegreesFromPoints(Point points)
+			=> _degreesPoints = points.Degrees.ToArray();
 		private void FillDegreesFromComboBox()
 		{
 			DataRowView item;
@@ -61,7 +58,8 @@ namespace RecruitmentServer.Forms
 			{
 				item = comboBoxDegrees.Items[i] as DataRowView;
 
-				EducationDegreePoint pointDegree = new EducationDegreePoint(int.Parse(item[0].ToString()), 0);
+				EducationDegreePoint pointDegree = new EducationDegreePoint(int.Parse(
+					item[0].ToString()), 0);
 				_degreesPoints[i] = pointDegree;
 			}
 		}
@@ -78,7 +76,7 @@ namespace RecruitmentServer.Forms
 					label.Cursor = cursor;
 		}
 
-		private void SetFormFields(Points points)
+		private void SetFormFields(Point points)
 		{
 			NUDAgeUnder18.Value = points.AgeUnder18;
 			NUDAge18_30.Value = points.Age18_30;
@@ -176,7 +174,7 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonCreate_Click(object sender, EventArgs e)
 		{
-			_points.Change((int)NUDAgeUnder18.Value, (int)NUDAge18_30.Value,
+			_point.Change((int)NUDAgeUnder18.Value, (int)NUDAge18_30.Value,
 				(int)NUDAge30_50.Value, (int)NUDAgeOver50.Value, (int)NUDExpNone.Value,
 				(int)NUDExpUnderYear.Value, (int)NUDExp1_3.Value, (int)NUDExpOver3.Value,
 				(int)NUDDiploma.Value, (int)NUDNoChronicDiseases.Value,

@@ -1,55 +1,57 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Point")]
-    public partial class Point
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Point()
-        {
-            EducationDegree_Point = new HashSet<EducationDegreePoint>();
-            Vacancy = new HashSet<Vacancy>();
-        }
+	[Table("Point")]
+	public partial class Point
+	{
+		public int Id { get; private set; }
+		public int AgeUnder18 { get; private set; }
+		public int Age18_30 { get; private set; }
+		public int Age30_50 { get; private set; }
+		public int AgeOver50 { get; private set; }
+		public int ExpNone { get; private set; }
+		public int ExpUnderYear { get; private set; }
+		public int Exp1_3 { get; private set; }
+		public int ExpOver3 { get; private set; }
+		public int Diploma { get; private set; }
+		public int NoChronicDiseases { get; private set; }
+		public int DriverLicense { get; private set; }
+		public int NoSmoker { get; private set; }
+		public int NoDrinkAlcohol { get; private set; }
+		public int BusinessTripOpportunity { get; private set; }
 
-        public int id { get; set; }
+		public virtual ICollection<EducationDegreePoint> Degrees
+		{ get; private set; }
+		public virtual ICollection<Vacancy> Vacancy { get; private set; }
 
-        public int age_under_18 { get; set; }
+		public Point()
+			=> Vacancy = new HashSet<Vacancy>();
 
-        public int age_18_30 { get; set; }
+		public void Change(int ageUnder18, int age18_30, int age30_50, int ageOver50,
+			int expNone, int expUnderYear, int exp1_3, int expOver3, int diploma,
+			int noChronicDiseases, int driverLicense, int noSmoker, int noDrinkAlcohol,
+			int businessTripOpportunity, ICollection<EducationDegreePoint> degrees)
+		{
+			AgeUnder18 = ageUnder18;
+			Age18_30 = age18_30;
+			Age30_50 = age30_50;
+			AgeOver50 = ageOver50;
+			ExpNone = expNone;
+			ExpUnderYear = expUnderYear;
+			Exp1_3 = exp1_3;
+			ExpOver3 = expOver3;
+			Diploma = diploma;
+			NoChronicDiseases = noChronicDiseases;
+			DriverLicense = driverLicense;
+			NoSmoker = noSmoker;
+			NoDrinkAlcohol = noDrinkAlcohol;
+			BusinessTripOpportunity = businessTripOpportunity;
 
-        public int age_30_50 { get; set; }
-
-        public int age_over_50 { get; set; }
-
-        public int exp_none { get; set; }
-
-        public int exp_under_year { get; set; }
-
-        public int exp_1_3 { get; set; }
-
-        public int exp_over_3 { get; set; }
-
-        public int diploma { get; set; }
-
-        public int no_chronic_diseases { get; set; }
-
-        public int driver_license { get; set; }
-
-        public int no_smoker { get; set; }
-
-        public int no_drink_alcohol { get; set; }
-
-        public int business_trip_opportunity { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EducationDegreePoint> EducationDegree_Point { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy> Vacancy { get; set; }
-    }
+			Degrees = new HashSet<EducationDegreePoint>();
+			foreach (var degree in degrees)
+				Degrees.Add(degree);
+		}
+	}
 }

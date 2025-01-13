@@ -17,7 +17,7 @@ namespace RecruitmentServer.Forms
 		private readonly Account _account;
 		private FullVacancy _vacancy;
 		private readonly FullRequirement _requirement = new FullRequirement();
-		private Points _points = new Points();
+		private SharedModels.Models.Point _point = new SharedModels.Models.Point();
 		private readonly Action<EventArgs> _actionAfterChange;
 
 		private VacancyForm()
@@ -187,16 +187,16 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{
-			_points = DataBase.GetPoints(_vacancy.IdPoint);
+			_point = DataBase.GetPoints(_vacancy.IdPoint);
 
-			PointsForm pointsForm = new PointsForm(_account, _points, true);
+			PointsForm pointsForm = new PointsForm(_account, _point, true);
 			Visible = false;
 			pointsForm.FormClosed += (s, args) => { Visible = true; };
 			pointsForm.ShowDialog();
 		}
 		private void ButtonPointsCreate_Click(object sender, EventArgs e)
 		{
-			PointsForm pointsForm = new PointsForm(_account, _points, false);
+			PointsForm pointsForm = new PointsForm(_account, _point, false);
 			Visible = false;
 			pointsForm.FormClosed += (s, args) => { Visible = true; };
 			pointsForm.ShowDialog();
@@ -206,7 +206,7 @@ namespace RecruitmentServer.Forms
 		{
 			if (CheckValidData())
 			{
-				int pointId = DataBase.CreatePoints(_points);
+				int pointId = DataBase.CreatePoints(_point);
 				int requirementId = DataBase.CreateRequirement(_requirement);
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
@@ -277,7 +277,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ValidatePoints(ref bool isDataValid)
 		{
-			if (_points.Degrees == null)
+			if (_point.Degrees == null)
 			{// If the points are not filled in
 				if (isDataValid)
 				{

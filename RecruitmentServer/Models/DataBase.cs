@@ -88,7 +88,7 @@ namespace RecruitmentServer.Models
 
 			return idRequirement;
 		}
-		internal static int CreatePoints(Points points)
+		internal static int CreatePoints(SharedModels.Models.Point points)
 		{// Метод створює бали та повертає id
 		 // Створення балів
 			ExecuteQuery($"INSERT INTO Point(age_under_18,age_18_30,age_30_50,age_over_50,exp_none,exp_under_year,exp_1_3,exp_over_3,diploma," +
@@ -104,10 +104,10 @@ namespace RecruitmentServer.Models
 
 			if (points.Degrees != null)
 			{
-				for (int i = 0; i < points.Degrees.Length; i++)
-					if (points.Degrees[i].Points != 0)
+				foreach(var degreePoint in points.Degrees)
+					if (degreePoint.Points != 0)
 						command += $"INSERT INTO EducationDegree_Point(points,id_point,id_education_degree) " +
-							$"values({points.Degrees[i].Points},{idPoints},{points.Degrees[i].IdEducationDegree}) ";
+							$"values({degreePoint.Points},{idPoints},{degreePoint.IdEducationDegree}) ";
 				if (command != string.Empty)
 					ExecuteQuery(command);
 			}
@@ -342,7 +342,7 @@ namespace RecruitmentServer.Models
 			return s.TrimEnd(' ').TrimEnd(',').ToLower();
 
 		}
-		internal static Points GetPoints(int idPoint)
+		internal static SharedModels.Models.Point GetPoints(int idPoint)
 		{// Метод, який повертає бали
 			DataTable dt = ExecuteReturnQuery($"SELECT id_education_degree,points FROM EducationDegree_Point " +
 				$"WHERE id_point = {idPoint}");
@@ -355,7 +355,7 @@ namespace RecruitmentServer.Models
 				$"exp_none,exp_under_year,exp_1_3,exp_over_3,diploma,no_chronic_diseases,driver_license," +
 				$"no_smoker,no_drink_alcohol,business_trip_opportunity FROM Point WHERE id = {idPoint}");
 
-			Points points = new Points();
+			SharedModels.Models.Point points = new SharedModels.Models.Point();
 			points.Change(GetIntItem(dt, 0, 0), GetIntItem(dt, 0, 1), GetIntItem(dt, 0, 2), GetIntItem(dt, 0, 3),
 				GetIntItem(dt, 0, 4), GetIntItem(dt, 0, 5), GetIntItem(dt, 0, 6), GetIntItem(dt, 0, 7),
 				GetIntItem(dt, 0, 8), GetIntItem(dt, 0, 9), GetIntItem(dt, 0, 10), GetIntItem(dt, 0, 11),
