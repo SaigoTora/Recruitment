@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="ApplicationInfo\Application.cs" />
     <Compile Include="ApplicationInfo\Position.cs" />
-    <Compile Include="ApplicationInfo\Requirement.cs" />
     <Compile Include="ApplicationInfo\Searcher.cs" />
     <Compile Include="ApplicationInfo\Vacancy.cs" />
     <Compile Include="AssignmentSolver.cs" />

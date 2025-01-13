@@ -15,10 +15,10 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Business_Trip_Opportunity> Business_Trip_Opportunity { get; set; }
 		public virtual DbSet<Candidate> Candidate { get; set; }
 		public virtual DbSet<Education> Education { get; set; }
-		public virtual DbSet<Education_Degree> Education_Degree { get; set; }
+		public virtual DbSet<EducationDegree> Education_Degree { get; set; }
 		public virtual DbSet<Education_Form> Education_Form { get; set; }
 		public virtual DbSet<EducationDegreePoint> EducationDegree_Point { get; set; }
-		public virtual DbSet<EducationDegree_Requirement> EducationDegree_Requirement { get; set; }
+		public virtual DbSet<EducationDegreeRequirement> EducationDegree_Requirement { get; set; }
 		public virtual DbSet<Employee> Employee { get; set; }
 		public virtual DbSet<Family_Status> Family_Status { get; set; }
 		public virtual DbSet<Health> Health { get; set; }
@@ -62,22 +62,22 @@ namespace RecruitmentServer.Models
 				.WithRequired(e => e.Candidate)
 				.HasForeignKey(e => e.id_candidate);
 
-			modelBuilder.Entity<Education_Degree>()
+			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.Education)
 				.WithRequired(e => e.Education_Degree)
 				.HasForeignKey(e => e.id_education_degree)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Education_Degree>()
-				.HasMany(e => e.EducationDegree_Point)
+			modelBuilder.Entity<EducationDegree>()
+				.HasMany(e => e.EducationDegreePoint)
 				.WithRequired(e => e.Education_Degree)
 				.HasForeignKey(e => e.IdEducationDegree)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Education_Degree>()
-				.HasMany(e => e.EducationDegree_Requirement)
-				.WithRequired(e => e.Education_Degree)
-				.HasForeignKey(e => e.id_education_degree)
+			modelBuilder.Entity<EducationDegree>()
+				.HasMany(e => e.EducationDegreeRequirement)
+				.WithRequired(e => e.EducationDegree)
+				.HasForeignKey(e => e.IdEducationDegree)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Education_Form>()
@@ -144,9 +144,9 @@ namespace RecruitmentServer.Models
 				.HasForeignKey(e => e.id_questionnaire);
 
 			modelBuilder.Entity<Requirement>()
-				.HasMany(e => e.EducationDegree_Requirement)
+				.HasMany(e => e.EducationDegreeRequirement)
 				.WithRequired(e => e.Requirement)
-				.HasForeignKey(e => e.id_requirement);
+				.HasForeignKey(e => e.IdRequirement);
 
 			modelBuilder.Entity<Requirement>()
 				.HasMany(e => e.Vacancy)

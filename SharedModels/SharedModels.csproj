@@ -59,8 +59,8 @@
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Education.cs" />
     <Compile Include="Models\EducationDegreePoint.cs" />
-    <Compile Include="Models\EducationDegree_Requirement.cs" />
-    <Compile Include="Models\Education_Degree.cs" />
+    <Compile Include="Models\EducationDegreeRequirement.cs" />
+    <Compile Include="Models\EducationDegree.cs" />
     <Compile Include="Models\Education_Form.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Family_Status.cs" />

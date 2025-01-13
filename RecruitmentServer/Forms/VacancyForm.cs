@@ -9,6 +9,7 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Forms
 {
@@ -16,7 +17,7 @@ namespace RecruitmentServer.Forms
 	{
 		private readonly Account _account;
 		private FullVacancy _vacancy;
-		private readonly FullRequirement _requirement = new FullRequirement();
+		private readonly Requirement _requirement = new Requirement();
 		private SharedModels.Models.Point _point = new SharedModels.Models.Point();
 		private readonly Action<EventArgs> _actionAfterChange;
 
@@ -208,7 +209,7 @@ namespace RecruitmentServer.Forms
 			{
 				int pointId = DataBase.CreatePoints(_point);
 				int requirementId = DataBase.CreateRequirement(_requirement);
-				Position position = new Position(textBoxPosition.Text,
+				RecruitmentLibrary.ApplicationInfo.Position position = new RecruitmentLibrary.ApplicationInfo.Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
 
 				_vacancy = new FullVacancy(0, position, double.Parse(textBoxSalary.Text),

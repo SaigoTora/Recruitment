@@ -55,7 +55,7 @@ namespace RecruitmentServer.Models
 			ExecuteQuery($"INSERT INTO Vacancy(salary,date_publication,info,id_point,id_requirement,id_position) " +
 				$"values({salary},'{vacancy.DatePublication:yyyy-MM-dd HH:mm:ss}',{info},{vacancy.IdPoint},{vacancy.IdRequirement},{idPosition})");
 		}
-		internal static int CreateRequirement(FullRequirement requirement)
+		internal static int CreateRequirement(SharedModels.Models.Requirement requirement)
 		{// Метод створює вимоги та повертає id
 			string city = "NULL";
 			if (requirement.City != null && requirement.City.Length > 0)
@@ -80,9 +80,9 @@ namespace RecruitmentServer.Models
 			DataTable dt = ExecuteReturnQuery($"SELECT TOP 1 id FROM Requirement ORDER BY id DESC");
 			int idRequirement = GetIntItem(dt, 0, 0);
 			string command = string.Empty;
-			for (int i = 0; i < requirement.IdDegrees.Count; i++)
+			foreach (var degreeReq in requirement.EducationDegreeRequirement)
 				command += $"INSERT INTO EducationDegree_Requirement(id_requirement,id_education_degree) " +
-				$"values({idRequirement},{requirement.IdDegrees[i]}) ";
+				$"values({idRequirement},{degreeReq.IdEducationDegree}) ";
 			if (command != string.Empty)
 				ExecuteQuery(command);
 
@@ -307,7 +307,7 @@ namespace RecruitmentServer.Models
 
 		}
 
-		internal static Requirement GetRequirement(int idRequirement)
+		internal static SharedModels.Models.Requirement GetRequirement(int idRequirement)
 		{// Метод, який повертає вимоги
 			DataTable dt = ExecuteReturnQuery($"SELECT city,age_min,age_max," +
 				$"exp_min,diploma,no_chronic_diseases,driver_license,no_smoker," +
@@ -322,7 +322,7 @@ namespace RecruitmentServer.Models
 				student = GetBoolItem(dt, 0, 10);
 
 
-			Requirement requirement = new Requirement(city, byte.Parse(GetItem(dt, 0, 1)),
+			SharedModels.Models.Requirement requirement = new SharedModels.Models.Requirement(city, byte.Parse(GetItem(dt, 0, 1)),
 				byte.Parse(GetItem(dt, 0, 2)), GetIntItem(dt, 0, 3), GetBoolItem(dt, 0, 4), GetBoolItem(dt, 0, 5),
 				GetBoolItem(dt, 0, 6), GetBoolItem(dt, 0, 7), GetBoolItem(dt, 0, 8),
 				GetBoolItem(dt, 0, 9), student);
@@ -430,9 +430,9 @@ namespace RecruitmentServer.Models
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
 				// Записуємо елемент
-				employees.Add(new SharedModels.Models.Employee(GetIntItem(dt, i, 0), GetItem(dt, i, 1), 
+				employees.Add(new SharedModels.Models.Employee(GetIntItem(dt, i, 0), GetItem(dt, i, 1),
 					GetItem(dt, i, 2), GetItem(dt, i, 3), GetItem(dt, i, 4), GetItem(dt, i, 5),
-					GetItem(dt, i, 6), GetDateItem(dt, i, 7), GetItem(dt, i, 8), 
+					GetItem(dt, i, 6), GetDateItem(dt, i, 7), GetItem(dt, i, 8),
 					Decimal.Parse(GetItem(dt, i, 9)), GetDateItem(dt, i, 10)));
 			}
 
@@ -444,7 +444,7 @@ namespace RecruitmentServer.Models
 				$"position_name, city, phone, birthday, email, salary, date_employment " +
 				$"FROM Employee WHERE id_interview = {idInterview}");
 
-			SharedModels.Models.Employee employee = new SharedModels.Models.Employee(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), 
+			SharedModels.Models.Employee employee = new SharedModels.Models.Employee(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1),
 				GetItem(dt, 0, 2), GetItem(dt, 0, 3), GetItem(dt, 0, 4), GetItem(dt, 0, 5),
 				GetItem(dt, 0, 6), GetDateItem(dt, 0, 7), GetItem(dt, 0, 8),
 				Decimal.Parse(GetItem(dt, 0, 9)), GetDateItem(dt, 0, 10));

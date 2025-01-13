@@ -110,7 +110,6 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\DataBase.cs" />
     <Compile Include="Models\FullApplication.cs" />
-    <Compile Include="Models\FullRequirement.cs" />
     <Compile Include="Models\FullVacancy.cs" />
     <Compile Include="Forms\RequirementForm.cs">
       <SubType>Form</SubType>

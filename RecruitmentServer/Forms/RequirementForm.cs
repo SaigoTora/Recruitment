@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -15,13 +16,13 @@ namespace RecruitmentServer.Forms
 	internal partial class RequirementForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private readonly FullRequirement _requirement;
+		private readonly SharedModels.Models.Requirement _requirement;
 		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
 			new CheckBoxEventHandlers();
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
 
-		internal RequirementForm(Account account, FullRequirement requirement)
+		internal RequirementForm(Account account, SharedModels.Models.Requirement requirement)
 		{
 			InitializeComponent();
 
@@ -52,7 +53,7 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void SetFormFields(FullRequirement requirement)
+		private void SetFormFields(SharedModels.Models.Requirement requirement)
 		{
 			textBoxCity.Text = requirement.City;
 			numericUpDownAgeMin.Value = requirement.AgeMin;
@@ -76,12 +77,12 @@ namespace RecruitmentServer.Forms
 		{
 			DataRowView item;
 			listBoxDegrees.SetSelected(0, false);// Deselect the first element
-			for (int i = 0; i < _requirement.IdDegrees.Count; i++)
+			foreach (var degreeReq in _requirement.EducationDegreeRequirement)
 				for (int j = 0; j < listBoxDegrees.Items.Count; j++)
 				{
 					item = listBoxDegrees.Items[j] as DataRowView;
 
-					if (item != null && _requirement.IdDegrees[i]
+					if (item != null && degreeReq.IdEducationDegree
 						== Convert.ToInt32(item["id"]))
 					{
 						listBoxDegrees.SetSelected(j, true);
@@ -122,16 +123,17 @@ namespace RecruitmentServer.Forms
 				else if (radioButtonStudentYes.Checked)
 					student = true;
 
-				List<int> degrees = new List<int>();
+				var degreeReqs = new List<EducationDegreeRequirement>();
 				foreach (DataRowView selectedItem in listBoxDegrees.SelectedItems)
-					degrees.Add(int.Parse(selectedItem[0].ToString()));
+					degreeReqs.Add(new EducationDegreeRequirement(_requirement.Id,
+						int.Parse(selectedItem[0].ToString())));
 
 				_requirement.Change(textBoxCity.Text, (byte)numericUpDownAgeMin.Value,
 					(byte)numericUpDownAgeMax.Value, (int)numericUpDownExpMin.Value,
 					checkBoxDiplomaAll.Checked, radioButtonNoChronicDiseasesYes.Checked,
 					radioButtonDriverLicenseYes.Checked, radioButtonNoSmokerYes.Checked,
 					radioButtonNoDrinkAlcoholYes.Checked, radioButtonBusinessTripYes.Checked,
-					student, degrees);
+					student, degreeReqs);
 				Close();
 			}
 		}

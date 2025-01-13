@@ -256,7 +256,7 @@ namespace RecruitmentClient.Models
 			return interviews;
 		}
 
-		internal static Requirement GetRequirement(int idVacancy)
+		internal static SharedModels.Models.Requirement GetRequirement(int idVacancy)
 		{// Метод, який повертає вимоги для заданої вакансії
 			string[] arr = SendToServerAndGetResult($"SELECT city,age_min,age_max," +
 				$"exp_min,diploma,no_chronic_diseases,driver_license,no_smoker," +
@@ -270,8 +270,7 @@ namespace RecruitmentClient.Models
 			else
 				student = bool.Parse(arr[10]);
 
-			return new Requirement(city, byte.Parse(arr[1]), byte.Parse(arr[2]), int.Parse(arr[3]),
-				bool.Parse(arr[4]), bool.Parse(arr[5]), bool.Parse(arr[6]), bool.Parse(arr[7]), bool.Parse(arr[8]), bool.Parse(arr[9]), student);
+			return new SharedModels.Models.Requirement(city, byte.Parse(arr[1]), byte.Parse(arr[2]), int.Parse(arr[3]), bool.Parse(arr[4]), bool.Parse(arr[5]), bool.Parse(arr[6]), bool.Parse(arr[7]), bool.Parse(arr[8]), bool.Parse(arr[9]), student);
 		}
 		internal static string GetRequirementEducationDegree(int idVacancy)
 		{// Метод, який повертає вимоги до ступенів освіти для заданої вакансії

@@ -1,50 +1,105 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Requirement")]
-    public partial class Requirement
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Requirement()
-        {
-            EducationDegree_Requirement = new HashSet<EducationDegree_Requirement>();
-            Vacancy = new HashSet<Vacancy>();
-        }
+	[Table("Requirement")]
+	public partial class Requirement
+	{
+		public int Id { get; private set; }
+		[StringLength(64)]
+		public string City { get; private set; }
+		public byte AgeMin { get; private set; }
+		public byte AgeMax { get; private set; }
+		public int ExpMin { get; private set; }
+		public bool Diploma { get; private set; }
+		public bool NoChronicDiseases { get; private set; }
+		public bool DriverLicense { get; private set; }
+		public bool NoSmoker { get; private set; }
+		public bool NoDrinkAlcohol { get; private set; }
+		public bool BusinessTripOpportunity { get; private set; }
+		public bool? Student { get; private set; }
+		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirement
+		{ get; private set; }
+		public virtual ICollection<Vacancy> Vacancy { get; private set; }
 
-        public int id { get; set; }
+		public Requirement()
+		{
+			EducationDegreeRequirement = new HashSet<EducationDegreeRequirement>();
+			Vacancy = new HashSet<Vacancy>();
+		}
+		public Requirement(string city, byte ageMin, byte ageMax, int expMin,
+			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
+			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student)
+			: this()
+		{
+			City = city;
+			AgeMin = ageMin;
+			AgeMax = ageMax;
+			ExpMin = expMin;
+			Diploma = diploma;
+			NoChronicDiseases = noChronicDiseases;
+			DriverLicense = driverLicense;
+			NoSmoker = noSmoker;
+			NoDrinkAlcohol = noDrinkAlcohol;
+			BusinessTripOpportunity = businessTripOpportunity;
+			Student = student;
+		}
 
-        [StringLength(64)]
-        public string city { get; set; }
+		public void Change(string city, byte ageMin, byte ageMax, int expMin,
+			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
+			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student,
+			ICollection<EducationDegreeRequirement> educationDegreeRequirement)
+		{
+			City = city;
+			AgeMin = ageMin;
+			AgeMax = ageMax;
+			ExpMin = expMin;
+			Diploma = diploma;
+			NoChronicDiseases = noChronicDiseases;
+			DriverLicense = driverLicense;
+			NoSmoker = noSmoker;
+			NoDrinkAlcohol = noDrinkAlcohol;
+			BusinessTripOpportunity = businessTripOpportunity;
+			Student = student;
+			EducationDegreeRequirement = educationDegreeRequirement;
+		}
 
-        public byte age_min { get; set; }
+		public override string ToString()
+		{
+			string res = string.Empty;
+			int number = 1;
 
-        public byte age_max { get; set; }
+			if (City != null)
+				res += $"{number++}. Місце проживання: {City}.\n";
+			if (AgeMin == AgeMax)
+				res += $"{number++}. Вік: {AgeMin} р.\n";
+			else
+				res += $"{number++}. Вік: від {AgeMin} до {AgeMax}.\n";
+			if (ExpMin != 0)
+				res += $"{number++}. Мінімальний досвід роботи: {ExpMin} міс.\n";
+			if (Diploma)
+				res += $"{number++}. Наявність диплому.\n";
+			if (NoChronicDiseases)
+				res += $"{number++}. Відсутність хронічних захворювань.\n";
+			if (DriverLicense)
+				res += $"{number++}. Наявність посвідчення водія.\n";
+			if (NoSmoker)
+				res += $"{number++}. Кандидат НЕ повинен бути курцем.\n";
+			if (NoDrinkAlcohol)
+				res += $"{number++}. Кандидат НЕ повинен вживати алкогольні напої.\n";
+			if (BusinessTripOpportunity)
+				res += $"{number++}. Можливість відряджень.\n";
 
-        public int exp_min { get; set; }
+			if (Student != null && Student.Value)
+				res += $"{number++}. Кандидат повинен бути студентом.\n";
+			if (Student != null && !Student.Value)
+				res += $"{number++}. Кандидат НЕ повинен студентом.\n";
 
-        public bool diploma { get; set; }
-
-        public bool no_chronic_diseases { get; set; }
-
-        public bool driver_license { get; set; }
-
-        public bool no_smoker { get; set; }
-
-        public bool no_drink_alcohol { get; set; }
-
-        public bool business_trip_opportunity { get; set; }
-
-        public bool? student { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EducationDegree_Requirement> EducationDegree_Requirement { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy> Vacancy { get; set; }
-    }
+			if (number == 2)
+				res = res.Remove(0, 3);
+			return res.TrimEnd('\n');
+		}
+	}
 }
