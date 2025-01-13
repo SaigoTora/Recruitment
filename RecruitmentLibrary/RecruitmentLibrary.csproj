@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationInfo\Application.cs" />
-    <Compile Include="ApplicationInfo\Interview.cs" />
     <Compile Include="ApplicationInfo\Position.cs" />
     <Compile Include="ApplicationInfo\Requirement.cs" />
     <Compile Include="ApplicationInfo\Searcher.cs" />

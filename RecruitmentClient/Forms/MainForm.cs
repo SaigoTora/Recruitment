@@ -10,6 +10,7 @@ using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentLibrary.ApplicationInfo;
 using RecruitmentLibrary.PersonInfo;
+using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -48,8 +49,8 @@ namespace RecruitmentClient.Forms
 
 		private readonly List<Guna2GradientPanel> _createdPanels =
 			new List<Guna2GradientPanel>();
-		private readonly Dictionary<Guna2GradientButton, Vacancy> _buttonVacancyMap =
-			new Dictionary<Guna2GradientButton, Vacancy>();
+		private readonly Dictionary<Guna2GradientButton, RecruitmentLibrary.ApplicationInfo.Vacancy> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, RecruitmentLibrary.ApplicationInfo.Vacancy>();
 		private readonly Dictionary<Guna2GradientButton, string> _buttonReasonRejectionMap =
 			new Dictionary<Guna2GradientButton, string>();
 
@@ -306,7 +307,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
+			List<RecruitmentLibrary.ApplicationInfo.Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -343,7 +344,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Interview> interviews = Client.GetInterviews(_account.Login,
+			List<ViewInterview> interviews = Client.GetInterviews(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -364,7 +365,7 @@ namespace RecruitmentClient.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(Vacancy vacancy)
+		private void CreateVacancy(RecruitmentLibrary.ApplicationInfo.Vacancy vacancy)
 		{
 			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
@@ -406,17 +407,18 @@ namespace RecruitmentClient.Forms
 				ManageReasonRejectionButtonEvent(button, true);
 			}
 		}
-		private void CreateInterview(Interview interview)
+		private void CreateInterview(ViewInterview interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			_interviewCreator.CreateLabel(labelPositionI, interview.Position.Name);
+			_interviewCreator.CreateLabel(labelPositionI, interview.PositionName);
 			_interviewCreator.CreateLabel(labelStatusI, interview.Status);
 			Label labelDate = _interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
 				ConvertDateToString(interview.DateEvent));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
-			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(pictureBoxInterviewStatus);
+			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(
+				pictureBoxInterviewStatus);
 			picture.FillColor = GetInterviewStatusColor(interview.Status);
 		}
 
@@ -440,8 +442,8 @@ namespace RecruitmentClient.Forms
 		}
 		private void AdjustLabelLocation(Label labelDate, Guna2GradientPanel panelModel)
 		{
-			labelDate.Location = new Point(labelDate.Location.X + (labelDate.Parent.Width - panelModel.Width),
-				labelDate.Location.Y);
+			labelDate.Location = new System.Drawing.Point(labelDate.Location.X +
+				(labelDate.Parent.Width - panelModel.Width), labelDate.Location.Y);
 		}
 		private Color GetApplicationStatusColor(string status)
 		{
@@ -490,7 +492,7 @@ namespace RecruitmentClient.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			Vacancy vacancy = _buttonVacancyMap[button];
+			RecruitmentLibrary.ApplicationInfo.Vacancy vacancy = _buttonVacancyMap[button];
 			try
 			{
 				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
@@ -578,7 +580,7 @@ namespace RecruitmentClient.Forms
 		{
 			int newValue = Math.Min(flpContent.VerticalScroll.Value + GetCurrentPanelHeight() +
 				SCROLL_PADDING, flpContent.VerticalScroll.Maximum);
-			flpContent.AutoScrollPosition = new Point(0, newValue);
+			flpContent.AutoScrollPosition = new System.Drawing.Point(0, newValue);
 			FlpContent_Scroll(sender, new ScrollEventArgs(ScrollEventType.SmallIncrement,
 				newValue));
 		}
@@ -586,7 +588,7 @@ namespace RecruitmentClient.Forms
 		{
 			int newValue = Math.Max(flpContent.VerticalScroll.Value - GetCurrentPanelHeight() -
 				SCROLL_PADDING, flpContent.VerticalScroll.Minimum);
-			flpContent.AutoScrollPosition = new Point(0, newValue);
+			flpContent.AutoScrollPosition = new System.Drawing.Point(0, newValue);
 		}
 
 		private int GetCurrentPanelHeight()

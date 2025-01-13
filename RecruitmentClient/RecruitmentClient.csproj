@@ -214,6 +214,10 @@
       <Project>{ccf5b97e-7820-4a5e-996b-aa7aede8261b}</Project>
       <Name>RecruitmentLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedModels\SharedModels.csproj">
+      <Project>{ab1c077b-d981-4d31-bfe9-c87f466a151f}</Project>
+      <Name>SharedModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UIHelpers\UIHelpers.csproj">
       <Project>{49f42a8b-4e71-4075-987b-66cd7d258ec2}</Project>
       <Name>UIHelpers</Name>

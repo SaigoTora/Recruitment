@@ -226,9 +226,9 @@ namespace RecruitmentClient.Models
 				"WHERE id_application IN (SELECT id FROM Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}')) {condition}")[0]);
 		}
-		internal static List<Interview> GetInterviews(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<SharedModels.Models.ViewInterview> GetInterviews(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
-			List<Interview> interviews = new List<Interview>();
+			List<SharedModels.Models.ViewInterview> interviews = new List<SharedModels.Models.ViewInterview>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -249,8 +249,7 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 4)
 			{
-				Position position = new Position(arr[i], arr[i + 1]);
-				interviews.Add(new Interview(position, arr[i + 2],
+				interviews.Add(new SharedModels.Models.ViewInterview(arr[i], arr[i + 1], arr[i + 2],
 					DateTime.Parse(arr[i + 3]).ToLocalTime()));
 			}
 

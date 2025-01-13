@@ -8,6 +8,7 @@ using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Forms
 {
@@ -24,10 +25,10 @@ namespace RecruitmentServer.Forms
 
 
 		private readonly Account _account;
-		private readonly FullInterview _interview;
+		private readonly ViewInterview _interview;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal InterviewForm(Account account, FullInterview interview,
+		internal InterviewForm(Account account, ViewInterview interview,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
@@ -45,9 +46,9 @@ namespace RecruitmentServer.Forms
 			SetFormFields(_interview);
 			SetTheme(_account.Theme);
 		}
-		private void SetFormFields(FullInterview interview)
+		private void SetFormFields(ViewInterview interview)
 		{
-			textBoxPosition.Text = interview.Position.Name;
+			textBoxPosition.Text = interview.PositionName;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
 				interview.DateEvent.ToString("d MMMM yyyy HH:mm");
 
@@ -79,7 +80,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonEmployee_Click(object sender, EventArgs e)
 		{
-			Employee employee = DataBase.GetEmployee(_interview.Id);
+			RecruitmentLibrary.PersonInfo.Employee employee = DataBase.GetEmployee(_interview.Id);
 			EmployeeForm employeeForm = new EmployeeForm(_account, employee, (args) =>
 			{ Close(); _actionAfterChange(EventArgs.Empty); });
 			Visible = false;
@@ -143,7 +144,7 @@ namespace RecruitmentServer.Forms
 					return;
 			}
 
-			_interview.ChangeDate(dateTime);
+			_interview.ChangeDateEvent(dateTime);
 			DataBase.ChangeInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
 			ButtonChangeDateBack_Click(sender, e);
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +

@@ -12,6 +12,7 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Forms
 {
@@ -50,10 +51,10 @@ namespace RecruitmentServer.Forms
 			new Dictionary<Guna2GradientButton, FullVacancy>();
 		private readonly Dictionary<Guna2GradientButton, FullApplication>
 			_buttonApplicationMap = new Dictionary<Guna2GradientButton, FullApplication>();
-		private readonly Dictionary<Guna2GradientButton, FullInterview> _buttonInterviewMap =
-			new Dictionary<Guna2GradientButton, FullInterview>();
-		private readonly Dictionary<Guna2GradientButton, Employee> _buttonEmployeeMap =
-			new Dictionary<Guna2GradientButton, Employee>();
+		private readonly Dictionary<Guna2GradientButton, ViewInterview> _buttonInterviewMap =
+			new Dictionary<Guna2GradientButton, ViewInterview>();
+		private readonly Dictionary<Guna2GradientButton, RecruitmentLibrary.PersonInfo.Employee> _buttonEmployeeMap =
+			new Dictionary<Guna2GradientButton, RecruitmentLibrary.PersonInfo.Employee>();
 
 		private int _totalItemsToDisplay;// Total number of panels required for display
 		private int _currentComboBoxDateIndex, _currentComboBoxStatusIndex,
@@ -367,7 +368,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<FullInterview> interviews = DataBase.GetInterviews(_createdPanels.Count,
+			List<ViewInterview> interviews = DataBase.GetInterviews(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -385,7 +386,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Employee> employees = DataBase.GetEmployees(_createdPanels.Count,
+			List<RecruitmentLibrary.PersonInfo.Employee> employees = DataBase.GetEmployees(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[employees.Count];
 
@@ -447,11 +448,11 @@ namespace RecruitmentServer.Forms
 			_buttonApplicationMap.Add(button, application);
 			ManageApplicationButtonEvent(button, true);
 		}
-		private void CreateInterview(FullInterview interview)
+		private void CreateInterview(ViewInterview interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			_interviewCreator.CreateLabel(labelPositionI, interview.Position.Name);
+			_interviewCreator.CreateLabel(labelPositionI, interview.PositionName);
 			_interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
 				ConvertDateToString(interview.DateEvent));
 
@@ -464,7 +465,7 @@ namespace RecruitmentServer.Forms
 			_buttonInterviewMap.Add(button, interview);
 			ManageInterviewButtonEvent(button, true);
 		}
-		private void CreateEmployee(Employee employee)
+		private void CreateEmployee(RecruitmentLibrary.PersonInfo.Employee employee)
 		{
 			const string DATE_PREFIX = "Дата працевлаштування: ";
 
@@ -584,7 +585,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			FullInterview interview = _buttonInterviewMap[button];
+			ViewInterview interview = _buttonInterviewMap[button];
 			InterviewForm interviewForm = new InterviewForm(_account, interview, SelectLabel);
 			interviewForm.ShowDialog();
 		}
@@ -593,7 +594,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			Employee employee = _buttonEmployeeMap[button];
+			RecruitmentLibrary.PersonInfo.Employee employee = _buttonEmployeeMap[button];
 			EmployeeForm employeeForm = new EmployeeForm(_account, employee, SelectLabel);
 			employeeForm.ShowDialog();
 		}
@@ -697,7 +698,7 @@ namespace RecruitmentServer.Forms
 		{
 			int newValue = Math.Min(flpContent.VerticalScroll.Value + GetCurrentPanelHeight()
 				+ SCROLL_PADDING, flpContent.VerticalScroll.Maximum);
-			flpContent.AutoScrollPosition = new Point(0, newValue);
+			flpContent.AutoScrollPosition = new System.Drawing.Point(0, newValue);
 			FlpContent_Scroll(sender, new ScrollEventArgs(ScrollEventType.SmallIncrement,
 				newValue));
 		}
@@ -705,7 +706,7 @@ namespace RecruitmentServer.Forms
 		{
 			int newValue = Math.Max(flpContent.VerticalScroll.Value - GetCurrentPanelHeight()
 				- SCROLL_PADDING, flpContent.VerticalScroll.Minimum);
-			flpContent.AutoScrollPosition = new Point(0, newValue);
+			flpContent.AutoScrollPosition = new System.Drawing.Point(0, newValue);
 		}
 
 		private int GetCurrentPanelHeight()

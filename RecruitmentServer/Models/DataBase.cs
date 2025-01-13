@@ -104,7 +104,7 @@ namespace RecruitmentServer.Models
 
 			if (points.Degrees != null)
 			{
-				foreach(var degreePoint in points.Degrees)
+				foreach (var degreePoint in points.Degrees)
 					if (degreePoint.Points != 0)
 						command += $"INSERT INTO EducationDegree_Point(points,id_point,id_education_degree) " +
 							$"values({degreePoint.Points},{idPoints},{degreePoint.IdEducationDegree}) ";
@@ -373,9 +373,9 @@ namespace RecruitmentServer.Models
 
 			return GetIntItem(dt, 0, 0);
 		}
-		internal static List<FullInterview> GetInterviews(int offset, int amount, ServerSearcher searcher)
+		internal static List<SharedModels.Models.ViewInterview> GetInterviews(int offset, int amount, ServerSearcher searcher)
 		{// Метод, який повертає список співбесід
-			List<FullInterview> interviews = new List<FullInterview>();
+			List<SharedModels.Models.ViewInterview> interviews = new List<SharedModels.Models.ViewInterview>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -390,13 +390,12 @@ namespace RecruitmentServer.Models
 				$"FROM View_Interview {condition}{orderBy} " +
 				$"OFFSET {offset} ROWS FETCH NEXT {amount} ROWS ONLY");
 
-			Position position;
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
-				position = new Position(GetItem(dt, i, 1), GetItem(dt, i, 2));
 				// Записуємо елемент
-				interviews.Add(new FullInterview(GetIntItem(dt, i, 0), position, GetItem(dt, i, 3),
-					GetDateTimeItem(dt, i, 4), GetIntItem(dt, i, 5)));
+				interviews.Add(new SharedModels.Models.ViewInterview(GetIntItem(dt, i, 0), GetItem(dt, i, 1),
+					GetItem(dt, i, 2), GetItem(dt, i, 3), GetDateTimeItem(dt, i, 4),
+					GetIntItem(dt, i, 5)));
 			}
 
 			return interviews;

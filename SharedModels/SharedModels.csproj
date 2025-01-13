@@ -66,7 +66,7 @@
     <Compile Include="Models\Family_Status.cs" />
     <Compile Include="Models\Health.cs" />
     <Compile Include="Models\Interview.cs" />
-    <Compile Include="Models\Interview_Status.cs" />
+    <Compile Include="Models\InterviewStatus.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Position.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="Models\Vacancy.cs" />
     <Compile Include="Models\View_Application.cs" />
     <Compile Include="Models\View_Education.cs" />
-    <Compile Include="Models\View_Interview.cs" />
+    <Compile Include="Models\ViewInterview.cs" />
     <Compile Include="Models\View_Point.cs" />
     <Compile Include="Models\View_Questionnaire.cs" />
     <Compile Include="Models\View_Requirement.cs" />

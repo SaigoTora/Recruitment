@@ -23,7 +23,7 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Family_Status> Family_Status { get; set; }
 		public virtual DbSet<Health> Health { get; set; }
 		public virtual DbSet<Interview> Interview { get; set; }
-		public virtual DbSet<Interview_Status> Interview_Status { get; set; }
+		public virtual DbSet<InterviewStatus> Interview_Status { get; set; }
 		public virtual DbSet<Language> Language { get; set; }
 		public virtual DbSet<Point> Point { get; set; }
 		public virtual DbSet<Position> Position { get; set; }
@@ -32,7 +32,7 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Vacancy> Vacancy { get; set; }
 		public virtual DbSet<View_Application> View_Application { get; set; }
 		public virtual DbSet<View_Education> View_Education { get; set; }
-		public virtual DbSet<View_Interview> View_Interview { get; set; }
+		public virtual DbSet<ViewInterview> View_Interview { get; set; }
 		public virtual DbSet<View_Point> View_Point { get; set; }
 		public virtual DbSet<View_Questionnaire> View_Questionnaire { get; set; }
 		public virtual DbSet<View_Requirement> View_Requirement { get; set; }
@@ -43,7 +43,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Application>()
 				.HasMany(e => e.Interview)
 				.WithRequired(e => e.Application)
-				.HasForeignKey(e => e.id_application);
+				.HasForeignKey(e => e.IdApplication);
 
 			modelBuilder.Entity<Application_Status>()
 				.HasMany(e => e.Application)
@@ -107,10 +107,10 @@ namespace RecruitmentServer.Models
 				.HasForeignKey(e => e.id_interview)
 				.WillCascadeOnDelete();
 
-			modelBuilder.Entity<Interview_Status>()
+			modelBuilder.Entity<InterviewStatus>()
 				.HasMany(e => e.Interview)
 				.WithRequired(e => e.Interview_Status)
-				.HasForeignKey(e => e.id_interview_status)
+				.HasForeignKey(e => e.IdInterviewStatus)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Point>()
