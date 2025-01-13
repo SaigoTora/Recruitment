@@ -6,7 +6,8 @@ namespace SharedModels.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class View_Vacancy
+	[Table("View_Vacancy")]
+	public partial class View_Vacancy
     {
         [Key]
         [Column(Order = 0)]

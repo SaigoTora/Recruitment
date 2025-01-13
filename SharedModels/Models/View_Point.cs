@@ -6,7 +6,8 @@ namespace SharedModels.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class View_Point
+	[Table("View_Point")]
+	public partial class View_Point
     {
         [Key]
         [Column(Order = 0)]

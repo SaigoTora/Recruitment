@@ -6,7 +6,8 @@ namespace SharedModels.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Interview_Status
+	[Table("Interview_Status")]
+	public partial class Interview_Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Interview_Status()

@@ -6,7 +6,8 @@ namespace SharedModels.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Family_Status
+	[Table("Family_Status")]
+	public partial class Family_Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Family_Status()

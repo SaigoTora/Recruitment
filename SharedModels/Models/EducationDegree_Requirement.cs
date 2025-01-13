@@ -6,7 +6,8 @@ namespace SharedModels.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class EducationDegree_Requirement
+	[Table("EducationDegree_Requirement")]
+	public partial class EducationDegree_Requirement
     {
         public int id { get; set; }
 
