@@ -25,14 +25,14 @@ namespace SharedModels.Models
 		public virtual Questionnaire Questionnaire { get; private set; }
 
 		public Education(string nameInstitution, string specialty, int yearAdmission,
-			DateTime dateEnd, int id_EducationDegree, int id_EducationForm)
+			DateTime dateEnd, int idEducationDegree, int idEducationForm)
 		{
 			NameInstitution = nameInstitution;
 			Specialty = specialty;
 			YearAdmission = yearAdmission;
 			DateEnd = dateEnd;
-			IdEducationDegree = id_EducationDegree;
-			IdEducationForm = id_EducationForm;
+			IdEducationDegree = idEducationDegree;
+			IdEducationForm = idEducationForm;
 		}
 		public Education(Education education)
 		{

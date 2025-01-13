@@ -13,14 +13,14 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
-		private readonly ViewVacancy _vacancy;
+		private readonly VacancyDbView _vacancy;
 		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
 		private readonly Theme _currentTheme;
 
 		private string _requirements;
 
-		internal VacancyForm(Account account, ViewVacancy vacancy,
+		internal VacancyForm(Account account, VacancyDbView vacancy,
 			string login, Action<EventArgs> refresh)
 		{
 			InitializeComponent();

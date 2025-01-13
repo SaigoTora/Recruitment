@@ -20,11 +20,11 @@ namespace SharedModels.Models
 		public int Readiness { get; private set; }
 		public string AdditionalInfo { get; private set; }
 		public int IdHealth { get; private set; }
-		public virtual Health Health { get; private set; }
 		public int IdFamilyStatus { get; private set; }
-		public virtual FamilyStatus FamilyStatus { get; private set; }
 		public int IdBusinessTripOpportunity { get; private set; }
-		public virtual BusinessTripOpportunity Business_Trip_Opportunity { get; private set; }
+		public virtual Health Health { get; private set; }
+		public virtual FamilyStatus FamilyStatus { get; private set; }
+		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; private set; }
 		public virtual ICollection<Language> Languages { get; private set; }
 		public virtual ICollection<Education> Educations { get; private set; }
 		public virtual ICollection<Candidate> Candidate { get; private set; }
@@ -37,7 +37,7 @@ namespace SharedModels.Models
 		}
 		public Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
-			Health health, int id_FamilyStatus, int id_BusinessTripOpportunity,
+			Health health, int idFamilyStatus, int idBusinessTripOpportunity,
 			List<Language> languages, List<Education> educations)
 			: this()
 		{
@@ -49,8 +49,8 @@ namespace SharedModels.Models
 			Readiness = readiness;
 			AdditionalInfo = additionalInfo;
 			Health = health;
-			IdFamilyStatus = id_FamilyStatus;
-			IdBusinessTripOpportunity = id_BusinessTripOpportunity;
+			IdFamilyStatus = idFamilyStatus;
+			IdBusinessTripOpportunity = idBusinessTripOpportunity;
 			Languages = languages;
 			Educations = educations;
 		}

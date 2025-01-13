@@ -73,13 +73,13 @@
     <Compile Include="Models\Questionnaire.cs" />
     <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\Vacancy.cs" />
-    <Compile Include="Models\ViewApplication.cs" />
-    <Compile Include="Models\View_Education.cs" />
-    <Compile Include="Models\ViewInterview.cs" />
-    <Compile Include="Models\View_Point.cs" />
-    <Compile Include="Models\View_Questionnaire.cs" />
-    <Compile Include="Models\View_Requirement.cs" />
-    <Compile Include="Models\ViewVacancy.cs" />
+    <Compile Include="Models\ApplicationDbView.cs" />
+    <Compile Include="Models\EducationDbView.cs" />
+    <Compile Include="Models\InterviewDbView.cs" />
+    <Compile Include="Models\PointDbView.cs" />
+    <Compile Include="Models\QuestionnaireDbView.cs" />
+    <Compile Include="Models\RequirementDbView.cs" />
+    <Compile Include="Models\VacancyDbView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

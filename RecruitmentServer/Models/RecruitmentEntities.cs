@@ -30,13 +30,13 @@ namespace RecruitmentServer.Models
 		public virtual DbSet<Questionnaire> Questionnaire { get; set; }
 		public virtual DbSet<Requirement> Requirement { get; set; }
 		public virtual DbSet<Vacancy> Vacancy { get; set; }
-		public virtual DbSet<ViewApplication> View_Application { get; set; }
-		public virtual DbSet<View_Education> View_Education { get; set; }
-		public virtual DbSet<ViewInterview> View_Interview { get; set; }
-		public virtual DbSet<View_Point> View_Point { get; set; }
-		public virtual DbSet<View_Questionnaire> View_Questionnaire { get; set; }
-		public virtual DbSet<View_Requirement> View_Requirement { get; set; }
-		public virtual DbSet<ViewVacancy> View_Vacancy { get; set; }
+		public virtual DbSet<ApplicationDbView> View_Application { get; set; }
+		public virtual DbSet<EducationDbView> View_Education { get; set; }
+		public virtual DbSet<InterviewDbView> View_Interview { get; set; }
+		public virtual DbSet<PointDbView> View_Point { get; set; }
+		public virtual DbSet<QuestionnaireDbView> View_Questionnaire { get; set; }
+		public virtual DbSet<RequirementDbView> View_Requirement { get; set; }
+		public virtual DbSet<VacancyDbView> View_Vacancy { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -53,7 +53,7 @@ namespace RecruitmentServer.Models
 
 			modelBuilder.Entity<BusinessTripOpportunity>()
 				.HasMany(e => e.Questionnaire)
-				.WithRequired(e => e.Business_Trip_Opportunity)
+				.WithRequired(e => e.BusinessTripOpportunity)
 				.HasForeignKey(e => e.IdBusinessTripOpportunity)
 				.WillCascadeOnDelete(false);
 
@@ -70,7 +70,7 @@ namespace RecruitmentServer.Models
 
 			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.EducationDegreePoint)
-				.WithRequired(e => e.Education_Degree)
+				.WithRequired(e => e.EducationDegree)
 				.HasForeignKey(e => e.IdEducationDegree)
 				.WillCascadeOnDelete(false);
 
@@ -109,7 +109,7 @@ namespace RecruitmentServer.Models
 
 			modelBuilder.Entity<InterviewStatus>()
 				.HasMany(e => e.Interview)
-				.WithRequired(e => e.Interview_Status)
+				.WithRequired(e => e.InterviewStatus)
 				.HasForeignKey(e => e.IdInterviewStatus)
 				.WillCascadeOnDelete(false);
 
@@ -162,7 +162,7 @@ namespace RecruitmentServer.Models
 				.WithRequired(e => e.Vacancy)
 				.HasForeignKey(e => e.IdVacancy);
 
-			modelBuilder.Entity<ViewVacancy>()
+			modelBuilder.Entity<VacancyDbView>()
 				.Property(e => e.Salary)
 				.HasPrecision(19, 4);
 		}

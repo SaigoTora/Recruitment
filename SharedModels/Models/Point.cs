@@ -21,7 +21,6 @@ namespace SharedModels.Models
 		public int NoSmoker { get; private set; }
 		public int NoDrinkAlcohol { get; private set; }
 		public int BusinessTripOpportunity { get; private set; }
-
 		public virtual ICollection<EducationDegreePoint> Degrees
 		{ get; private set; }
 		public virtual ICollection<Vacancy> Vacancy { get; private set; }

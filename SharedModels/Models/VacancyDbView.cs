@@ -5,7 +5,7 @@ namespace SharedModels.Models
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("View_Vacancy")]
-	public partial class ViewVacancy
+	public partial class VacancyDbView
 	{
 		[Key]
 		[Column(Order = 0)]
@@ -36,7 +36,7 @@ namespace SharedModels.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdRequirement { get; private set; }
 
-		public ViewVacancy(int id, string positionName, string positionDescription,
+		public VacancyDbView(int id, string positionName, string positionDescription,
 			decimal salary, DateTime datePublication,
 			string info)
 		{
@@ -47,7 +47,7 @@ namespace SharedModels.Models
 			DatePublication = datePublication;
 			Info = info;
 		}
-		public ViewVacancy(int id, string positionName, string positionDescription,
+		public VacancyDbView(int id, string positionName, string positionDescription,
 			decimal salary, DateTime datePublication, string info, bool relevance,
 			int applicationCount, int idPoint, int idRequirement)
 			: this(id, positionName, positionDescription, salary, datePublication, info)

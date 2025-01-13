@@ -25,10 +25,10 @@ namespace RecruitmentServer.Forms
 
 
 		private readonly Account _account;
-		private readonly ViewInterview _interview;
+		private readonly InterviewDbView _interview;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal InterviewForm(Account account, ViewInterview interview,
+		internal InterviewForm(Account account, InterviewDbView interview,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
@@ -46,7 +46,7 @@ namespace RecruitmentServer.Forms
 			SetFormFields(_interview);
 			SetTheme(_account.Theme);
 		}
-		private void SetFormFields(ViewInterview interview)
+		private void SetFormFields(InterviewDbView interview)
 		{
 			textBoxPosition.Text = interview.PositionName;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
@@ -72,7 +72,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{
-			ViewApplication application = DataBase.GetApplication(_interview.IdApplication);
+			ApplicationDbView application = DataBase.GetApplication(_interview.IdApplication);
 			ApplicationForm applicationForm = new ApplicationForm(_account, application, null);
 			Visible = false;
 			applicationForm.FormClosed += (s, args) => { Visible = true; };

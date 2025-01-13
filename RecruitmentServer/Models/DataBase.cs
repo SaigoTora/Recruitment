@@ -36,7 +36,7 @@ namespace RecruitmentServer.Models
 
 
 		// Методи для створення даних
-		internal static void CreateVacancy(SharedModels.Models.ViewVacancy vacancy)
+		internal static void CreateVacancy(SharedModels.Models.VacancyDbView vacancy)
 		{// Створення вакансії
 		 // Створюємо посаду
 			string description = "NULL";// Опис посади
@@ -142,9 +142,9 @@ namespace RecruitmentServer.Models
 
 			return GetIntItem(dt, 0, 0);
 		}
-		internal static List<SharedModels.Models.ViewVacancy> GetVacancies(int offset, int amount, ServerSearcher searcher)
+		internal static List<SharedModels.Models.VacancyDbView> GetVacancies(int offset, int amount, ServerSearcher searcher)
 		{// Метод, який повертає список вакансій
-			List<SharedModels.Models.ViewVacancy> vacancies = new List<SharedModels.Models.ViewVacancy>();
+			List<SharedModels.Models.VacancyDbView> vacancies = new List<SharedModels.Models.VacancyDbView>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -160,7 +160,7 @@ namespace RecruitmentServer.Models
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
 				// Записуємо елемент
-				vacancies.Add(new SharedModels.Models.ViewVacancy(GetIntItem(dt, i, 0),
+				vacancies.Add(new SharedModels.Models.VacancyDbView(GetIntItem(dt, i, 0),
 					GetItem(dt, i, 1), GetItem(dt, i, 2), decimal.Parse(GetItem(dt, i, 3)), GetDateTimeItem(dt, i, 4), GetItem(dt, i, 5),
 					GetBoolItem(dt, i, 6), GetIntItem(dt, i, 7), GetIntItem(dt, i, 8),
 					GetIntItem(dt, i, 9)));
@@ -168,12 +168,12 @@ namespace RecruitmentServer.Models
 
 			return vacancies;
 		}
-		internal static SharedModels.Models.ViewVacancy GetVacancy(int idVacancy)
+		internal static SharedModels.Models.VacancyDbView GetVacancy(int idVacancy)
 		{// Метод, який повертає вакансію за кодом
 			DataTable dt = ExecuteReturnQuery($"SELECT id,position_name,position_description,salary,date_publication,info,relevance,application_count,id_point,id_requirement " + $"FROM View_Vacancy WHERE id = {idVacancy}");
 
 			// Записуємо елемент
-			SharedModels.Models.ViewVacancy vacancy = new SharedModels.Models.ViewVacancy(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2),
+			SharedModels.Models.VacancyDbView vacancy = new SharedModels.Models.VacancyDbView(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2),
 				decimal.Parse(GetItem(dt, 0, 3)), GetDateTimeItem(dt, 0, 4), GetItem(dt, 0, 5),
 				GetBoolItem(dt, 0, 6), GetIntItem(dt, 0, 7), GetIntItem(dt, 0, 8),
 				GetIntItem(dt, 0, 9));
@@ -190,9 +190,9 @@ namespace RecruitmentServer.Models
 
 			return GetIntItem(dt, 0, 0);
 		}
-		internal static List<SharedModels.Models.ViewApplication> GetApplications(int offset, int amount, ServerSearcher searcher)
+		internal static List<SharedModels.Models.ApplicationDbView> GetApplications(int offset, int amount, ServerSearcher searcher)
 		{// Метод, який повертає список заявок
-			List<SharedModels.Models.ViewApplication> applications = new List<SharedModels.Models.ViewApplication>();
+			List<SharedModels.Models.ApplicationDbView> applications = new List<SharedModels.Models.ApplicationDbView>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -210,32 +210,32 @@ namespace RecruitmentServer.Models
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
 				// Записуємо елемент
-				applications.Add(new SharedModels.Models.ViewApplication(GetIntItem(dt, i, 0), GetItem(dt, i, 1), GetItem(dt, i, 2), GetItem(dt, i, 3),
+				applications.Add(new SharedModels.Models.ApplicationDbView(GetIntItem(dt, i, 0), GetItem(dt, i, 1), GetItem(dt, i, 2), GetItem(dt, i, 3),
 					GetDateTimeItem(dt, i, 4), GetItem(dt, i, 5), GetIntItem(dt, i, 6),
 					GetItem(dt, i, 7), GetIntItem(dt, i, 8), GetIntItem(dt, i, 9)));
 			}
 
 			return applications;
 		}
-		internal static SharedModels.Models.ViewApplication GetApplication(int idApplication)
+		internal static SharedModels.Models.ApplicationDbView GetApplication(int idApplication)
 		{// Метод, який повертає заявку за кодом
 			DataTable dt = ExecuteReturnQuery($"SELECT id,position_name,position_description,status," +
 	$"date_submission,reason_rejection,scores,additional_info,id_candidate,id_vacancy " +
 	$"FROM View_Application WHERE id = {idApplication}");
 
-			SharedModels.Models.ViewApplication application = new SharedModels.Models.ViewApplication(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3),
+			SharedModels.Models.ApplicationDbView application = new SharedModels.Models.ApplicationDbView(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3),
 				GetDateTimeItem(dt, 0, 4), GetItem(dt, 0, 5), GetIntItem(dt, 0, 6),
 				GetItem(dt, 0, 7), GetIntItem(dt, 0, 8), GetIntItem(dt, 0, 9));
 
 			return application;
 		}
-		internal static SharedModels.Models.ViewApplication GetApplication(int idVacancy, int idCandidate)
+		internal static SharedModels.Models.ApplicationDbView GetApplication(int idVacancy, int idCandidate)
 		{// Метод, який повертає заявку за кодом вакансії та кандидата
 			DataTable dt = ExecuteReturnQuery($"SELECT id,position_name,position_description,status," +
 	$"date_submission,reason_rejection,scores,additional_info,id_candidate,id_vacancy " +
 	$"FROM View_Application WHERE id_vacancy = {idVacancy} AND id_candidate = {idCandidate}");
 
-			SharedModels.Models.ViewApplication application = new SharedModels.Models.ViewApplication(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3),
+			SharedModels.Models.ApplicationDbView application = new SharedModels.Models.ApplicationDbView(GetIntItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3),
 				GetDateTimeItem(dt, 0, 4), GetItem(dt, 0, 5), GetIntItem(dt, 0, 6),
 				GetItem(dt, 0, 7), GetIntItem(dt, 0, 8), GetIntItem(dt, 0, 9));
 
@@ -366,9 +366,9 @@ namespace RecruitmentServer.Models
 
 			return GetIntItem(dt, 0, 0);
 		}
-		internal static List<SharedModels.Models.ViewInterview> GetInterviews(int offset, int amount, ServerSearcher searcher)
+		internal static List<SharedModels.Models.InterviewDbView> GetInterviews(int offset, int amount, ServerSearcher searcher)
 		{// Метод, який повертає список співбесід
-			List<SharedModels.Models.ViewInterview> interviews = new List<SharedModels.Models.ViewInterview>();
+			List<SharedModels.Models.InterviewDbView> interviews = new List<SharedModels.Models.InterviewDbView>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -386,7 +386,7 @@ namespace RecruitmentServer.Models
 			for (int i = 0; i < dt.Rows.Count; i++)
 			{
 				// Записуємо елемент
-				interviews.Add(new SharedModels.Models.ViewInterview(GetIntItem(dt, i, 0), GetItem(dt, i, 1),
+				interviews.Add(new SharedModels.Models.InterviewDbView(GetIntItem(dt, i, 0), GetItem(dt, i, 1),
 					GetItem(dt, i, 2), GetItem(dt, i, 3), GetDateTimeItem(dt, i, 4),
 					GetIntItem(dt, i, 5)));
 			}

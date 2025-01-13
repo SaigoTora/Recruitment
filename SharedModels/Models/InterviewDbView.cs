@@ -5,7 +5,7 @@ namespace SharedModels.Models
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("View_Interview")]
-	public partial class ViewInterview
+	public partial class InterviewDbView
 	{
 		[Key]
 		[Column(Order = 0)]
@@ -28,7 +28,7 @@ namespace SharedModels.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdApplication { get; private set; }
 
-		public ViewInterview(string positionName, string positionDescription,
+		public InterviewDbView(string positionName, string positionDescription,
 			string status, DateTime dateEvent)
 		{
 			PositionName = positionName;
@@ -36,7 +36,7 @@ namespace SharedModels.Models
 			Status = status;
 			DateEvent = dateEvent;
 		}
-		public ViewInterview(int id, string positionName, string positionDescription,
+		public InterviewDbView(int id, string positionName, string positionDescription,
 			string status, DateTime dateEvent, int idApplication)
 			: this(positionName, positionDescription, status, dateEvent)
 		{

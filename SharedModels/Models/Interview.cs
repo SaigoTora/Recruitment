@@ -13,8 +13,8 @@ namespace SharedModels.Models
 		public int IdApplication { get; private set; }
 		public int IdInterviewStatus { get; private set; }
 		public virtual Application Application { get; private set; }
+		public virtual InterviewStatus InterviewStatus { get; private set; }
 		public virtual ICollection<Employee> Employee { get; private set; }
-		public virtual InterviewStatus Interview_Status { get; private set; }
 
 		public Interview()
 			=> Employee = new HashSet<Employee>();

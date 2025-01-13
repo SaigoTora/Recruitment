@@ -26,10 +26,10 @@ namespace RecruitmentServer.Forms
 
 		private readonly Dictionary<Guna2GradientButton, Candidate>
 			_buttonCandidateMap = new Dictionary<Guna2GradientButton, Candidate>();
-		private readonly Dictionary<Guna2GradientButton, ViewApplication>
-			_buttonApplicationMap = new Dictionary<Guna2GradientButton, ViewApplication>();
-		private readonly Dictionary<Guna2GradientButton, ViewVacancy>
-			_buttonVacancyMap = new Dictionary<Guna2GradientButton, ViewVacancy>();
+		private readonly Dictionary<Guna2GradientButton, ApplicationDbView>
+			_buttonApplicationMap = new Dictionary<Guna2GradientButton, ApplicationDbView>();
+		private readonly Dictionary<Guna2GradientButton, VacancyDbView>
+			_buttonVacancyMap = new Dictionary<Guna2GradientButton, VacancyDbView>();
 
 		internal AssignmentForm(Account account, Action<EventArgs> refreshMainForm)
 		{
@@ -108,9 +108,9 @@ namespace RecruitmentServer.Forms
 			List<Guna2GradientPanel> createdPanels = new List<Guna2GradientPanel>();
 			for (int i = 0; i < _resultItems.Count; i++)
 			{
-				ViewVacancy vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
+				VacancyDbView vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
 				Candidate candidate = DataBase.GetCandidate(_resultItems[i].IdCandidate);
-				ViewApplication application = DataBase.GetApplication(
+				ApplicationDbView application = DataBase.GetApplication(
 					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
 
 				createdPanels.Add(_assignmentCreator.CreateMainPanel());
@@ -186,7 +186,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			ViewApplication application = _buttonApplicationMap[button];
+			ApplicationDbView application = _buttonApplicationMap[button];
 			ApplicationForm applicationForm = new ApplicationForm(_account, application,
 				(args) =>
 				{
@@ -201,7 +201,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			ViewVacancy vacancy = _buttonVacancyMap[button];
+			VacancyDbView vacancy = _buttonVacancyMap[button];
 
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				(args) =>

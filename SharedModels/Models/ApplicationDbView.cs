@@ -5,7 +5,7 @@ namespace SharedModels.Models
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("View_Application")]
-	public partial class ViewApplication
+	public partial class ApplicationDbView
 	{
 		[Key]
 		[Column(Order = 0)]
@@ -38,7 +38,7 @@ namespace SharedModels.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdVacancy { get; private set; }
 
-		public ViewApplication(string positionName, string positionDescription, string status,
+		public ApplicationDbView(string positionName, string positionDescription, string status,
 			DateTime dateSubmission, string reasonRejection)
 		{
 			PositionName = positionName;
@@ -47,7 +47,7 @@ namespace SharedModels.Models
 			DateSubmission = dateSubmission;
 			ReasonRejection = reasonRejection;
 		}
-		public ViewApplication(int id, string positionName, string positionDescription,
+		public ApplicationDbView(int id, string positionName, string positionDescription,
 			string status, DateTime dateSubmission, string reasonRejection, int scores,
 			string additionalInfo, int idCandidate, int idVacancy)
 			: this(positionName, positionDescription, status, dateSubmission, reasonRejection)

@@ -16,7 +16,7 @@ namespace RecruitmentServer.Forms
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private ViewVacancy _vacancy;
+		private VacancyDbView _vacancy;
 		private readonly Requirement _requirement = new Requirement();
 		private SharedModels.Models.Point _point = new SharedModels.Models.Point();
 		private readonly Action<EventArgs> _actionAfterChange;
@@ -35,7 +35,7 @@ namespace RecruitmentServer.Forms
 
 			ConfigureFormForVacancyCreation();
 		}
-		internal VacancyForm(Account account, ViewVacancy vacancy,
+		internal VacancyForm(Account account, VacancyDbView vacancy,
 			Action<EventArgs> actionAfterChange = null, bool isDeleteButtonVisible = true)
 			: this()
 		{// Constructor for viewing vacancies
@@ -75,7 +75,7 @@ namespace RecruitmentServer.Forms
 
 			ManageButtonForCreateEvents(true);
 		}
-		private void ConfigureFormForVacancyViewing(ViewVacancy vacancy,
+		private void ConfigureFormForVacancyViewing(VacancyDbView vacancy,
 			bool isDeleteButtonVisible)
 		{
 			textBoxPosition.Text = vacancy.PositionName;
@@ -212,7 +212,7 @@ namespace RecruitmentServer.Forms
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
 
-				_vacancy = new ViewVacancy(0, position.Name, position.Description,
+				_vacancy = new VacancyDbView(0, position.Name, position.Description,
 					decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
 					richTextBoxAdditionalInfo.Text, true, 0, pointId,
 					requirementId);

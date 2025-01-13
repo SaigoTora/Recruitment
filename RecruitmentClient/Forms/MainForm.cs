@@ -49,8 +49,8 @@ namespace RecruitmentClient.Forms
 
 		private readonly List<Guna2GradientPanel> _createdPanels =
 			new List<Guna2GradientPanel>();
-		private readonly Dictionary<Guna2GradientButton, ViewVacancy> _buttonVacancyMap =
-			new Dictionary<Guna2GradientButton, ViewVacancy>();
+		private readonly Dictionary<Guna2GradientButton, VacancyDbView> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, VacancyDbView>();
 		private readonly Dictionary<Guna2GradientButton, string> _buttonReasonRejectionMap =
 			new Dictionary<Guna2GradientButton, string>();
 
@@ -307,7 +307,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ViewVacancy> vacancies = Client.GetFreeVacancies(_account.Login,
+			List<VacancyDbView> vacancies = Client.GetFreeVacancies(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -325,7 +325,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ViewApplication> applications =
+			List<ApplicationDbView> applications =
 				Client.GetApplications(_account.Login, _createdPanels.Count,
 				COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -344,7 +344,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ViewInterview> interviews = Client.GetInterviews(_account.Login,
+			List<InterviewDbView> interviews = Client.GetInterviews(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -365,7 +365,7 @@ namespace RecruitmentClient.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(ViewVacancy vacancy)
+		private void CreateVacancy(VacancyDbView vacancy)
 		{
 			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
@@ -384,7 +384,7 @@ namespace RecruitmentClient.Forms
 			_buttonVacancyMap.Add(button, vacancy);
 			ManageVacancyButtonEvent(button, true);
 		}
-		private void CreateApplication(ViewApplication application)
+		private void CreateApplication(ApplicationDbView application)
 		{
 			const string DATE_PREFIX = "Дата і час подачі: ";
 
@@ -407,7 +407,7 @@ namespace RecruitmentClient.Forms
 				ManageReasonRejectionButtonEvent(button, true);
 			}
 		}
-		private void CreateInterview(ViewInterview interview)
+		private void CreateInterview(InterviewDbView interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
@@ -492,7 +492,7 @@ namespace RecruitmentClient.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			ViewVacancy vacancy = _buttonVacancyMap[button];
+			VacancyDbView vacancy = _buttonVacancyMap[button];
 			try
 			{
 				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
