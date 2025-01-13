@@ -1647,7 +1647,7 @@
 			this.buttonAddEducation.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonAddEducation.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(245)))), ((int)(((byte)(130)))));
 			this.buttonAddEducation.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(175)))), ((int)(((byte)(95)))));
-			this.buttonAddEducation.Location = new System.Drawing.Point(1183, 1239);
+			this.buttonAddEducation.Location = new System.Drawing.Point(1163, 1239);
 			this.buttonAddEducation.Name = "buttonAddEducation";
 			this.buttonAddEducation.PressedColor = System.Drawing.Color.White;
 			this.buttonAddEducation.PressedDepth = 20;
@@ -1678,7 +1678,7 @@
 			this.buttonRemoveEducation.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonRemoveEducation.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(70)))));
 			this.buttonRemoveEducation.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-			this.buttonRemoveEducation.Location = new System.Drawing.Point(1123, 1239);
+			this.buttonRemoveEducation.Location = new System.Drawing.Point(1103, 1239);
 			this.buttonRemoveEducation.Name = "buttonRemoveEducation";
 			this.buttonRemoveEducation.PressedColor = System.Drawing.Color.White;
 			this.buttonRemoveEducation.PressedDepth = 20;
@@ -1709,7 +1709,7 @@
 			this.buttonAddLanguage.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonAddLanguage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(245)))), ((int)(((byte)(130)))));
 			this.buttonAddLanguage.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(175)))), ((int)(((byte)(95)))));
-			this.buttonAddLanguage.Location = new System.Drawing.Point(845, 775);
+			this.buttonAddLanguage.Location = new System.Drawing.Point(825, 775);
 			this.buttonAddLanguage.Name = "buttonAddLanguage";
 			this.buttonAddLanguage.PressedColor = System.Drawing.Color.White;
 			this.buttonAddLanguage.PressedDepth = 20;
@@ -1740,7 +1740,7 @@
 			this.buttonRemoveLanguage.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonRemoveLanguage.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(70)))));
 			this.buttonRemoveLanguage.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-			this.buttonRemoveLanguage.Location = new System.Drawing.Point(785, 775);
+			this.buttonRemoveLanguage.Location = new System.Drawing.Point(765, 775);
 			this.buttonRemoveLanguage.Name = "buttonRemoveLanguage";
 			this.buttonRemoveLanguage.PressedColor = System.Drawing.Color.White;
 			this.buttonRemoveLanguage.PressedDepth = 20;

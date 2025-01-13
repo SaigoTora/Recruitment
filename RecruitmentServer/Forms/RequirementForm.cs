@@ -137,13 +137,21 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{
-			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelCity);
+			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelCity,
+				labelAge);
 
 			Validator validator = new Validator();
 			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR,
 				_account.Theme);
 
-			return validator.IsDataValid;
+			bool isDataValid = validator.IsDataValid;
+			if (numericUpDownAgeMin.Value > numericUpDownAgeMax.Value)
+			{
+				ValidationFeedbackManager.HighlightInvalidLabel(labelAge, "Мінімальний вік "
+					+ "не може перевищувати максимальний!", _account.Theme, ref isDataValid);
+			}
+
+			return isDataValid;
 		}
 
 		#region TextBox event handlers

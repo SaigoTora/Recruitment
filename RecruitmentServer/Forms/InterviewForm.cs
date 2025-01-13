@@ -156,6 +156,14 @@ namespace RecruitmentServer.Forms
 			DialogResult result;
 			if (DateTime.Now < _interview.DateEvent)
 			{
+				if (comboBoxDecision.Text == "Прийнято")
+				{
+					CustomMessageBox.Show("Кандидата не можна прийняти на роботу, поки не буде " +
+						"проведено співбесіду!", _account.Theme, "Помилка",
+						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					return;
+				}
+
 				result = CustomMessageBox.Show("Ви впевнені, що хочете " +
 					"змінити статус?\nЗ кандидатом ще не було проведено співбесіди!",
 					_account.Theme, "Увага", CustomMessageBoxButtons.YesNo,

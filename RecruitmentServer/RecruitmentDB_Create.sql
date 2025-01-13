@@ -558,7 +558,7 @@ if EXISTS(SELECT Application.id FROM Application
 INNER JOIN Vacancy ON Application.id_vacancy = Vacancy.id
 WHERE Application.date_submission < Vacancy.date_publication)
 BEGIN
-raiserror('Дата подачі заявки не може раніше, ніж дата публікації вакансії!',16,10)
+raiserror('Дата подачі заявки не може бути раніше, ніж дата публікації вакансії!',16,10)
 rollback transaction
 END
 

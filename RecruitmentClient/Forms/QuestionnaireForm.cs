@@ -621,6 +621,7 @@ namespace RecruitmentClient.Forms
 			panelMain.BackColor = BackColor;
 			flpLanguages.BackColor = BackColor;
 			flpEducations.BackColor = BackColor;
+			panelDown.BackColor = BackColor;
 		}
 
 		private void QuestionnaireForm_FormClosing(object sender, FormClosingEventArgs e)
