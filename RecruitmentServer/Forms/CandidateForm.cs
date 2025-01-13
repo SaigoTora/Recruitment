@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -17,11 +18,11 @@ namespace RecruitmentServer.Forms
 
 		private readonly int _idBusinessTrip, _idFamilyStatus;
 		private readonly Account _account;
-		private readonly Candidate _candidate;
+		private readonly RecruitmentLibrary.PersonInfo.Candidate _candidate;
 		private readonly ControlCreator _languageCreator;
 		private readonly ControlCreator _educationCreator;
 
-		internal CandidateForm(Account account, Candidate candidate)
+		internal CandidateForm(Account account, RecruitmentLibrary.PersonInfo.Candidate candidate)
 		{
 			InitializeComponent();
 
@@ -108,7 +109,7 @@ namespace RecruitmentServer.Forms
 				richTextBoxChronicDiseases.Visible = false;
 			}
 		}
-		private void CreateLanguages(List<Language> languages)
+		private void CreateLanguages(List<RecruitmentLibrary.PersonInfo.Language> languages)
 		{
 			for (int i = 0; i < languages.Count; i++)
 			{
@@ -119,7 +120,7 @@ namespace RecruitmentServer.Forms
 					languages[i].Level);
 			}
 		}
-		private void CreateEducations(List<Education> educations)
+		private void CreateEducations(List<RecruitmentLibrary.PersonInfo.Education> educations)
 		{
 			for (int i = 0; i < educations.Count; i++)
 			{

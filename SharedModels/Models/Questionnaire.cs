@@ -43,7 +43,7 @@ namespace SharedModels.Models
 
         public int id_business_trip_opportunity { get; set; }
 
-        public virtual Business_Trip_Opportunity Business_Trip_Opportunity { get; set; }
+        public virtual BusinessTripOpportunity Business_Trip_Opportunity { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Candidate> Candidate { get; set; }
@@ -51,7 +51,7 @@ namespace SharedModels.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Education> Education { get; set; }
 
-        public virtual Family_Status Family_Status { get; set; }
+        public virtual FamilyStatus Family_Status { get; set; }
 
         public virtual Health Health { get; set; }
 

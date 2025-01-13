@@ -261,10 +261,10 @@ namespace RecruitmentServer.Models
 			$"WHERE Candidate.id = {idCandidate}");
 
 
-			Health h = new Health(GetItem(dt, 0, 13), GetBoolItem(dt, 0, 14), GetBoolItem(dt, 0, 15));
+			SharedModels.Models.Health health = new SharedModels.Models.Health(GetItem(dt, 0, 13), GetBoolItem(dt, 0, 14), GetBoolItem(dt, 0, 15));
 			Questionnaire q = new Questionnaire(GetItem(dt, 0, 6), GetItem(dt, 0, 7),// Анкета
 				GetIntItem(dt, 0, 8), GetIntItem(dt, 0, 9), GetBoolItem(dt, 0, 10),
-				GetIntItem(dt, 0, 11), GetItem(dt, 0, 12), h,
+				GetIntItem(dt, 0, 11), GetItem(dt, 0, 12), health,
 				GetIntItem(dt, 0, 16), GetIntItem(dt, 0, 17),
 				GetLanguages(idCandidate), GetEducations(idCandidate));
 

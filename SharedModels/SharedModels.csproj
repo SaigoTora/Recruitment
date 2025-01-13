@@ -55,15 +55,15 @@
   <ItemGroup>
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Application_Status.cs" />
-    <Compile Include="Models\Business_Trip_Opportunity.cs" />
+    <Compile Include="Models\BusinessTripOpportunity.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Education.cs" />
     <Compile Include="Models\EducationDegreePoint.cs" />
     <Compile Include="Models\EducationDegreeRequirement.cs" />
     <Compile Include="Models\EducationDegree.cs" />
-    <Compile Include="Models\Education_Form.cs" />
+    <Compile Include="Models\EducationForm.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\Family_Status.cs" />
+    <Compile Include="Models\FamilyStatus.cs" />
     <Compile Include="Models\Health.cs" />
     <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\InterviewStatus.cs" />

@@ -410,7 +410,7 @@ namespace RecruitmentClient.Forms
 				textBoxCity.Text, (int)numericUpDownChildrenAmount.Value,
 				(int)numericUpDownExperience.Value, radioButtonDriverLicenseYes.Checked,
 				(int)numericUpDownReadiness.Value, richTextBoxAdditionalInfo.Text,
-				new Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
+				new SharedModels.Models.Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
 				radioButtonDrinkAlcoholYes.Checked), comboBoxFamilyStatus.SelectedIndex + 1,
 				comboBoxBusinessTripOpportunity.SelectedIndex + 1, languages, educations);
 		}
@@ -472,7 +472,7 @@ namespace RecruitmentClient.Forms
 				validator.CheckMinLength(_educations[i].LabelSpecialty,
 					_educations[i].TextBoxSpecialty, 2, _account.Theme);
 
-				isDataValid = validator.IsDataValid;
+				isDataValid = isDataValid && validator.IsDataValid;
 				CheckEducationDates(_educations[i], ref isDataValid);
 			}
 		}

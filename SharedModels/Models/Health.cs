@@ -1,30 +1,34 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Health")]
-    public partial class Health
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Health()
-        {
-            Questionnaire = new HashSet<Questionnaire>();
-        }
+	[Table("Health")]
+	public partial class Health
+	{
+		public int Id { get; private set; }
+		[StringLength(256)]
+		public string ChronicDiseases { get; private set; }
+		public bool Smoker { get; private set; }
+		public bool DrinkAlcohol { get; private set; }
+		public virtual ICollection<Questionnaire> Questionnaire { get; private set; }
 
-        public int id { get; set; }
-
-        [StringLength(256)]
-        public string chronic_diseases { get; set; }
-
-        public bool smoker { get; set; }
-
-        public bool drink_alcohol { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Questionnaire> Questionnaire { get; set; }
-    }
+		public Health()
+			=> Questionnaire = new HashSet<Questionnaire>();
+		public Health(string chronicDiseases, bool smoker, bool drinkAlcohol)
+			: this()
+		{
+			ChronicDiseases = chronicDiseases;
+			Smoker = smoker;
+			DrinkAlcohol = drinkAlcohol;
+		}
+		public Health(Health health)
+			: this()
+		{
+			ChronicDiseases = health.ChronicDiseases;
+			Smoker = health.Smoker;
+			DrinkAlcohol = health.DrinkAlcohol;
+		}
+	}
 }

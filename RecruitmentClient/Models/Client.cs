@@ -128,7 +128,7 @@ namespace RecruitmentClient.Models
 			if (list.Length < 18)
 				throw new ArgumentException("Логін та/або пароль введені не вірно!");
 
-			Health h = new Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
+			SharedModels.Models.Health h = new SharedModels.Models.Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
 			Questionnaire q = new Questionnaire(list[6], list[7],// Анкета
 				Int32.Parse(list[8]), Int32.Parse(list[9]), bool.Parse(list[10]),
 				Int32.Parse(list[11]), list[12], h,
@@ -332,7 +332,7 @@ namespace RecruitmentClient.Models
 			=> Change(field, oldI.ToString(), newI.ToString(), false);
 		private static string Change(string field, bool oldB, bool newB)
 			=> Change(field, oldB.ToString(), newB.ToString());
-		private static void ChangeHealth(string login, Health oldH, Health newH)
+		private static void ChangeHealth(string login, SharedModels.Models.Health oldH, SharedModels.Models.Health newH)
 		{// Метод, який змінює здоров’я на сервері
 			string message = "UPDATE Health SET";
 			message += Change("chronic_diseases", oldH.ChronicDiseases, newH.ChronicDiseases);
@@ -474,7 +474,7 @@ namespace RecruitmentClient.Models
 			// Оголошуємо змінні
 			Candidate candidate = account.candidate;
 			Questionnaire questionnaire = candidate.questionnaire;
-			Health health = questionnaire.CandidateHealth;
+			SharedModels.Models.Health health = questionnaire.CandidateHealth;
 
 			string fatherName = candidate.FatherName == "" ? "NULL" : $"'{candidate.FatherName}'";
 			string chronicDiseases = health.ChronicDiseases == "" ? "NULL" : $"'{health.ChronicDiseases}'";

@@ -12,15 +12,15 @@ namespace RecruitmentServer.Models
 
 		public virtual DbSet<Application> Application { get; set; }
 		public virtual DbSet<Application_Status> Application_Status { get; set; }
-		public virtual DbSet<Business_Trip_Opportunity> Business_Trip_Opportunity { get; set; }
+		public virtual DbSet<BusinessTripOpportunity> Business_Trip_Opportunity { get; set; }
 		public virtual DbSet<Candidate> Candidate { get; set; }
 		public virtual DbSet<Education> Education { get; set; }
 		public virtual DbSet<EducationDegree> Education_Degree { get; set; }
-		public virtual DbSet<Education_Form> Education_Form { get; set; }
+		public virtual DbSet<EducationForm> Education_Form { get; set; }
 		public virtual DbSet<EducationDegreePoint> EducationDegree_Point { get; set; }
 		public virtual DbSet<EducationDegreeRequirement> EducationDegree_Requirement { get; set; }
 		public virtual DbSet<Employee> Employee { get; set; }
-		public virtual DbSet<Family_Status> Family_Status { get; set; }
+		public virtual DbSet<FamilyStatus> Family_Status { get; set; }
 		public virtual DbSet<Health> Health { get; set; }
 		public virtual DbSet<Interview> Interview { get; set; }
 		public virtual DbSet<InterviewStatus> Interview_Status { get; set; }
@@ -51,7 +51,7 @@ namespace RecruitmentServer.Models
 				.HasForeignKey(e => e.id_application_status)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Business_Trip_Opportunity>()
+			modelBuilder.Entity<BusinessTripOpportunity>()
 				.HasMany(e => e.Questionnaire)
 				.WithRequired(e => e.Business_Trip_Opportunity)
 				.HasForeignKey(e => e.id_business_trip_opportunity)
@@ -80,7 +80,7 @@ namespace RecruitmentServer.Models
 				.HasForeignKey(e => e.IdEducationDegree)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Education_Form>()
+			modelBuilder.Entity<EducationForm>()
 				.HasMany(e => e.Education)
 				.WithRequired(e => e.Education_Form)
 				.HasForeignKey(e => e.id_education_form)
@@ -90,7 +90,7 @@ namespace RecruitmentServer.Models
 				.Property(e => e.Salary)
 				.HasPrecision(19, 4);
 
-			modelBuilder.Entity<Family_Status>()
+			modelBuilder.Entity<FamilyStatus>()
 				.HasMany(e => e.Questionnaire)
 				.WithRequired(e => e.Family_Status)
 				.HasForeignKey(e => e.id_family_status)

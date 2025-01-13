@@ -57,13 +57,16 @@
     <Compile Include="PersonInfo\Serializator.cs" />
     <Compile Include="PersonInfo\Candidate.cs" />
     <Compile Include="PersonInfo\Education.cs" />
-    <Compile Include="PersonInfo\Health.cs" />
     <Compile Include="PersonInfo\Language.cs" />
     <Compile Include="PersonInfo\Person.cs" />
     <Compile Include="PersonInfo\Questionnaire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharedModels\SharedModels.csproj">
+      <Project>{ab1c077b-d981-4d31-bfe9-c87f466a151f}</Project>
+      <Name>SharedModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UIHelpers\UIHelpers.csproj">
       <Project>{49f42a8b-4e71-4075-987b-66cd7d258ec2}</Project>
       <Name>UIHelpers</Name>

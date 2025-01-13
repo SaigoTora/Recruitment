@@ -32,7 +32,7 @@ namespace SharedModels.Models
 
         public virtual EducationDegree Education_Degree { get; set; }
 
-        public virtual Education_Form Education_Form { get; set; }
+        public virtual EducationForm Education_Form { get; set; }
 
         public virtual Questionnaire Questionnaire { get; set; }
     }
