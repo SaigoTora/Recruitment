@@ -249,7 +249,7 @@ namespace RecruitmentServer.Models
 			return application;
 		}
 
-		internal static Candidate GetCandidate(int idCandidate)
+		internal static SharedModels.Models.Candidate GetCandidate(int idCandidate)
 		{// Метод, який повертає кандидата за кодом
 			DataTable dt = ExecuteReturnQuery($"SELECT surname,name,father_name,phone,birthday,email, " +
 			$"nationality,city,children_amount,experience,driver_license,readiness,additional_info, " +
@@ -262,13 +262,13 @@ namespace RecruitmentServer.Models
 
 
 			SharedModels.Models.Health health = new SharedModels.Models.Health(GetItem(dt, 0, 13), GetBoolItem(dt, 0, 14), GetBoolItem(dt, 0, 15));
-			Questionnaire q = new Questionnaire(GetItem(dt, 0, 6), GetItem(dt, 0, 7),// Анкета
+			SharedModels.Models.Questionnaire q = new SharedModels.Models.Questionnaire(GetItem(dt, 0, 6), GetItem(dt, 0, 7),// Анкета
 				GetIntItem(dt, 0, 8), GetIntItem(dt, 0, 9), GetBoolItem(dt, 0, 10),
 				GetIntItem(dt, 0, 11), GetItem(dt, 0, 12), health,
 				GetIntItem(dt, 0, 16), GetIntItem(dt, 0, 17),
 				GetLanguages(idCandidate), GetEducations(idCandidate));
 
-			return new Candidate(GetItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3), GetDateItem(dt, 0, 4), GetItem(dt, 0, 5), q);
+			return new SharedModels.Models.Candidate(GetItem(dt, 0, 0), GetItem(dt, 0, 1), GetItem(dt, 0, 2), GetItem(dt, 0, 3), GetDateItem(dt, 0, 4), GetItem(dt, 0, 5), q);
 		}
 		internal static List<SharedModels.Models.Language> GetLanguages(int idCandidate)
 		{// Метод повертає список мов кандидата

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.PersonInfo;
+using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -79,7 +80,8 @@ namespace RecruitmentClient.Forms
 			buttonLogin.Click += ButtonChangePassword_Click;
 		}
 		private void MoveElement(Control control, int x, int y)
-			=> control.Location = new Point(control.Location.X + x, control.Location.Y + y);
+			=> control.Location = new System.Drawing.Point(control.Location.X + x,
+				control.Location.Y + y);
 
 		#region Registration
 		private void LabelRegisterStart_Click(object sender, EventArgs e)

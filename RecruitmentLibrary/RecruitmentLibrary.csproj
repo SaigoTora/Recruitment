@@ -55,9 +55,6 @@
     <Compile Include="ApplicationInfo\Vacancy.cs" />
     <Compile Include="AssignmentSolver.cs" />
     <Compile Include="PersonInfo\Serializator.cs" />
-    <Compile Include="PersonInfo\Candidate.cs" />
-    <Compile Include="PersonInfo\Person.cs" />
-    <Compile Include="PersonInfo\Questionnaire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

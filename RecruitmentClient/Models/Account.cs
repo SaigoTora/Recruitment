@@ -1,5 +1,5 @@
 ﻿using System;
-using RecruitmentLibrary.PersonInfo;
+using SharedModels.Models;
 using UIHelpers.Themes;
 
 namespace RecruitmentClient.Models

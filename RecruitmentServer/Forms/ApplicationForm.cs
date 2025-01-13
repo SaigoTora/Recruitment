@@ -8,6 +8,7 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Forms
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Models;
 using SharedModels.Models;
 using UIHelpers.Controls;
@@ -18,11 +18,11 @@ namespace RecruitmentServer.Forms
 
 		private readonly int _idBusinessTrip, _idFamilyStatus;
 		private readonly Account _account;
-		private readonly RecruitmentLibrary.PersonInfo.Candidate _candidate;
+		private readonly Candidate _candidate;
 		private readonly ControlCreator _languageCreator;
 		private readonly ControlCreator _educationCreator;
 
-		internal CandidateForm(Account account, RecruitmentLibrary.PersonInfo.Candidate candidate)
+		internal CandidateForm(Account account, Candidate candidate)
 		{
 			InitializeComponent();
 
@@ -30,8 +30,8 @@ namespace RecruitmentServer.Forms
 				maximizeBox: false);
 			_account = account;
 			_candidate = candidate;
-			_idBusinessTrip = _candidate.questionnaire.ID_BusinessTripOpportunity;
-			_idFamilyStatus = _candidate.questionnaire.ID_FamilyStatus;
+			_idBusinessTrip = _candidate.Questionnaire.IdBusinessTripOpportunity;
+			_idFamilyStatus = _candidate.Questionnaire.IdFamilyStatus;
 
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);
@@ -46,15 +46,15 @@ namespace RecruitmentServer.Forms
 		{
 			labelFullName.Text = $"{_candidate.Surname.ToUpper()} {_candidate.Name} " +
 				$"{_candidate.FatherName}";
-			labelNationality.Text = "Громадянство: " + _candidate.questionnaire.Nationality;
-			labelCity.Text = "Місце проживання: " + _candidate.questionnaire.City;
+			labelNationality.Text = "Громадянство: " + _candidate.Questionnaire.Nationality;
+			labelCity.Text = "Місце проживання: " + _candidate.Questionnaire.City;
 			labelBirthday.Text = "Дата народження: " +
 				_candidate.Birthday.ToString("yyyy-MM-dd");
 			richTextBoxContact.Text = $"Номер телефону: {_candidate.Phone}" +
 				$"\nE-mail: {_candidate.Email}";
 
-			richTextBoxAdditionalInfo.Text = _candidate.questionnaire.AdditionalInfo;
-			if (string.IsNullOrWhiteSpace(_candidate.questionnaire.AdditionalInfo))
+			richTextBoxAdditionalInfo.Text = _candidate.Questionnaire.AdditionalInfo;
+			if (string.IsNullOrWhiteSpace(_candidate.Questionnaire.AdditionalInfo))
 			{
 				labelAdditionalInfoTitle.Visible = false;
 				richTextBoxAdditionalInfo.Visible = false;
@@ -73,23 +73,23 @@ namespace RecruitmentServer.Forms
 		private void ShowRemainingInfo()
 		{
 			labelExperience.Text = $"Досвід роботи: " +
-				$"{_candidate.questionnaire.Experience} міс.";
+				$"{_candidate.Questionnaire.Experience} міс.";
 			labelBusinessTrip.Text = "Можливість відряджень: " +
 				DataBase.GetBusinessTrip(_idBusinessTrip);
-			if (_candidate.questionnaire.DriverLicense)
+			if (_candidate.Questionnaire.DriverLicense)
 				labelDriverLicense.Text = "Має посвідчення водія";
 			else
 				labelDriverLicense.Text = "НЕ має посвідчення водія";
 			labelReadiness.Text = $"Готовність до роботи: " +
-				$"{_candidate.questionnaire.Readiness} дн.";
+				$"{_candidate.Questionnaire.Readiness} дн.";
 			labelFamilyStatus.Text = "Сімейний стан: " +
 				DataBase.GetFamilyStatus(_idFamilyStatus);
 			labelChildrenAmount.Text = "Кількість дітей: " +
-				_candidate.questionnaire.ChildrenAmount;
+				_candidate.Questionnaire.ChildrenAmount;
 
-			ShowHealth(_candidate.questionnaire.CandidateHealth);
-			CreateLanguages(_candidate.questionnaire.Languages);
-			CreateEducations(_candidate.questionnaire.Educations);
+			ShowHealth(_candidate.Questionnaire.Health);
+			CreateLanguages(_candidate.Questionnaire.Languages.ToArray());
+			CreateEducations(_candidate.Questionnaire.Educations.ToArray());
 		}
 		private void ShowHealth(Health health)
 		{
@@ -109,9 +109,9 @@ namespace RecruitmentServer.Forms
 				richTextBoxChronicDiseases.Visible = false;
 			}
 		}
-		private void CreateLanguages(List<Language> languages)
+		private void CreateLanguages(Language[] languages)
 		{
-			for (int i = 0; i < languages.Count; i++)
+			for (int i = 0; i < languages.Length; i++)
 			{
 				_languageCreator.CreateMainPanel();
 				_languageCreator.CreateLabel(labelLanguageNumber, (i + 1).ToString());
@@ -120,9 +120,9 @@ namespace RecruitmentServer.Forms
 					languages[i].Level);
 			}
 		}
-		private void CreateEducations(List<Education> educations)
+		private void CreateEducations(Education[] educations)
 		{
-			for (int i = 0; i < educations.Count; i++)
+			for (int i = 0; i < educations.Length; i++)
 			{
 				_educationCreator.CreateMainPanel();
 				_educationCreator.CreateLabel(labelEducationNumber, (i + 1).ToString());

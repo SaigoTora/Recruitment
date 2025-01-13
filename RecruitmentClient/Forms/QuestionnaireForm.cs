@@ -13,6 +13,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
+using System.Linq;
 
 namespace RecruitmentClient.Forms
 {
@@ -26,7 +27,7 @@ namespace RecruitmentClient.Forms
 		private readonly int _defaultYearAdmission = DateTime.Today.Year - 4;
 
 		private readonly Account _account;
-		private readonly RecruitmentLibrary.PersonInfo.Questionnaire _oldQuestionnaire = null;
+		private readonly Questionnaire _oldQuestionnaire = null;
 		private readonly bool _formOpenForChange = false;
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
@@ -48,7 +49,7 @@ namespace RecruitmentClient.Forms
 			_account = account;
 			if (startForm == null)
 			{
-				_oldQuestionnaire = new RecruitmentLibrary.PersonInfo.Questionnaire(_account.candidate.questionnaire);
+				_oldQuestionnaire = new Questionnaire(_account.candidate.Questionnaire);
 				_formOpenForChange = true;
 			}
 
@@ -67,9 +68,9 @@ namespace RecruitmentClient.Forms
 			ResetEducationFields();
 			comboBoxNationality.Focus();
 
-			if (_account.candidate.questionnaire == null)
+			if (_account.candidate.Questionnaire == null)
 			{
-				_account.candidate.questionnaire = new RecruitmentLibrary.PersonInfo.Questionnaire();
+				_account.candidate.Questionnaire = new Questionnaire();
 				comboBoxNationality.SelectedIndex =
 					comboBoxNationality.FindString(DEFAULT_NATIONALITY);
 				comboBoxLanguage.SelectedIndex =
@@ -77,18 +78,18 @@ namespace RecruitmentClient.Forms
 				ButtonAddEducation_Click(new Object(), EventArgs.Empty);
 			}
 			else
-				SetFormFields(_account.candidate.questionnaire);
+				SetFormFields(_account.candidate.Questionnaire);
 
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonDriverLicenseNo,
 				radioButtonDriverLicenseYes, radioButtonSmokerNo, radioButtonSmokerYes,
 				radioButtonDrinkAlcoholNo, radioButtonDrinkAlcoholYes);
 		}
 
-		private void SetFormFields(RecruitmentLibrary.PersonInfo.Questionnaire q)
+		private void SetFormFields(Questionnaire q)
 		{
 			comboBoxNationality.SelectedIndex = comboBoxNationality.FindString(q.Nationality);
 			textBoxCity.Text = q.City;
-			comboBoxBusinessTripOpportunity.SelectedIndex = q.ID_BusinessTripOpportunity - 1;
+			comboBoxBusinessTripOpportunity.SelectedIndex = q.IdBusinessTripOpportunity - 1;
 
 			numericUpDownExperience.Value = q.Experience;
 			numericUpDownReadiness.Value = q.Readiness;
@@ -96,17 +97,17 @@ namespace RecruitmentClient.Forms
 				radioButtonDriverLicenseNo, q.DriverLicense);
 
 			SetRadioButtonState(radioButtonSmokerYes,
-				radioButtonSmokerNo, q.CandidateHealth.Smoker);
+				radioButtonSmokerNo, q.Health.Smoker);
 			SetRadioButtonState(radioButtonDrinkAlcoholYes,
-				radioButtonDrinkAlcoholNo, q.CandidateHealth.DrinkAlcohol);
-			richTextBoxChronicDiseases.Text = q.CandidateHealth.ChronicDiseases;
+				radioButtonDrinkAlcoholNo, q.Health.DrinkAlcohol);
+			richTextBoxChronicDiseases.Text = q.Health.ChronicDiseases;
 
-			comboBoxFamilyStatus.SelectedIndex = q.ID_FamilyStatus - 1;
+			comboBoxFamilyStatus.SelectedIndex = q.IdFamilyStatus - 1;
 			numericUpDownChildrenAmount.Value = q.ChildrenAmount;
 			richTextBoxAdditionalInfo.Text = q.AdditionalInfo;
 
-			SetLanguagesFields(q.Languages);
-			SetEducationsFields(q.Educations);
+			SetLanguagesFields(q.Languages.ToArray());
+			SetEducationsFields(q.Educations.ToArray());
 		}
 		private void SetRadioButtonState(Guna2CustomRadioButton radioButtonYes,
 			Guna2CustomRadioButton radioButtonNo, bool value)
@@ -122,9 +123,9 @@ namespace RecruitmentClient.Forms
 				radioButtonNo.Checked = true;
 			}
 		}
-		private void SetLanguagesFields(List<Language> languages)
+		private void SetLanguagesFields(Language[] languages)
 		{
-			for (int i = 0; i < languages.Count; i++)
+			for (int i = 0; i < languages.Length; i++)
 			{
 				if (i != 0)
 					ButtonAddLanguage_Click(buttonAddLanguage, EventArgs.Empty);
@@ -133,9 +134,9 @@ namespace RecruitmentClient.Forms
 				_languages[i].NUDLevel.Value = languages[i].Level;
 			}
 		}
-		private void SetEducationsFields(List<Education> educations)
+		private void SetEducationsFields(Education[] educations)
 		{
-			for (int i = 0; i < educations.Count; i++)
+			for (int i = 0; i < educations.Length; i++)
 			{
 				ButtonAddEducation_Click(buttonAddEducation, EventArgs.Empty);
 				_educations[i].TextBoxNameInstitution.Text = educations[i].NameInstitution;
@@ -374,7 +375,7 @@ namespace RecruitmentClient.Forms
 					try
 					{
 						Client.ChangeQuestionnaire(_account.Login, _oldQuestionnaire,
-							_account.candidate.questionnaire);
+							_account.candidate.Questionnaire);
 					}
 					catch (SocketException)
 					{
@@ -405,12 +406,12 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = ReadLanguagesFromForm();
 			List<Education> educations = ReadEducationsFromForm();
 
-			_account.candidate.questionnaire =
-				new RecruitmentLibrary.PersonInfo.Questionnaire(comboBoxNationality.SelectedItem.ToString(),
+			_account.candidate.Questionnaire =
+				new Questionnaire(comboBoxNationality.SelectedItem.ToString(),
 				textBoxCity.Text, (int)numericUpDownChildrenAmount.Value,
 				(int)numericUpDownExperience.Value, radioButtonDriverLicenseYes.Checked,
 				(int)numericUpDownReadiness.Value, richTextBoxAdditionalInfo.Text,
-				new SharedModels.Models.Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
+				new Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
 				radioButtonDrinkAlcoholYes.Checked), comboBoxFamilyStatus.SelectedIndex + 1,
 				comboBoxBusinessTripOpportunity.SelectedIndex + 1, languages, educations);
 		}
@@ -633,8 +634,8 @@ namespace RecruitmentClient.Forms
 
 			if (result != DialogResult.Yes)
 				e.Cancel = true;
-			else if (_account.candidate.questionnaire.City == null)
-				_account.candidate.questionnaire = null;
+			else if (_account.candidate.Questionnaire.City == null)
+				_account.candidate.Questionnaire = null;
 		}
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

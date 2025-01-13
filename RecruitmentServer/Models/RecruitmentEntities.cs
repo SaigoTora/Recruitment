@@ -54,7 +54,7 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<BusinessTripOpportunity>()
 				.HasMany(e => e.Questionnaire)
 				.WithRequired(e => e.Business_Trip_Opportunity)
-				.HasForeignKey(e => e.id_business_trip_opportunity)
+				.HasForeignKey(e => e.IdBusinessTripOpportunity)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Candidate>()
@@ -92,14 +92,14 @@ namespace RecruitmentServer.Models
 
 			modelBuilder.Entity<FamilyStatus>()
 				.HasMany(e => e.Questionnaire)
-				.WithRequired(e => e.Family_Status)
-				.HasForeignKey(e => e.id_family_status)
+				.WithRequired(e => e.FamilyStatus)
+				.HasForeignKey(e => e.IdFamilyStatus)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Health>()
 				.HasMany(e => e.Questionnaire)
 				.WithRequired(e => e.Health)
-				.HasForeignKey(e => e.id_health);
+				.HasForeignKey(e => e.IdHealth);
 
 			modelBuilder.Entity<Interview>()
 				.HasMany(e => e.Employee)
@@ -131,15 +131,15 @@ namespace RecruitmentServer.Models
 			modelBuilder.Entity<Questionnaire>()
 				.HasMany(e => e.Candidate)
 				.WithRequired(e => e.Questionnaire)
-				.HasForeignKey(e => e.id_questionnaire);
+				.HasForeignKey(e => e.IdQuestionnaire);
 
 			modelBuilder.Entity<Questionnaire>()
-				.HasMany(e => e.Education)
+				.HasMany(e => e.Educations)
 				.WithRequired(e => e.Questionnaire)
 				.HasForeignKey(e => e.IdQuestionnaire);
 
 			modelBuilder.Entity<Questionnaire>()
-				.HasMany(e => e.Language)
+				.HasMany(e => e.Languages)
 				.WithRequired(e => e.Questionnaire)
 				.HasForeignKey(e => e.IdQuestionnaire);
 

@@ -114,7 +114,7 @@ namespace RecruitmentClient.Models
 
 			return educations;
 		}
-		internal static Candidate GetCandidate(string login, string password)
+		internal static SharedModels.Models.Candidate GetCandidate(string login, string password)
 		{// Метод повертає кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT surname,name,father_name,phone,birthday,email, " +
 				$"nationality,city,children_amount,experience,driver_license,readiness,additional_info, " +
@@ -129,13 +129,13 @@ namespace RecruitmentClient.Models
 				throw new ArgumentException("Логін та/або пароль введені не вірно!");
 
 			SharedModels.Models.Health h = new SharedModels.Models.Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
-			Questionnaire q = new Questionnaire(list[6], list[7],// Анкета
+			SharedModels.Models.Questionnaire q = new SharedModels.Models.Questionnaire(list[6], list[7],// Анкета
 				Int32.Parse(list[8]), Int32.Parse(list[9]), bool.Parse(list[10]),
 				Int32.Parse(list[11]), list[12], h,
 				Int32.Parse(list[16]), Int32.Parse(list[17]),
 				GetLanguages(login), GetEducations(login));
 
-			return new Candidate(list[0], list[1], list[2], list[3], DateTime.Parse(list[4]), list[5], q);
+			return new SharedModels.Models.Candidate(list[0], list[1], list[2], list[3], DateTime.Parse(list[4]), list[5], q);
 		}
 
 		internal static int GetCountVacancies(string login, ClientSearcher searcher)
@@ -404,7 +404,7 @@ namespace RecruitmentClient.Models
 		}
 
 
-		internal static void ChangeQuestionnaire(string login, Questionnaire oldQ, Questionnaire newQ)
+		internal static void ChangeQuestionnaire(string login, SharedModels.Models.Questionnaire oldQ, SharedModels.Models.Questionnaire newQ)
 		{// Метод, який змінює анкету на сервері
 			string message = "UPDATE Questionnaire SET";
 			message += Change("nationality", oldQ.Nationality, newQ.Nationality);
@@ -414,18 +414,18 @@ namespace RecruitmentClient.Models
 			message += Change("driver_license", oldQ.DriverLicense, newQ.DriverLicense);
 			message += Change("readiness", oldQ.Readiness, newQ.Readiness);
 			message += Change("additional_info", oldQ.AdditionalInfo, newQ.AdditionalInfo);
-			message += Change("id_family_status", oldQ.ID_FamilyStatus, newQ.ID_FamilyStatus);
-			message += Change("id_business_trip_opportunity", oldQ.ID_BusinessTripOpportunity, newQ.ID_BusinessTripOpportunity);
+			message += Change("id_family_status", oldQ.IdFamilyStatus, newQ.IdFamilyStatus);
+			message += Change("id_business_trip_opportunity", oldQ.IdBusinessTripOpportunity, newQ.IdBusinessTripOpportunity);
 			message = message.TrimEnd(',');// Видаляємо останню кому
 
 			if (message != "UPDATE Questionnaire SET")// Якщо потрібно змінити дані
 				SendToServer(message + $" WHERE id = (SELECT id_questionnaire FROM Candidate WHERE login = '{login}')");
 
-			ChangeHealth(login, oldQ.CandidateHealth, newQ.CandidateHealth);
-			ChangeLanguages(login, oldQ.Languages, newQ.Languages);
-			ChangeEducations(login, oldQ.Educations, newQ.Educations);
+			ChangeHealth(login, oldQ.Health, newQ.Health);
+			ChangeLanguages(login, oldQ.Languages.ToList(), newQ.Languages.ToList());
+			ChangeEducations(login, oldQ.Educations.ToList(), newQ.Educations.ToList());
 		}
-		internal static void ChangeCandidate(string login, Candidate oldC, Candidate newC)
+		internal static void ChangeCandidate(string login, SharedModels.Models.Candidate oldC, SharedModels.Models.Candidate newC)
 		{// Метод, який змінює кандидата на сервері
 			string message = "UPDATE Candidate SET";
 			message += Change("surname", oldC.Surname, newC.Surname);
@@ -472,9 +472,9 @@ namespace RecruitmentClient.Models
 		{// Метод який створює на сервері кандидата
 
 			// Оголошуємо змінні
-			Candidate candidate = account.candidate;
-			Questionnaire questionnaire = candidate.questionnaire;
-			SharedModels.Models.Health health = questionnaire.CandidateHealth;
+			SharedModels.Models.Candidate candidate = account.candidate;
+			SharedModels.Models.Questionnaire questionnaire = candidate.Questionnaire;
+			SharedModels.Models.Health health = questionnaire.Health;
 
 			string fatherName = candidate.FatherName == "" ? "NULL" : $"'{candidate.FatherName}'";
 			string chronicDiseases = health.ChronicDiseases == "" ? "NULL" : $"'{health.ChronicDiseases}'";
@@ -487,11 +487,11 @@ namespace RecruitmentClient.Models
 				$"id_health,id_family_status,id_business_trip_opportunity) " +
 				$"values('{questionnaire.Nationality}','{questionnaire.City}',{questionnaire.ChildrenAmount}, " +
 				$"{questionnaire.Experience},'{questionnaire.DriverLicense}',{questionnaire.Readiness}, " +
-				$"{info},SCOPE_IDENTITY(),{questionnaire.ID_FamilyStatus}, " +
-				$"{questionnaire.ID_BusinessTripOpportunity}) " +
+				$"{info},SCOPE_IDENTITY(),{questionnaire.IdFamilyStatus}, " +
+				$"{questionnaire.IdBusinessTripOpportunity}) " +
 				$"DECLARE @id_q int " +
-				$"SET @id_q = SCOPE_IDENTITY() " + CreateLanguages(questionnaire.Languages, "@id_q") +
-				CreateEducations(questionnaire.Educations, "@id_q") +
+				$"SET @id_q = SCOPE_IDENTITY() " + CreateLanguages(questionnaire.Languages.ToList(), "@id_q") +
+				CreateEducations(questionnaire.Educations.ToList(), "@id_q") +
 				$"INSERT INTO Candidate(surname,name,father_name,login,password,phone,birthday,email,id_questionnaire) " +
 				$"values('{candidate.Surname}','{candidate.Name}',{fatherName},'{account.Login}', " +
 				$"'{account.Password}','{candidate.Phone}','{candidate.Birthday:yyyy-MM-dd}','{candidate.Email}',@id_q)");

@@ -1,61 +1,78 @@
 namespace SharedModels.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Questionnaire")]
-    public partial class Questionnaire
-    {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Questionnaire()
-        {
-            Candidate = new HashSet<Candidate>();
-            Education = new HashSet<Education>();
-            Language = new HashSet<Language>();
-        }
+	[Table("Questionnaire")]
+	public partial class Questionnaire
+	{
+		public int Id { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string Nationality { get; private set; }
+		[Required]
+		[StringLength(64)]
+		public string City { get; private set; }
+		public int ChildrenAmount { get; private set; }
+		public int Experience { get; private set; }
+		public bool DriverLicense { get; private set; }
+		public int Readiness { get; private set; }
+		public string AdditionalInfo { get; private set; }
+		public int IdHealth { get; private set; }
+		public virtual Health Health { get; private set; }
+		public int IdFamilyStatus { get; private set; }
+		public virtual FamilyStatus FamilyStatus { get; private set; }
+		public int IdBusinessTripOpportunity { get; private set; }
+		public virtual BusinessTripOpportunity Business_Trip_Opportunity { get; private set; }
+		public virtual ICollection<Language> Languages { get; private set; }
+		public virtual ICollection<Education> Educations { get; private set; }
+		public virtual ICollection<Candidate> Candidate { get; private set; }
 
-        public int id { get; set; }
+		public Questionnaire()
+		{
+			Candidate = new HashSet<Candidate>();
+			Educations = new HashSet<Education>();
+			Languages = new HashSet<Language>();
+		}
+		public Questionnaire(string nationality, string city, int childrenAmount,
+			int experience, bool driverLicense, int readiness, string additionalInfo,
+			Health health, int id_FamilyStatus, int id_BusinessTripOpportunity,
+			List<Language> languages, List<Education> educations)
+			: this()
+		{
+			Nationality = nationality;
+			City = city;
+			ChildrenAmount = childrenAmount;
+			Experience = experience;
+			DriverLicense = driverLicense;
+			Readiness = readiness;
+			AdditionalInfo = additionalInfo;
+			Health = health;
+			IdFamilyStatus = id_FamilyStatus;
+			IdBusinessTripOpportunity = id_BusinessTripOpportunity;
+			Languages = languages;
+			Educations = educations;
+		}
+		public Questionnaire(Questionnaire q)
+		{
+			Nationality = q.Nationality;
+			City = q.City;
+			ChildrenAmount = q.ChildrenAmount;
+			Experience = q.Experience;
+			DriverLicense = q.DriverLicense;
+			Readiness = q.Readiness;
+			AdditionalInfo = q.AdditionalInfo;
+			Health = new Health(q.Health);
+			IdFamilyStatus = q.IdFamilyStatus;
+			IdBusinessTripOpportunity = q.IdBusinessTripOpportunity;
 
-        [Required]
-        [StringLength(64)]
-        public string nationality { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string city { get; set; }
-
-        public int children_amount { get; set; }
-
-        public int experience { get; set; }
-
-        public bool driver_license { get; set; }
-
-        public int readiness { get; set; }
-
-        public string additional_info { get; set; }
-
-        public int id_health { get; set; }
-
-        public int id_family_status { get; set; }
-
-        public int id_business_trip_opportunity { get; set; }
-
-        public virtual BusinessTripOpportunity Business_Trip_Opportunity { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Candidate> Candidate { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Education> Education { get; set; }
-
-        public virtual FamilyStatus Family_Status { get; set; }
-
-        public virtual Health Health { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Language> Language { get; set; }
-    }
+			Languages = new List<Language>();
+			foreach (var language in q.Languages)
+				Languages.Add(new Language(language));
+			Educations = new List<Education>();
+			foreach (var education in q.Educations)
+				Educations.Add(new Education(education));
+		}
+	}
 }

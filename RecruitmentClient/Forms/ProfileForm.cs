@@ -11,6 +11,7 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Models;
 
 namespace RecruitmentClient.Forms
 {
@@ -124,7 +125,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CheckValidQuestionnairе(ref bool isDataValid)
 		{
-			if (_account.candidate.questionnaire == null)
+			if (_account.candidate.Questionnaire == null)
 			{
 				if (isDataValid)
 				{
@@ -202,7 +203,7 @@ namespace RecruitmentClient.Forms
 						$"{labelPhoneStart.Text}{textBoxPhone1.Text}" +
 						$"{textBoxPhone2.Text}{textBoxPhone3.Text}",
 						dateTimePickerBirthday.Value, textBoxEmail.Text,
-						_account.candidate.questionnaire);
+						_account.candidate.Questionnaire);
 
 					if (_startForm != null)
 						CreateCandidate();

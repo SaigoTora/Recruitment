@@ -5,11 +5,11 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentLibrary;
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Forms
 {
