@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Application_Status")]
-	public partial class ApplicationStatus
+	public partial class ApplicationStatus : EntityBase
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(32)]
 		public string Status { get; private set; }

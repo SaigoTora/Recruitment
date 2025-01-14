@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Position")]
-	public partial class Position
+	public partial class Position : EntityBase
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(64)]
 		public string Name { get; private set; }

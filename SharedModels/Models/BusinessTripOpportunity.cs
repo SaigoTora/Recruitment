@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Business_Trip_Opportunity")]
-	public partial class BusinessTripOpportunity
+	public partial class BusinessTripOpportunity : EntityBase
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(32)]
 		public string Opportunity { get; private set; }

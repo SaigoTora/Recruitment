@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Education_Form")]
-	public partial class EducationForm
+	public partial class EducationForm : EntityBase
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(32)]
 		public string Form { get; private set; }

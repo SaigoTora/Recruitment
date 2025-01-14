@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Requirement")]
-	public partial class Requirement
+	public partial class Requirement : EntityBase
 	{
-		public int Id { get; private set; }
 		[StringLength(64)]
 		public string City { get; private set; }
 		public byte AgeMin { get; private set; }

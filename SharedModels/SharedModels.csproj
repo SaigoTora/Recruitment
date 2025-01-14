@@ -63,6 +63,7 @@
     <Compile Include="Models\EducationDegree.cs" />
     <Compile Include="Models\EducationForm.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Base\EntityBase.cs" />
     <Compile Include="Models\FamilyStatus.cs" />
     <Compile Include="Models\Health.cs" />
     <Compile Include="Models\Interview.cs" />

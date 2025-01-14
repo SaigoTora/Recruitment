@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Vacancy")]
-	public partial class Vacancy
+	public partial class Vacancy : EntityBase
 	{
-		public int Id { get; private set; }
 		[Column(TypeName = "money")]
 		public decimal Salary { get; private set; }
 		[Column(TypeName = "datetime2")]

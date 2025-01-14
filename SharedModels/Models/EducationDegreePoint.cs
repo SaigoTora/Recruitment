@@ -1,11 +1,11 @@
+using SharedModels.Models.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedModels.Models
 {
 	[Table("EducationDegree_Point")]
-	public partial class EducationDegreePoint
+	public partial class EducationDegreePoint : EntityBase
 	{
-		public int Id { get; private set; }
 		public int Points { get; private set; }
 		public int IdPoint { get; private set; }
 		public int IdEducationDegree { get; private set; }

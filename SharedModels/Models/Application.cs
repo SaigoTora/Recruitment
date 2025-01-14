@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Application")]
-	public partial class Application
+	public partial class Application : EntityBase
 	{
-		public int Id { get; private set; }
 		[Column(TypeName = "datetime2")]
 		public DateTime DateSubmission { get; private set; }
 		public int Scores { get; private set; }

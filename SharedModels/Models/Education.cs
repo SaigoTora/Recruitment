@@ -1,13 +1,13 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Education")]
-	public partial class Education : ICloneable
+	public partial class Education : EntityBase, ICloneable
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(128)]
 		public string NameInstitution { get; private set; }

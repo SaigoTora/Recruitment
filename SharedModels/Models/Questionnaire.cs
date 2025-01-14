@@ -1,14 +1,14 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Questionnaire")]
-	public partial class Questionnaire : ICloneable
+	public partial class Questionnaire : EntityBase, ICloneable
 	{
-		public int Id { get; private set; }
 		[Required]
 		[StringLength(64)]
 		public string Nationality { get; private set; }

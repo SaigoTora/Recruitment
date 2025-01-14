@@ -1,14 +1,14 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Health")]
-	public partial class Health : ICloneable
+	public partial class Health : EntityBase, ICloneable
 	{
-		public int Id { get; private set; }
 		[StringLength(256)]
 		public string ChronicDiseases { get; private set; }
 		public bool Smoker { get; private set; }

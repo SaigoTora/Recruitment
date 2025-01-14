@@ -1,12 +1,12 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Point")]
-	public partial class Point
+	public partial class Point : EntityBase
 	{
-		public int Id { get; private set; }
 		public int AgeUnder18 { get; private set; }
 		public int Age18_30 { get; private set; }
 		public int Age30_50 { get; private set; }

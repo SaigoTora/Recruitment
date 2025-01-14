@@ -1,11 +1,11 @@
 namespace SharedModels.Models
 {
+	using SharedModels.Models.Base;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("EducationDegree_Requirement")]
-	public partial class EducationDegreeRequirement
+	public partial class EducationDegreeRequirement : EntityBase
 	{
-		public int Id { get; private set; }
 		public int IdRequirement { get; private set; }
 		public int IdEducationDegree { get; private set; }
 		public virtual EducationDegree EducationDegree { get; private set; }
