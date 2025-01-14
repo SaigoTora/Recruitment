@@ -5,8 +5,6 @@ using System.Net.Sockets;
 using System.Text;
 
 using RecruitmentClient.Utilities.ClientUtilities;
-using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.PersonInfo;
 
 namespace RecruitmentClient.Models
 {

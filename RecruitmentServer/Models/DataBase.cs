@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Utilities.ServerUtilities;
-using SharedModels.Models;
 
 namespace RecruitmentServer.Models
 {

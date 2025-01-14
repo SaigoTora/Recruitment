@@ -8,8 +8,7 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.ClientUtilities;
-using RecruitmentLibrary.ApplicationInfo;
-using RecruitmentLibrary.PersonInfo;
+using RecruitmentLibrary.Serialization;
 using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;

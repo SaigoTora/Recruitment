@@ -1,6 +1,6 @@
 ﻿using System;
 
-using RecruitmentLibrary.ApplicationInfo;
+using RecruitmentLibrary.Search;
 
 namespace RecruitmentServer.Utilities.ServerUtilities
 {

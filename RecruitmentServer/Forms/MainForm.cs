@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using RecruitmentLibrary.PersonInfo;
 using RecruitmentServer.Models;
 using RecruitmentServer.Utilities.ServerUtilities;
 using UIHelpers.ControlEventHandlers;
@@ -13,6 +12,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
+using RecruitmentLibrary.Serialization;
 
 namespace RecruitmentServer.Forms
 {

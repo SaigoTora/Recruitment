@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Forms;
 using RecruitmentClient.Models;
-using RecruitmentLibrary.PersonInfo;
+using RecruitmentLibrary.Serialization;
 using UIHelpers.Forms;
 
 namespace RecruitmentClient

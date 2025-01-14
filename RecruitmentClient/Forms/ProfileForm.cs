@@ -6,12 +6,12 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.FormUtilities;
-using RecruitmentLibrary.PersonInfo;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
+using RecruitmentLibrary.Serialization;
 
 namespace RecruitmentClient.Forms
 {

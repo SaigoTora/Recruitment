@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-using RecruitmentLibrary;
 using RecruitmentServer.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using SharedModels.Models;
+using RecruitmentLibrary.Assignment;
 
 namespace RecruitmentServer.Forms
 {

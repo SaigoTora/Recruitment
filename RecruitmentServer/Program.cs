@@ -2,8 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 using System.Windows.Forms;
-
-using RecruitmentLibrary.PersonInfo;
+using RecruitmentLibrary.Serialization;
 using RecruitmentServer.Forms;
 using RecruitmentServer.Models;
 

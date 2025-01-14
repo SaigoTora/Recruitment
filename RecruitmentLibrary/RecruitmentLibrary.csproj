@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationInfo\Searcher.cs" />
-    <Compile Include="AssignmentSolver.cs" />
-    <Compile Include="PersonInfo\Serializator.cs" />
+    <Compile Include="Search\Searcher.cs" />
+    <Compile Include="Assignment\AssignmentSolver.cs" />
+    <Compile Include="Serialization\Serializator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
