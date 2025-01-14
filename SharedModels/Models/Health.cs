@@ -1,11 +1,12 @@
 namespace SharedModels.Models
 {
+	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Health")]
-	public partial class Health
+	public partial class Health : ICloneable
 	{
 		public int Id { get; private set; }
 		[StringLength(256)]
@@ -23,12 +24,16 @@ namespace SharedModels.Models
 			Smoker = smoker;
 			DrinkAlcohol = drinkAlcohol;
 		}
-		public Health(Health health)
-			: this()
+
+		public object Clone()
 		{
-			ChronicDiseases = health.ChronicDiseases;
-			Smoker = health.Smoker;
-			DrinkAlcohol = health.DrinkAlcohol;
+			Health newHealth = new Health(ChronicDiseases, Smoker, DrinkAlcohol)
+			{
+				Id = this.Id,
+				Questionnaire = this.Questionnaire
+			};
+
+			return newHealth;
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace SharedModels.Models
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Education")]
-	public partial class Education
+	public partial class Education : ICloneable
 	{
 		public int Id { get; private set; }
 		[Required]
@@ -34,14 +34,20 @@ namespace SharedModels.Models
 			IdEducationDegree = idEducationDegree;
 			IdEducationForm = idEducationForm;
 		}
-		public Education(Education education)
+
+		public object Clone()
 		{
-			NameInstitution = education.NameInstitution;
-			Specialty = education.Specialty;
-			YearAdmission = education.YearAdmission;
-			DateEnd = education.DateEnd;
-			IdEducationDegree = education.IdEducationDegree;
-			IdEducationForm = education.IdEducationForm;
+			var newEducation = new Education(NameInstitution, Specialty, YearAdmission, DateEnd,
+				IdEducationDegree, IdEducationForm)
+			{
+				Id = this.Id,
+				IdQuestionnaire = this.IdQuestionnaire,
+				EducationDegree = this.EducationDegree,
+				EducationForm = this.EducationForm,
+				Questionnaire = this.Questionnaire
+			};
+
+			return newEducation;
 		}
 	}
 }

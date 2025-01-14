@@ -49,7 +49,7 @@ namespace RecruitmentClient.Forms
 			_account = account;
 			if (startForm == null)
 			{
-				_oldQuestionnaire = new Questionnaire(_account.candidate.Questionnaire);
+				_oldQuestionnaire = (Questionnaire)_account.candidate.Questionnaire.Clone();
 				_formOpenForChange = true;
 			}
 

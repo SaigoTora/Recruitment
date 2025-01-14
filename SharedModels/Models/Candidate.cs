@@ -6,7 +6,7 @@ namespace SharedModels.Models
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Candidate")]
-	public partial class Candidate
+	public partial class Candidate : ICloneable
 	{
 		public int Id { get; private set; }
 		[Required]
@@ -52,8 +52,20 @@ namespace SharedModels.Models
 			DateTime birthday, string email, Questionnaire questionnaire)
 			: this(surname, name, fatherName, phone, birthday, email)
 			=> Questionnaire = questionnaire;
-		public Candidate(Candidate candidate) : this(candidate.Surname, candidate.Name,
-			candidate.FatherName, candidate.Phone, candidate.Birthday, candidate.Email)
-			=> Questionnaire = new Questionnaire(candidate.Questionnaire);
+
+		public object Clone()
+		{
+			var newCandidate = new Candidate(Surname, Name, FatherName, Phone, Birthday, Email)
+			{
+				Id = this.Id,
+				Login = this.Login,
+				Password = this.Password,
+				IdQuestionnaire = this.IdQuestionnaire,
+				Questionnaire = (Questionnaire)this.Questionnaire.Clone(),
+				Application = this.Application
+			};
+
+			return newCandidate;
+		}
 	}
 }

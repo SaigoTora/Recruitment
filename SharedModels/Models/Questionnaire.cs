@@ -1,11 +1,12 @@
 namespace SharedModels.Models
 {
+	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Questionnaire")]
-	public partial class Questionnaire
+	public partial class Questionnaire : ICloneable
 	{
 		public int Id { get; private set; }
 		[Required]
@@ -54,25 +55,29 @@ namespace SharedModels.Models
 			Languages = languages;
 			Educations = educations;
 		}
-		public Questionnaire(Questionnaire q)
-		{
-			Nationality = q.Nationality;
-			City = q.City;
-			ChildrenAmount = q.ChildrenAmount;
-			Experience = q.Experience;
-			DriverLicense = q.DriverLicense;
-			Readiness = q.Readiness;
-			AdditionalInfo = q.AdditionalInfo;
-			Health = new Health(q.Health);
-			IdFamilyStatus = q.IdFamilyStatus;
-			IdBusinessTripOpportunity = q.IdBusinessTripOpportunity;
 
-			Languages = new List<Language>();
-			foreach (var language in q.Languages)
-				Languages.Add(new Language(language));
-			Educations = new List<Education>();
-			foreach (var education in q.Educations)
-				Educations.Add(new Education(education));
+		public object Clone()
+		{
+			Health health = (Health)Health?.Clone();
+			var languages = new List<Language>();
+			foreach (var language in Languages)
+				languages.Add((Language)language?.Clone());
+			var educations = new List<Education>();
+			foreach (var education in Educations)
+				educations.Add((Education)education?.Clone());
+
+			var newQuestionnaire = new Questionnaire(Nationality, City, ChildrenAmount, Experience,
+				DriverLicense, Readiness, AdditionalInfo, health, IdFamilyStatus,
+				IdBusinessTripOpportunity, languages, educations)
+			{
+				Id = this.Id,
+				IdHealth = this.IdHealth,
+				FamilyStatus = this.FamilyStatus,
+				BusinessTripOpportunity = this.BusinessTripOpportunity,
+				Candidate = this.Candidate
+			};
+
+			return newQuestionnaire;
 		}
 	}
 }

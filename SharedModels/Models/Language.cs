@@ -1,10 +1,11 @@
 namespace SharedModels.Models
 {
+	using System;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Language")]
-	public partial class Language
+	public partial class Language : ICloneable
 	{
 		public int Id { get; private set; }
 		[Required]
@@ -19,10 +20,17 @@ namespace SharedModels.Models
 			Name = name;
 			Level = level;
 		}
-		public Language(Language language)
+
+		public object Clone()
 		{
-			Name = language.Name;
-			Level = language.Level;
+			Language newLanguage = new Language(Name, Level)
+			{
+				Id = this.Id,
+				IdQuestionnaire = this.IdQuestionnaire,
+				Questionnaire = this.Questionnaire
+			};
+
+			return newLanguage;
 		}
 	}
 }

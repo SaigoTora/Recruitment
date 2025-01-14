@@ -32,7 +32,7 @@ namespace RecruitmentClient.Forms
 				_account.candidate = new Candidate();
 			else
 			{
-				_oldCandidate = new Candidate(_account.candidate);
+				_oldCandidate = (Candidate)_account.candidate.Clone();
 				SetFormData(_account);
 			}
 		}
