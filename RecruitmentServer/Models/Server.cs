@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecruitmentServer.Models.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace RecruitmentServer.Models
 
 				if (query.StartsWith("SELECT"))
 				{// Якщо потрібно повернути результат
-					DataTable dt = DataBase.ExecuteReturnQuery(query);// Отримуємо таблицю потрібних даних
+					DataTable dt = DataBaseManager.ExecuteReturnQuery(query);// Отримуємо таблицю потрібних даних
 
 					// Відправлення одного рядку даних через роздільник
 					string message = DataTableToString(dt);
@@ -61,7 +62,7 @@ namespace RecruitmentServer.Models
 					Send(message, clientStream);
 				}
 				else// Виконуємо запит
-					DataBase.ExecuteQuery(query);
+					DataBaseManager.ExecuteQuery(query);
 
 				await clientStream.FlushAsync();
 			}

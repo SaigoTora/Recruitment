@@ -101,14 +101,15 @@
     <Compile Include="Forms\AssignmentForm.Designer.cs">
       <DependentUpon>AssignmentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\RecruitmentEntities.cs" />
+    <Compile Include="Models\DataBase\IRepo.cs" />
+    <Compile Include="Models\DataBase\RecruitmentEntities.cs" />
     <Compile Include="RecruitmentDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RecruitmentDB.xsd</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\DataBase.cs" />
+    <Compile Include="Models\DataBase\DataBaseManager.cs" />
     <Compile Include="Forms\RequirementForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
+using RecruitmentServer.Models.DataBase;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -75,7 +76,7 @@ namespace RecruitmentServer.Forms
 			labelExperience.Text = $"Досвід роботи: " +
 				$"{_candidate.Questionnaire.Experience} міс.";
 			labelBusinessTrip.Text = "Можливість відряджень: " +
-				DataBase.GetBusinessTrip(_idBusinessTrip);
+				DataBaseManager.GetBusinessTrip(_idBusinessTrip);
 			if (_candidate.Questionnaire.DriverLicense)
 				labelDriverLicense.Text = "Має посвідчення водія";
 			else
@@ -83,7 +84,7 @@ namespace RecruitmentServer.Forms
 			labelReadiness.Text = $"Готовність до роботи: " +
 				$"{_candidate.Questionnaire.Readiness} дн.";
 			labelFamilyStatus.Text = "Сімейний стан: " +
-				DataBase.GetFamilyStatus(_idFamilyStatus);
+				DataBaseManager.GetFamilyStatus(_idFamilyStatus);
 			labelChildrenAmount.Text = "Кількість дітей: " +
 				_candidate.Questionnaire.ChildrenAmount;
 
@@ -131,13 +132,13 @@ namespace RecruitmentServer.Forms
 				_educationCreator.CreateLabel(labelSpecialty, "Спецальність: " +
 					educations[i].Specialty);
 				_educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
-					DataBase.GetEducationDegree(educations[i].IdEducationDegree));
+					DataBaseManager.GetEducationDegree(educations[i].IdEducationDegree));
 				_educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " +
 					educations[i].YearAdmission);
 				_educationCreator.CreateLabel(labelDateEnd, "Дата закінчення: " +
 					educations[i].DateEnd.ToString("yyyy-MM-dd"));
 				_educationCreator.CreateLabel(labelEducationForm, "Форма навчання: " +
-					DataBase.GetEducationForm(educations[i].IdEducationForm));
+					DataBaseManager.GetEducationForm(educations[i].IdEducationForm));
 			}
 		}
 

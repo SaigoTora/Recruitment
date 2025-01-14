@@ -8,6 +8,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
+using RecruitmentServer.Models.DataBase;
 
 namespace RecruitmentServer.Forms
 {
@@ -74,7 +75,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{
-			VacancyDbView vacancy = DataBase.GetVacancy(_application.IdVacancy);
+			VacancyDbView vacancy = DataBaseManager.GetVacancy(_application.IdVacancy);
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				isDeleteButtonVisible: false);
 			Visible = false;
@@ -83,7 +84,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonCandidate_Click(object sender, EventArgs e)
 		{
-			Candidate candidate = DataBase.GetCandidate(_application.IdCandidate);
+			Candidate candidate = DataBaseManager.GetCandidate(_application.IdCandidate);
 			CandidateForm candidateForm = new CandidateForm(_account, candidate);
 			Visible = false;
 			candidateForm.FormClosed += (s, args) => { Visible = true; };
@@ -155,13 +156,13 @@ namespace RecruitmentServer.Forms
 		private void ChangeApplicationStatus(DateTime dateTime)
 		{
 			int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-			DataBase.SetApplicationStatus(_application.Id, idStatus,
+			DataBaseManager.SetApplicationStatus(_application.Id, idStatus,
 				richTextBoxReason.Text);
 
 			if (comboBoxDecision.Text == "Прийнята")
 			{
-				DataBase.CreateInterview(_application.Id, dateTime.ToUniversalTime());
-				Candidate candidate = DataBase.GetCandidate(_application.IdCandidate);
+				DataBaseManager.CreateInterview(_application.Id, dateTime.ToUniversalTime());
+				Candidate candidate = DataBaseManager.GetCandidate(_application.IdCandidate);
 
 				CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
 					$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",

@@ -10,6 +10,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using SharedModels.Models;
 using RecruitmentLibrary.Assignment;
+using RecruitmentServer.Models.DataBase;
 
 namespace RecruitmentServer.Forms
 {
@@ -43,7 +44,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void AssignmentForm_Load(object sender, EventArgs e)
 		{
-			_allItems = DataBase.GetAssignmentItems();
+			_allItems = DataBaseManager.GetAssignmentItems();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
 			int[] results = AssignmentSolver.HungarianAlgorithm(matrix, true);
@@ -108,9 +109,9 @@ namespace RecruitmentServer.Forms
 			List<Guna2GradientPanel> createdPanels = new List<Guna2GradientPanel>();
 			for (int i = 0; i < _resultItems.Count; i++)
 			{
-				VacancyDbView vacancy = DataBase.GetVacancy(_resultItems[i].IdVacancy);
-				Candidate candidate = DataBase.GetCandidate(_resultItems[i].IdCandidate);
-				ApplicationDbView application = DataBase.GetApplication(
+				VacancyDbView vacancy = DataBaseManager.GetVacancy(_resultItems[i].IdVacancy);
+				Candidate candidate = DataBaseManager.GetCandidate(_resultItems[i].IdCandidate);
+				ApplicationDbView application = DataBaseManager.GetApplication(
 					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
 
 				createdPanels.Add(_assignmentCreator.CreateMainPanel());

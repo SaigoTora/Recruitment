@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
+using RecruitmentServer.Models.DataBase;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -113,7 +114,7 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DataBase.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
+						DataBaseManager.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
 						_employee.ChangePosition(textBoxPosition.Text);
 						_actionAfterChange(EventArgs.Empty);
 					}
@@ -140,7 +141,7 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DataBase.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
+						DataBaseManager.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
 							_employee.Id);
 						_employee.ChangeSalary(decimal.Parse(textBoxSalary.Text));
 						_actionAfterChange(EventArgs.Empty);
@@ -189,7 +190,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DataBase.DeleteEmployee(_employee.Id);
+				DataBaseManager.DeleteEmployee(_employee.Id);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

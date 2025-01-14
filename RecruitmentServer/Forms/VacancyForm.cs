@@ -9,6 +9,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
+using RecruitmentServer.Models.DataBase;
 
 namespace RecruitmentServer.Forms
 {
@@ -161,8 +162,8 @@ namespace RecruitmentServer.Forms
 		#region Button event handlers
 		private void ButtonRequirementShow_Click(object sender, EventArgs e)
 		{
-			string requirement = DataBase.GetRequirement(_vacancy.IdRequirement).ToString();
-			string educationDegrees = DataBase.GetRequirementEducationDegree(
+			string requirement = DataBaseManager.GetRequirement(_vacancy.IdRequirement).ToString();
+			string educationDegrees = DataBaseManager.GetRequirementEducationDegree(
 				_vacancy.IdRequirement);
 
 			if (educationDegrees != null && educationDegrees != string.Empty)
@@ -187,7 +188,7 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{
-			_point = DataBase.GetPoints(_vacancy.IdPoint);
+			_point = DataBaseManager.GetPoints(_vacancy.IdPoint);
 
 			PointsForm pointsForm = new PointsForm(_account, _point, true);
 			Visible = false;
@@ -206,8 +207,8 @@ namespace RecruitmentServer.Forms
 		{
 			if (CheckValidData())
 			{
-				int pointId = DataBase.CreatePoints(_point);
-				int requirementId = DataBase.CreateRequirement(_requirement);
+				int pointId = DataBaseManager.CreatePoints(_point);
+				int requirementId = DataBaseManager.CreateRequirement(_requirement);
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
 
@@ -215,7 +216,7 @@ namespace RecruitmentServer.Forms
 					decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
 					richTextBoxAdditionalInfo.Text, true, 0, pointId,
 					requirementId);
-				DataBase.CreateVacancy(_vacancy);
+				DataBaseManager.CreateVacancy(_vacancy);
 
 				_actionAfterChange(EventArgs.Empty);
 				Close();
@@ -230,7 +231,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DataBase.DeleteVacancy(_vacancy.Id);
+				DataBaseManager.DeleteVacancy(_vacancy.Id);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}
