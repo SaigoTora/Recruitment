@@ -21,18 +21,14 @@ namespace SharedModels.Models
 		public bool BusinessTripOpportunity { get; private set; }
 		public bool? Student { get; private set; }
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirement
-		{ get; private set; }
+		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
 		public virtual ICollection<Vacancy> Vacancy { get; private set; }
+			= new HashSet<Vacancy>();
 
-		public Requirement()
-		{
-			EducationDegreeRequirement = new HashSet<EducationDegreeRequirement>();
-			Vacancy = new HashSet<Vacancy>();
-		}
+		public Requirement() { }
 		public Requirement(string city, byte ageMin, byte ageMax, int expMin,
 			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
 			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student)
-			: this()
 		{
 			City = city;
 			AgeMin = ageMin;

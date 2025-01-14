@@ -12,11 +12,9 @@ namespace SharedModels.Models
 		[StringLength(32)]
 		public string Status { get; private set; }
 		public virtual ICollection<Interview> Interview { get; private set; }
+			= new HashSet<Interview>();
 
 		public InterviewStatus(string status)
-		{
-			Interview = new HashSet<Interview>();
-			Status = status;
-		}
+			=> Status = status;
 	}
 }

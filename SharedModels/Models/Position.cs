@@ -13,9 +13,9 @@ namespace SharedModels.Models
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		public virtual ICollection<Vacancy> Vacancy { get; private set; }
+			= new HashSet<Vacancy>();
 
-		public Position()
-			=> Vacancy = new HashSet<Vacancy>();
+		public Position() { }
 		public Position(string name, string description)
 		{
 			Name = name;

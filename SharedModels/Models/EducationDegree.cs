@@ -12,16 +12,10 @@ namespace SharedModels.Models
 		[StringLength(32)]
 		public string Degree { get; private set; }
 		public virtual ICollection<Education> Education { get; private set; }
+			= new HashSet<Education>();
 		public virtual ICollection<EducationDegreePoint> EducationDegreePoint
-		{ get; private set; }
+		{ get; private set; } = new HashSet<EducationDegreePoint>();
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirement
-		{ get; private set; }
-
-		public EducationDegree()
-		{
-			Education = new HashSet<Education>();
-			EducationDegreePoint = new HashSet<EducationDegreePoint>();
-			EducationDegreeRequirement = new HashSet<EducationDegreeRequirement>();
-		}
+		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
 	}
 }

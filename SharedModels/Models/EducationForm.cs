@@ -12,8 +12,6 @@ namespace SharedModels.Models
 		[StringLength(32)]
 		public string Form { get; private set; }
 		public virtual ICollection<Education> Education { get; private set; }
-
-		public EducationForm()
-			=> Education = new HashSet<Education>();
+			= new HashSet<Education>();
 	}
 }

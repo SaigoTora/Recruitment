@@ -15,11 +15,6 @@ namespace SharedModels.Models
 		public virtual Application Application { get; private set; }
 		public virtual InterviewStatus InterviewStatus { get; private set; }
 		public virtual ICollection<Employee> Employee { get; private set; }
-
-		public Interview()
-			=> Employee = new HashSet<Employee>();
-
-		public void ChangeDateEvent(DateTime dateTime)
-			=> DateEvent = dateTime;
+			= new HashSet<Employee>();
 	}
 }

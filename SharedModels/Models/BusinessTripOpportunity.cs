@@ -12,8 +12,6 @@ namespace SharedModels.Models
 		[StringLength(32)]
 		public string Opportunity { get; private set; }
 		public virtual ICollection<Questionnaire> Questionnaire { get; private set; }
-
-		public BusinessTripOpportunity()
-			=> Questionnaire = new HashSet<Questionnaire>();
+			= new HashSet<Questionnaire>();
 	}
 }

@@ -24,9 +24,9 @@ namespace SharedModels.Models
 		public virtual ICollection<EducationDegreePoint> Degrees
 		{ get; private set; }
 		public virtual ICollection<Vacancy> Vacancy { get; private set; }
+			= new HashSet<Vacancy>();
 
-		public Point()
-			=> Vacancy = new HashSet<Vacancy>();
+		public Point() { }
 
 		public void Change(int ageUnder18, int age18_30, int age30_50, int ageOver50,
 			int expNone, int expUnderYear, int exp1_3, int expOver3, int diploma,

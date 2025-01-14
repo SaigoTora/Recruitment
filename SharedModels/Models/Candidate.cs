@@ -34,12 +34,11 @@ namespace SharedModels.Models
 		public int IdQuestionnaire { get; private set; }
 		public virtual Questionnaire Questionnaire { get; set; }
 		public virtual ICollection<Application> Application { get; private set; }
+			= new HashSet<Application>();
 
-		public Candidate()
-			=> Application = new HashSet<Application>();
+		public Candidate() { }
 		public Candidate(string surname, string name, string fatherName, string phone,
 			DateTime birthday, string email)
-			: this()
 		{
 			Surname = surname;
 			Name = name;

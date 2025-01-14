@@ -20,8 +20,6 @@ namespace SharedModels.Models
 		public virtual Candidate Candidate { get; private set; }
 		public virtual Vacancy Vacancy { get; private set; }
 		public virtual ICollection<Interview> Interview { get; private set; }
-
-		public Application()
-			=> Interview = new HashSet<Interview>();
+			= new HashSet<Interview>();
 	}
 }

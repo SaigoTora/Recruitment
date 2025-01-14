@@ -14,11 +14,9 @@ namespace SharedModels.Models
 		public bool Smoker { get; private set; }
 		public bool DrinkAlcohol { get; private set; }
 		public virtual ICollection<Questionnaire> Questionnaire { get; private set; }
+			= new HashSet<Questionnaire>();
 
-		public Health()
-			=> Questionnaire = new HashSet<Questionnaire>();
 		public Health(string chronicDiseases, bool smoker, bool drinkAlcohol)
-			: this()
 		{
 			ChronicDiseases = chronicDiseases;
 			Smoker = smoker;

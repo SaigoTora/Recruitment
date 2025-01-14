@@ -27,20 +27,17 @@ namespace SharedModels.Models
 		public virtual FamilyStatus FamilyStatus { get; private set; }
 		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; private set; }
 		public virtual ICollection<Language> Languages { get; private set; }
+			= new HashSet<Language>();
 		public virtual ICollection<Education> Educations { get; private set; }
+			= new HashSet<Education>();
 		public virtual ICollection<Candidate> Candidate { get; private set; }
+			= new HashSet<Candidate>();
 
-		public Questionnaire()
-		{
-			Candidate = new HashSet<Candidate>();
-			Educations = new HashSet<Education>();
-			Languages = new HashSet<Language>();
-		}
+		public Questionnaire() { }
 		public Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
 			Health health, int idFamilyStatus, int idBusinessTripOpportunity,
 			List<Language> languages, List<Education> educations)
-			: this()
 		{
 			Nationality = nationality;
 			City = city;
