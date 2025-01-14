@@ -101,6 +101,7 @@
     <Compile Include="Forms\AssignmentForm.Designer.cs">
       <DependentUpon>AssignmentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataBase\BaseRepo.cs" />
     <Compile Include="Models\DataBase\IRepo.cs" />
     <Compile Include="Models\DataBase\RecruitmentEntities.cs" />
     <Compile Include="RecruitmentDB.Designer.cs">
