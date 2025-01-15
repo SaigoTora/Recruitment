@@ -10,33 +10,34 @@ namespace RecruitmentServer.Models.DataBase
 		{
 		}
 
-		public virtual DbSet<Application> Application { get; set; }
-		public virtual DbSet<ApplicationStatus> Application_Status { get; set; }
-		public virtual DbSet<BusinessTripOpportunity> Business_Trip_Opportunity { get; set; }
-		public virtual DbSet<Candidate> Candidate { get; set; }
-		public virtual DbSet<Education> Education { get; set; }
-		public virtual DbSet<EducationDegree> Education_Degree { get; set; }
-		public virtual DbSet<EducationForm> Education_Form { get; set; }
-		public virtual DbSet<EducationDegreePoint> EducationDegree_Point { get; set; }
-		public virtual DbSet<EducationDegreeRequirement> EducationDegree_Requirement { get; set; }
-		public virtual DbSet<Employee> Employee { get; set; }
-		public virtual DbSet<FamilyStatus> Family_Status { get; set; }
+		public virtual DbSet<Employee> Employees { get; set; }
+		public virtual DbSet<Interview> Interviews { get; set; }
+		public virtual DbSet<Application> Applications { get; set; }
+		public virtual DbSet<Candidate> Candidates { get; set; }
+		public virtual DbSet<Education> Educations { get; set; }
+		public virtual DbSet<Language> Languages { get; set; }
+		public virtual DbSet<Questionnaire> Questionnaires { get; set; }
+		public virtual DbSet<Vacancy> Vacancies { get; set; }
+		public virtual DbSet<EducationDegreeRequirement> EducationDegreeRequirements { get; set; }
+		public virtual DbSet<Requirement> Requirements { get; set; }
+		public virtual DbSet<EducationDegreePoint> EducationDegreePoints { get; set; }
+		public virtual DbSet<Point> Points { get; set; }
+		public virtual DbSet<InterviewStatus> InterviewStatuses { get; set; }
+		public virtual DbSet<FamilyStatus> FamilyStatuses { get; set; }
+		public virtual DbSet<BusinessTripOpportunity> BusinessTripOpportunities { get; set; }
 		public virtual DbSet<Health> Health { get; set; }
-		public virtual DbSet<Interview> Interview { get; set; }
-		public virtual DbSet<InterviewStatus> Interview_Status { get; set; }
-		public virtual DbSet<Language> Language { get; set; }
-		public virtual DbSet<Point> Point { get; set; }
-		public virtual DbSet<Position> Position { get; set; }
-		public virtual DbSet<Questionnaire> Questionnaire { get; set; }
-		public virtual DbSet<Requirement> Requirement { get; set; }
-		public virtual DbSet<Vacancy> Vacancy { get; set; }
-		public virtual DbSet<ApplicationDbView> View_Application { get; set; }
-		public virtual DbSet<EducationDbView> View_Education { get; set; }
-		public virtual DbSet<InterviewDbView> View_Interview { get; set; }
-		public virtual DbSet<PointDbView> View_Point { get; set; }
-		public virtual DbSet<QuestionnaireDbView> View_Questionnaire { get; set; }
-		public virtual DbSet<RequirementDbView> View_Requirement { get; set; }
-		public virtual DbSet<VacancyDbView> View_Vacancy { get; set; }
+		public virtual DbSet<EducationDegree> EducationDegrees { get; set; }
+		public virtual DbSet<EducationForm> EducationForms { get; set; }
+		public virtual DbSet<Position> Positions { get; set; }
+		public virtual DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
+
+		public virtual DbSet<PointDbView> PointsDbView { get; set; }
+		public virtual DbSet<RequirementDbView> RequirementsDbView { get; set; }
+		public virtual DbSet<EducationDbView> EducationsDbView { get; set; }
+		public virtual DbSet<QuestionnaireDbView> QuestionnairesDbView { get; set; }
+		public virtual DbSet<ApplicationDbView> ApplicationsDbView { get; set; }
+		public virtual DbSet<VacancyDbView> VacanciesDbView { get; set; }
+		public virtual DbSet<InterviewDbView> InterviewsDbView { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
