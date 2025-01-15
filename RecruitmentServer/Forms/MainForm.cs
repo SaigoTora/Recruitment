@@ -78,7 +78,8 @@ namespace RecruitmentServer.Forms
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			SetDefaultSearchValues();
-			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication, labelInterview, labelEmployee);
+			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication,
+				labelInterview, labelEmployee);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
 				pictureBoxDown, pictureBoxUp, pictureBoxTheme);
 			SetTheme(_account.Theme);

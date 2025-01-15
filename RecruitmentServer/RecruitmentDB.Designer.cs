@@ -16462,22 +16462,22 @@ SELECT id, date_submission, scores, additional_info, reason_rejection, id_applic
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Application_Status] WHERE (([id] = @Original_id) AND ([status] = @Or" +
-                "iginal_status))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Application_Status] WHERE (([id] = @Original_id) AND ([status]" +
+                " = @Original_status))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Application_Status] ([status]) VALUES (@status);\r\nSELECT id, status " +
-                "FROM Application_Status WHERE (id = SCOPE_IDENTITY()) ORDER BY id";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Application_Status] ([status]) VALUES (@status);\r\nSELECT id, s" +
+                "tatus FROM Application_Status WHERE (id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [Application_Status] SET [status] = @status WHERE (([id] = @Original_id) A" +
-                "ND ([status] = @Original_status));\r\nSELECT id, status FROM Application_Status WH" +
-                "ERE (id = @id) ORDER BY id";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Application_Status] SET [status] = @status WHERE (([id] = @Original" +
+                "_id) AND ([status] = @Original_status));\r\nSELECT id, status FROM Application_Sta" +
+                "tus WHERE (id = @id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -16498,7 +16498,7 @@ SELECT id, date_submission, scores, additional_info, reason_rejection, id_applic
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT       id, status\r\nFROM            Application_Status\r\nORDER BY id";
+            this._commandCollection[0].CommandText = "SELECT id, status FROM dbo.Application_Status ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -16789,14 +16789,14 @@ SELECT id, date_submission, scores, additional_info, reason_rejection, id_applic
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Business_Trip_Opportunity] ([opportunity]) VALUES (@opportunit" +
                 "y);\r\nSELECT id, opportunity FROM Business_Trip_Opportunity WHERE (id = SCOPE_IDE" +
-                "NTITY())";
+                "NTITY()) ORDER BY id";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@opportunity", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "opportunity", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Business_Trip_Opportunity] SET [opportunity] = @opportunity WHERE (" +
                 "([id] = @Original_id) AND ([opportunity] = @Original_opportunity));\r\nSELECT id, " +
-                "opportunity FROM Business_Trip_Opportunity WHERE (id = @id)";
+                "opportunity FROM Business_Trip_Opportunity WHERE (id = @id) ORDER BY id";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@opportunity", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "opportunity", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -16817,7 +16817,7 @@ SELECT id, date_submission, scores, additional_info, reason_rejection, id_applic
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, opportunity FROM dbo.Business_Trip_Opportunity";
+            this._commandCollection[0].CommandText = "SELECT id, opportunity FROM dbo.Business_Trip_Opportunity ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -18093,15 +18093,11 @@ SELECT id, name_institution, specialty, year_admission, date_end, id_questionnai
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT id, degree FROM dbo.Education_Degree ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT degree, id FROM Education_Degree ORDER BY id";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18126,19 +18122,6 @@ SELECT id, name_institution, specialty, year_admission, date_end, id_questionnai
             RecruitmentDB.Education_DegreeDataTable dataTable = new RecruitmentDB.Education_DegreeDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBy(RecruitmentDB.Education_DegreeDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18403,14 +18386,14 @@ SELECT id, name_institution, specialty, year_admission, date_end, id_questionnai
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Education_Form] ([form]) VALUES (@form);\r\nSELECT id, form FROM" +
-                " Education_Form WHERE (id = SCOPE_IDENTITY())";
+                " Education_Form WHERE (id = SCOPE_IDENTITY()) ORDER BY id";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@form", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "form", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Education_Form] SET [form] = @form WHERE (([id] = @Original_id) AND" +
                 " ([form] = @Original_form));\r\nSELECT id, form FROM Education_Form WHERE (id = @i" +
-                "d)";
+                "d) ORDER BY id";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@form", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "form", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -18431,7 +18414,7 @@ SELECT id, name_institution, specialty, year_admission, date_end, id_questionnai
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, form FROM dbo.Education_Form";
+            this._commandCollection[0].CommandText = "SELECT id, form FROM dbo.Education_Form ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -19955,14 +19938,14 @@ SELECT id, surname, name, father_name, position_name, city, phone, birthday, ema
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Family_Status] ([status]) VALUES (@status);\r\nSELECT id, status" +
-                " FROM Family_Status WHERE (id = SCOPE_IDENTITY())";
+                " FROM Family_Status WHERE (id = SCOPE_IDENTITY()) ORDER BY id";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Family_Status] SET [status] = @status WHERE (([id] = @Original_id) " +
                 "AND ([status] = @Original_status));\r\nSELECT id, status FROM Family_Status WHERE " +
-                "(id = @id)";
+                "(id = @id) ORDER BY id";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -19983,7 +19966,7 @@ SELECT id, surname, name, father_name, position_name, city, phone, birthday, ema
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, status FROM dbo.Family_Status";
+            this._commandCollection[0].CommandText = "SELECT id, status FROM dbo.Family_Status ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -20932,14 +20915,14 @@ SELECT id, date_event, id_application, id_interview_status FROM Interview WHERE 
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Interview_Status] ([status]) VALUES (@status);\r\nSELECT id, sta" +
-                "tus FROM Interview_Status WHERE (id = SCOPE_IDENTITY())";
+                "tus FROM Interview_Status WHERE (id = SCOPE_IDENTITY()) ORDER BY id";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Interview_Status] SET [status] = @status WHERE (([id] = @Original_i" +
                 "d) AND ([status] = @Original_status));\r\nSELECT id, status FROM Interview_Status " +
-                "WHERE (id = @id)";
+                "WHERE (id = @id) ORDER BY id";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -20960,7 +20943,7 @@ SELECT id, date_event, id_application, id_interview_status FROM Interview WHERE 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, status FROM dbo.Interview_Status";
+            this._commandCollection[0].CommandText = "SELECT id, status FROM dbo.Interview_Status ORDER BY id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

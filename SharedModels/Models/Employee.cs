@@ -41,13 +41,13 @@ namespace SharedModels.Models
 			string city, string phone, DateTime birthday, string email, decimal salary,
 			DateTime dateEmployment)
 		{
+			Id = id;
 			Surname = surname;
 			Name = name;
 			FatherName = fatherName;
 			Phone = phone;
 			Birthday = birthday;
 			Email = email;
-			Id = id;
 			PositionName = position;
 			City = city;
 			Salary = salary;

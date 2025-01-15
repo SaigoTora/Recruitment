@@ -8,8 +8,20 @@ using RecruitmentServer.Utilities.ServerUtilities;
 
 namespace RecruitmentServer.Models.DataBase
 {
-	internal static class DataBaseManager
+	internal class DataBaseManager : IDisposable
 	{
+		private readonly RecruitmentEntities _context;
+		private readonly BaseRepo<Employee> _employeeRepo;
+
+		public DataBaseManager()
+		{
+			_context = new RecruitmentEntities();
+			_employeeRepo = new BaseRepo<Employee>(_context);
+
+			DataBaseInitializer.Initialize(_context);
+		}
+
+
 		// Рядок підключення
 		private const string CONNECT_STR = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\RecruitmentDB.mdf;Integrated Security=True";
 		internal static void ExecuteQuery(string commandStr)
@@ -527,5 +539,10 @@ namespace RecruitmentServer.Models.DataBase
 		internal static void DeleteEmployee(int employeeId)
 			=> ExecuteQuery($"DELETE FROM Employee WHERE id = {employeeId}");
 
+		public void Dispose()
+		{
+			_context?.Dispose();
+			_employeeRepo?.Dispose();
+		}
 	}
 }

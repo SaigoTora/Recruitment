@@ -8,13 +8,19 @@ namespace SharedModels.Models
 	[Table("Application")]
 	public partial class Application : EntityBase
 	{
-		[Column(TypeName = "datetime2")]
+		[Column(name: "date_submission", TypeName = "datetime2")]
 		public DateTime DateSubmission { get; private set; }
+		[Column("scores")]
 		public int Scores { get; private set; }
+		[Column("additional_info")]
 		public string AdditionalInfo { get; private set; }
+		[Column("reason_rejection")]
 		public string ReasonRejection { get; private set; }
+		[Column("id_application_status")]
 		public int IdApplicationStatus { get; private set; }
+		[Column("id_candidate")]
 		public int IdCandidate { get; private set; }
+		[Column("id_vacancy")]
 		public int IdVacancy { get; private set; }
 		public virtual ApplicationStatus ApplicationStatus { get; private set; }
 		public virtual Candidate Candidate { get; private set; }

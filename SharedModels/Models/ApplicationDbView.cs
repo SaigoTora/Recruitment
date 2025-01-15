@@ -38,6 +38,7 @@ namespace SharedModels.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdVacancy { get; private set; }
 
+		public ApplicationDbView() { }
 		public ApplicationDbView(string positionName, string positionDescription, string status,
 			DateTime dateSubmission, string reasonRejection)
 		{

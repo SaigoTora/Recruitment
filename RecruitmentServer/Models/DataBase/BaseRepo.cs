@@ -8,16 +8,16 @@ using SharedModels.Models.Base;
 
 namespace RecruitmentServer.Models.DataBase
 {
-	internal class BaseRepo<T> : IRepo<T> where T : EntityBase, IDisposable, new()
+	internal class BaseRepo<T> : IDisposable, IRepo<T> where T : EntityBase
 	{
 		protected RecruitmentEntities Context => _db;
 
 		private readonly DbSet<T> _table;
 		private readonly RecruitmentEntities _db;
 
-		internal BaseRepo()
+		internal BaseRepo(RecruitmentEntities context)
 		{
-			_db = new RecruitmentEntities();
+			_db = context;
 			_table = _db.Set<T>();
 		}
 
@@ -70,9 +70,10 @@ namespace RecruitmentServer.Models.DataBase
 			}
 		}
 
-		public int Delete(int id, byte[] timeStamp)
+		public int Delete(int id)
 		{
-			_db.Entry(new EntityBase(id, timeStamp)).State = EntityState.Deleted;
+			_db.Entry(new EntityBase(id)).State
+				= EntityState.Deleted;
 			return SaveChanges();
 		}
 		public int Delete(T entity)
@@ -87,7 +88,6 @@ namespace RecruitmentServer.Models.DataBase
 		public List<T> ExecuteQuery(string sql) => _table.SqlQuery(sql).ToList();
 		public List<T> ExecuteQuery(string sql, object[] sqlParametersObjects)
 			=> _table.SqlQuery(sql, sqlParametersObjects).ToList();
-
 
 		public void Dispose() => _db?.Dispose();
 	}

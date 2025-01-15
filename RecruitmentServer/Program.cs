@@ -2,9 +2,11 @@
 using System.Configuration;
 using System.Globalization;
 using System.Windows.Forms;
+
 using RecruitmentLibrary.Serialization;
 using RecruitmentServer.Forms;
 using RecruitmentServer.Models;
+using RecruitmentServer.Models.DataBase;
 
 namespace RecruitmentServer
 {
@@ -14,6 +16,7 @@ namespace RecruitmentServer
 			$"{ConfigurationManager.AppSettings["serializePath"]}";
 		internal static readonly string EncryptKey =
 			ConfigurationManager.AppSettings["encryptKey"];
+		internal readonly static DataBaseManager DataBaseManager = new DataBaseManager();
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -28,6 +31,7 @@ namespace RecruitmentServer
 			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey)
 				?? new Account();
 			Application.Run(new MainForm(account));
+			DataBaseManager?.Dispose();
 		}
 	}
 }

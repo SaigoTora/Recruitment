@@ -3,40 +3,40 @@ using System.Data.Entity;
 
 namespace RecruitmentServer.Models.DataBase
 {
-	internal partial class RecruitmentEntities : DbContext
+	public partial class RecruitmentEntities : DbContext
 	{
-		internal RecruitmentEntities()
+		public RecruitmentEntities()
 			: base("name=RecruitmentEntities")
 		{
 		}
 
-		internal virtual DbSet<Application> Application { get; set; }
-		internal virtual DbSet<ApplicationStatus> Application_Status { get; set; }
-		internal virtual DbSet<BusinessTripOpportunity> Business_Trip_Opportunity { get; set; }
-		internal virtual DbSet<Candidate> Candidate { get; set; }
-		internal virtual DbSet<Education> Education { get; set; }
-		internal virtual DbSet<EducationDegree> Education_Degree { get; set; }
-		internal virtual DbSet<EducationForm> Education_Form { get; set; }
-		internal virtual DbSet<EducationDegreePoint> EducationDegree_Point { get; set; }
-		internal virtual DbSet<EducationDegreeRequirement> EducationDegree_Requirement { get; set; }
-		internal virtual DbSet<Employee> Employee { get; set; }
-		internal virtual DbSet<FamilyStatus> Family_Status { get; set; }
-		internal virtual DbSet<Health> Health { get; set; }
-		internal virtual DbSet<Interview> Interview { get; set; }
-		internal virtual DbSet<InterviewStatus> Interview_Status { get; set; }
-		internal virtual DbSet<Language> Language { get; set; }
-		internal virtual DbSet<Point> Point { get; set; }
-		internal virtual DbSet<Position> Position { get; set; }
-		internal virtual DbSet<Questionnaire> Questionnaire { get; set; }
-		internal virtual DbSet<Requirement> Requirement { get; set; }
-		internal virtual DbSet<Vacancy> Vacancy { get; set; }
-		internal virtual DbSet<ApplicationDbView> View_Application { get; set; }
-		internal virtual DbSet<EducationDbView> View_Education { get; set; }
-		internal virtual DbSet<InterviewDbView> View_Interview { get; set; }
-		internal virtual DbSet<PointDbView> View_Point { get; set; }
-		internal virtual DbSet<QuestionnaireDbView> View_Questionnaire { get; set; }
-		internal virtual DbSet<RequirementDbView> View_Requirement { get; set; }
-		internal virtual DbSet<VacancyDbView> View_Vacancy { get; set; }
+		public virtual DbSet<Application> Application { get; set; }
+		public virtual DbSet<ApplicationStatus> Application_Status { get; set; }
+		public virtual DbSet<BusinessTripOpportunity> Business_Trip_Opportunity { get; set; }
+		public virtual DbSet<Candidate> Candidate { get; set; }
+		public virtual DbSet<Education> Education { get; set; }
+		public virtual DbSet<EducationDegree> Education_Degree { get; set; }
+		public virtual DbSet<EducationForm> Education_Form { get; set; }
+		public virtual DbSet<EducationDegreePoint> EducationDegree_Point { get; set; }
+		public virtual DbSet<EducationDegreeRequirement> EducationDegree_Requirement { get; set; }
+		public virtual DbSet<Employee> Employee { get; set; }
+		public virtual DbSet<FamilyStatus> Family_Status { get; set; }
+		public virtual DbSet<Health> Health { get; set; }
+		public virtual DbSet<Interview> Interview { get; set; }
+		public virtual DbSet<InterviewStatus> Interview_Status { get; set; }
+		public virtual DbSet<Language> Language { get; set; }
+		public virtual DbSet<Point> Point { get; set; }
+		public virtual DbSet<Position> Position { get; set; }
+		public virtual DbSet<Questionnaire> Questionnaire { get; set; }
+		public virtual DbSet<Requirement> Requirement { get; set; }
+		public virtual DbSet<Vacancy> Vacancy { get; set; }
+		public virtual DbSet<ApplicationDbView> View_Application { get; set; }
+		public virtual DbSet<EducationDbView> View_Education { get; set; }
+		public virtual DbSet<InterviewDbView> View_Interview { get; set; }
+		public virtual DbSet<PointDbView> View_Point { get; set; }
+		public virtual DbSet<QuestionnaireDbView> View_Questionnaire { get; set; }
+		public virtual DbSet<RequirementDbView> View_Requirement { get; set; }
+		public virtual DbSet<VacancyDbView> View_Vacancy { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

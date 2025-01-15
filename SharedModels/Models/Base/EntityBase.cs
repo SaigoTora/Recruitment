@@ -6,13 +6,9 @@ namespace SharedModels.Models.Base
 	{
 		[Key]
 		public int Id { get; protected set; }
-		[Timestamp]
-		public byte[] Timestamp { get; protected set; }
 
-		public EntityBase(int id, byte[] timestamp)
-		{
-			Id = id;
-			Timestamp = timestamp;
-		}
+		public EntityBase() { }
+		public EntityBase(int id)
+			=> Id = id;
 	}
 }
