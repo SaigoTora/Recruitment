@@ -8,14 +8,19 @@ namespace SharedModels.Models
 	[Table("Vacancy")]
 	public partial class Vacancy : EntityBase
 	{
-		[Column(TypeName = "money")]
+		[Column(name: "salary", TypeName = "money")]
 		public decimal Salary { get; private set; }
-		[Column(TypeName = "datetime2")]
+		[Column(name: "date_publication", TypeName = "datetime2")]
 		public DateTime DatePublication { get; private set; }
+		[Column("info")]
 		public string Info { get; private set; }
+		[Column("relevance")]
 		public bool Relevance { get; private set; }
+		[Column("id_point")]
 		public int IdPoint { get; private set; }
+		[Column("id_requirement")]
 		public int IdRequirement { get; private set; }
+		[Column("id_position")]
 		public int IdPosition { get; private set; }
 		public virtual Point Point { get; private set; }
 		public virtual Position Position { get; private set; }

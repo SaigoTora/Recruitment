@@ -7,19 +7,33 @@ namespace SharedModels.Models
 	[Table("Point")]
 	public partial class Point : EntityBase
 	{
+		[Column("age_under_18")]
 		public int AgeUnder18 { get; private set; }
+		[Column("age_18_30")]
 		public int Age18_30 { get; private set; }
+		[Column("age_30_50")]
 		public int Age30_50 { get; private set; }
+		[Column("age_over_50")]
 		public int AgeOver50 { get; private set; }
+		[Column("exp_none")]
 		public int ExpNone { get; private set; }
+		[Column("exp_under_year")]
 		public int ExpUnderYear { get; private set; }
+		[Column("exp_1_3")]
 		public int Exp1_3 { get; private set; }
+		[Column("exp_over_3")]
 		public int ExpOver3 { get; private set; }
+		[Column("diploma")]
 		public int Diploma { get; private set; }
+		[Column("no_chronic_diseases")]
 		public int NoChronicDiseases { get; private set; }
+		[Column("driver_license")]
 		public int DriverLicense { get; private set; }
+		[Column("no_smoker")]
 		public int NoSmoker { get; private set; }
+		[Column("no_drink_alcohol")]
 		public int NoDrinkAlcohol { get; private set; }
+		[Column("business_trip_opportunity")]
 		public int BusinessTripOpportunity { get; private set; }
 		public virtual ICollection<EducationDegreePoint> Degrees
 		{ get; private set; }

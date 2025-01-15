@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using SharedModels.Models.Base;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -35,20 +36,20 @@ namespace RecruitmentServer.Models.DataBase
 		{
 			var dbSetProperties = context.GetType().GetProperties().
 				Where(p => p.PropertyType.IsGenericType
-				&& p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)).ToList();
+				&& p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
+				&& p.PropertyType.GetGenericArguments()[0].IsSubclassOf(typeof(EntityBase)))
+				.ToList();
 
 			foreach (dynamic property in dbSetProperties)
 			{
 				var dbSet = property.GetValue(context);
 				dbSet.RemoveRange(dbSet);
+				context.SaveChanges();
 			}
-
-			context.SaveChanges();
 		}
 		private static void SeedDatabase()
 		{
-			// Пример добавления данных
-			// Здесь можно вызвать методы добавления записей в таблицы
+
 		}
 	}
 }

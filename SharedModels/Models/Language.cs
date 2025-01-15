@@ -8,13 +8,17 @@ namespace SharedModels.Models
 	[Table("Language")]
 	public partial class Language : EntityBase, ICloneable
 	{
+		[Column("name")]
 		[Required]
 		[StringLength(64)]
 		public string Name { get; private set; }
+		[Column("level")]
 		public int Level { get; private set; }
+		[Column("id_questionnaire")]
 		public int IdQuestionnaire { get; private set; }
 		public virtual Questionnaire Questionnaire { get; private set; }
 
+		public Language() { }
 		public Language(string name, int level)
 		{
 			Name = name;

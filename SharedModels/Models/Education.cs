@@ -8,22 +8,29 @@ namespace SharedModels.Models
 	[Table("Education")]
 	public partial class Education : EntityBase, ICloneable
 	{
+		[Column("name_institution")]
 		[Required]
 		[StringLength(128)]
 		public string NameInstitution { get; private set; }
+		[Column("specialty")]
 		[Required]
 		[StringLength(64)]
 		public string Specialty { get; private set; }
+		[Column("year_admission")]
 		public int YearAdmission { get; private set; }
-		[Column(TypeName = "date")]
+		[Column(name: "date_end", TypeName = "date")]
 		public DateTime DateEnd { get; private set; }
+		[Column("id_questionnaire")]
 		public int IdQuestionnaire { get; private set; }
+		[Column("id_education_degree")]
 		public int IdEducationDegree { get; private set; }
+		[Column("id_education_form")]
 		public int IdEducationForm { get; private set; }
 		public virtual EducationDegree EducationDegree { get; private set; }
 		public virtual EducationForm EducationForm { get; private set; }
 		public virtual Questionnaire Questionnaire { get; private set; }
 
+		public Education() { }
 		public Education(string nameInstitution, string specialty, int yearAdmission,
 			DateTime dateEnd, int idEducationDegree, int idEducationForm)
 		{

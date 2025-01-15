@@ -8,9 +8,11 @@ namespace SharedModels.Models
 	[Table("Position")]
 	public partial class Position : EntityBase
 	{
+		[Column("name")]
 		[Required]
 		[StringLength(64)]
 		public string Name { get; private set; }
+		[Column("description")]
 		public string Description { get; private set; }
 		public virtual ICollection<Vacancy> Vacancy { get; private set; }
 			= new HashSet<Vacancy>();

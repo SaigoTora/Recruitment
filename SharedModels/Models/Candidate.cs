@@ -9,28 +9,36 @@ namespace SharedModels.Models
 	[Table("Candidate")]
 	public partial class Candidate : EntityBase, ICloneable
 	{
+		[Column("login")]
 		[Required]
 		[StringLength(16)]
 		public string Login { get; private set; }
+		[Column("password")]
 		[Required]
 		[StringLength(16)]
 		public string Password { get; private set; }
+		[Column("surname")]
 		[Required]
 		[StringLength(64)]
 		public string Surname { get; private set; }
+		[Column("name")]
 		[Required]
 		[StringLength(64)]
 		public string Name { get; private set; }
+		[Column("father_name")]
 		[StringLength(64)]
 		public string FatherName { get; private set; }
+		[Column("phone")]
 		[Required]
 		[StringLength(13)]
 		public string Phone { get; private set; }
-		[Column(TypeName = "date")]
+		[Column(name: "birthday", TypeName = "date")]
 		public DateTime Birthday { get; private set; }
+		[Column("email")]
 		[Required]
 		[StringLength(64)]
 		public string Email { get; private set; }
+		[Column("id_questionnaire")]
 		public int IdQuestionnaire { get; private set; }
 		public virtual Questionnaire Questionnaire { get; set; }
 		public virtual ICollection<Application> Application { get; private set; }

@@ -8,9 +8,9 @@ namespace SharedModels.Models
 	[Table("Application_Status")]
 	public partial class ApplicationStatus : EntityBase
 	{
+		[Column("status")]
 		[Required]
 		[StringLength(32)]
-		[Column("status")]
 		public string Status { get; private set; }
 		public virtual ICollection<Application> Application { get; private set; }
 			= new HashSet<Application>();

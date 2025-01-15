@@ -8,6 +8,7 @@ namespace SharedModels.Models
 	[Table("Education_Degree")]
 	public partial class EducationDegree : EntityBase
 	{
+		[Column("degree")]
 		[Required]
 		[StringLength(32)]
 		public string Degree { get; private set; }

@@ -8,6 +8,7 @@ namespace SharedModels.Models
 	[Table("Family_Status")]
 	public partial class FamilyStatus : EntityBase
 	{
+		[Column("status")]
 		[Required]
 		[StringLength(32)]
 		public string Status { get; private set; }

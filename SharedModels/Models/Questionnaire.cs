@@ -9,19 +9,29 @@ namespace SharedModels.Models
 	[Table("Questionnaire")]
 	public partial class Questionnaire : EntityBase, ICloneable
 	{
+		[Column("nationality")]
 		[Required]
 		[StringLength(64)]
 		public string Nationality { get; private set; }
+		[Column("city")]
 		[Required]
 		[StringLength(64)]
 		public string City { get; private set; }
+		[Column("children_amount")]
 		public int ChildrenAmount { get; private set; }
+		[Column("experience")]
 		public int Experience { get; private set; }
+		[Column("driver_license")]
 		public bool DriverLicense { get; private set; }
+		[Column("readiness")]
 		public int Readiness { get; private set; }
+		[Column("additional_info")]
 		public string AdditionalInfo { get; private set; }
+		[Column("id_health")]
 		public int IdHealth { get; private set; }
+		[Column("id_family_status")]
 		public int IdFamilyStatus { get; private set; }
+		[Column("id_business_trip_opportunity")]
 		public int IdBusinessTripOpportunity { get; private set; }
 		public virtual Health Health { get; private set; }
 		public virtual FamilyStatus FamilyStatus { get; private set; }

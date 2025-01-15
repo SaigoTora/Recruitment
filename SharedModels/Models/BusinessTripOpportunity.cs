@@ -8,6 +8,7 @@ namespace SharedModels.Models
 	[Table("Business_Trip_Opportunity")]
 	public partial class BusinessTripOpportunity : EntityBase
 	{
+		[Column("opportunity")]
 		[Required]
 		[StringLength(32)]
 		public string Opportunity { get; private set; }

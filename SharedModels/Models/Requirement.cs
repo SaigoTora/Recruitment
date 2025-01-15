@@ -8,17 +8,28 @@ namespace SharedModels.Models
 	[Table("Requirement")]
 	public partial class Requirement : EntityBase
 	{
+		[Column("city")]
 		[StringLength(64)]
 		public string City { get; private set; }
+		[Column("age_min")]
 		public byte AgeMin { get; private set; }
+		[Column("age_max")]
 		public byte AgeMax { get; private set; }
+		[Column("exp_min")]
 		public int ExpMin { get; private set; }
+		[Column("diploma")]
 		public bool Diploma { get; private set; }
+		[Column("no_chronic_diseases")]
 		public bool NoChronicDiseases { get; private set; }
+		[Column("driver_license")]
 		public bool DriverLicense { get; private set; }
+		[Column("no_smoker")]
 		public bool NoSmoker { get; private set; }
+		[Column("no_drink_alcohol")]
 		public bool NoDrinkAlcohol { get; private set; }
+		[Column("business_trip_opportunity")]
 		public bool BusinessTripOpportunity { get; private set; }
+		[Column("student")]
 		public bool? Student { get; private set; }
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirement
 		{ get; private set; } = new HashSet<EducationDegreeRequirement>();

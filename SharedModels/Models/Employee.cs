@@ -8,35 +8,44 @@ namespace SharedModels.Models
 	[Table("Employee")]
 	public partial class Employee : EntityBase
 	{
+		[Column("surname")]
 		[Required]
 		[StringLength(64)]
 		public string Surname { get; private set; }
+		[Column("name")]
 		[Required]
 		[StringLength(64)]
 		public string Name { get; private set; }
+		[Column("father_name")]
 		[StringLength(64)]
 		public string FatherName { get; private set; }
+		[Column("position_name")]
 		[Required]
 		[StringLength(64)]
 		public string PositionName { get; private set; }
+		[Column("city")]
 		[Required]
 		[StringLength(64)]
 		public string City { get; private set; }
+		[Column("phone")]
 		[Required]
 		[StringLength(16)]
 		public string Phone { get; private set; }
-		[Column(TypeName = "date")]
+		[Column(name: "birthday", TypeName = "date")]
 		public DateTime Birthday { get; private set; }
+		[Column("email")]
 		[Required]
 		[StringLength(64)]
 		public string Email { get; private set; }
-		[Column(TypeName = "money")]
+		[Column(name: "salary", TypeName = "money")]
 		public decimal Salary { get; private set; }
-		[Column(TypeName = "date")]
+		[Column(name: "date_employment", TypeName = "date")]
 		public DateTime DateEmployment { get; private set; }
+		[Column("id_interview")]
 		public int? IdInterview { get; private set; }
 		public virtual Interview Interview { get; private set; }
 
+		public Employee() { }
 		public Employee(int id, string surname, string name, string fatherName, string position,
 			string city, string phone, DateTime birthday, string email, decimal salary,
 			DateTime dateEmployment)

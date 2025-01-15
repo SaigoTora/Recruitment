@@ -8,26 +8,28 @@ namespace SharedModels.Models
 	public partial class InterviewDbView
 	{
 		[Key]
-		[Column(Order = 0)]
+		[Column(name: "id", Order = 0)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int Id { get; private set; }
 		[Key]
-		[Column(Order = 1)]
+		[Column(name: "position_name", Order = 1)]
 		[StringLength(64)]
 		public string PositionName { get; private set; }
+		[Column("position_description")]
 		public string PositionDescription { get; private set; }
 		[Key]
-		[Column(Order = 2, TypeName = "datetime2")]
+		[Column(name: "date_event", Order = 2, TypeName = "datetime2")]
 		public DateTime DateEvent { get; private set; }
 		[Key]
-		[Column(Order = 3)]
+		[Column(name: "status", Order = 3)]
 		[StringLength(32)]
 		public string Status { get; private set; }
 		[Key]
-		[Column(Order = 4)]
+		[Column(name: "id_application", Order = 4)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdApplication { get; private set; }
 
+		public InterviewDbView() { }
 		public InterviewDbView(string positionName, string positionDescription,
 			string status, DateTime dateEvent)
 		{

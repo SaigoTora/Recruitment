@@ -8,33 +8,36 @@ namespace SharedModels.Models
 	public partial class ApplicationDbView
 	{
 		[Key]
-		[Column(Order = 0)]
+		[Column(name: "id", Order = 0)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int Id { get; private set; }
 		[Key]
-		[Column(Order = 1, TypeName = "datetime2")]
+		[Column(name: "date_submission", Order = 1, TypeName = "datetime2")]
 		public DateTime DateSubmission { get; private set; }
 		[Key]
-		[Column(Order = 2)]
+		[Column(name: "scores", Order = 2)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int Scores { get; private set; }
 		[Key]
-		[Column(Order = 3)]
+		[Column(name: "status", Order = 3)]
 		[StringLength(32)]
 		public string Status { get; private set; }
+		[Column("additional_info")]
 		public string AdditionalInfo { get; private set; }
+		[Column("reason_rejection")]
 		public string ReasonRejection { get; private set; }
 		[Key]
-		[Column(Order = 4)]
+		[Column(name: "position_name", Order = 4)]
 		[StringLength(64)]
 		public string PositionName { get; private set; }
+		[Column("position_description")]
 		public string PositionDescription { get; private set; }
 		[Key]
-		[Column(Order = 5)]
+		[Column(name: "id_candidate", Order = 5)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdCandidate { get; private set; }
 		[Key]
-		[Column(Order = 6)]
+		[Column(name: "id_vacancy", Order = 6)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int IdVacancy { get; private set; }
 

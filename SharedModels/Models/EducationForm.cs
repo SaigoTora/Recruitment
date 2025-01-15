@@ -8,6 +8,7 @@ namespace SharedModels.Models
 	[Table("Education_Form")]
 	public partial class EducationForm : EntityBase
 	{
+		[Column("form")]
 		[Required]
 		[StringLength(32)]
 		public string Form { get; private set; }
