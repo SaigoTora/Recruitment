@@ -8,17 +8,17 @@ using RecruitmentServer.Utilities.ServerUtilities;
 
 namespace RecruitmentServer.Models.DataBase
 {
-	internal class DataBaseManager : IDisposable
+	internal class DatabaseManager : IDisposable
 	{
 		private readonly RecruitmentEntities _context;
 		private readonly BaseRepo<Employee> _employeeRepo;
 
-		public DataBaseManager()
+		public DatabaseManager()
 		{
 			_context = new RecruitmentEntities();
 			_employeeRepo = new BaseRepo<Employee>(_context);
 
-			DataBaseInitializer.Initialize(_context);
+			DatabaseInitializer.Initialize(_context);
 		}
 
 
@@ -275,7 +275,7 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		internal static List<Language> GetLanguages(int idCandidate)
 		{// Метод повертає список мов кандидата
-			DataTable dt = ExecuteReturnQuery($"SELECT name,level " +
+			DataTable dt = ExecuteReturnQuery($"SELECT name,level,id_questionnaire " +
 				$"FROM Language " +
 				$"WHERE Language.id_questionnaire = " +
 				$"(SELECT id FROM Questionnaire " +
@@ -285,14 +285,15 @@ namespace RecruitmentServer.Models.DataBase
 
 			List<Language> languages = new List<Language>();
 			for (int i = 0; i < dt.Rows.Count; i++)
-				languages.Add(new Language(GetItem(dt, i, 0), GetIntItem(dt, i, 1)));
+				languages.Add(new Language(GetItem(dt, i, 0), GetIntItem(dt, i, 1),
+					GetIntItem(dt, i, 2)));
 
 			return languages;
 		}
 		internal static List<Education> GetEducations(int idCandidate)
 		{// Метод повертає список освіт кандидата
 			DataTable dt = ExecuteReturnQuery($"SELECT name_institution,specialty,year_admission,date_end, " +
-				$"id_education_degree,id_education_form " +
+				$"id_questionnaire, id_education_degree,id_education_form " +
 				$"FROM Education WHERE Education.id_questionnaire = " +
 				$"(SELECT id FROM Questionnaire " +
 				$"WHERE Questionnaire.id = " +
@@ -304,7 +305,7 @@ namespace RecruitmentServer.Models.DataBase
 			for (int i = 0; i < dt.Rows.Count; i++)
 				educations.Add(new Education(GetItem(dt, i, 0), GetItem(dt, i, 1),
 					GetIntItem(dt, i, 2), GetDateItem(dt, i, 3),
-					GetIntItem(dt, i, 4), GetIntItem(dt, i, 5)));
+					GetIntItem(dt, i, 4), GetIntItem(dt, i, 5), GetIntItem(dt, i, 6)));
 
 			return educations;
 
@@ -347,11 +348,11 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		internal static Point GetPoints(int idPoint)
 		{// Метод, який повертає бали
-			DataTable dt = ExecuteReturnQuery($"SELECT id_education_degree,points FROM EducationDegree_Point " +
+			DataTable dt = ExecuteReturnQuery($"SELECT points,id_education_degree FROM EducationDegree_Point " +
 				$"WHERE id_point = {idPoint}");
 			EducationDegreePoint[] degrees = new EducationDegreePoint[dt.Rows.Count];
 			for (int i = 0; i < degrees.Length; i++)
-				degrees[i] = new EducationDegreePoint(GetIntItem(dt, i, 0), GetIntItem(dt, i, 1));
+				degrees[i] = new EducationDegreePoint(GetIntItem(dt, i, 0), idPoint, GetIntItem(dt, i, 1));
 
 
 			dt = ExecuteReturnQuery($"SELECT age_under_18,age_18_30,age_30_50,age_over_50," +

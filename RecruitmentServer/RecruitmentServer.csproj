@@ -102,11 +102,11 @@
       <DependentUpon>AssignmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\DataBase\BaseRepo.cs" />
-    <Compile Include="Models\DataBase\DataBaseInitializer.cs" />
+    <Compile Include="Models\DataBase\DatabaseInitializer.cs" />
     <Compile Include="Models\DataBase\IRepo.cs" />
     <Compile Include="Models\DataBase\RecruitmentEntities.cs" />
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\DataBase\DataBaseManager.cs" />
+    <Compile Include="Models\DataBase\DatabaseManager.cs" />
     <Compile Include="Forms\RequirementForm.cs">
       <SubType>Form</SubType>
     </Compile>

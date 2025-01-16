@@ -200,7 +200,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelVacancy, labelApplication, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Vacancy;
-			_totalItemsToDisplay = DataBaseManager.GetCountVacancies(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetCountVacancies(_searcher);
 		}
 		private void SetupVacanciesSearchPanel()
 		{
@@ -220,7 +220,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelApplication, labelVacancy, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Application;
-			_totalItemsToDisplay = DataBaseManager.GetCountApplications(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetCountApplications(_searcher);
 		}
 		private void SetupApplicationsSearchPanel()
 		{
@@ -240,7 +240,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelInterview, labelVacancy, labelApplication, labelEmployee);
 			_panelsInfo = PanelsInfo.Interview;
-			_totalItemsToDisplay = DataBaseManager.GetCountInterviews(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetCountInterviews(_searcher);
 		}
 		private void SetupInterviewsSearchPanel()
 		{
@@ -259,7 +259,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelEmployee, labelVacancy, labelApplication, labelInterview);
 			_panelsInfo = PanelsInfo.Employee;
-			_totalItemsToDisplay = DataBaseManager.GetCountEmployees(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetCountEmployees(_searcher);
 		}
 		private void SetupEmployeesSearchPanel()
 		{
@@ -334,7 +334,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<VacancyDbView> vacancies = DataBaseManager.GetVacancies(_createdPanels.Count,
+			List<VacancyDbView> vacancies = DatabaseManager.GetVacancies(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -352,7 +352,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ApplicationDbView> applications = DataBaseManager.GetApplications(
+			List<ApplicationDbView> applications = DatabaseManager.GetApplications(
 				_createdPanels.Count, COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
 
@@ -370,7 +370,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<InterviewDbView> interviews = DataBaseManager.GetInterviews(_createdPanels.Count,
+			List<InterviewDbView> interviews = DatabaseManager.GetInterviews(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -388,7 +388,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Employee> employees = DataBaseManager.GetEmployees(_createdPanels.Count,
+			List<Employee> employees = DatabaseManager.GetEmployees(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[employees.Count];
 

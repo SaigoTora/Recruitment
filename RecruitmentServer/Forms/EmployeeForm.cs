@@ -114,7 +114,7 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DataBaseManager.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
+						DatabaseManager.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
 						_employee.ChangePosition(textBoxPosition.Text);
 						_actionAfterChange(EventArgs.Empty);
 					}
@@ -141,7 +141,7 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DataBaseManager.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
+						DatabaseManager.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
 							_employee.Id);
 						_employee.ChangeSalary(decimal.Parse(textBoxSalary.Text));
 						_actionAfterChange(EventArgs.Empty);
@@ -190,7 +190,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DataBaseManager.DeleteEmployee(_employee.Id);
+				DatabaseManager.DeleteEmployee(_employee.Id);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

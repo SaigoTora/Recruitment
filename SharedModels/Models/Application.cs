@@ -27,5 +27,16 @@ namespace SharedModels.Models
 		public virtual Vacancy Vacancy { get; private set; }
 		public virtual ICollection<Interview> Interview { get; private set; }
 			= new HashSet<Interview>();
+
+		public Application() { }
+		public Application(DateTime dateSubmission, string additionalInfo, int idApplicationStatus,
+			int idCandidate, int idVacancy)
+		{
+			DateSubmission = dateSubmission;
+			AdditionalInfo = additionalInfo;
+			IdApplicationStatus = idApplicationStatus;
+			IdCandidate = idCandidate;
+			IdVacancy = idVacancy;
+		}
 	}
 }

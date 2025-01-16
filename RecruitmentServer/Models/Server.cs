@@ -54,7 +54,7 @@ namespace RecruitmentServer.Models
 
 				if (query.StartsWith("SELECT"))
 				{// Якщо потрібно повернути результат
-					DataTable dt = DataBaseManager.ExecuteReturnQuery(query);// Отримуємо таблицю потрібних даних
+					DataTable dt = DatabaseManager.ExecuteReturnQuery(query);// Отримуємо таблицю потрібних даних
 
 					// Відправлення одного рядку даних через роздільник
 					string message = DataTableToString(dt);
@@ -62,7 +62,7 @@ namespace RecruitmentServer.Models
 					Send(message, clientStream);
 				}
 				else// Виконуємо запит
-					DataBaseManager.ExecuteQuery(query);
+					DatabaseManager.ExecuteQuery(query);
 
 				await clientStream.FlushAsync();
 			}

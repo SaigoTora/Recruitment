@@ -16,10 +16,11 @@ namespace SharedModels.Models
 		public virtual Point Point { get; private set; }
 
 		public EducationDegreePoint() { }
-		public EducationDegreePoint(int idDegree, int point)
+		public EducationDegreePoint(int points, int idPoint, int idEducationDegree)
 		{
-			IdEducationDegree = idDegree;
-			Points = point;
+			Points = points;
+			IdPoint = idPoint;
+			IdEducationDegree = idEducationDegree;
 		}
 	}
 }

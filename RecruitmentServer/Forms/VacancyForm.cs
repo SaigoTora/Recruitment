@@ -162,8 +162,8 @@ namespace RecruitmentServer.Forms
 		#region Button event handlers
 		private void ButtonRequirementShow_Click(object sender, EventArgs e)
 		{
-			string requirement = DataBaseManager.GetRequirement(_vacancy.IdRequirement).ToString();
-			string educationDegrees = DataBaseManager.GetRequirementEducationDegree(
+			string requirement = DatabaseManager.GetRequirement(_vacancy.IdRequirement).ToString();
+			string educationDegrees = DatabaseManager.GetRequirementEducationDegree(
 				_vacancy.IdRequirement);
 
 			if (educationDegrees != null && educationDegrees != string.Empty)
@@ -188,7 +188,7 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{
-			_point = DataBaseManager.GetPoints(_vacancy.IdPoint);
+			_point = DatabaseManager.GetPoints(_vacancy.IdPoint);
 
 			PointsForm pointsForm = new PointsForm(_account, _point, true);
 			Visible = false;
@@ -207,8 +207,8 @@ namespace RecruitmentServer.Forms
 		{
 			if (CheckValidData())
 			{
-				int pointId = DataBaseManager.CreatePoints(_point);
-				int requirementId = DataBaseManager.CreateRequirement(_requirement);
+				int pointId = DatabaseManager.CreatePoints(_point);
+				int requirementId = DatabaseManager.CreateRequirement(_requirement);
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
 
@@ -216,7 +216,7 @@ namespace RecruitmentServer.Forms
 					decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
 					richTextBoxAdditionalInfo.Text, true, 0, pointId,
 					requirementId);
-				DataBaseManager.CreateVacancy(_vacancy);
+				DatabaseManager.CreateVacancy(_vacancy);
 
 				_actionAfterChange(EventArgs.Empty);
 				Close();
@@ -231,7 +231,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DataBaseManager.DeleteVacancy(_vacancy.Id);
+				DatabaseManager.DeleteVacancy(_vacancy.Id);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

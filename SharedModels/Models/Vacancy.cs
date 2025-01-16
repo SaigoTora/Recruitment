@@ -27,5 +27,18 @@ namespace SharedModels.Models
 		public virtual Requirement Requirement { get; private set; }
 		public virtual ICollection<Application> Application { get; private set; }
 			= new HashSet<Application>();
+
+		public Vacancy() { }
+		public Vacancy(decimal salary, DateTime datePublication, string info, int idPoint,
+			int idRequirement, int idPosition)
+		{
+			Salary = salary;
+			DatePublication = datePublication;
+			Info = info;
+			Relevance = true;
+			IdPoint = idPoint;
+			IdRequirement = idRequirement;
+			IdPosition = idPosition;
+		}
 	}
 }

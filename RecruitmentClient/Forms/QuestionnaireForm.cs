@@ -420,7 +420,7 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = new List<Language>(MAX_LANGUAGE_COUNT);
 			for (int i = 0; i < _languages.Count; i++)
 				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(),
-					(int)_languages[i].NUDLevel.Value));
+					(int)_languages[i].NUDLevel.Value, _account.candidate.IdQuestionnaire));
 
 			return languages;
 		}

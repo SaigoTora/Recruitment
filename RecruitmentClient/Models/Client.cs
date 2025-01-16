@@ -77,7 +77,7 @@ namespace RecruitmentClient.Models
 		// Методи для отримання даних від серверу
 		private static List<SharedModels.Models.Language> GetLanguages(string login)
 		{// Метод повертає список мов кандидата від серверу
-			string[] list = SendToServerAndGetResult($"SELECT name,level " +
+			string[] list = SendToServerAndGetResult($"SELECT name,level,id_questionnaire " +
 				$"FROM Language " +
 				$"WHERE Language.id_questionnaire = " +
 				$"(SELECT id FROM Questionnaire " +
@@ -87,7 +87,8 @@ namespace RecruitmentClient.Models
 
 			List<SharedModels.Models.Language> languages = new List<SharedModels.Models.Language>();
 			for (int i = 0; i < list.Length; i += 2)
-				languages.Add(new SharedModels.Models.Language(list[i], Int32.Parse(list[i + 1])));
+				languages.Add(new SharedModels.Models.Language(list[i], Int32.Parse(list[i + 1]),
+					Int32.Parse(list[i + 2])));
 
 			return languages;
 		}

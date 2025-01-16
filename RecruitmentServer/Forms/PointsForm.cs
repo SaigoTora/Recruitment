@@ -58,8 +58,7 @@ namespace RecruitmentServer.Forms
 			{
 				item = comboBoxDegrees.Items[i] as DataRowView;
 
-				EducationDegreePoint pointDegree = new EducationDegreePoint(int.Parse(
-					item[0].ToString()), 0);
+				EducationDegreePoint pointDegree = new EducationDegreePoint(0, _point.Id, int.Parse(item[0].ToString()));
 				_degreesPoints[i] = pointDegree;
 			}
 		}
@@ -101,7 +100,7 @@ namespace RecruitmentServer.Forms
 			int index = FindDegreeIndexById(id);
 
 			if (index >= 0)
-				_degreesPoints[index] = new EducationDegreePoint(id, (int)NUDDegree.Value);
+				_degreesPoints[index] = new EducationDegreePoint((int)NUDDegree.Value, _point.Id, id);
 		}
 		private void ComboBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
 		{

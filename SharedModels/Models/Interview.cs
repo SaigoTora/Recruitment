@@ -18,5 +18,13 @@ namespace SharedModels.Models
 		public virtual InterviewStatus InterviewStatus { get; private set; }
 		public virtual ICollection<Employee> Employee { get; private set; }
 			= new HashSet<Employee>();
+
+		public Interview() { }
+		public Interview(DateTime dateEvent, int idApplication, int idInterviewStatus)
+		{
+			DateEvent = dateEvent;
+			IdApplication = idApplication;
+			IdInterviewStatus = idInterviewStatus;
+		}
 	}
 }

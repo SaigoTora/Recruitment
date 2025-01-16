@@ -41,6 +41,25 @@ namespace SharedModels.Models
 			= new HashSet<Vacancy>();
 
 		public Point() { }
+		public Point(int ageUnder18, int age18_30, int age30_50, int ageOver50, int expNone,
+			int expUnderYear, int exp1_3, int expOver3, int diploma, int noChronicDiseases,
+			int driverLicense, int noSmoker, int noDrinkAlcohol, int businessTripOpportunity)
+		{
+			AgeUnder18 = ageUnder18;
+			Age18_30 = age18_30;
+			Age30_50 = age30_50;
+			AgeOver50 = ageOver50;
+			ExpNone = expNone;
+			ExpUnderYear = expUnderYear;
+			Exp1_3 = exp1_3;
+			ExpOver3 = expOver3;
+			Diploma = diploma;
+			NoChronicDiseases = noChronicDiseases;
+			DriverLicense = driverLicense;
+			NoSmoker = noSmoker;
+			NoDrinkAlcohol = noDrinkAlcohol;
+			BusinessTripOpportunity = businessTripOpportunity;
+		}
 
 		public void Change(int ageUnder18, int age18_30, int age30_50, int ageOver50,
 			int expNone, int expUnderYear, int exp1_3, int expOver3, int diploma,

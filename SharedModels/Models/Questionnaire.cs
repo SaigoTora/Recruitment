@@ -44,10 +44,9 @@ namespace SharedModels.Models
 			= new HashSet<Candidate>();
 
 		public Questionnaire() { }
-		public Questionnaire(string nationality, string city, int childrenAmount,
+		private Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
-			Health health, int idFamilyStatus, int idBusinessTripOpportunity,
-			List<Language> languages, List<Education> educations)
+			int idFamilyStatus, int idBusinessTripOpportunity)
 		{
 			Nationality = nationality;
 			City = city;
@@ -56,9 +55,25 @@ namespace SharedModels.Models
 			DriverLicense = driverLicense;
 			Readiness = readiness;
 			AdditionalInfo = additionalInfo;
-			Health = health;
 			IdFamilyStatus = idFamilyStatus;
 			IdBusinessTripOpportunity = idBusinessTripOpportunity;
+		}
+		public Questionnaire(string nationality, string city, int childrenAmount,
+			int experience, bool driverLicense, int readiness, string additionalInfo,
+			int idHealth, int idFamilyStatus, int idBusinessTripOpportunity)
+			: this(nationality, city, childrenAmount, experience, driverLicense,
+				  readiness, additionalInfo, idFamilyStatus, idBusinessTripOpportunity)
+		{
+			IdHealth = idHealth;
+		}
+		public Questionnaire(string nationality, string city, int childrenAmount,
+			int experience, bool driverLicense, int readiness, string additionalInfo,
+			Health health, int idFamilyStatus, int idBusinessTripOpportunity,
+			List<Language> languages, List<Education> educations)
+			: this(nationality, city, childrenAmount, experience, driverLicense,
+				  readiness, additionalInfo, idFamilyStatus, idBusinessTripOpportunity)
+		{
+			Health = health;
 			Languages = languages;
 			Educations = educations;
 		}

@@ -72,7 +72,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{
-			ApplicationDbView application = DataBaseManager.GetApplication(_interview.IdApplication);
+			ApplicationDbView application = DatabaseManager.GetApplication(_interview.IdApplication);
 			ApplicationForm applicationForm = new ApplicationForm(_account, application, null);
 			Visible = false;
 			applicationForm.FormClosed += (s, args) => { Visible = true; };
@@ -80,7 +80,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonEmployee_Click(object sender, EventArgs e)
 		{
-			Employee employee = DataBaseManager.GetEmployee(_interview.Id);
+			Employee employee = DatabaseManager.GetEmployee(_interview.Id);
 			EmployeeForm employeeForm = new EmployeeForm(_account, employee, (args) =>
 			{ Close(); _actionAfterChange(EventArgs.Empty); });
 			Visible = false;
@@ -145,7 +145,7 @@ namespace RecruitmentServer.Forms
 			}
 
 			_interview.ChangeDateEvent(dateTime);
-			DataBaseManager.ChangeInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
+			DatabaseManager.ChangeInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
 			ButtonChangeDateBack_Click(sender, e);
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
 				_interview.DateEvent.ToString("d MMMM yyyy HH:mm");
@@ -184,7 +184,7 @@ namespace RecruitmentServer.Forms
 			if (result == DialogResult.Yes)
 			{
 				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-				DataBaseManager.SetInterviewStatus(_interview.Id, idStatus);
+				DatabaseManager.SetInterviewStatus(_interview.Id, idStatus);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

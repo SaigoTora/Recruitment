@@ -32,12 +32,13 @@ namespace SharedModels.Models
 
 		public Education() { }
 		public Education(string nameInstitution, string specialty, int yearAdmission,
-			DateTime dateEnd, int idEducationDegree, int idEducationForm)
+			DateTime dateEnd, int idQuestionnaire, int idEducationDegree, int idEducationForm)
 		{
 			NameInstitution = nameInstitution;
 			Specialty = specialty;
 			YearAdmission = yearAdmission;
 			DateEnd = dateEnd;
+			IdQuestionnaire = idQuestionnaire;
 			IdEducationDegree = idEducationDegree;
 			IdEducationForm = idEducationForm;
 		}
@@ -45,10 +46,9 @@ namespace SharedModels.Models
 		public object Clone()
 		{
 			var newEducation = new Education(NameInstitution, Specialty, YearAdmission, DateEnd,
-				IdEducationDegree, IdEducationForm)
+				IdQuestionnaire, IdEducationDegree, IdEducationForm)
 			{
 				Id = this.Id,
-				IdQuestionnaire = this.IdQuestionnaire,
 				EducationDegree = this.EducationDegree,
 				EducationForm = this.EducationForm,
 				Questionnaire = this.Questionnaire

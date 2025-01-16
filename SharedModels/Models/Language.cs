@@ -19,18 +19,18 @@ namespace SharedModels.Models
 		public virtual Questionnaire Questionnaire { get; private set; }
 
 		public Language() { }
-		public Language(string name, int level)
+		public Language(string name, int level, int idQuestionnaire)
 		{
 			Name = name;
 			Level = level;
+			IdQuestionnaire = idQuestionnaire;
 		}
 
 		public object Clone()
 		{
-			Language newLanguage = new Language(Name, Level)
+			Language newLanguage = new Language(Name, Level, IdQuestionnaire)
 			{
 				Id = this.Id,
-				IdQuestionnaire = this.IdQuestionnaire,
 				Questionnaire = this.Questionnaire
 			};
 
