@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 using SharedModels.Models;
@@ -17,27 +16,12 @@ namespace RecruitmentServer.Models.DataBase
 
 		public static void Initialize(RecruitmentEntities context)
 		{
-			if (ShouldSeedDatabase())
+			if (Debugger.IsAttached)
 			{
 				_context = context;
 				ClearDatabase();
 				SeedDatabase();
 			}
-		}
-
-		private static bool ShouldSeedDatabase()
-		{
-#if DEBUG
-			return true;
-#else
-			return Debugger.IsAttached && IsRunningFromDevelopmentEnvironment();
-#endif
-		}
-		private static bool IsRunningFromDevelopmentEnvironment()
-		{
-			string exePath = Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
-			string devPath = Path.Combine(Directory.GetCurrentDirectory(), "bin");
-			return exePath.Contains(devPath);
 		}
 
 		private static void ClearDatabase()
