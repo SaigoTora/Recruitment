@@ -77,7 +77,7 @@ namespace RecruitmentServer.Forms
 		{
 			DataRowView item;
 			listBoxDegrees.SetSelected(0, false);// Deselect the first element
-			foreach (var degreeReq in _requirement.EducationDegreeRequirement)
+			foreach (var degreeReq in _requirement.EducationDegreeRequirements)
 				for (int j = 0; j < listBoxDegrees.Items.Count; j++)
 				{
 					item = listBoxDegrees.Items[j] as DataRowView;

@@ -41,7 +41,7 @@ namespace SharedModels.Models
 		[Column("id_questionnaire")]
 		public int IdQuestionnaire { get; private set; }
 		public virtual Questionnaire Questionnaire { get; set; }
-		public virtual ICollection<Application> Application { get; private set; }
+		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
 		public Candidate() { }
@@ -75,7 +75,7 @@ namespace SharedModels.Models
 			{
 				Id = this.Id,
 				Questionnaire = (Questionnaire)this.Questionnaire.Clone(),
-				Application = this.Application
+				Applications = this.Applications
 			};
 
 			return newCandidate;

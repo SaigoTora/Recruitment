@@ -91,7 +91,7 @@ namespace RecruitmentServer.Models.DataBase
 			DataTable dt = ExecuteReturnQuery($"SELECT TOP 1 id FROM Requirement ORDER BY id DESC");
 			int idRequirement = GetIntItem(dt, 0, 0);
 			string command = string.Empty;
-			foreach (var degreeReq in requirement.EducationDegreeRequirement)
+			foreach (var degreeReq in requirement.EducationDegreeRequirements)
 				command += $"INSERT INTO EducationDegree_Requirement(id_requirement,id_education_degree) " +
 				$"values({idRequirement},{degreeReq.IdEducationDegree}) ";
 			if (command != string.Empty)

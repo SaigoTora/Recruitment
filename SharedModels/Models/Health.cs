@@ -16,7 +16,7 @@ namespace SharedModels.Models
 		public bool Smoker { get; private set; }
 		[Column("drink_alcohol")]
 		public bool DrinkAlcohol { get; private set; }
-		public virtual ICollection<Questionnaire> Questionnaire { get; private set; }
+		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 
 		public Health() { }
@@ -32,7 +32,7 @@ namespace SharedModels.Models
 			Health newHealth = new Health(ChronicDiseases, Smoker, DrinkAlcohol)
 			{
 				Id = this.Id,
-				Questionnaire = this.Questionnaire
+				Questionnaires = this.Questionnaires
 			};
 
 			return newHealth;

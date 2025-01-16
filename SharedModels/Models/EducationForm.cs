@@ -12,7 +12,7 @@ namespace SharedModels.Models
 		[Required]
 		[StringLength(32)]
 		public string Form { get; private set; }
-		public virtual ICollection<Education> Education { get; private set; }
+		public virtual ICollection<Education> Educations { get; private set; }
 			= new HashSet<Education>();
 
 		public EducationForm() { }

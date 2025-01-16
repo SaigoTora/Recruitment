@@ -12,7 +12,7 @@ namespace SharedModels.Models
 		[Required]
 		[StringLength(32)]
 		public string Status { get; private set; }
-		public virtual ICollection<Application> Application { get; private set; }
+		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
 		public ApplicationStatus() { }

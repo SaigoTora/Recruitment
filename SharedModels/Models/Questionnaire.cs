@@ -40,7 +40,7 @@ namespace SharedModels.Models
 			= new HashSet<Language>();
 		public virtual ICollection<Education> Educations { get; private set; }
 			= new HashSet<Education>();
-		public virtual ICollection<Candidate> Candidate { get; private set; }
+		public virtual ICollection<Candidate> Candidates { get; private set; }
 			= new HashSet<Candidate>();
 
 		public Questionnaire() { }
@@ -96,7 +96,7 @@ namespace SharedModels.Models
 				IdHealth = this.IdHealth,
 				FamilyStatus = this.FamilyStatus,
 				BusinessTripOpportunity = this.BusinessTripOpportunity,
-				Candidate = this.Candidate
+				Candidates = this.Candidates
 			};
 
 			return newQuestionnaire;

@@ -25,7 +25,7 @@ namespace SharedModels.Models
 		public virtual Point Point { get; private set; }
 		public virtual Position Position { get; private set; }
 		public virtual Requirement Requirement { get; private set; }
-		public virtual ICollection<Application> Application { get; private set; }
+		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
 		public Vacancy() { }

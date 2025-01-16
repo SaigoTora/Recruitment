@@ -31,9 +31,9 @@ namespace SharedModels.Models
 		public bool BusinessTripOpportunity { get; private set; }
 		[Column("student")]
 		public bool? Student { get; private set; }
-		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirement
+		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirements
 		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
-		public virtual ICollection<Vacancy> Vacancy { get; private set; }
+		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 
 		public Requirement() { }
@@ -57,7 +57,7 @@ namespace SharedModels.Models
 		public void Change(string city, byte ageMin, byte ageMax, int expMin,
 			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
 			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student,
-			ICollection<EducationDegreeRequirement> educationDegreeRequirement)
+			ICollection<EducationDegreeRequirement> educationDegreeRequirements)
 		{
 			City = city;
 			AgeMin = ageMin;
@@ -70,7 +70,7 @@ namespace SharedModels.Models
 			NoDrinkAlcohol = noDrinkAlcohol;
 			BusinessTripOpportunity = businessTripOpportunity;
 			Student = student;
-			EducationDegreeRequirement = educationDegreeRequirement;
+			EducationDegreeRequirements = educationDegreeRequirements;
 		}
 
 		public override string ToString()

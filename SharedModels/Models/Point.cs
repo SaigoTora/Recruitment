@@ -37,7 +37,7 @@ namespace SharedModels.Models
 		public int BusinessTripOpportunity { get; private set; }
 		public virtual ICollection<EducationDegreePoint> Degrees
 		{ get; private set; }
-		public virtual ICollection<Vacancy> Vacancy { get; private set; }
+		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 
 		public Point() { }
