@@ -48,12 +48,13 @@ namespace RecruitmentServer.Forms
 
 		private readonly List<Guna2GradientPanel> _createdPanels =
 			new List<Guna2GradientPanel>();
-		private readonly Dictionary<Guna2GradientButton, VacancyDbView> _buttonVacancyMap =
-			new Dictionary<Guna2GradientButton, VacancyDbView>();
-		private readonly Dictionary<Guna2GradientButton, ApplicationDbView>
-			_buttonApplicationMap = new Dictionary<Guna2GradientButton, ApplicationDbView>();
-		private readonly Dictionary<Guna2GradientButton, InterviewDbView> _buttonInterviewMap =
-			new Dictionary<Guna2GradientButton, InterviewDbView>();
+		private readonly Dictionary<Guna2GradientButton, Vacancy> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, Vacancy>();
+		private readonly Dictionary<Guna2GradientButton, SharedModels.Models.Application>
+			_buttonApplicationMap = new Dictionary<Guna2GradientButton,
+				SharedModels.Models.Application>();
+		private readonly Dictionary<Guna2GradientButton, Interview> _buttonInterviewMap =
+			new Dictionary<Guna2GradientButton, Interview>();
 		private readonly Dictionary<Guna2GradientButton, Employee> _buttonEmployeeMap =
 			new Dictionary<Guna2GradientButton, Employee>();
 
@@ -78,6 +79,10 @@ namespace RecruitmentServer.Forms
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			SetDefaultSearchValues();
+			_currentComboBoxDateIndex = comboBoxDate.SelectedIndex;
+			_currentComboBoxStatusIndex = comboBoxStatus.SelectedIndex;
+			_currentComboBoxSortIndex = comboBoxSort.SelectedIndex;
+
 			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication,
 				labelInterview, labelEmployee);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
@@ -334,7 +339,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<VacancyDbView> vacancies = DatabaseManager.GetVacancies(_createdPanels.Count,
+			List<Vacancy> vacancies = DatabaseManager.GetVacancies(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -352,7 +357,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ApplicationDbView> applications = DatabaseManager.GetApplications(
+			List<SharedModels.Models.Application> applications = DatabaseManager.GetApplications(
 				_createdPanels.Count, COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
 
@@ -370,7 +375,7 @@ namespace RecruitmentServer.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<InterviewDbView> interviews = DatabaseManager.GetInterviews(_createdPanels.Count,
+			List<Interview> interviews = DatabaseManager.GetInterviews(_createdPanels.Count,
 				COUNT_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -409,14 +414,14 @@ namespace RecruitmentServer.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(VacancyDbView vacancy)
+		private void CreateVacancy(Vacancy vacancy)
 		{
 			const string DATE_PREFIX = "Опубліковано: ";
 			const string COUNT_PREFIX = "Заявок: ";
 
-			_vacancyCreator.CreateLabel(labelPositionV, vacancy.PositionName);
+			_vacancyCreator.CreateLabel(labelPositionV, vacancy.Position.Name);
 			_vacancyCreator.CreateLabel(labelCountV, COUNT_PREFIX +
-				vacancy.ApplicationCount.ToString());
+				vacancy.Applications.Count.ToString());
 			_vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
 				ConvertDateToString(vacancy.DatePublication));
 
@@ -430,38 +435,38 @@ namespace RecruitmentServer.Forms
 			_buttonVacancyMap.Add(button, vacancy);
 			ManageVacancyButtonEvent(button, true);
 		}
-		private void CreateApplication(ApplicationDbView application)
+		private void CreateApplication(SharedModels.Models.Application application)
 		{
 			const string DATE_PREFIX = "Дата і час подачі: ";
 			const string SCORES_PREFIX = "Балів: ";
 
-			_applicationCreator.CreateLabel(labelPositionA, application.PositionName);
+			_applicationCreator.CreateLabel(labelPositionA, application.Vacancy.Position.Name);
 			_applicationCreator.CreateLabel(labelScores, SCORES_PREFIX +
 				application.Scores.ToString());
 			_applicationCreator.CreateLabel(labelDateSubmissionA, DATE_PREFIX +
 				ConvertDateToString(application.DateSubmission));
 
-			_applicationCreator.CreateLabel(labelStatusA, application.Status);
+			_applicationCreator.CreateLabel(labelStatusA, application.ApplicationStatus.Status);
 			Guna2PictureBox picture = _applicationCreator.CreatePictureBox(
 				pictureBoxApplicationStatus);
-			picture.FillColor = GetApplicationStatusColor(application.Status);
+			picture.FillColor = GetApplicationStatusColor(application.ApplicationStatus.Status);
 
 			Guna2GradientButton button = _applicationCreator.CreateButton(buttonApplication);
 			_buttonApplicationMap.Add(button, application);
 			ManageApplicationButtonEvent(button, true);
 		}
-		private void CreateInterview(InterviewDbView interview)
+		private void CreateInterview(Interview interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			_interviewCreator.CreateLabel(labelPositionI, interview.PositionName);
+			_interviewCreator.CreateLabel(labelPositionI, interview.Application.Vacancy.Position.Name);
 			_interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
 				ConvertDateToString(interview.DateEvent));
 
-			_interviewCreator.CreateLabel(labelStatusI, interview.Status);
+			_interviewCreator.CreateLabel(labelStatusI, interview.InterviewStatus.Status);
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(
 				pictureBoxInterviewStatus);
-			picture.FillColor = GetInterviewStatusColor(interview.Status);
+			picture.FillColor = GetInterviewStatusColor(interview.InterviewStatus.Status);
 
 			Guna2GradientButton button = _interviewCreator.CreateButton(buttonInterview);
 			_buttonInterviewMap.Add(button, interview);
@@ -486,11 +491,11 @@ namespace RecruitmentServer.Forms
 		{
 			string result;
 
-			if (date.Day == DateTime.Today.Day)
+			if (date == DateTime.Today)
 				result = "Сьогодні";
-			else if (date.AddDays(1).Day == DateTime.Today.Day)
+			else if (date.AddDays(1) == DateTime.Today)
 				result = "Вчора";
-			else if (date.AddDays(2).Day == DateTime.Today.Day)
+			else if (date.AddDays(2) == DateTime.Today)
 				result = "Два дні тому";
 			else if (date.Year == DateTime.Today.Year)
 				result = date.ToString("d MMMM");
@@ -568,7 +573,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			VacancyDbView vacancy = _buttonVacancyMap[button];
+			Vacancy vacancy = _buttonVacancyMap[button];
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy, SelectLabel);
 			vacancyForm.ShowDialog();
 		}
@@ -577,9 +582,9 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			ApplicationDbView application = _buttonApplicationMap[button];
-			ApplicationForm applicationForm = new ApplicationForm(_account, application,
-				SelectLabel);
+			SharedModels.Models.Application application = _buttonApplicationMap[button];
+			ApplicationForm applicationForm = new ApplicationForm(_account,
+				application, SelectLabel);
 			applicationForm.ShowDialog();
 		}
 		private void ButtonInterview_Click(object sender, EventArgs e)
@@ -587,7 +592,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			InterviewDbView interview = _buttonInterviewMap[button];
+			Interview interview = _buttonInterviewMap[button];
 			InterviewForm interviewForm = new InterviewForm(_account, interview, SelectLabel);
 			interviewForm.ShowDialog();
 		}
@@ -624,7 +629,7 @@ namespace RecruitmentServer.Forms
 			}
 			else
 			{
-				if (_panelsInfo == PanelsInfo.Vacancy)
+				if (_panelsInfo == PanelsInfo.Vacancy && comboBoxStatus.SelectedIndex != 0)
 					isRelevance = comboBoxStatus.SelectedIndex == 2;
 				if (!isRelevance.HasValue && comboBoxStatus.SelectedIndex != 0)
 					status = comboBoxStatus.Items[comboBoxStatus.SelectedIndex].ToString();

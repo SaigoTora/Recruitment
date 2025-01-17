@@ -16,7 +16,6 @@ namespace RecruitmentServer
 			$"{ConfigurationManager.AppSettings["serializePath"]}";
 		internal static readonly string EncryptKey =
 			ConfigurationManager.AppSettings["encryptKey"];
-		internal readonly static DatabaseManager DatabaseManager = new DatabaseManager();
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -31,7 +30,7 @@ namespace RecruitmentServer
 			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey)
 				?? new Account();
 			Application.Run(new MainForm(account));
-			DatabaseManager?.Dispose();
+			DatabaseManager.Dispose();
 		}
 	}
 }

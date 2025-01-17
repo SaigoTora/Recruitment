@@ -4,6 +4,7 @@ namespace SharedModels.Models
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
+	using System.Data;
 
 	[Table("Vacancy")]
 	public partial class Vacancy : EntityBase
@@ -40,5 +41,7 @@ namespace SharedModels.Models
 			IdRequirement = idRequirement;
 			IdPosition = idPosition;
 		}
+
+		public void ChangeRelevance(bool relevance) => Relevance = relevance;
 	}
 }

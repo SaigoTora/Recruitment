@@ -15,15 +15,16 @@ namespace RecruitmentServer.Forms
 	internal partial class ApplicationForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private readonly ApplicationDbView _application;
+		private readonly SharedModels.Models.Application _application;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal ApplicationForm(Account account, ApplicationDbView application,
+		internal ApplicationForm(Account account, SharedModels.Models.Application application,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, $"Заявка ({application.Status})",
+			customTitleBar = new CustomTitleBar(this, $"Заявка " +
+				$"({application.ApplicationStatus.Status})",
 				minimizeBox: false, maximizeBox: false);
 			_account = account;
 			_application = application;
@@ -36,9 +37,9 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void SetFormFields(ApplicationDbView application)
+		private void SetFormFields(SharedModels.Models.Application application)
 		{
-			textBoxPosition.Text = application.PositionName;
+			textBoxPosition.Text = application.Vacancy.Position.Name;
 			labelScores.Text = "Балів: " + application.Scores;
 			labelDatePublication.Text = "Дата і час подачі: " +
 				application.DateSubmission.ToString("d MMMM yyyy HH:mm");
@@ -50,7 +51,7 @@ namespace RecruitmentServer.Forms
 				&& application.ReasonRejection.Length > 0)
 				buttonReasonRejection.Visible = true;
 
-			if (application.Status != "В очікуванні")
+			if (application.ApplicationStatus.Status != "В очікуванні")
 			{
 				labelStatus.Visible = false;
 				comboBoxDecision.Visible = false;
@@ -75,7 +76,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{
-			VacancyDbView vacancy = DatabaseManager.GetVacancy(_application.IdVacancy);
+			Vacancy vacancy = DatabaseManager.GetVacancy(_application.IdVacancy);
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				isDeleteButtonVisible: false);
 			Visible = false;

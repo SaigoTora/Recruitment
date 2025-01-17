@@ -51,15 +51,5 @@ namespace SharedModels.Models
 			DatePublication = datePublication;
 			Info = info;
 		}
-		public VacancyDbView(int id, string positionName, string positionDescription,
-			decimal salary, DateTime datePublication, string info, bool relevance,
-			int applicationCount, int idPoint, int idRequirement)
-			: this(id, positionName, positionDescription, salary, datePublication, info)
-		{
-			Relevance = relevance;
-			ApplicationCount = applicationCount;
-			IdPoint = idPoint;
-			IdRequirement = idRequirement;
-		}
 	}
 }

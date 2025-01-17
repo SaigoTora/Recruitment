@@ -25,15 +25,16 @@ namespace RecruitmentServer.Forms
 
 
 		private readonly Account _account;
-		private readonly InterviewDbView _interview;
+		private readonly Interview _interview;
 		private readonly Action<EventArgs> _actionAfterChange;
 
-		internal InterviewForm(Account account, InterviewDbView interview,
+		internal InterviewForm(Account account, Interview interview,
 			Action<EventArgs> actionAfterChange)
 		{
 			InitializeComponent();
 
-			customTitleBar = new CustomTitleBar(this, $"Співбесіда ({interview.Status})",
+			customTitleBar = new CustomTitleBar(this, $"Співбесіда " +
+				$"({interview.InterviewStatus.Status})",
 				minimizeBox: false, maximizeBox: false);
 
 			_interview = interview;
@@ -46,25 +47,26 @@ namespace RecruitmentServer.Forms
 			SetFormFields(_interview);
 			SetTheme(_account.Theme);
 		}
-		private void SetFormFields(InterviewDbView interview)
+		private void SetFormFields(Interview interview)
 		{
-			textBoxPosition.Text = interview.PositionName;
+			textBoxPosition.Text = interview.Application.Vacancy.Position.Name;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
 				interview.DateEvent.ToString("d MMMM yyyy HH:mm");
 
-			if (interview.Status == "Прийнято" || interview.Status == "Не прийнято")
+			if (interview.InterviewStatus.Status == "Прийнято"
+				|| interview.InterviewStatus.Status == "Не прийнято")
 			{
 				labelStatus.Visible = false;
 				comboBoxDecision.Visible = false;
 			}
-			if (interview.Status == "Прийнято")
+			if (interview.InterviewStatus.Status == "Прийнято")
 				buttonEmployee.Visible = true;
-			if (interview.Status == "Кандидат запрошений")
+			if (interview.InterviewStatus.Status == "Кандидат запрошений")
 				buttonChangeDate.Visible = true;
 
 			dateTimePickerInterview.MinDate = DateTime.Now;
 			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1);
-			if (_interview.Status == "Кандидат чекає на рішення")
+			if (interview.InterviewStatus.Status == "Кандидат чекає на рішення")
 				comboBoxDecision.SelectedIndex = 1;
 		}
 
@@ -72,7 +74,8 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{
-			ApplicationDbView application = DatabaseManager.GetApplication(_interview.IdApplication);
+			SharedModels.Models.Application application =
+				DatabaseManager.GetApplication(_interview.IdApplication);
 			ApplicationForm applicationForm = new ApplicationForm(_account, application, null);
 			Visible = false;
 			applicationForm.FormClosed += (s, args) => { Visible = true; };
@@ -194,7 +197,7 @@ namespace RecruitmentServer.Forms
 		#region ComboBox
 		private void ComboBoxDecision_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (_interview.Status == "Кандидат запрошений")
+			if (_interview.InterviewStatus.Status == "Кандидат запрошений")
 			{
 				if (comboBoxDecision.Text != "Кандидат запрошений")
 				{
@@ -207,7 +210,7 @@ namespace RecruitmentServer.Forms
 					buttonChangeDate.Visible = true;
 				}
 			}
-			else if (_interview.Status == "Кандидат чекає на рішення")
+			else if (_interview.InterviewStatus.Status == "Кандидат чекає на рішення")
 			{
 				if (comboBoxDecision.Text == "Прийнято"
 					|| comboBoxDecision.Text == "Не прийнято")

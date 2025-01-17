@@ -45,8 +45,5 @@ namespace SharedModels.Models
 			Id = id;
 			IdApplication = idApplication;
 		}
-
-		public void ChangeDateEvent(DateTime dateTime)
-			=> DateEvent = dateTime;
 	}
 }

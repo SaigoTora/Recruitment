@@ -44,6 +44,7 @@ namespace SharedModels.Models
 		[Column("id_interview")]
 		public int? IdInterview { get; private set; }
 		public virtual Interview Interview { get; private set; }
+		public string GetFullName => $"{Surname.ToUpper()} {Name} {FatherName}";
 
 		public Employee() { }
 		public Employee(int id, string surname, string name, string fatherName, string position,

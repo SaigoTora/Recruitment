@@ -425,11 +425,11 @@ namespace RecruitmentClient.Forms
 		{
 			string result;
 
-			if (date.Day == DateTime.Today.Day)
+			if (date == DateTime.Today)
 				result = "Сьогодні";
-			else if (date.AddDays(1).Day == DateTime.Today.Day)
+			else if (date.AddDays(1) == DateTime.Today)
 				result = "Вчора";
-			else if (date.AddDays(2).Day == DateTime.Today.Day)
+			else if (date.AddDays(2) == DateTime.Today)
 				result = "Два дні тому";
 			else if (date.Year == DateTime.Today.Year)
 				result = date.ToString("d MMMM");

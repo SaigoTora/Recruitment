@@ -27,10 +27,11 @@ namespace RecruitmentServer.Forms
 
 		private readonly Dictionary<Guna2GradientButton, Candidate>
 			_buttonCandidateMap = new Dictionary<Guna2GradientButton, Candidate>();
-		private readonly Dictionary<Guna2GradientButton, ApplicationDbView>
-			_buttonApplicationMap = new Dictionary<Guna2GradientButton, ApplicationDbView>();
-		private readonly Dictionary<Guna2GradientButton, VacancyDbView>
-			_buttonVacancyMap = new Dictionary<Guna2GradientButton, VacancyDbView>();
+		private readonly Dictionary<Guna2GradientButton, SharedModels.Models.Application>
+			_buttonApplicationMap = new Dictionary<Guna2GradientButton,
+				SharedModels.Models.Application>();
+		private readonly Dictionary<Guna2GradientButton, Vacancy>
+			_buttonVacancyMap = new Dictionary<Guna2GradientButton, Vacancy>();
 
 		internal AssignmentForm(Account account, Action<EventArgs> refreshMainForm)
 		{
@@ -44,7 +45,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void AssignmentForm_Load(object sender, EventArgs e)
 		{
-			_allItems = DatabaseManager.GetAssignmentItems();
+			_allItems = DatabaseManager.GetAssignmentItems().ToArray();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
 			int[] results = AssignmentSolver.HungarianAlgorithm(matrix, true);
@@ -61,8 +62,8 @@ namespace RecruitmentServer.Forms
 
 			for (int i = 0; i < _allItems.Length; i++)
 			{// Read all application and vacancy IDs
-				_vacancyIds.Add(_allItems[i].IdVacancy);
-				_candidateIds.Add(_allItems[i].IdCandidate);
+				_vacancyIds.Add(_allItems[i].VacancyId);
+				_candidateIds.Add(_allItems[i].CandidateId);
 			}
 
 			_vacancyIds = _vacancyIds.Distinct().ToList();// Removing repetitions
@@ -79,8 +80,8 @@ namespace RecruitmentServer.Forms
 		private int GetScore(int idVacancy, int idCandidate)
 		{// Method that returns scores by vacancy ID and candidate ID
 			for (int i = 0; i < _allItems.Length; i++)
-				if (_allItems[i].IdVacancy == idVacancy
-					&& _allItems[i].IdCandidate == idCandidate)
+				if (_allItems[i].VacancyId == idVacancy
+					&& _allItems[i].CandidateId == idCandidate)
 					return _allItems[i].Scores;
 
 			return -1;
@@ -109,10 +110,10 @@ namespace RecruitmentServer.Forms
 			List<Guna2GradientPanel> createdPanels = new List<Guna2GradientPanel>();
 			for (int i = 0; i < _resultItems.Count; i++)
 			{
-				VacancyDbView vacancy = DatabaseManager.GetVacancy(_resultItems[i].IdVacancy);
-				Candidate candidate = DatabaseManager.GetCandidate(_resultItems[i].IdCandidate);
-				ApplicationDbView application = DatabaseManager.GetApplication(
-					_resultItems[i].IdVacancy, _resultItems[i].IdCandidate);
+				Vacancy vacancy = DatabaseManager.GetVacancy(_resultItems[i].VacancyId);
+				Candidate candidate = DatabaseManager.GetCandidate(_resultItems[i].CandidateId);
+				SharedModels.Models.Application application = DatabaseManager.GetApplication(
+					_resultItems[i].VacancyId, _resultItems[i].CandidateId);
 
 				createdPanels.Add(_assignmentCreator.CreateMainPanel());
 				_assignmentCreator.CreateLabel(labelCandidate);
@@ -126,7 +127,7 @@ namespace RecruitmentServer.Forms
 				Guna2GradientButton buttonV = _assignmentCreator.CreateButton(buttonVacancy);
 
 				buttonC.Text = candidate.Surname;
-				buttonV.Text = vacancy.PositionName;
+				buttonV.Text = vacancy.Position.Name;
 
 				_buttonCandidateMap.Add(buttonC, candidate);
 				_buttonApplicationMap.Add(buttonA, application);
@@ -187,7 +188,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			ApplicationDbView application = _buttonApplicationMap[button];
+			SharedModels.Models.Application application = _buttonApplicationMap[button];
 			ApplicationForm applicationForm = new ApplicationForm(_account, application,
 				(args) =>
 				{
@@ -202,7 +203,7 @@ namespace RecruitmentServer.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			VacancyDbView vacancy = _buttonVacancyMap[button];
+			Vacancy vacancy = _buttonVacancyMap[button];
 
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				(args) =>

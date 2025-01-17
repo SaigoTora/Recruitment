@@ -16,7 +16,7 @@ namespace RecruitmentServer.Forms
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private VacancyDbView _vacancy;
+		private Vacancy _vacancy;
 		private readonly Requirement _requirement = new Requirement();
 		private SharedModels.Models.Point _point = new SharedModels.Models.Point();
 		private readonly Action<EventArgs> _actionAfterChange;
@@ -35,7 +35,7 @@ namespace RecruitmentServer.Forms
 
 			ConfigureFormForVacancyCreation();
 		}
-		internal VacancyForm(Account account, VacancyDbView vacancy,
+		internal VacancyForm(Account account, Vacancy vacancy,
 			Action<EventArgs> actionAfterChange = null, bool isDeleteButtonVisible = true)
 			: this()
 		{// Constructor for viewing vacancies
@@ -75,18 +75,18 @@ namespace RecruitmentServer.Forms
 
 			ManageButtonForCreateEvents(true);
 		}
-		private void ConfigureFormForVacancyViewing(VacancyDbView vacancy,
+		private void ConfigureFormForVacancyViewing(Vacancy vacancy,
 			bool isDeleteButtonVisible)
 		{
-			textBoxPosition.Text = vacancy.PositionName;
+			textBoxPosition.Text = vacancy.Position.Name;
 			textBoxSalary.Text = $"{vacancy.Salary:0.##}";
 			labelApplicationCount.Text = "Кількість заявок: " +
-				vacancy.ApplicationCount.ToString();
+				vacancy.Applications.Count.ToString();
 			labelDatePublication.Text = "Дата публікації: " +
 				vacancy.DatePublication.ToString("yyyy-MM-dd");
 			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";
 			labelRelevance.Text = relevance;
-			richTextBoxPositionDescription.Text = vacancy.PositionDescription;
+			richTextBoxPositionDescription.Text = vacancy.Position.Description;
 			richTextBoxAdditionalInfo.Text = vacancy.Info;
 			if (vacancy.Relevance && isDeleteButtonVisible)
 				buttonDelete.Visible = true;
@@ -188,7 +188,7 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{
-			_point = DatabaseManager.GetPoints(_vacancy.IdPoint);
+			_point = DatabaseManager.GetPoint(_vacancy.IdPoint);
 
 			PointsForm pointsForm = new PointsForm(_account, _point, true);
 			Visible = false;
@@ -212,10 +212,8 @@ namespace RecruitmentServer.Forms
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
 
-				_vacancy = new VacancyDbView(0, position.Name, position.Description,
-					decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
-					richTextBoxAdditionalInfo.Text, true, 0, pointId,
-					requirementId);
+				_vacancy = new Vacancy(decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
+					richTextBoxAdditionalInfo.Text, pointId, requirementId, position.Id);
 				DatabaseManager.CreateVacancy(_vacancy);
 
 				_actionAfterChange(EventArgs.Empty);

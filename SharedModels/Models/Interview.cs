@@ -26,5 +26,8 @@ namespace SharedModels.Models
 			IdApplication = idApplication;
 			IdInterviewStatus = idInterviewStatus;
 		}
+
+		public void ChangeDateEvent(DateTime dateTime)
+			=> DateEvent = dateTime;
 	}
 }
