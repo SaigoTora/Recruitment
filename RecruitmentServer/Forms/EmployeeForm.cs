@@ -190,7 +190,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DatabaseManager.DeleteEmployee(_employee.Id);
+				DatabaseManager.DeleteEmployee(_employee);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

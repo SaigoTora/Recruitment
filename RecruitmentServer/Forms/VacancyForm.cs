@@ -207,10 +207,15 @@ namespace RecruitmentServer.Forms
 		{
 			if (CheckValidData())
 			{
-				int pointId = DatabaseManager.CreatePoints(_point);
-				int requirementId = DatabaseManager.CreateRequirement(_requirement);
+				DatabaseManager.CreatePoint(_point);
+				DatabaseManager.CreateRequirement(_requirement);
+
+				int requirementId = _requirement.Id;
+				int pointId = _point.Id;
+
 				Position position = new Position(textBoxPosition.Text,
 					richTextBoxPositionDescription.Text);
+				DatabaseManager.CreatePosition(position);
 
 				_vacancy = new Vacancy(decimal.Parse(textBoxSalary.Text), DateTime.UtcNow,
 					richTextBoxAdditionalInfo.Text, pointId, requirementId, position.Id);
@@ -229,7 +234,7 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				DatabaseManager.DeleteVacancy(_vacancy.Id);
+				DatabaseManager.DeleteVacancy(_vacancy);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

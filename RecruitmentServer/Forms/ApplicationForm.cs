@@ -162,7 +162,7 @@ namespace RecruitmentServer.Forms
 
 			if (comboBoxDecision.Text == "Прийнята")
 			{
-				DatabaseManager.CreateInterview(_application.Id, dateTime.ToUniversalTime());
+				DatabaseManager.CreateInterview(dateTime.ToUniversalTime(), _application.Id);
 				Candidate candidate = DatabaseManager.GetCandidate(_application.IdCandidate);
 
 				CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
