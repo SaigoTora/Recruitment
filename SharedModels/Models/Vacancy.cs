@@ -43,5 +43,7 @@ namespace SharedModels.Models
 		}
 
 		public void ChangeRelevance(bool relevance) => Relevance = relevance;
+		public void ChangeDatePublication(DateTime datePublication)
+			=> DatePublication = datePublication;
 	}
 }

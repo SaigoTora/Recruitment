@@ -22,6 +22,7 @@ namespace RecruitmentServer.Models.DataBase
 			_educationDegreeRequirementRepo;
 		private static readonly BaseRepo<Requirement> _requirementRepo;
 		private static readonly BaseRepo<Point> _pointRepo;
+		private static readonly BaseRepo<InterviewStatus> _interviewStatusRepo;
 		private static readonly BaseRepo<FamilyStatus> _familyStatusRepo;
 		private static readonly BaseRepo<BusinessTripOpportunity> _businessTripOpportunityRepo;
 		private static readonly BaseRepo<EducationDegree> _educationDegreeRepo;
@@ -43,6 +44,7 @@ namespace RecruitmentServer.Models.DataBase
 			_educationDegreeRequirementRepo = new BaseRepo<EducationDegreeRequirement>(_context);
 			_requirementRepo = new BaseRepo<Requirement>(_context);
 			_pointRepo = new BaseRepo<Point>(_context);
+			_interviewStatusRepo = new BaseRepo<InterviewStatus>(_context);
 			_familyStatusRepo = new BaseRepo<FamilyStatus>(_context);
 			_businessTripOpportunityRepo = new BaseRepo<BusinessTripOpportunity>(_context);
 			_educationDegreeRepo = new BaseRepo<EducationDegree>(_context);
@@ -81,11 +83,12 @@ namespace RecruitmentServer.Models.DataBase
 			=> _requirementRepo.Add(requirement);
 		internal static void CreatePoint(Point point)
 			=> _pointRepo.Add(point);
-		internal static void CreateInterview(DateTime dateEvent, int idApplication)
+		internal static void CreateInterview(int idApplication, DateTime dateEvent)
 		{
 			int DEFAULT_STATUS_ID = 1;
 
 			Interview interview = new Interview(dateEvent, idApplication, DEFAULT_STATUS_ID);
+			interview.ChangeStatusId(_interviewStatusRepo.GetOne(DEFAULT_STATUS_ID));
 			_interviewRepo.Add(interview);
 		}
 		#endregion
@@ -111,7 +114,7 @@ namespace RecruitmentServer.Models.DataBase
 		{
 			var degrees = _educationDegreeRequirementRepo.GetAll().
 				Where(edr => edr.IdRequirement == requirementId).
-				Select(edr => edr.EducationDegree.Degree); ;
+				Select(edr => edr.EducationDegree?.Degree); ;
 
 			string s = string.Empty;
 			foreach (string degree in degrees)
@@ -120,10 +123,16 @@ namespace RecruitmentServer.Models.DataBase
 			return s.TrimEnd(' ', ',').ToLower();
 		}
 
-		internal static Vacancy GetVacancy(int vacancyId) => _vacancyRepo.GetOne(vacancyId);
+		internal static Vacancy GetVacancy(int vacancyId)
+		{
+			Vacancy vacancy = _vacancyRepo.GetOne(vacancyId);
+			vacancy.ChangeDatePublication(vacancy.DatePublication.ToLocalTime());
+			return vacancy;
+		}
 		private static List<Vacancy> GetVacancies(ServerSearcher searcher)
 		{
 			var vacancies = _vacancyRepo.GetAll();
+			vacancies.ForEach(v => v.ChangeDatePublication(v.DatePublication.ToLocalTime()));
 
 			if (searcher == null)
 				return vacancies.OrderByDescending(v => v.DatePublication).ToList();
@@ -148,6 +157,7 @@ namespace RecruitmentServer.Models.DataBase
 				vacancies = vacancies.
 					Where(v => v.Relevance == searcher.IsRelevance).ToList();
 
+
 			switch (searcher.SortOption)
 			{
 				case ServerSortOption.Date:
@@ -159,7 +169,7 @@ namespace RecruitmentServer.Models.DataBase
 				default: return vacancies.ToList();
 			}
 		}
-		internal static int GetCountVacancies(ServerSearcher searcher)
+		internal static int GetVacanciesCount(ServerSearcher searcher)
 			=> GetVacancies(searcher).Count;
 		internal static List<Vacancy> GetVacancies(int offset, int amount,
 			ServerSearcher searcher)
@@ -169,10 +179,15 @@ namespace RecruitmentServer.Models.DataBase
 		}
 
 		internal static Application GetApplication(int applicationId)
-			=> _applicationRepo.GetOne(applicationId);
+		{
+			Application application = _applicationRepo.GetOne(applicationId);
+			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
+			return application;
+		}
 		private static List<Application> GetApplications(ServerSearcher searcher)
 		{
 			var applications = _applicationRepo.GetAll();
+			applications.ForEach(a => a.ChangeDateSubmission(a.DateSubmission.ToLocalTime()));
 
 			if (searcher == null)
 				return applications.OrderByDescending(a => a.DateSubmission).ToList();
@@ -209,7 +224,7 @@ namespace RecruitmentServer.Models.DataBase
 				default: return applications.ToList();
 			}
 		}
-		internal static int GetCountApplications(ServerSearcher searcher)
+		internal static int GetApplicationsCount(ServerSearcher searcher)
 			=> GetApplications(searcher).Count;
 		internal static List<Application> GetApplications(int offset, int amount,
 			ServerSearcher searcher)
@@ -218,12 +233,18 @@ namespace RecruitmentServer.Models.DataBase
 			return applications.GetRange(offset, Math.Min(applications.Count, amount));
 		}
 		internal static Application GetApplication(int idVacancy, int idCandidate)
-			=> _applicationRepo.GetAll().
+		{
+			Application application = _applicationRepo.GetAll().
 				Find(a => a.IdVacancy == idVacancy && a.IdCandidate == idCandidate);
+			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
+			return application;
+		}
+
 
 		private static List<Interview> GetInterviews(ServerSearcher searcher)
 		{
 			var interviews = _interviewRepo.GetAll();
+			interviews.ForEach(i => i.ChangeDateEvent(i.DateEvent.ToLocalTime()));
 
 			if (searcher == null)
 				return interviews.OrderByDescending(i => i.DateEvent).ToList();
@@ -250,7 +271,7 @@ namespace RecruitmentServer.Models.DataBase
 				default: return interviews.ToList();
 			}
 		}
-		internal static int GetCountInterviews(ServerSearcher searcher)
+		internal static int GetInterviewsCount(ServerSearcher searcher)
 			=> GetInterviews(searcher).Count;
 		internal static List<Interview> GetInterviews(int offset, int amount,
 			ServerSearcher searcher)
@@ -292,8 +313,7 @@ namespace RecruitmentServer.Models.DataBase
 				default: return employees.ToList();
 			}
 		}
-
-		internal static int GetCountEmployees(ServerSearcher searcher)
+		internal static int GetEmployeesCount(ServerSearcher searcher)
 			=> GetEmployees(searcher).Count;
 		internal static List<Employee> GetEmployees(int offset, int amount,
 			ServerSearcher searcher)
@@ -328,37 +348,40 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		#endregion
 
-		// Методи для зміни даних
-		internal static void SetApplicationStatus(int idApplication, int idStatus, string reasonRejection)
-		{// Метод встановлює статус заявці
-			if (reasonRejection == null || reasonRejection.Length < 0)
-				reasonRejection = "NULL";
-			else
-				reasonRejection = $"'{reasonRejection}'";
-
-			ExecuteQuery($"UPDATE Application SET id_application_status = {idStatus}, reason_rejection = {reasonRejection} " +
-				$"WHERE Application.id = {idApplication}");
-		}
-		internal static void SetInterviewStatus(int idInterview, int idStatus)
-		{// Метод встановлює статус співбесіді
-			ExecuteQuery($"UPDATE Interview SET id_interview_status = {idStatus} " +
-				$"WHERE id = {idInterview}");
-		}
-		internal static void ChangeInterviewDateEvent(int idInterview, DateTime dateTime)
-		{// Метод, який змінює дату співбесіди
-			ExecuteQuery($"UPDATE Interview SET date_event = " +
-				$"'{dateTime:yyyy-MM-dd} {dateTime:HH:mm:ss}' WHERE id = {idInterview}");
-		}
-		internal static void UpdateEmployeePosition(string position, int employeeId)
+		#region Update
+		internal static void UpdateEmployeePositionName(int employeeId, string positionName)
 		{
-			ExecuteQuery($"UPDATE Employee SET position_name  = '{position}' " +
-				$"WHERE id = {employeeId}");
+			Employee employeeToUpdate = _employeeRepo.GetOne(employeeId);
+			employeeToUpdate.ChangePosition(positionName);
+			_employeeRepo.Save(employeeToUpdate);
 		}
-		internal static void UpdateEmployeeSalary(double salary, int employeeId)
+		internal static void UpdateEmployeeSalary(int employeeId, decimal salary)
 		{
-			ExecuteQuery($"UPDATE Employee SET salary = " +
-				$"{salary.ToString().Replace(",", ".")} WHERE id = {employeeId}");
+			Employee employeeToUpdate = _employeeRepo.GetOne(employeeId);
+			employeeToUpdate.ChangeSalary(salary);
+			_employeeRepo.Save(employeeToUpdate);
 		}
+		internal static void UpdateInterviewDateEvent(int interviewId, DateTime dateEvent)
+		{
+			Interview interviewToUpdate = _interviewRepo.GetOne(interviewId);
+			interviewToUpdate.ChangeDateEvent(dateEvent);
+			_interviewRepo.Save(interviewToUpdate);
+		}
+		internal static void UpdateInterviewStatus(int interviewId, int statusId)
+		{
+			Interview interviewToUpdate = _interviewRepo.GetOne(interviewId);
+			interviewToUpdate.ChangeStatusId(_interviewStatusRepo.GetOne(statusId));
+			_interviewRepo.Save(interviewToUpdate);
+		}
+		internal static void UpdateApplicationStatus(int applicationId, int statusId,
+			string reasonRejection)
+		{
+			Application applicationToUpdate = _applicationRepo.GetOne(applicationId);
+			applicationToUpdate.ChangeStatusId(statusId);
+			applicationToUpdate.ChangeReasonRejection(reasonRejection);
+			_applicationRepo.Save(applicationToUpdate);
+		}
+		#endregion
 
 		#region Delete
 		internal static void DeleteVacancy(Vacancy vacancy) => _vacancyRepo.Delete(vacancy);
@@ -377,6 +400,7 @@ namespace RecruitmentServer.Models.DataBase
 			_educationDegreeRequirementRepo?.Dispose();
 			_requirementRepo?.Dispose();
 			_pointRepo?.Dispose();
+			_interviewStatusRepo?.Dispose();
 			_familyStatusRepo?.Dispose();
 			_businessTripOpportunityRepo?.Dispose();
 			_educationDegreeRepo?.Dispose();

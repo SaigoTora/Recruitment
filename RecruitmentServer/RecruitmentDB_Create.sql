@@ -491,6 +491,9 @@ END
 
 DECLARE @id_interview_status_accept int = 3-- Код статусу співбесіди 'Прийнято'
 if EXISTS(SELECT id FROM inserted WHERE id_interview_status = @id_interview_status_accept)
+if NOT EXISTS (SELECT 1 FROM Employee
+WHERE id_interview IN (SELECT id FROM inserted))
+BEGIN
 BEGIN-- Якщо статус співбесіди = 3, тобто кандидат прийнятий на роботу
     INSERT INTO Employee (surname, name, father_name, position_name, city, phone, birthday, email, salary, date_employment, id_interview)
     SELECT surname, Candidate.name, father_name,Position.name,city,phone,birthday,email,salary,DATEADD(DAY,readiness, GETDATE()),inserted.id
@@ -500,7 +503,7 @@ BEGIN-- Якщо статус співбесіди = 3, тобто кандид�
 	INNER JOIN Position ON id_position = Position.id
     INNER JOIN Candidate ON id_candidate = Candidate.id
 	INNER JOIN Questionnaire ON id_questionnaire = Questionnaire.id
-
+END
 END
 
 UPDATE Vacancy SET relevance = 'False'-- Вказуємо що вакансія не актуальна

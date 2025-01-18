@@ -114,7 +114,7 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DatabaseManager.UpdateEmployeePosition(textBoxPosition.Text, _employee.Id);
+						DatabaseManager.UpdateEmployeePositionName(_employee.Id, textBoxPosition.Text);
 						_employee.ChangePosition(textBoxPosition.Text);
 						_actionAfterChange(EventArgs.Empty);
 					}
@@ -141,8 +141,8 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DatabaseManager.UpdateEmployeeSalary(double.Parse(textBoxSalary.Text),
-							_employee.Id);
+						DatabaseManager.UpdateEmployeeSalary(_employee.Id,
+							decimal.Parse(textBoxSalary.Text));
 						_employee.ChangeSalary(decimal.Parse(textBoxSalary.Text));
 						_actionAfterChange(EventArgs.Empty);
 					}

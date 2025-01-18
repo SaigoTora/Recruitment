@@ -27,7 +27,12 @@ namespace SharedModels.Models
 			IdInterviewStatus = idInterviewStatus;
 		}
 
-		public void ChangeDateEvent(DateTime dateTime)
-			=> DateEvent = dateTime;
+		public void ChangeDateEvent(DateTime dateEvent)
+			=> DateEvent = dateEvent;
+		public void ChangeStatusId(InterviewStatus interviewStatus)
+		{
+			IdInterviewStatus = interviewStatus.Id;
+			InterviewStatus = interviewStatus;
+		}
 	}
 }

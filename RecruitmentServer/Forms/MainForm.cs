@@ -205,7 +205,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelVacancy, labelApplication, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Vacancy;
-			_totalItemsToDisplay = DatabaseManager.GetCountVacancies(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetVacanciesCount(_searcher);
 		}
 		private void SetupVacanciesSearchPanel()
 		{
@@ -225,7 +225,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelApplication, labelVacancy, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Application;
-			_totalItemsToDisplay = DatabaseManager.GetCountApplications(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetApplicationsCount(_searcher);
 		}
 		private void SetupApplicationsSearchPanel()
 		{
@@ -245,7 +245,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelInterview, labelVacancy, labelApplication, labelEmployee);
 			_panelsInfo = PanelsInfo.Interview;
-			_totalItemsToDisplay = DatabaseManager.GetCountInterviews(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetInterviewsCount(_searcher);
 		}
 		private void SetupInterviewsSearchPanel()
 		{
@@ -264,7 +264,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelEmployee, labelVacancy, labelApplication, labelInterview);
 			_panelsInfo = PanelsInfo.Employee;
-			_totalItemsToDisplay = DatabaseManager.GetCountEmployees(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetEmployeesCount(_searcher);
 		}
 		private void SetupEmployeesSearchPanel()
 		{
@@ -459,14 +459,15 @@ namespace RecruitmentServer.Forms
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			_interviewCreator.CreateLabel(labelPositionI, interview.Application.Vacancy.Position.Name);
+			_interviewCreator.CreateLabel(labelPositionI,
+				interview.Application.Vacancy.Position.Name);
 			_interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
 				ConvertDateToString(interview.DateEvent));
 
-			_interviewCreator.CreateLabel(labelStatusI, interview.InterviewStatus.Status);
+			_interviewCreator.CreateLabel(labelStatusI, interview?.InterviewStatus?.Status);
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(
 				pictureBoxInterviewStatus);
-			picture.FillColor = GetInterviewStatusColor(interview.InterviewStatus.Status);
+			picture.FillColor = GetInterviewStatusColor(interview?.InterviewStatus?.Status);
 
 			Guna2GradientButton button = _interviewCreator.CreateButton(buttonInterview);
 			_buttonInterviewMap.Add(button, interview);

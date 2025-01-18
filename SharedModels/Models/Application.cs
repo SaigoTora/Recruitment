@@ -38,5 +38,12 @@ namespace SharedModels.Models
 			IdCandidate = idCandidate;
 			IdVacancy = idVacancy;
 		}
+
+		public void ChangeDateSubmission(DateTime dateSubmission)
+			=> DateSubmission = dateSubmission;
+		public void ChangeReasonRejection(string reasonRejection)
+			=> ReasonRejection = reasonRejection;
+		public void ChangeStatusId(int idApplicationStatus)
+			=> IdApplicationStatus = idApplicationStatus;
 	}
 }

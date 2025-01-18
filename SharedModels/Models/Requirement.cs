@@ -78,7 +78,7 @@ namespace SharedModels.Models
 			string res = string.Empty;
 			int number = 1;
 
-			if (City != null)
+			if (!string.IsNullOrWhiteSpace(City))
 				res += $"{number++}. Місце проживання: {City}.\n";
 			if (AgeMin == AgeMax)
 				res += $"{number++}. Вік: {AgeMin} р.\n";

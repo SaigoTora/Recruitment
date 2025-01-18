@@ -432,6 +432,7 @@ namespace RecruitmentClient.Forms
 					_educations[i].TextBoxSpecialty.Text,
 					(int)_educations[i].NUD_YearAdmission.Value,
 					_educations[i].DTP_DateEnd.Value,
+					_account.candidate.IdQuestionnaire,
 					_educations[i].CB_EducationDegree.SelectedIndex + 1,
 					_educations[i].CB_EducationForm.SelectedIndex + 1));
 

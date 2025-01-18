@@ -51,7 +51,7 @@ namespace RecruitmentServer.Forms
 		{
 			textBoxPosition.Text = interview.Application.Vacancy.Position.Name;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
-				interview.DateEvent.ToString("d MMMM yyyy HH:mm");
+				interview.DateEvent.ToLocalTime().ToString("d MMMM yyyy HH:mm");
 
 			if (interview.InterviewStatus.Status == "Прийнято"
 				|| interview.InterviewStatus.Status == "Не прийнято")
@@ -64,8 +64,8 @@ namespace RecruitmentServer.Forms
 			if (interview.InterviewStatus.Status == "Кандидат запрошений")
 				buttonChangeDate.Visible = true;
 
-			dateTimePickerInterview.MinDate = DateTime.Now;
-			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1);
+			dateTimePickerInterview.MinDate = interview.DateEvent.Date;
+			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1).Date;
 			if (interview.InterviewStatus.Status == "Кандидат чекає на рішення")
 				comboBoxDecision.SelectedIndex = 1;
 		}
@@ -95,9 +95,9 @@ namespace RecruitmentServer.Forms
 			Size = new Size(Width, Height + panelDate.Height);
 			comboBoxDecision.Enabled = false;
 			panelDate.Visible = true;
-			dateTimePickerInterview.Value = _interview.DateEvent;
-			numericUpDownHours.Value = _interview.DateEvent.Hour;
-			numericUpDownMinutes.Value = _interview.DateEvent.Minute;
+			dateTimePickerInterview.Value = _interview.DateEvent.ToLocalTime();
+			numericUpDownHours.Value = _interview.DateEvent.ToLocalTime().Hour;
+			numericUpDownMinutes.Value = _interview.DateEvent.ToLocalTime().Minute;
 			buttonChangeApply.Visible = true;
 
 			buttonChangeDate.Text = "Назад";
@@ -136,7 +136,7 @@ namespace RecruitmentServer.Forms
 					CustomMessageBoxIcon.Error, 440);
 				return;
 			}
-			if (_interview.DateEvent >= dateTime)
+			if (_interview.DateEvent.ToLocalTime() >= dateTime)
 			{
 				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити " +
 					"дату та час співбесіди? Рекомендується не встановлювати їх на раніше, " +
@@ -148,10 +148,10 @@ namespace RecruitmentServer.Forms
 			}
 
 			_interview.ChangeDateEvent(dateTime);
-			DatabaseManager.ChangeInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
+			DatabaseManager.UpdateInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
 			ButtonChangeDateBack_Click(sender, e);
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
-				_interview.DateEvent.ToString("d MMMM yyyy HH:mm");
+				_interview.DateEvent.ToLocalTime().ToString("d MMMM yyyy HH:mm");
 			_actionAfterChange(EventArgs.Empty);
 		}
 		private void ButtonApply_Click(object sender, EventArgs e)
@@ -187,7 +187,7 @@ namespace RecruitmentServer.Forms
 			if (result == DialogResult.Yes)
 			{
 				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-				DatabaseManager.SetInterviewStatus(_interview.Id, idStatus);
+				DatabaseManager.UpdateInterviewStatus(_interview.Id, idStatus);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

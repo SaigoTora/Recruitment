@@ -94,7 +94,7 @@ namespace RecruitmentClient.Models
 		}
 		private static List<SharedModels.Models.Education> GetEducations(string login)
 		{// Метод повертає список освіт кандидата від серверу
-			string[] list = SendToServerAndGetResult($"SELECT name_institution,specialty,year_admission,date_end, " +
+			string[] list = SendToServerAndGetResult($"SELECT name_institution,specialty,year_admission,date_end,Education.id_questionnaire," +
 				$"id_education_degree,id_education_form " +
 				$"FROM Education WHERE Education.id_questionnaire = " +
 				$"(SELECT id FROM Questionnaire " +
@@ -109,7 +109,7 @@ namespace RecruitmentClient.Models
 			for (int i = 0; i < list.Length; i += 6)
 				educations.Add(new SharedModels.Models.Education(list[i], list[i + 1],
 					Int32.Parse(list[i + 2]), DateTime.Parse(list[i + 3]),
-					Int32.Parse(list[i + 4]), Int32.Parse(list[i + 5])));
+					Int32.Parse(list[i + 4]), Int32.Parse(list[i + 5]), Int32.Parse(list[i + 6])));
 
 			return educations;
 		}

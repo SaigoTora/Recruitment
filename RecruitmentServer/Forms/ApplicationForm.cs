@@ -157,12 +157,12 @@ namespace RecruitmentServer.Forms
 		private void ChangeApplicationStatus(DateTime dateTime)
 		{
 			int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-			DatabaseManager.SetApplicationStatus(_application.Id, idStatus,
+			DatabaseManager.UpdateApplicationStatus(_application.Id, idStatus,
 				richTextBoxReason.Text);
 
 			if (comboBoxDecision.Text == "Прийнята")
 			{
-				DatabaseManager.CreateInterview(dateTime.ToUniversalTime(), _application.Id);
+				DatabaseManager.CreateInterview(_application.Id, dateTime.ToUniversalTime());
 				Candidate candidate = DatabaseManager.GetCandidate(_application.IdCandidate);
 
 				CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
