@@ -115,7 +115,7 @@ namespace RecruitmentServer.Forms
 		private int FindDegreeIndexById(int id)
 		{
 			for (int i = 0; i < _degreesPoints.Length; i++)
-				if (_degreesPoints[i].IdEducationDegree == id)
+				if (_degreesPoints[i].EducationDegreeId == id)
 					return i;
 
 			return -1;

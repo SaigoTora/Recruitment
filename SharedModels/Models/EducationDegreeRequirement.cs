@@ -7,17 +7,17 @@ namespace SharedModels.Models
 	public partial class EducationDegreeRequirement : EntityBase
 	{
 		[Column("id_requirement")]
-		public int IdRequirement { get; private set; }
+		public int RequirementId { get; private set; }
 		[Column("id_education_degree")]
-		public int IdEducationDegree { get; private set; }
+		public int EducationDegreeId { get; private set; }
 		public virtual EducationDegree EducationDegree { get; private set; }
 		public virtual Requirement Requirement { get; private set; }
 
 		public EducationDegreeRequirement() { }
-		public EducationDegreeRequirement(int idRequirement, int idEducationDegree)
+		public EducationDegreeRequirement(int requirementId, int educationDegreeId)
 		{
-			IdRequirement = idRequirement;
-			IdEducationDegree = idEducationDegree;
+			RequirementId = requirementId;
+			EducationDegreeId = educationDegreeId;
 		}
 	}
 }

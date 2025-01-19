@@ -44,47 +44,47 @@ namespace RecruitmentServer.Models.DataBase
 			modelBuilder.Entity<Application>()
 				.HasMany(e => e.Interviews)
 				.WithRequired(e => e.Application)
-				.HasForeignKey(e => e.IdApplication);
+				.HasForeignKey(e => e.ApplicationId);
 
 			modelBuilder.Entity<ApplicationStatus>()
 				.HasMany(e => e.Applications)
 				.WithRequired(e => e.ApplicationStatus)
-				.HasForeignKey(e => e.IdApplicationStatus)
+				.HasForeignKey(e => e.ApplicationStatusId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<BusinessTripOpportunity>()
 				.HasMany(e => e.Questionnaires)
 				.WithRequired(e => e.BusinessTripOpportunity)
-				.HasForeignKey(e => e.IdBusinessTripOpportunity)
+				.HasForeignKey(e => e.BusinessTripOpportunityId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Candidate>()
 				.HasMany(e => e.Applications)
 				.WithRequired(e => e.Candidate)
-				.HasForeignKey(e => e.IdCandidate);
+				.HasForeignKey(e => e.CandidateId);
 
 			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.Educations)
 				.WithRequired(e => e.EducationDegree)
-				.HasForeignKey(e => e.IdEducationDegree)
+				.HasForeignKey(e => e.EducationDegreeId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.EducationDegreePoints)
 				.WithRequired(e => e.EducationDegree)
-				.HasForeignKey(e => e.IdEducationDegree)
+				.HasForeignKey(e => e.EducationDegreeId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<EducationDegree>()
 				.HasMany(e => e.EducationDegreeRequirements)
 				.WithRequired(e => e.EducationDegree)
-				.HasForeignKey(e => e.IdEducationDegree)
+				.HasForeignKey(e => e.EducationDegreeId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<EducationForm>()
 				.HasMany(e => e.Educations)
 				.WithRequired(e => e.EducationForm)
-				.HasForeignKey(e => e.IdEducationForm)
+				.HasForeignKey(e => e.EducationFormId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Employee>()
@@ -94,65 +94,65 @@ namespace RecruitmentServer.Models.DataBase
 			modelBuilder.Entity<FamilyStatus>()
 				.HasMany(e => e.Questionnaires)
 				.WithRequired(e => e.FamilyStatus)
-				.HasForeignKey(e => e.IdFamilyStatus)
+				.HasForeignKey(e => e.FamilyStatusId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Health>()
 				.HasMany(e => e.Questionnaires)
 				.WithRequired(e => e.Health)
-				.HasForeignKey(e => e.IdHealth);
+				.HasForeignKey(e => e.HealthId);
 
 			modelBuilder.Entity<Interview>()
 				.HasMany(e => e.Employees)
 				.WithOptional(e => e.Interview)
-				.HasForeignKey(e => e.IdInterview)
+				.HasForeignKey(e => e.InterviewId)
 				.WillCascadeOnDelete();
 
 			modelBuilder.Entity<InterviewStatus>()
 				.HasMany(e => e.Interviews)
 				.WithRequired(e => e.InterviewStatus)
-				.HasForeignKey(e => e.IdInterviewStatus)
+				.HasForeignKey(e => e.InterviewStatusId)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Point>()
 				.HasMany(e => e.Degrees)
 				.WithRequired(e => e.Point)
-				.HasForeignKey(e => e.IdPoint);
+				.HasForeignKey(e => e.PointId);
 
 			modelBuilder.Entity<Point>()
 				.HasMany(e => e.Vacancies)
 				.WithRequired(e => e.Point)
-				.HasForeignKey(e => e.IdPoint);
+				.HasForeignKey(e => e.PointId);
 
 			modelBuilder.Entity<Position>()
 				.HasMany(e => e.Vacancies)
 				.WithRequired(e => e.Position)
-				.HasForeignKey(e => e.IdPosition);
+				.HasForeignKey(e => e.PositionId);
 
 			modelBuilder.Entity<Questionnaire>()
 				.HasMany(e => e.Candidates)
 				.WithRequired(e => e.Questionnaire)
-				.HasForeignKey(e => e.IdQuestionnaire);
+				.HasForeignKey(e => e.QuestionnaireId);
 
 			modelBuilder.Entity<Questionnaire>()
 				.HasMany(e => e.Educations)
 				.WithRequired(e => e.Questionnaire)
-				.HasForeignKey(e => e.IdQuestionnaire);
+				.HasForeignKey(e => e.QuestionnaireId);
 
 			modelBuilder.Entity<Questionnaire>()
 				.HasMany(e => e.Languages)
 				.WithRequired(e => e.Questionnaire)
-				.HasForeignKey(e => e.IdQuestionnaire);
+				.HasForeignKey(e => e.QuestionnaireId);
 
 			modelBuilder.Entity<Requirement>()
 				.HasMany(e => e.EducationDegreeRequirements)
 				.WithRequired(e => e.Requirement)
-				.HasForeignKey(e => e.IdRequirement);
+				.HasForeignKey(e => e.RequirementId);
 
 			modelBuilder.Entity<Requirement>()
 				.HasMany(e => e.Vacancies)
 				.WithRequired(e => e.Requirement)
-				.HasForeignKey(e => e.IdRequirement);
+				.HasForeignKey(e => e.RequirementId);
 
 			modelBuilder.Entity<Vacancy>()
 				.Property(e => e.Salary)
@@ -161,7 +161,7 @@ namespace RecruitmentServer.Models.DataBase
 			modelBuilder.Entity<Vacancy>()
 				.HasMany(e => e.Applications)
 				.WithRequired(e => e.Vacancy)
-				.HasForeignKey(e => e.IdVacancy);
+				.HasForeignKey(e => e.VacancyId);
 
 			modelBuilder.Entity<VacancyDbView>()
 				.Property(e => e.Salary)

@@ -82,7 +82,7 @@ namespace RecruitmentServer.Forms
 				{
 					item = listBoxDegrees.Items[j] as DataRowView;
 
-					if (item != null && degreeReq.IdEducationDegree
+					if (item != null && degreeReq.EducationDegreeId
 						== Convert.ToInt32(item["id"]))
 					{
 						listBoxDegrees.SetSelected(j, true);

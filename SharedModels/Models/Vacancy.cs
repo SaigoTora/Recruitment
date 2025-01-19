@@ -18,11 +18,11 @@ namespace SharedModels.Models
 		[Column("relevance")]
 		public bool Relevance { get; private set; }
 		[Column("id_point")]
-		public int IdPoint { get; private set; }
+		public int PointId { get; private set; }
 		[Column("id_requirement")]
-		public int IdRequirement { get; private set; }
+		public int RequirementId { get; private set; }
 		[Column("id_position")]
-		public int IdPosition { get; private set; }
+		public int PositionId { get; private set; }
 		public virtual Point Point { get; private set; }
 		public virtual Position Position { get; private set; }
 		public virtual Requirement Requirement { get; private set; }
@@ -30,16 +30,16 @@ namespace SharedModels.Models
 			= new HashSet<Application>();
 
 		public Vacancy() { }
-		public Vacancy(decimal salary, DateTime datePublication, string info, int idPoint,
-			int idRequirement, int idPosition)
+		public Vacancy(decimal salary, DateTime datePublication, string info, int pointId,
+			int requirementId, int positionId)
 		{
 			Salary = salary;
 			DatePublication = datePublication;
 			Info = info;
 			Relevance = true;
-			IdPoint = idPoint;
-			IdRequirement = idRequirement;
-			IdPosition = idPosition;
+			PointId = pointId;
+			RequirementId = requirementId;
+			PositionId = positionId;
 		}
 
 		public void ChangeRelevance(bool relevance) => Relevance = relevance;

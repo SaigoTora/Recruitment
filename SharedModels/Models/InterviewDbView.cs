@@ -27,7 +27,7 @@ namespace SharedModels.Models
 		[Key]
 		[Column(name: "id_application", Order = 4)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdApplication { get; private set; }
+		public int ApplicationId { get; private set; }
 
 		public InterviewDbView() { }
 		public InterviewDbView(string positionName, string positionDescription,
@@ -39,11 +39,11 @@ namespace SharedModels.Models
 			DateEvent = dateEvent;
 		}
 		public InterviewDbView(int id, string positionName, string positionDescription,
-			string status, DateTime dateEvent, int idApplication)
+			string status, DateTime dateEvent, int applicationId)
 			: this(positionName, positionDescription, status, dateEvent)
 		{
 			Id = id;
-			IdApplication = idApplication;
+			ApplicationId = applicationId;
 		}
 	}
 }

@@ -162,9 +162,9 @@ namespace RecruitmentServer.Forms
 		#region Button event handlers
 		private void ButtonRequirementShow_Click(object sender, EventArgs e)
 		{
-			string requirement = DatabaseManager.GetRequirement(_vacancy.IdRequirement).ToString();
+			string requirement = DatabaseManager.GetRequirement(_vacancy.RequirementId).ToString();
 			string educationDegrees = DatabaseManager.GetRequirementEducationDegree(
-				_vacancy.IdRequirement);
+				_vacancy.RequirementId);
 
 			if (educationDegrees != null && educationDegrees != string.Empty)
 			{
@@ -188,7 +188,7 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonPointsShow_Click(object sender, EventArgs e)
 		{
-			_point = DatabaseManager.GetPoint(_vacancy.IdPoint);
+			_point = DatabaseManager.GetPoint(_vacancy.PointId);
 
 			PointsForm pointsForm = new PointsForm(_account, _point, true);
 			Visible = false;

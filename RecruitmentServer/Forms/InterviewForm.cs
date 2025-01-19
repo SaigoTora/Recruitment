@@ -75,7 +75,7 @@ namespace RecruitmentServer.Forms
 		private void ButtonApplication_Click(object sender, EventArgs e)
 		{
 			SharedModels.Models.Application application =
-				DatabaseManager.GetApplication(_interview.IdApplication);
+				DatabaseManager.GetApplication(_interview.ApplicationId);
 			ApplicationForm applicationForm = new ApplicationForm(_account, application, null);
 			Visible = false;
 			applicationForm.FormClosed += (s, args) => { Visible = true; };

@@ -28,11 +28,11 @@ namespace SharedModels.Models
 		[Column("additional_info")]
 		public string AdditionalInfo { get; private set; }
 		[Column("id_health")]
-		public int IdHealth { get; private set; }
+		public int HealthId { get; private set; }
 		[Column("id_family_status")]
-		public int IdFamilyStatus { get; private set; }
+		public int FamilyStatusId { get; private set; }
 		[Column("id_business_trip_opportunity")]
-		public int IdBusinessTripOpportunity { get; private set; }
+		public int BusinessTripOpportunityId { get; private set; }
 		public virtual Health Health { get; private set; }
 		public virtual FamilyStatus FamilyStatus { get; private set; }
 		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; private set; }
@@ -46,7 +46,7 @@ namespace SharedModels.Models
 		public Questionnaire() { }
 		private Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
-			int idFamilyStatus, int idBusinessTripOpportunity)
+			int familyStatusId, int businessTripOpportunityId)
 		{
 			Nationality = nationality;
 			City = city;
@@ -55,23 +55,23 @@ namespace SharedModels.Models
 			DriverLicense = driverLicense;
 			Readiness = readiness;
 			AdditionalInfo = additionalInfo;
-			IdFamilyStatus = idFamilyStatus;
-			IdBusinessTripOpportunity = idBusinessTripOpportunity;
+			FamilyStatusId = familyStatusId;
+			BusinessTripOpportunityId = businessTripOpportunityId;
 		}
 		public Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
-			int idHealth, int idFamilyStatus, int idBusinessTripOpportunity)
+			int healthId, int familyStatusId, int businessTripOpportunityId)
 			: this(nationality, city, childrenAmount, experience, driverLicense,
-				  readiness, additionalInfo, idFamilyStatus, idBusinessTripOpportunity)
+				  readiness, additionalInfo, familyStatusId, businessTripOpportunityId)
 		{
-			IdHealth = idHealth;
+			HealthId = healthId;
 		}
 		public Questionnaire(string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
-			Health health, int idFamilyStatus, int idBusinessTripOpportunity,
+			Health health, int familyStatusId, int businessTripOpportunityId,
 			List<Language> languages, List<Education> educations)
 			: this(nationality, city, childrenAmount, experience, driverLicense,
-				  readiness, additionalInfo, idFamilyStatus, idBusinessTripOpportunity)
+				  readiness, additionalInfo, familyStatusId, businessTripOpportunityId)
 		{
 			Health = health;
 			Languages = languages;
@@ -89,11 +89,11 @@ namespace SharedModels.Models
 				educations.Add((Education)education?.Clone());
 
 			var newQuestionnaire = new Questionnaire(Nationality, City, ChildrenAmount, Experience,
-				DriverLicense, Readiness, AdditionalInfo, health, IdFamilyStatus,
-				IdBusinessTripOpportunity, languages, educations)
+				DriverLicense, Readiness, AdditionalInfo, health, FamilyStatusId,
+				BusinessTripOpportunityId, languages, educations)
 			{
 				Id = this.Id,
-				IdHealth = this.IdHealth,
+				HealthId = this.HealthId,
 				FamilyStatus = this.FamilyStatus,
 				BusinessTripOpportunity = this.BusinessTripOpportunity,
 				Candidates = this.Candidates

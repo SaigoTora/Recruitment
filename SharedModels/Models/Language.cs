@@ -15,20 +15,20 @@ namespace SharedModels.Models
 		[Column("level")]
 		public int Level { get; private set; }
 		[Column("id_questionnaire")]
-		public int IdQuestionnaire { get; private set; }
+		public int QuestionnaireId { get; private set; }
 		public virtual Questionnaire Questionnaire { get; private set; }
 
 		public Language() { }
-		public Language(string name, int level, int idQuestionnaire)
+		public Language(string name, int level, int questionnaireId)
 		{
 			Name = name;
 			Level = level;
-			IdQuestionnaire = idQuestionnaire;
+			QuestionnaireId = questionnaireId;
 		}
 
 		public object Clone()
 		{
-			Language newLanguage = new Language(Name, Level, IdQuestionnaire)
+			Language newLanguage = new Language(Name, Level, QuestionnaireId)
 			{
 				Id = this.Id,
 				Questionnaire = this.Questionnaire

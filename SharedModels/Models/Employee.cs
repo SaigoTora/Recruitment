@@ -42,16 +42,15 @@ namespace SharedModels.Models
 		[Column(name: "date_employment", TypeName = "date")]
 		public DateTime DateEmployment { get; private set; }
 		[Column("id_interview")]
-		public int? IdInterview { get; private set; }
+		public int? InterviewId { get; private set; }
 		public virtual Interview Interview { get; private set; }
 		public string GetFullName => $"{Surname.ToUpper()} {Name} {FatherName}";
 
 		public Employee() { }
-		public Employee(int id, string surname, string name, string fatherName, string position,
+		public Employee(string surname, string name, string fatherName, string position,
 			string city, string phone, DateTime birthday, string email, decimal salary,
 			DateTime dateEmployment)
 		{
-			Id = id;
 			Surname = surname;
 			Name = name;
 			FatherName = fatherName;

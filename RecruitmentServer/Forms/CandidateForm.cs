@@ -31,8 +31,8 @@ namespace RecruitmentServer.Forms
 				maximizeBox: false);
 			_account = account;
 			_candidate = candidate;
-			_idBusinessTrip = _candidate.Questionnaire.IdBusinessTripOpportunity;
-			_idFamilyStatus = _candidate.Questionnaire.IdFamilyStatus;
+			_idBusinessTrip = _candidate.Questionnaire.BusinessTripOpportunityId;
+			_idFamilyStatus = _candidate.Questionnaire.FamilyStatusId;
 
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);

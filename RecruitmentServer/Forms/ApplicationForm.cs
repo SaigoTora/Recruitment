@@ -76,7 +76,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{
-			Vacancy vacancy = DatabaseManager.GetVacancy(_application.IdVacancy);
+			Vacancy vacancy = DatabaseManager.GetVacancy(_application.VacancyId);
 			VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
 				isDeleteButtonVisible: false);
 			Visible = false;
@@ -85,7 +85,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonCandidate_Click(object sender, EventArgs e)
 		{
-			Candidate candidate = DatabaseManager.GetCandidate(_application.IdCandidate);
+			Candidate candidate = DatabaseManager.GetCandidate(_application.CandidateId);
 			CandidateForm candidateForm = new CandidateForm(_account, candidate);
 			Visible = false;
 			candidateForm.FormClosed += (s, args) => { Visible = true; };
@@ -163,7 +163,7 @@ namespace RecruitmentServer.Forms
 			if (comboBoxDecision.Text == "Прийнята")
 			{
 				DatabaseManager.CreateInterview(_application.Id, dateTime.ToUniversalTime());
-				Candidate candidate = DatabaseManager.GetCandidate(_application.IdCandidate);
+				Candidate candidate = DatabaseManager.GetCandidate(_application.CandidateId);
 
 				CustomMessageBox.Show($"Ви можете зв'язатися з кандидатом:\n\n" +
 					$"Номер телефону: {candidate.Phone}\nE-mail: {candidate.Email}",

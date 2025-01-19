@@ -36,6 +36,6 @@ namespace SharedModels.Models
 		[Key]
 		[Column(name: "id_questionnaire", Order = 7)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdQuestionnaire { get; private set; }
+		public int QuestionnaireId { get; private set; }
 	}
 }

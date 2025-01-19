@@ -95,7 +95,7 @@ namespace RecruitmentServer.Models.DataBase
 
 		#region Read
 		internal static Employee GetEmployee(int interviewId)
-			=> _employeeRepo.GetAll().Find(employee => employee.IdInterview == interviewId);
+			=> _employeeRepo.GetAll().Find(employee => employee.InterviewId == interviewId);
 		internal static Candidate GetCandidate(int candidateId)
 			=> _candidateRepo.GetOne(candidateId);
 		internal static Requirement GetRequirement(int requirementId)
@@ -113,7 +113,7 @@ namespace RecruitmentServer.Models.DataBase
 		internal static string GetRequirementEducationDegree(int requirementId)
 		{
 			var degrees = _educationDegreeRequirementRepo.GetAll().
-				Where(edr => edr.IdRequirement == requirementId).
+				Where(edr => edr.RequirementId == requirementId).
 				Select(edr => edr.EducationDegree?.Degree); ;
 
 			string s = string.Empty;
@@ -235,7 +235,7 @@ namespace RecruitmentServer.Models.DataBase
 		internal static Application GetApplication(int idVacancy, int idCandidate)
 		{
 			Application application = _applicationRepo.GetAll().
-				Find(a => a.IdVacancy == idVacancy && a.IdCandidate == idCandidate);
+				Find(a => a.VacancyId == idVacancy && a.CandidateId == idCandidate);
 			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
 			return application;
 		}

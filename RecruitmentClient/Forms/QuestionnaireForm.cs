@@ -89,7 +89,7 @@ namespace RecruitmentClient.Forms
 		{
 			comboBoxNationality.SelectedIndex = comboBoxNationality.FindString(q.Nationality);
 			textBoxCity.Text = q.City;
-			comboBoxBusinessTripOpportunity.SelectedIndex = q.IdBusinessTripOpportunity - 1;
+			comboBoxBusinessTripOpportunity.SelectedIndex = q.BusinessTripOpportunityId - 1;
 
 			numericUpDownExperience.Value = q.Experience;
 			numericUpDownReadiness.Value = q.Readiness;
@@ -102,7 +102,7 @@ namespace RecruitmentClient.Forms
 				radioButtonDrinkAlcoholNo, q.Health.DrinkAlcohol);
 			richTextBoxChronicDiseases.Text = q.Health.ChronicDiseases;
 
-			comboBoxFamilyStatus.SelectedIndex = q.IdFamilyStatus - 1;
+			comboBoxFamilyStatus.SelectedIndex = q.FamilyStatusId - 1;
 			numericUpDownChildrenAmount.Value = q.ChildrenAmount;
 			richTextBoxAdditionalInfo.Text = q.AdditionalInfo;
 
@@ -144,9 +144,9 @@ namespace RecruitmentClient.Forms
 				_educations[i].NUD_YearAdmission.Value = educations[i].YearAdmission;
 				_educations[i].DTP_DateEnd.Value = educations[i].DateEnd;
 				_educations[i].CB_EducationDegree.SelectedIndex =
-					educations[i].IdEducationDegree - 1;
+					educations[i].EducationDegreeId - 1;
 				_educations[i].CB_EducationForm.SelectedIndex =
-					educations[i].IdEducationForm - 1;
+					educations[i].EducationFormId - 1;
 			}
 		}
 		private void SetComboBoxItems()
@@ -420,7 +420,7 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = new List<Language>(MAX_LANGUAGE_COUNT);
 			for (int i = 0; i < _languages.Count; i++)
 				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(),
-					(int)_languages[i].NUDLevel.Value, _account.candidate.IdQuestionnaire));
+					(int)_languages[i].NUDLevel.Value, _account.candidate.QuestionnaireId));
 
 			return languages;
 		}
@@ -432,7 +432,7 @@ namespace RecruitmentClient.Forms
 					_educations[i].TextBoxSpecialty.Text,
 					(int)_educations[i].NUD_YearAdmission.Value,
 					_educations[i].DTP_DateEnd.Value,
-					_account.candidate.IdQuestionnaire,
+					_account.candidate.QuestionnaireId,
 					_educations[i].CB_EducationDegree.SelectedIndex + 1,
 					_educations[i].CB_EducationForm.SelectedIndex + 1));
 

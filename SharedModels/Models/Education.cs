@@ -21,32 +21,32 @@ namespace SharedModels.Models
 		[Column(name: "date_end", TypeName = "date")]
 		public DateTime DateEnd { get; private set; }
 		[Column("id_questionnaire")]
-		public int IdQuestionnaire { get; private set; }
+		public int QuestionnaireId { get; private set; }
 		[Column("id_education_degree")]
-		public int IdEducationDegree { get; private set; }
+		public int EducationDegreeId { get; private set; }
 		[Column("id_education_form")]
-		public int IdEducationForm { get; private set; }
+		public int EducationFormId { get; private set; }
 		public virtual EducationDegree EducationDegree { get; private set; }
 		public virtual EducationForm EducationForm { get; private set; }
 		public virtual Questionnaire Questionnaire { get; private set; }
 
 		public Education() { }
 		public Education(string nameInstitution, string specialty, int yearAdmission,
-			DateTime dateEnd, int idQuestionnaire, int idEducationDegree, int idEducationForm)
+			DateTime dateEnd, int questionnaireId, int educationDegreeId, int educationFormId)
 		{
 			NameInstitution = nameInstitution;
 			Specialty = specialty;
 			YearAdmission = yearAdmission;
 			DateEnd = dateEnd;
-			IdQuestionnaire = idQuestionnaire;
-			IdEducationDegree = idEducationDegree;
-			IdEducationForm = idEducationForm;
+			QuestionnaireId = questionnaireId;
+			EducationDegreeId = educationDegreeId;
+			EducationFormId = educationFormId;
 		}
 
 		public object Clone()
 		{
 			var newEducation = new Education(NameInstitution, Specialty, YearAdmission, DateEnd,
-				IdQuestionnaire, IdEducationDegree, IdEducationForm)
+				QuestionnaireId, EducationDegreeId, EducationFormId)
 			{
 				Id = this.Id,
 				EducationDegree = this.EducationDegree,

@@ -33,11 +33,11 @@ namespace SharedModels.Models
 		[Key]
 		[Column(name: "id_point", Order = 5)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdPoint { get; private set; }
+		public int PointId { get; private set; }
 		[Key]
 		[Column(name: "id_requirement", Order = 6)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdRequirement { get; private set; }
+		public int RequirementId { get; private set; }
 
 		public VacancyDbView() { }
 		public VacancyDbView(int id, string positionName, string positionDescription,

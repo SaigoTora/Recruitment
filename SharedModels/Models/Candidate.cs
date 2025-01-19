@@ -39,7 +39,7 @@ namespace SharedModels.Models
 		[StringLength(64)]
 		public string Email { get; private set; }
 		[Column("id_questionnaire")]
-		public int IdQuestionnaire { get; private set; }
+		public int QuestionnaireId { get; private set; }
 		public virtual Questionnaire Questionnaire { get; set; }
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
@@ -56,12 +56,12 @@ namespace SharedModels.Models
 			Email = email;
 		}
 		public Candidate(string surname, string name, string fatherName, string login,
-			string password, string phone, DateTime birthday, string email, int idQuestionnaire)
+			string password, string phone, DateTime birthday, string email, int questionnaireId)
 			: this(surname, name, fatherName, phone, birthday, email)
 		{
 			Login = login;
 			Password = password;
-			IdQuestionnaire = idQuestionnaire;
+			QuestionnaireId = questionnaireId;
 		}
 		public Candidate(string surname, string name, string fatherName, string phone,
 			DateTime birthday, string email, Questionnaire questionnaire)
@@ -71,7 +71,7 @@ namespace SharedModels.Models
 		public object Clone()
 		{
 			var newCandidate = new Candidate(Surname, Name, FatherName, Login, Password, Phone,
-				Birthday, Email, IdQuestionnaire)
+				Birthday, Email, QuestionnaireId)
 			{
 				Id = this.Id,
 				Questionnaire = (Questionnaire)this.Questionnaire.Clone(),

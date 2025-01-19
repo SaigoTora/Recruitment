@@ -35,11 +35,11 @@ namespace SharedModels.Models
 		[Key]
 		[Column(name: "id_candidate", Order = 5)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdCandidate { get; private set; }
+		public int CandidateId { get; private set; }
 		[Key]
 		[Column(name: "id_vacancy", Order = 6)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdVacancy { get; private set; }
+		public int VacancyId { get; private set; }
 
 		public ApplicationDbView() { }
 		public ApplicationDbView(string positionName, string positionDescription, string status,
@@ -53,14 +53,14 @@ namespace SharedModels.Models
 		}
 		public ApplicationDbView(int id, string positionName, string positionDescription,
 			string status, DateTime dateSubmission, string reasonRejection, int scores,
-			string additionalInfo, int idCandidate, int idVacancy)
+			string additionalInfo, int candidateId, int vacancyId)
 			: this(positionName, positionDescription, status, dateSubmission, reasonRejection)
 		{
 			Id = id;
 			Scores = scores;
 			AdditionalInfo = additionalInfo;
-			IdCandidate = idCandidate;
-			IdVacancy = idVacancy;
+			CandidateId = candidateId;
+			VacancyId = vacancyId;
 		}
 	}
 }

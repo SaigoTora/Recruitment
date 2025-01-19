@@ -47,7 +47,7 @@ namespace SharedModels.Models
 		[Key]
 		[Column(name: "id_business_trip_opportunity", Order = 9)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int IdBusinessTripOpportunity { get; private set; }
+		public int BusinessTripOpportunityId { get; private set; }
 		[Column("city")]
 		[StringLength(64)]
 		public string City { get; private set; }

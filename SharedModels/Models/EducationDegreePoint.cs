@@ -9,18 +9,18 @@ namespace SharedModels.Models
 		[Column("points")]
 		public int Points { get; private set; }
 		[Column("id_point")]
-		public int IdPoint { get; private set; }
+		public int PointId { get; private set; }
 		[Column("id_education_degree")]
-		public int IdEducationDegree { get; private set; }
+		public int EducationDegreeId { get; private set; }
 		public virtual EducationDegree EducationDegree { get; private set; }
 		public virtual Point Point { get; private set; }
 
 		public EducationDegreePoint() { }
-		public EducationDegreePoint(int points, int idPoint, int idEducationDegree)
+		public EducationDegreePoint(int points, int pointId, int educationDegreeId)
 		{
 			Points = points;
-			IdPoint = idPoint;
-			IdEducationDegree = idEducationDegree;
+			PointId = pointId;
+			EducationDegreeId = educationDegreeId;
 		}
 	}
 }

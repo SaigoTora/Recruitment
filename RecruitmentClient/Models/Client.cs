@@ -378,15 +378,15 @@ namespace RecruitmentClient.Models
 				message += Change("specialty", oldE[i].Specialty, newE[i].Specialty);
 				message += Change("year_admission", oldE[i].YearAdmission, newE[i].YearAdmission);
 				message += Change("date_end", oldE[i].DateEnd.ToString("yyyy-MM-dd"), newE[i].DateEnd.ToString("yyyy-MM-dd"));
-				message += Change("id_education_degree", oldE[i].IdEducationDegree, newE[i].IdEducationDegree);
-				message += Change("id_education_form", oldE[i].IdEducationForm, newE[i].IdEducationForm);
+				message += Change("id_education_degree", oldE[i].EducationDegreeId, newE[i].EducationDegreeId);
+				message += Change("id_education_form", oldE[i].EducationFormId, newE[i].EducationFormId);
 				message = message.TrimEnd(',');// Видаляємо останню кому
 
 				if (message != "UPDATE Education SET")// Якщо потрібно змінити дані
 					SendToServer(message + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
 						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
 						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].IdEducationDegree} AND id_education_form = {oldE[i].IdEducationForm}");
+						$" {oldE[i].EducationDegreeId} AND id_education_form = {oldE[i].EducationFormId}");
 			}
 
 			if (oldE.Count > newE.Count)// Якщо кількість освіт зменшилась
@@ -394,7 +394,7 @@ namespace RecruitmentClient.Models
 					SendToServer("DELETE FROM Education" + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
 						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
 						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].IdEducationDegree} AND id_education_form = {oldE[i].IdEducationForm}");
+						$" {oldE[i].EducationDegreeId} AND id_education_form = {oldE[i].EducationFormId}");
 
 			else if (oldE.Count < newE.Count)// Якщо кількість освіт збільшилась
 				SendToServer(CreateEducations(newE.GetRange(oldE.Count, newE.Count - oldE.Count),
@@ -412,8 +412,8 @@ namespace RecruitmentClient.Models
 			message += Change("driver_license", oldQ.DriverLicense, newQ.DriverLicense);
 			message += Change("readiness", oldQ.Readiness, newQ.Readiness);
 			message += Change("additional_info", oldQ.AdditionalInfo, newQ.AdditionalInfo);
-			message += Change("id_family_status", oldQ.IdFamilyStatus, newQ.IdFamilyStatus);
-			message += Change("id_business_trip_opportunity", oldQ.IdBusinessTripOpportunity, newQ.IdBusinessTripOpportunity);
+			message += Change("id_family_status", oldQ.FamilyStatusId, newQ.FamilyStatusId);
+			message += Change("id_business_trip_opportunity", oldQ.BusinessTripOpportunityId, newQ.BusinessTripOpportunityId);
 			message = message.TrimEnd(',');// Видаляємо останню кому
 
 			if (message != "UPDATE Questionnaire SET")// Якщо потрібно змінити дані
@@ -462,7 +462,7 @@ namespace RecruitmentClient.Models
 				res += $"INSERT INTO Education(name_institution,specialty,year_admission," +
 					$"date_end,id_questionnaire,id_education_degree,id_education_form) " +
 					$"values('{item.NameInstitution}','{item.Specialty}',{item.YearAdmission}," +
-					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.IdEducationDegree},{item.IdEducationForm}) ";
+					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.EducationDegreeId},{item.EducationFormId}) ";
 
 			return res;
 		}
@@ -485,8 +485,8 @@ namespace RecruitmentClient.Models
 				$"id_health,id_family_status,id_business_trip_opportunity) " +
 				$"values('{questionnaire.Nationality}','{questionnaire.City}',{questionnaire.ChildrenAmount}, " +
 				$"{questionnaire.Experience},'{questionnaire.DriverLicense}',{questionnaire.Readiness}, " +
-				$"{info},SCOPE_IDENTITY(),{questionnaire.IdFamilyStatus}, " +
-				$"{questionnaire.IdBusinessTripOpportunity}) " +
+				$"{info},SCOPE_IDENTITY(),{questionnaire.FamilyStatusId}, " +
+				$"{questionnaire.BusinessTripOpportunityId}) " +
 				$"DECLARE @id_q int " +
 				$"SET @id_q = SCOPE_IDENTITY() " + CreateLanguages(questionnaire.Languages.ToList(), "@id_q") +
 				CreateEducations(questionnaire.Educations.ToList(), "@id_q") +
