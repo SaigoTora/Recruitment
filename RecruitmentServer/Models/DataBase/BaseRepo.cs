@@ -43,13 +43,13 @@ namespace RecruitmentServer.Models.DataBase
 			{
 				return _db.SaveChanges();
 			}
-			catch (DbUpdateConcurrencyException ex)
+			catch (DbUpdateConcurrencyException)
 			{
 				// Thrown when there is a concurrency error
 				// for now, just rethrow the exception
 				throw;
 			}
-			catch (DbUpdateException ex)
+			catch (DbUpdateException)
 			{
 				// Thrown when database update fails
 				// Examine the inner exception(s) for additional 
@@ -57,13 +57,13 @@ namespace RecruitmentServer.Models.DataBase
 				// for now, just rethrow the exception
 				throw;
 			}
-			catch (CommitFailedException ex)
+			catch (CommitFailedException)
 			{
 				// Handle transaction failures here
 				// for now, just rethrow the exception
 				throw;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				// Some other exception happened and should be handled
 				throw;

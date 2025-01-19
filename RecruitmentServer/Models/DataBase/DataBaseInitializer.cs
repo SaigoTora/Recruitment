@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 
-using SharedModels.Models;
 using Base;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Models.DataBase
 {
@@ -16,7 +16,12 @@ namespace RecruitmentServer.Models.DataBase
 
 		public static void Initialize(RecruitmentEntities context)
 		{
-			if (Debugger.IsAttached)
+			bool parseResult = bool.TryParse(ConfigurationManager.AppSettings["seedData"],
+				out bool shouldSeedData);
+			if (!parseResult)
+				shouldSeedData = false;
+
+			if (shouldSeedData)
 			{
 				_context = context;
 				ClearDatabase();
