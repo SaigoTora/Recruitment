@@ -48,8 +48,8 @@ namespace RecruitmentClient.Forms
 
 		private readonly List<Guna2GradientPanel> _createdPanels =
 			new List<Guna2GradientPanel>();
-		private readonly Dictionary<Guna2GradientButton, VacancyDbView> _buttonVacancyMap =
-			new Dictionary<Guna2GradientButton, VacancyDbView>();
+		private readonly Dictionary<Guna2GradientButton, Vacancy> _buttonVacancyMap =
+			new Dictionary<Guna2GradientButton, Vacancy>();
 		private readonly Dictionary<Guna2GradientButton, string> _buttonReasonRejectionMap =
 			new Dictionary<Guna2GradientButton, string>();
 
@@ -306,7 +306,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<VacancyDbView> vacancies = Client.GetFreeVacancies(_account.Login,
+			List<Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
@@ -324,7 +324,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<ApplicationDbView> applications =
+			List<SharedModels.Models.Application> applications =
 				Client.GetApplications(_account.Login, _createdPanels.Count,
 				COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -343,7 +343,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<InterviewDbView> interviews = Client.GetInterviews(_account.Login,
+			List<Interview> interviews = Client.GetInterviews(_account.Login,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
@@ -364,14 +364,14 @@ namespace RecruitmentClient.Forms
 			FlpContent_Resize(flpContent, EventArgs.Empty);
 		}
 
-		private void CreateVacancy(VacancyDbView vacancy)
+		private void CreateVacancy(Vacancy vacancy)
 		{
 			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
 
-			_vacancyCreator.CreateLabel(labelPositionV, vacancy.PositionName);
+			_vacancyCreator.CreateLabel(labelPositionV, vacancy.Position.Name);
 			Label labelDescription = _vacancyCreator.CreateLabel(labelPositionDescriptionV,
-				vacancy.PositionDescription);
+				vacancy.Position.Description);
 			AdjustLabelLocation(labelDescription, panelVacancy);
 			_vacancyCreator.CreateLabel(labelSalaryV, $"{vacancy.Salary:0.##}" +
 				$" {CURRENCY}");
@@ -383,19 +383,19 @@ namespace RecruitmentClient.Forms
 			_buttonVacancyMap.Add(button, vacancy);
 			ManageVacancyButtonEvent(button, true);
 		}
-		private void CreateApplication(ApplicationDbView application)
+		private void CreateApplication(SharedModels.Models.Application application)
 		{
 			const string DATE_PREFIX = "Дата і час подачі: ";
 
-			_applicationCreator.CreateLabel(labelPositionA, application.PositionName);
+			_applicationCreator.CreateLabel(labelPositionA, application.Vacancy.Position.Name);
 			Label labelDate = _applicationCreator.CreateLabel(labelDateSubmissionA,
 				DATE_PREFIX + ConvertDateToString(application.DateSubmission));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
-			_applicationCreator.CreateLabel(labelStatusA, application.Status);
+			_applicationCreator.CreateLabel(labelStatusA, application.ApplicationStatus.Status);
 			Guna2PictureBox picture = _applicationCreator.CreatePictureBox(
 				pictureBoxApplicationStatus);
-			picture.FillColor = GetApplicationStatusColor(application.Status);
+			picture.FillColor = GetApplicationStatusColor(application.ApplicationStatus.Status);
 
 			string reason = application.ReasonRejection;
 			if (!string.IsNullOrWhiteSpace(reason))
@@ -406,19 +406,20 @@ namespace RecruitmentClient.Forms
 				ManageReasonRejectionButtonEvent(button, true);
 			}
 		}
-		private void CreateInterview(InterviewDbView interview)
+		private void CreateInterview(Interview interview)
 		{
 			const string DATE_PREFIX = "Дата і час проведення: ";
 
-			_interviewCreator.CreateLabel(labelPositionI, interview.PositionName);
-			_interviewCreator.CreateLabel(labelStatusI, interview.Status);
+			_interviewCreator.CreateLabel(labelPositionI,
+				interview.Application.Vacancy.Position.Name);
+			_interviewCreator.CreateLabel(labelStatusI, interview.InterviewStatus.Status);
 			Label labelDate = _interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
 				ConvertDateToString(interview.DateEvent));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(
 				pictureBoxInterviewStatus);
-			picture.FillColor = GetInterviewStatusColor(interview.Status);
+			picture.FillColor = GetInterviewStatusColor(interview.InterviewStatus.Status);
 		}
 
 		private string ConvertDateToString(DateTime date)
@@ -491,7 +492,7 @@ namespace RecruitmentClient.Forms
 			if (!(sender is Guna2GradientButton button))
 				return;
 
-			VacancyDbView vacancy = _buttonVacancyMap[button];
+			Vacancy vacancy = _buttonVacancyMap[button];
 			try
 			{
 				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,

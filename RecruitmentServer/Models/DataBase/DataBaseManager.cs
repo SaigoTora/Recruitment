@@ -83,11 +83,11 @@ namespace RecruitmentServer.Models.DataBase
 			=> _requirementRepo.Add(requirement);
 		internal static void CreatePoint(Point point)
 			=> _pointRepo.Add(point);
-		internal static void CreateInterview(int idApplication, DateTime dateEvent)
+		internal static void CreateInterview(int applicationId, DateTime dateEvent)
 		{
 			int DEFAULT_STATUS_ID = 1;
 
-			Interview interview = new Interview(dateEvent, idApplication, DEFAULT_STATUS_ID);
+			Interview interview = new Interview(dateEvent, applicationId, DEFAULT_STATUS_ID);
 			interview.ChangeStatusId(_interviewStatusRepo.GetOne(DEFAULT_STATUS_ID));
 			_interviewRepo.Add(interview);
 		}
@@ -232,10 +232,10 @@ namespace RecruitmentServer.Models.DataBase
 			var applications = GetApplications(searcher);
 			return applications.GetRange(offset, Math.Min(applications.Count, amount));
 		}
-		internal static Application GetApplication(int idVacancy, int idCandidate)
+		internal static Application GetApplication(int vacancyId, int candidateId)
 		{
 			Application application = _applicationRepo.GetAll().
-				Find(a => a.VacancyId == idVacancy && a.CandidateId == idCandidate);
+				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
 			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
 			return application;
 		}

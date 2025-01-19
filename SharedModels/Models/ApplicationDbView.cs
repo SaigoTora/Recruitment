@@ -40,27 +40,5 @@ namespace SharedModels.Models
 		[Column(name: "id_vacancy", Order = 6)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int VacancyId { get; private set; }
-
-		public ApplicationDbView() { }
-		public ApplicationDbView(string positionName, string positionDescription, string status,
-			DateTime dateSubmission, string reasonRejection)
-		{
-			PositionName = positionName;
-			PositionDescription = positionDescription;
-			Status = status;
-			DateSubmission = dateSubmission;
-			ReasonRejection = reasonRejection;
-		}
-		public ApplicationDbView(int id, string positionName, string positionDescription,
-			string status, DateTime dateSubmission, string reasonRejection, int scores,
-			string additionalInfo, int candidateId, int vacancyId)
-			: this(positionName, positionDescription, status, dateSubmission, reasonRejection)
-		{
-			Id = id;
-			Scores = scores;
-			AdditionalInfo = additionalInfo;
-			CandidateId = candidateId;
-			VacancyId = vacancyId;
-		}
 	}
 }

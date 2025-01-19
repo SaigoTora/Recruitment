@@ -38,18 +38,5 @@ namespace SharedModels.Models
 		[Column(name: "id_requirement", Order = 6)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int RequirementId { get; private set; }
-
-		public VacancyDbView() { }
-		public VacancyDbView(int id, string positionName, string positionDescription,
-			decimal salary, DateTime datePublication,
-			string info)
-		{
-			Id = id;
-			PositionName = positionName;
-			PositionDescription = positionDescription;
-			Salary = salary;
-			DatePublication = datePublication;
-			Info = info;
-		}
 	}
 }

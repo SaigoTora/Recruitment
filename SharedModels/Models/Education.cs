@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;

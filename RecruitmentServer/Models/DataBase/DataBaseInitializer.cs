@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 
 using SharedModels.Models;
-using SharedModels.Models.Base;
+using Base;
 
 namespace RecruitmentServer.Models.DataBase
 {

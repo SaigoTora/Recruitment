@@ -16,13 +16,13 @@ namespace RecruitmentServer.Forms
 	internal partial class RequirementForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
-		private readonly SharedModels.Models.Requirement _requirement;
+		private readonly Requirement _requirement;
 		private readonly CheckBoxEventHandlers _checkBoxEventHandlers =
 			new CheckBoxEventHandlers();
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
 
-		internal RequirementForm(Account account, SharedModels.Models.Requirement requirement)
+		internal RequirementForm(Account account, Requirement requirement)
 		{
 			InitializeComponent();
 
@@ -53,7 +53,7 @@ namespace RecruitmentServer.Forms
 			SetTheme(_account.Theme);
 		}
 
-		private void SetFormFields(SharedModels.Models.Requirement requirement)
+		private void SetFormFields(Requirement requirement)
 		{
 			textBoxCity.Text = requirement.City;
 			numericUpDownAgeMin.Value = requirement.AgeMin;

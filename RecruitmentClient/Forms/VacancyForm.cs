@@ -13,14 +13,14 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
-		private readonly VacancyDbView _vacancy;
+		private readonly Vacancy _vacancy;
 		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
 		private readonly Theme _currentTheme;
 
 		private string _requirements;
 
-		internal VacancyForm(Account account, VacancyDbView vacancy,
+		internal VacancyForm(Account account, Vacancy vacancy,
 			string login, Action<EventArgs> refresh)
 		{
 			InitializeComponent();
@@ -34,12 +34,12 @@ namespace RecruitmentClient.Forms
 		}
 		private void VacancyForm_Load(object sender, EventArgs e)
 		{
-			richTextBoxPosition.Text = _vacancy.PositionName;
+			richTextBoxPosition.Text = _vacancy.Position.Name;
 			richTextBoxSalary.Text = $"{_vacancy.Salary:0.##}" + " грн.";
 			labelDatePublication.Text = "Дата публікації: " +
 				_vacancy.DatePublication.ToString("yyyy-MM-dd");
 
-			SetupInformation(_vacancy.PositionDescription, labelPositionDescriptionTitle,
+			SetupInformation(_vacancy.Position.Description, labelPositionDescriptionTitle,
 				richTextBoxPositionDescription);
 			SetupInformation(_vacancy.Info,
 				labelAdditionalInfoTitle, richTextBoxAdditionalInfo);
@@ -116,6 +116,5 @@ namespace RecruitmentClient.Forms
 
 		public void SetTheme(Theme theme)
 			=> ThemeControlManager.ChangeFormTheme(this, theme);
-
 	}
 }

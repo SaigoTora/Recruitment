@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SharedModels.Models.Base
+namespace Base
 {
 	public class EntityBase
 	{

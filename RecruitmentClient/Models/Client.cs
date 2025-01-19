@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 
 using RecruitmentClient.Utilities.ClientUtilities;
+using SharedModels.Models;
 
 namespace RecruitmentClient.Models
 {
@@ -75,7 +76,7 @@ namespace RecruitmentClient.Models
 		}
 
 		// Методи для отримання даних від серверу
-		private static List<SharedModels.Models.Language> GetLanguages(string login)
+		private static List<Language> GetLanguages(string login)
 		{// Метод повертає список мов кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT name,level,id_questionnaire " +
 				$"FROM Language " +
@@ -85,14 +86,14 @@ namespace RecruitmentClient.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE login = '{login}'))");
 
-			List<SharedModels.Models.Language> languages = new List<SharedModels.Models.Language>();
+			List<Language> languages = new List<Language>();
 			for (int i = 0; i < list.Length; i += 2)
-				languages.Add(new SharedModels.Models.Language(list[i], Int32.Parse(list[i + 1]),
+				languages.Add(new Language(list[i], Int32.Parse(list[i + 1]),
 					Int32.Parse(list[i + 2])));
 
 			return languages;
 		}
-		private static List<SharedModels.Models.Education> GetEducations(string login)
+		private static List<Education> GetEducations(string login)
 		{// Метод повертає список освіт кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT name_institution,specialty,year_admission,date_end,Education.id_questionnaire," +
 				$"id_education_degree,id_education_form " +
@@ -102,18 +103,18 @@ namespace RecruitmentClient.Models
 				$"(SELECT id_questionnaire FROM Candidate " +
 				$"WHERE login = '{login}'))");
 
-			List<SharedModels.Models.Education> educations = new List<SharedModels.Models.Education>();
+			List<Education> educations = new List<Education>();
 			if (list.Length < 6)
 				return educations;
 
 			for (int i = 0; i < list.Length; i += 6)
-				educations.Add(new SharedModels.Models.Education(list[i], list[i + 1],
+				educations.Add(new Education(list[i], list[i + 1],
 					Int32.Parse(list[i + 2]), DateTime.Parse(list[i + 3]),
 					Int32.Parse(list[i + 4]), Int32.Parse(list[i + 5]), Int32.Parse(list[i + 6])));
 
 			return educations;
 		}
-		internal static SharedModels.Models.Candidate GetCandidate(string login, string password)
+		internal static Candidate GetCandidate(string login, string password)
 		{// Метод повертає кандидата від серверу
 			string[] list = SendToServerAndGetResult($"SELECT surname,name,father_name,phone,birthday,email, " +
 				$"nationality,city,children_amount,experience,driver_license,readiness,additional_info, " +
@@ -127,14 +128,14 @@ namespace RecruitmentClient.Models
 			if (list.Length < 18)
 				throw new ArgumentException("Логін та/або пароль введені не вірно!");
 
-			SharedModels.Models.Health h = new SharedModels.Models.Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
-			SharedModels.Models.Questionnaire q = new SharedModels.Models.Questionnaire(list[6], list[7],// Анкета
+			Health h = new Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
+			Questionnaire q = new Questionnaire(list[6], list[7],// Анкета
 				Int32.Parse(list[8]), Int32.Parse(list[9]), bool.Parse(list[10]),
 				Int32.Parse(list[11]), list[12], h,
 				Int32.Parse(list[16]), Int32.Parse(list[17]),
 				GetLanguages(login), GetEducations(login));
 
-			return new SharedModels.Models.Candidate(list[0], list[1], list[2], list[3], DateTime.Parse(list[4]), list[5], q);
+			return new Candidate(list[0], list[1], list[2], list[3], DateTime.Parse(list[4]), list[5], q);
 		}
 
 		internal static int GetCountVacancies(string login, ClientSearcher searcher)
@@ -148,9 +149,9 @@ namespace RecruitmentClient.Models
 				"WHERE id_vacancy = View_Vacancy.id AND id_candidate = " +
 				$"(SELECT id FROM Candidate WHERE login = '{login}')) = 0 {condition}")[0]);
 		}
-		internal static List<SharedModels.Models.VacancyDbView> GetFreeVacancies(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<Vacancy> GetFreeVacancies(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список актуальних вакансій, на які ще не відправляв заявки користувач
-			List<SharedModels.Models.VacancyDbView> vacancies = new List<SharedModels.Models.VacancyDbView>();
+			List<Vacancy> vacancies = new List<Vacancy>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -170,7 +171,7 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 6)
 			{
-				vacancies.Add(new SharedModels.Models.VacancyDbView(Int32.Parse(arr[i]), arr[i + 1], arr[i + 2], Decimal.Parse(arr[i + 3]), DateTime.Parse(arr[i + 4]).ToLocalTime(), arr[i + 5]));
+				vacancies.Add(new Vacancy(Int32.Parse(arr[i]), arr[i + 1], arr[i + 2], Decimal.Parse(arr[i + 3]), DateTime.Parse(arr[i + 4]).ToLocalTime(), arr[i + 5]));
 			}
 
 			return vacancies;
@@ -184,9 +185,9 @@ namespace RecruitmentClient.Models
 			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}') {condition}")[0]);
 		}
-		internal static List<SharedModels.Models.ApplicationDbView> GetApplications(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<Application> GetApplications(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
-			List<SharedModels.Models.ApplicationDbView> applications = new List<SharedModels.Models.ApplicationDbView>();
+			List<Application> applications = new List<Application>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -206,8 +207,7 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 5)
 			{
-				SharedModels.Models.Position position = new SharedModels.Models.Position();
-				applications.Add(new SharedModels.Models.ApplicationDbView(arr[i], arr[i + 1],
+				applications.Add(new Application(arr[i], arr[i + 1],
 					arr[i + 2],
 					DateTime.Parse(arr[i + 3]).ToLocalTime(), arr[i + 4]));
 			}
@@ -224,9 +224,9 @@ namespace RecruitmentClient.Models
 				"WHERE id_application IN (SELECT id FROM Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}')) {condition}")[0]);
 		}
-		internal static List<SharedModels.Models.InterviewDbView> GetInterviews(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<Interview> GetInterviews(string login, int offset, int amount, ClientSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
-			List<SharedModels.Models.InterviewDbView> interviews = new List<SharedModels.Models.InterviewDbView>();
+			List<Interview> interviews = new List<Interview>();
 			string condition = string.Empty, orderBy;
 			if (searcher != null)
 			{
@@ -247,19 +247,19 @@ namespace RecruitmentClient.Models
 				return null;
 			for (int i = 0; i < arr.Length; i += 4)
 			{
-				interviews.Add(new SharedModels.Models.InterviewDbView(arr[i], arr[i + 1], arr[i + 2],
+				interviews.Add(new Interview(arr[i], arr[i + 1], arr[i + 2],
 					DateTime.Parse(arr[i + 3]).ToLocalTime()));
 			}
 
 			return interviews;
 		}
 
-		internal static SharedModels.Models.Requirement GetRequirement(int idVacancy)
+		internal static Requirement GetRequirement(int vacancyId)
 		{// Метод, який повертає вимоги для заданої вакансії
 			string[] arr = SendToServerAndGetResult($"SELECT city,age_min,age_max," +
 				$"exp_min,diploma,no_chronic_diseases,driver_license,no_smoker," +
 				$"no_drink_alcohol,business_trip_opportunity,student" +
-				$" FROM Requirement WHERE Requirement.id = (SELECT id FROM Vacancy WHERE id = {idVacancy})");
+				$" FROM Requirement WHERE Requirement.id = (SELECT id FROM Vacancy WHERE id = {vacancyId})");
 
 			string city = arr[0] == "" ? null : arr[0];
 			bool? student;// Знаходимо вимогу "student"
@@ -268,13 +268,13 @@ namespace RecruitmentClient.Models
 			else
 				student = bool.Parse(arr[10]);
 
-			return new SharedModels.Models.Requirement(city, byte.Parse(arr[1]), byte.Parse(arr[2]), int.Parse(arr[3]), bool.Parse(arr[4]), bool.Parse(arr[5]), bool.Parse(arr[6]), bool.Parse(arr[7]), bool.Parse(arr[8]), bool.Parse(arr[9]), student);
+			return new Requirement(city, byte.Parse(arr[1]), byte.Parse(arr[2]), int.Parse(arr[3]), bool.Parse(arr[4]), bool.Parse(arr[5]), bool.Parse(arr[6]), bool.Parse(arr[7]), bool.Parse(arr[8]), bool.Parse(arr[9]), student);
 		}
-		internal static string GetRequirementEducationDegree(int idVacancy)
+		internal static string GetRequirementEducationDegree(int vacancyId)
 		{// Метод, який повертає вимоги до ступенів освіти для заданої вакансії
 			string[] arr = SendToServerAndGetResult("SELECT degree FROM Education_Degree WHERE id IN " +
 				"(SELECT id_education_degree FROM EducationDegree_Requirement " +
-				$"WHERE id_requirement = (SELECT id_requirement FROM Vacancy WHERE Vacancy.id = {idVacancy}))");
+				$"WHERE id_requirement = (SELECT id_requirement FROM Vacancy WHERE Vacancy.id = {vacancyId}))");
 
 			if (arr.Length == 1 && arr[0] == "")// Якщо результату немає
 				return null;
@@ -330,7 +330,7 @@ namespace RecruitmentClient.Models
 			=> Change(field, oldI.ToString(), newI.ToString(), false);
 		private static string Change(string field, bool oldB, bool newB)
 			=> Change(field, oldB.ToString(), newB.ToString());
-		private static void ChangeHealth(string login, SharedModels.Models.Health oldH, SharedModels.Models.Health newH)
+		private static void ChangeHealth(string login, Health oldH, Health newH)
 		{// Метод, який змінює здоров’я на сервері
 			string message = "UPDATE Health SET";
 			message += Change("chronic_diseases", oldH.ChronicDiseases, newH.ChronicDiseases);
@@ -342,7 +342,7 @@ namespace RecruitmentClient.Models
 				SendToServer(message + $" WHERE id = (SELECT id_health FROM Questionnaire " +
 					$"WHERE id = (SELECT id_questionnaire FROM Candidate WHERE login = '{login}'))");
 		}
-		private static void ChangeLanguages(string login, List<SharedModels.Models.Language> oldL, List<SharedModels.Models.Language> newL)
+		private static void ChangeLanguages(string login, List<Language> oldL, List<Language> newL)
 		{// Метод, який змінює мови на сервері
 			int n = Math.Min(oldL.Count, newL.Count);
 			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
@@ -366,7 +366,7 @@ namespace RecruitmentClient.Models
 				SendToServer(CreateLanguages(newL.GetRange(oldL.Count, newL.Count - oldL.Count),
 					$"(SELECT id_questionnaire FROM Candidate WHERE login = '{login}')"));
 		}
-		private static void ChangeEducations(string login, List<SharedModels.Models.Education> oldE, List<SharedModels.Models.Education> newE)
+		private static void ChangeEducations(string login, List<Education> oldE, List<Education> newE)
 		{// Метод, який змінює освіти на сервері
 			int n = Math.Min(oldE.Count, newE.Count);
 			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
@@ -402,7 +402,7 @@ namespace RecruitmentClient.Models
 		}
 
 
-		internal static void ChangeQuestionnaire(string login, SharedModels.Models.Questionnaire oldQ, SharedModels.Models.Questionnaire newQ)
+		internal static void ChangeQuestionnaire(string login, Questionnaire oldQ, Questionnaire newQ)
 		{// Метод, який змінює анкету на сервері
 			string message = "UPDATE Questionnaire SET";
 			message += Change("nationality", oldQ.Nationality, newQ.Nationality);
@@ -423,7 +423,7 @@ namespace RecruitmentClient.Models
 			ChangeLanguages(login, oldQ.Languages.ToList(), newQ.Languages.ToList());
 			ChangeEducations(login, oldQ.Educations.ToList(), newQ.Educations.ToList());
 		}
-		internal static void ChangeCandidate(string login, SharedModels.Models.Candidate oldC, SharedModels.Models.Candidate newC)
+		internal static void ChangeCandidate(string login, Candidate oldC, Candidate newC)
 		{// Метод, який змінює кандидата на сервері
 			string message = "UPDATE Candidate SET";
 			message += Change("surname", oldC.Surname, newC.Surname);
@@ -444,21 +444,21 @@ namespace RecruitmentClient.Models
 		}
 
 		// Методи для створення даних на сервері
-		private static string CreateLanguages(List<SharedModels.Models.Language> languages, string idQuestionnaire)
+		private static string CreateLanguages(List<Language> languages, string idQuestionnaire)
 		{// Метод який повертає запит створення мов
 			string res = string.Empty;
 
-			foreach (SharedModels.Models.Language item in languages)
+			foreach (Language item in languages)
 				res += $"INSERT INTO Language(name,level,id_questionnaire) " +
 				$"values('{item.Name}',{item.Level},{idQuestionnaire}) ";
 
 			return res;
 		}
-		private static string CreateEducations(List<SharedModels.Models.Education> educations, string idQuestionnaire)
+		private static string CreateEducations(List<Education> educations, string idQuestionnaire)
 		{// Метод який повертає запит створення освіт
 			string res = string.Empty;
 
-			foreach (SharedModels.Models.Education item in educations)
+			foreach (Education item in educations)
 				res += $"INSERT INTO Education(name_institution,specialty,year_admission," +
 					$"date_end,id_questionnaire,id_education_degree,id_education_form) " +
 					$"values('{item.NameInstitution}','{item.Specialty}',{item.YearAdmission}," +
@@ -470,9 +470,9 @@ namespace RecruitmentClient.Models
 		{// Метод який створює на сервері кандидата
 
 			// Оголошуємо змінні
-			SharedModels.Models.Candidate candidate = account.candidate;
-			SharedModels.Models.Questionnaire questionnaire = candidate.Questionnaire;
-			SharedModels.Models.Health health = questionnaire.Health;
+			Candidate candidate = account.candidate;
+			Questionnaire questionnaire = candidate.Questionnaire;
+			Health health = questionnaire.Health;
 
 			string fatherName = candidate.FatherName == "" ? "NULL" : $"'{candidate.FatherName}'";
 			string chronicDiseases = health.ChronicDiseases == "" ? "NULL" : $"'{health.ChronicDiseases}'";
@@ -494,11 +494,11 @@ namespace RecruitmentClient.Models
 				$"values('{candidate.Surname}','{candidate.Name}',{fatherName},'{account.Login}', " +
 				$"'{account.Password}','{candidate.Phone}','{candidate.Birthday:yyyy-MM-dd}','{candidate.Email}',@id_q)");
 		}
-		internal static void CreateApplication(string login, string info, int idVacancy)
+		internal static void CreateApplication(string login, string info, int vacancyId)
 		{// Метод, який створює заявку на роботу
 			info = info == "" ? "NULL" : $"'{info}'";
 			SendToServer("INSERT INTO Application(date_submission,additional_info,id_application_status,id_candidate,id_vacancy)" +
-				$" values('{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}',{info},1,(SELECT id FROM Candidate WHERE login = '{login}'),{idVacancy})");
+				$" values('{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}',{info},1,(SELECT id FROM Candidate WHERE login = '{login}'),{vacancyId})");
 		}
 	}
 }

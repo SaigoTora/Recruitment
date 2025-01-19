@@ -28,22 +28,5 @@ namespace SharedModels.Models
 		[Column(name: "id_application", Order = 4)]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int ApplicationId { get; private set; }
-
-		public InterviewDbView() { }
-		public InterviewDbView(string positionName, string positionDescription,
-			string status, DateTime dateEvent)
-		{
-			PositionName = positionName;
-			PositionDescription = positionDescription;
-			Status = status;
-			DateEvent = dateEvent;
-		}
-		public InterviewDbView(int id, string positionName, string positionDescription,
-			string status, DateTime dateEvent, int applicationId)
-			: this(positionName, positionDescription, status, dateEvent)
-		{
-			Id = id;
-			ApplicationId = applicationId;
-		}
 	}
 }

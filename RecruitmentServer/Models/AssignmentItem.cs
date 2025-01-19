@@ -7,10 +7,10 @@
 		internal int Scores { get; private set; }
 
 		public AssignmentItem() { }
-		public AssignmentItem(int idVacancy, int idCandidate, int scores)
+		public AssignmentItem(int vacancyId, int candidateId, int scores)
 		{
-			VacancyId = idVacancy;
-			CandidateId = idCandidate;
+			VacancyId = vacancyId;
+			CandidateId = candidateId;
 			Scores = scores;
 		}
 	}

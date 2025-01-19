@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
-using SharedModels.Models.Base;
+using Base;
 
 namespace RecruitmentServer.Models.DataBase
 {

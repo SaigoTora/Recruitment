@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("EducationDegree_Requirement")]

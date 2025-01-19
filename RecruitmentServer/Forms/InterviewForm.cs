@@ -186,8 +186,8 @@ namespace RecruitmentServer.Forms
 
 			if (result == DialogResult.Yes)
 			{
-				int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-				DatabaseManager.UpdateInterviewStatus(_interview.Id, idStatus);
+				int statusId = int.Parse(comboBoxDecision.SelectedValue.ToString());
+				DatabaseManager.UpdateInterviewStatus(_interview.Id, statusId);
 				_actionAfterChange(EventArgs.Empty);
 				Close();
 			}

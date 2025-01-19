@@ -77,31 +77,31 @@ namespace RecruitmentServer.Forms
 
 			return matrix;
 		}
-		private int GetScore(int idVacancy, int idCandidate)
+		private int GetScore(int vacancyId, int candidateId)
 		{// Method that returns scores by vacancy ID and candidate ID
 			for (int i = 0; i < _allItems.Length; i++)
-				if (_allItems[i].VacancyId == idVacancy
-					&& _allItems[i].CandidateId == idCandidate)
+				if (_allItems[i].VacancyId == vacancyId
+					&& _allItems[i].CandidateId == candidateId)
 					return _allItems[i].Scores;
 
 			return -1;
 		}
 		private void SetResultItems(int[] results)
 		{// The method writes data from a one-dimensional array to _resultItems
-			int idVacancy, idCandidate, scores;
+			int vacancyId, candidateId, scores;
 			for (int i = 0; i < results.Length; i++)
 			{
 				if (results[i] == -1)
 					continue;
 
-				idVacancy = _vacancyIds[results[i]];
-				idCandidate = _candidateIds[i];
-				scores = GetScore(idVacancy, idCandidate);
+				vacancyId = _vacancyIds[results[i]];
+				candidateId = _candidateIds[i];
+				scores = GetScore(vacancyId, candidateId);
 
 				if (scores < 0)
 					continue;
 
-				_resultItems.Add(new AssignmentItem(idVacancy, idCandidate, scores));
+				_resultItems.Add(new AssignmentItem(vacancyId, candidateId, scores));
 			}
 		}
 

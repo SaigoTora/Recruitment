@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +25,14 @@ namespace SharedModels.Models
 			DateEvent = dateEvent;
 			ApplicationId = applicationId;
 			InterviewStatusId = interviewStatusId;
+		}
+		public Interview(string positionName, string positionDescription,
+			string status, DateTime dateEvent)
+		{
+			Application?.Vacancy?.Position?.ChangeName(positionName);
+			Application?.Vacancy?.Position?.ChangeDescription(positionDescription);
+			InterviewStatus = new InterviewStatus(status);
+			DateEvent = dateEvent;
 		}
 
 		public void ChangeDateEvent(DateTime dateEvent)

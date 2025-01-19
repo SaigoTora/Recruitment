@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -23,5 +23,8 @@ namespace SharedModels.Models
 			Name = name;
 			Description = description;
 		}
+
+		public void ChangeName(string name) => Name = name;
+		public void ChangeDescription(string description) => Description = description;
 	}
 }

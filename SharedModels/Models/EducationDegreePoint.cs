@@ -1,4 +1,4 @@
-using SharedModels.Models.Base;
+using Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedModels.Models

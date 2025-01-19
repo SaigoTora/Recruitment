@@ -156,8 +156,8 @@ namespace RecruitmentServer.Forms
 		}
 		private void ChangeApplicationStatus(DateTime dateTime)
 		{
-			int idStatus = int.Parse(comboBoxDecision.SelectedValue.ToString());
-			DatabaseManager.UpdateApplicationStatus(_application.Id, idStatus,
+			int statusId = int.Parse(comboBoxDecision.SelectedValue.ToString());
+			DatabaseManager.UpdateApplicationStatus(_application.Id, statusId,
 				richTextBoxReason.Text);
 
 			if (comboBoxDecision.Text == "Прийнята")

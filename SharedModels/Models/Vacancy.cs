@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -40,6 +40,16 @@ namespace SharedModels.Models
 			PointId = pointId;
 			RequirementId = requirementId;
 			PositionId = positionId;
+		}
+		public Vacancy(int id, string positionName, string positionDescription,
+			decimal salary, DateTime datePublication, string info)
+			: base(id)
+		{
+			Position.ChangeName(positionName);
+			Position.ChangeDescription(positionDescription);
+			Salary = salary;
+			DatePublication = datePublication;
+			Info = info;
 		}
 
 		public void ChangeRelevance(bool relevance) => Relevance = relevance;

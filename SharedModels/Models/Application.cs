@@ -1,6 +1,6 @@
 namespace SharedModels.Models
 {
-	using SharedModels.Models.Base;
+	using Base;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -37,6 +37,15 @@ namespace SharedModels.Models
 			ApplicationStatusId = applicationStatusId;
 			CandidateId = candidateId;
 			VacancyId = vacancyId;
+		}
+		public Application(string positionName, string positionDescription, string status,
+			DateTime dateSubmission, string reasonRejection)
+		{
+			Vacancy?.Position?.ChangeName(positionName);
+			Vacancy?.Position?.ChangeDescription(positionDescription);
+			ApplicationStatus = new ApplicationStatus(status);
+			DateSubmission = dateSubmission;
+			ReasonRejection = reasonRejection;
 		}
 
 		public void ChangeDateSubmission(DateTime dateSubmission)
