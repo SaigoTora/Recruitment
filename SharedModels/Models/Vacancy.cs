@@ -1,21 +1,26 @@
 namespace SharedModels.Models
 {
 	using Base;
+	using Newtonsoft.Json;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations.Schema;
-	using System.Data;
 
 	[Table("Vacancy")]
+	[Serializable]
 	public partial class Vacancy : EntityBase
 	{
 		[Column(name: "salary", TypeName = "money")]
+		[JsonProperty]
 		public decimal Salary { get; private set; }
 		[Column(name: "date_publication", TypeName = "datetime2")]
+		[JsonProperty]
 		public DateTime DatePublication { get; private set; }
 		[Column("info")]
+		[JsonProperty]
 		public string Info { get; private set; }
 		[Column("relevance")]
+		[JsonProperty]
 		public bool Relevance { get; private set; }
 		[Column("id_point")]
 		public int PointId { get; private set; }
@@ -23,9 +28,13 @@ namespace SharedModels.Models
 		public int RequirementId { get; private set; }
 		[Column("id_position")]
 		public int PositionId { get; private set; }
+		[JsonIgnore]
 		public virtual Point Point { get; private set; }
+		[JsonProperty]
 		public virtual Position Position { get; private set; }
+		[JsonProperty]
 		public virtual Requirement Requirement { get; private set; }
+		[JsonIgnore]
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 

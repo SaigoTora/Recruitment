@@ -1,21 +1,27 @@
 namespace SharedModels.Models
 {
 	using Base;
+	using Newtonsoft.Json;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Health")]
+	[Serializable]
 	public partial class Health : EntityBase, ICloneable
 	{
 		[Column("chronic_diseases")]
 		[StringLength(256)]
+		[JsonProperty]
 		public string ChronicDiseases { get; private set; }
 		[Column("smoker")]
+		[JsonProperty]
 		public bool Smoker { get; private set; }
 		[Column("drink_alcohol")]
+		[JsonProperty]
 		public bool DrinkAlcohol { get; private set; }
+		[JsonIgnore]
 		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 

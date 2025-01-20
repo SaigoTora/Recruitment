@@ -1,16 +1,74 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 using RecruitmentClient.Utilities.ClientUtilities;
+using SharedModels.DTOs;
 using SharedModels.Models;
 
 namespace RecruitmentClient.Models
 {
-	internal static class Client
+	internal class Client
 	{// Клієнт
+		private static readonly HttpClient httpClient;
+		private readonly string _serverAddress;
+
+		private readonly string _candidateLoginUrl
+			= ConfigurationManager.AppSettings["candidateLoginUrl"];
+
+		internal Client(IPAddress IPaddress, int port)
+			=> _serverAddress = $"{IPaddress}:{port}";
+		static Client()
+		{
+			httpClient = new HttpClient()
+			{
+				Timeout = TimeSpan.FromSeconds(3)
+			};
+		}
+
+		internal async Task<Candidate> PostCandidateLoginAsync(CandidateLoginDTO candidateLoginDTO)
+		{
+			string jsonContent = JsonConvert.SerializeObject(candidateLoginDTO,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8,
+				"application/json"))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync($"http://{_serverAddress}{_candidateLoginUrl}", httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		private const int CHUNK_SIZE = 1024;// Розмір порції при передачі даних
 		internal const char SEPARATOR = '¤';// Роздільник
 
@@ -73,69 +131,6 @@ namespace RecruitmentClient.Models
 					arr[i] = "";
 
 			return arr;
-		}
-
-		// Методи для отримання даних від серверу
-		private static List<Language> GetLanguages(string login)
-		{// Метод повертає список мов кандидата від серверу
-			string[] list = SendToServerAndGetResult($"SELECT name,level,id_questionnaire " +
-				$"FROM Language " +
-				$"WHERE Language.id_questionnaire = " +
-				$"(SELECT id FROM Questionnaire " +
-				$"WHERE Questionnaire.id = " +
-				$"(SELECT id_questionnaire FROM Candidate " +
-				$"WHERE login = '{login}'))");
-
-			List<Language> languages = new List<Language>();
-			for (int i = 0; i < list.Length; i += 2)
-				languages.Add(new Language(list[i], Int32.Parse(list[i + 1]),
-					Int32.Parse(list[i + 2])));
-
-			return languages;
-		}
-		private static List<Education> GetEducations(string login)
-		{// Метод повертає список освіт кандидата від серверу
-			string[] list = SendToServerAndGetResult($"SELECT name_institution,specialty,year_admission,date_end,Education.id_questionnaire," +
-				$"id_education_degree,id_education_form " +
-				$"FROM Education WHERE Education.id_questionnaire = " +
-				$"(SELECT id FROM Questionnaire " +
-				$"WHERE Questionnaire.id = " +
-				$"(SELECT id_questionnaire FROM Candidate " +
-				$"WHERE login = '{login}'))");
-
-			List<Education> educations = new List<Education>();
-			if (list.Length < 6)
-				return educations;
-
-			for (int i = 0; i < list.Length; i += 6)
-				educations.Add(new Education(list[i], list[i + 1],
-					Int32.Parse(list[i + 2]), DateTime.Parse(list[i + 3]),
-					Int32.Parse(list[i + 4]), Int32.Parse(list[i + 5]), Int32.Parse(list[i + 6])));
-
-			return educations;
-		}
-		internal static Candidate GetCandidate(string login, string password)
-		{// Метод повертає кандидата від серверу
-			string[] list = SendToServerAndGetResult($"SELECT surname,name,father_name,phone,birthday,email, " +
-				$"nationality,city,children_amount,experience,driver_license,readiness,additional_info, " +
-				$"chronic_diseases,smoker,drink_alcohol, " +
-				$"id_family_status,id_business_trip_opportunity " +
-				$"FROM Candidate " +
-				$"INNER JOIN Questionnaire ON Questionnaire.id = Candidate.id_questionnaire " +
-				$"INNER JOIN Health ON Health.id = Questionnaire.id_health " +
-				$"WHERE login = '{login}' AND password = '{password}'");
-
-			if (list.Length < 18)
-				throw new ArgumentException("Логін та/або пароль введені не вірно!");
-
-			Health h = new Health(list[13], bool.Parse(list[14]), bool.Parse(list[15]));
-			Questionnaire q = new Questionnaire(list[6], list[7],// Анкета
-				Int32.Parse(list[8]), Int32.Parse(list[9]), bool.Parse(list[10]),
-				Int32.Parse(list[11]), list[12], h,
-				Int32.Parse(list[16]), Int32.Parse(list[17]),
-				GetLanguages(login), GetEducations(login));
-
-			return new Candidate(list[0], list[1], list[2], list[3], DateTime.Parse(list[4]), list[5], q);
 		}
 
 		internal static int GetCountVacancies(string login, ClientSearcher searcher)

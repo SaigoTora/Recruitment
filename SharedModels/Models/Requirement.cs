@@ -1,38 +1,54 @@
 namespace SharedModels.Models
 {
 	using Base;
+	using Newtonsoft.Json;
+	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Requirement")]
+	[Serializable]
 	public partial class Requirement : EntityBase
 	{
 		[Column("city")]
 		[StringLength(64)]
+		[JsonProperty]
 		public string City { get; private set; }
 		[Column("age_min")]
+		[JsonProperty]
 		public byte AgeMin { get; private set; }
 		[Column("age_max")]
+		[JsonProperty]
 		public byte AgeMax { get; private set; }
 		[Column("exp_min")]
+		[JsonProperty]
 		public int ExpMin { get; private set; }
 		[Column("diploma")]
+		[JsonProperty]
 		public bool Diploma { get; private set; }
 		[Column("no_chronic_diseases")]
+		[JsonProperty]
 		public bool NoChronicDiseases { get; private set; }
 		[Column("driver_license")]
+		[JsonProperty]
 		public bool DriverLicense { get; private set; }
 		[Column("no_smoker")]
+		[JsonProperty]
 		public bool NoSmoker { get; private set; }
 		[Column("no_drink_alcohol")]
+		[JsonProperty]
 		public bool NoDrinkAlcohol { get; private set; }
 		[Column("business_trip_opportunity")]
+		[JsonProperty]
 		public bool BusinessTripOpportunity { get; private set; }
 		[Column("student")]
+		[JsonProperty]
 		public bool? Student { get; private set; }
+		[JsonProperty]
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirements
 		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
+		[JsonIgnore]
 		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 

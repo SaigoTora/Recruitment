@@ -98,6 +98,9 @@ namespace RecruitmentServer.Models.DataBase
 			=> _employeeRepo.GetAll().Find(employee => employee.InterviewId == interviewId);
 		internal static Candidate GetCandidate(int candidateId)
 			=> _candidateRepo.GetOne(candidateId);
+		internal static Candidate GetCandidate(string login, string password)
+			=> _candidateRepo.GetAll().FirstOrDefault(c =>
+				c.Login == login && c.Password == password);
 		internal static Requirement GetRequirement(int requirementId)
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);

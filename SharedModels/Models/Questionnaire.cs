@@ -1,31 +1,40 @@
 namespace SharedModels.Models
 {
 	using Base;
+	using Newtonsoft.Json;
 	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Questionnaire")]
+	[Serializable]
 	public partial class Questionnaire : EntityBase, ICloneable
 	{
 		[Column("nationality")]
 		[Required]
 		[StringLength(64)]
+		[JsonProperty]
 		public string Nationality { get; private set; }
 		[Column("city")]
 		[Required]
 		[StringLength(64)]
+		[JsonProperty]
 		public string City { get; private set; }
 		[Column("children_amount")]
+		[JsonProperty]
 		public int ChildrenAmount { get; private set; }
 		[Column("experience")]
+		[JsonProperty]
 		public int Experience { get; private set; }
 		[Column("driver_license")]
+		[JsonProperty]
 		public bool DriverLicense { get; private set; }
 		[Column("readiness")]
+		[JsonProperty]
 		public int Readiness { get; private set; }
 		[Column("additional_info")]
+		[JsonProperty]
 		public string AdditionalInfo { get; private set; }
 		[Column("id_health")]
 		public int HealthId { get; private set; }
@@ -33,13 +42,19 @@ namespace SharedModels.Models
 		public int FamilyStatusId { get; private set; }
 		[Column("id_business_trip_opportunity")]
 		public int BusinessTripOpportunityId { get; private set; }
+		[JsonProperty]
 		public virtual Health Health { get; private set; }
+		[JsonProperty]
 		public virtual FamilyStatus FamilyStatus { get; private set; }
+		[JsonProperty]
 		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; private set; }
+		[JsonProperty]
 		public virtual ICollection<Language> Languages { get; private set; }
 			= new HashSet<Language>();
+		[JsonProperty]
 		public virtual ICollection<Education> Educations { get; private set; }
 			= new HashSet<Education>();
+		[JsonIgnore]
 		public virtual ICollection<Candidate> Candidates { get; private set; }
 			= new HashSet<Candidate>();
 

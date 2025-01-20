@@ -1,24 +1,30 @@
 namespace SharedModels.Models
 {
 	using Base;
+	using Newtonsoft.Json;
 	using System;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
 	[Table("Education")]
+	[Serializable]
 	public partial class Education : EntityBase, ICloneable
 	{
 		[Column("name_institution")]
 		[Required]
 		[StringLength(128)]
+		[JsonProperty]
 		public string NameInstitution { get; private set; }
 		[Column("specialty")]
 		[Required]
 		[StringLength(64)]
+		[JsonProperty]
 		public string Specialty { get; private set; }
 		[Column("year_admission")]
+		[JsonProperty]
 		public int YearAdmission { get; private set; }
 		[Column(name: "date_end", TypeName = "date")]
+		[JsonProperty]
 		public DateTime DateEnd { get; private set; }
 		[Column("id_questionnaire")]
 		public int QuestionnaireId { get; private set; }
@@ -26,8 +32,11 @@ namespace SharedModels.Models
 		public int EducationDegreeId { get; private set; }
 		[Column("id_education_form")]
 		public int EducationFormId { get; private set; }
+		[JsonProperty]
 		public virtual EducationDegree EducationDegree { get; private set; }
+		[JsonProperty]
 		public virtual EducationForm EducationForm { get; private set; }
+		[JsonIgnore]
 		public virtual Questionnaire Questionnaire { get; private set; }
 
 		public Education() { }

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Serialization;
+using SharedModels.DTOs;
 using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
@@ -208,7 +209,7 @@ namespace RecruitmentClient.Forms
 		}
 
 		#region Login
-		private void ButtonLogin_Click(object sender, EventArgs e)
+		private async void ButtonLogin_Click(object sender, EventArgs e)
 		{
 			SetDefaultLabels(_account.Theme);
 			Validator validator = new Validator();
@@ -223,8 +224,9 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
-				Candidate candidate = Client.GetCandidate(textBoxLogin.Text,
+				CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(textBoxLogin.Text,
 					textBoxPassword.Text);
+				Candidate candidate = await Program.Client.PostCandidateLoginAsync(candidateLoginDTO);
 				_account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
 				_account.candidate = candidate;
 				if (NeedToRemember)

@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Threading.Tasks;
+
+namespace RecruitmentClient.Models
+{
+	internal class LocalNetworkScanner
+	{
+		private const char SUBNET_SEPARATOR = '/';
+
+		private readonly int _port;
+
+		public LocalNetworkScanner(int port)
+			=> _port = port;
+
+		internal async Task<List<IPAddress>> ScanLocalNetworkAsync()
+		{
+			string subnet = GetLocalSubnet() ?? throw new InvalidOperationException("Failed to determine subnet.");
+			List<IPAddress> allIPs = GetAllIPInSubnet(subnet);
+			return await ScanNetworkForPortAsync(allIPs);
+		}
+
+		private string GetLocalSubnet()
+		{
+			foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+				if (ni.OperationalStatus == OperationalStatus.Up)
+					foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+						if (ip.Address.AddressFamily == AddressFamily.InterNetwork) // IPv4
+						{
+							string localIP = ip.Address.ToString();
+							string subnetMask = ip.IPv4Mask.ToString();
+							return localIP + SUBNET_SEPARATOR + subnetMask;
+						}
+
+			return null;
+		}
+
+		private List<IPAddress> GetAllIPInSubnet(string subnet)
+		{
+			List<IPAddress> ipAddresses = new List<IPAddress>();
+
+			string[] parts = subnet.Split(SUBNET_SEPARATOR);
+			IPAddress ip = IPAddress.Parse(parts[0]);
+			IPAddress mask = IPAddress.Parse(parts[1]);
+
+			byte[] ipBytes = ip.GetAddressBytes();
+			byte[] maskBytes = mask.GetAddressBytes();
+
+			for (int i = 1; i < 255; i++)
+			{
+				byte[] newIPBytes = (byte[])ipBytes.Clone();
+				newIPBytes[3] = (byte)i; // Changing the last byte
+
+				if (IsValidIPInSubnet(newIPBytes, ipBytes, maskBytes))
+					ipAddresses.Add(new IPAddress(newIPBytes));
+			}
+
+			return ipAddresses;
+		}
+		private bool IsValidIPInSubnet(byte[] newIPBytes, byte[] baseIPBytes, byte[] maskBytes)
+		{
+			for (int j = 0; j < maskBytes.Length; j++)
+				if ((newIPBytes[j] & maskBytes[j]) != (baseIPBytes[j] & maskBytes[j]))
+					return false;
+
+			return true; // If all bytes match, return true
+		}
+
+		private async Task<List<IPAddress>> ScanNetworkForPortAsync(List<IPAddress> ipAddresses)
+		{
+			List<IPAddress> devicesWithOpenPort = new List<IPAddress>();
+
+			var tasks = new List<Task<bool>>();
+
+			foreach (var ip in ipAddresses)
+				tasks.Add(IsPortOpenAsync(ip));
+			bool[] results = await Task.WhenAll(tasks);
+
+			for (int i = 0; i < results.Length; i++)
+				if (results[i])
+					devicesWithOpenPort.Add(ipAddresses[i]);
+
+			return devicesWithOpenPort;
+		}
+		private async Task<bool> IsPortOpenAsync(IPAddress ip, int timeout = 300)
+		{
+			try
+			{
+				using (TcpClient tcpClient = new TcpClient())
+				{
+					var connectionTask = tcpClient.ConnectAsync(ip, _port);
+					var success = await Task.WhenAny(connectionTask,
+						Task.Delay(TimeSpan.FromMilliseconds(timeout))) == connectionTask;
+
+					if (!success)
+						return false;
+
+					await connectionTask;
+					return true;
+				}
+			}
+			catch
+			{ return false; }
+		}
+	}
+}

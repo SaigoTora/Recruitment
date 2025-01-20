@@ -1,108 +1,123 @@
-﻿using RecruitmentServer.Models.DataBase;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net.Sockets;
+﻿using Newtonsoft.Json;
+using RecruitmentServer.Models.DataBase;
+using SharedModels.DTOs;
+using SharedModels.Models;
+using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RecruitmentServer.Models
 {
-	internal static class Server
+	internal class Server
 	{
-		private const int CHUNK_SIZE = 1024;// Розмір порції при передачі даних
-		internal const char SEPARATOR = '¤';// Роздільник
-		private static TcpListener serverSocket;
-		private static bool serverIsRunning = false;
+		private const string FIREWALL_RULE_NAME_PREFIX = "Recruitment";
+		internal const char SEPARATOR = '¤';
 
-		private static void Send(string message, NetworkStream stream)
-		{// Метод відправляє байти в потоці порціями
-			byte[] bytes = Encoding.UTF8.GetBytes(message);
-			int offset = 0;
-			while (offset < bytes.Length)
-			{// Поки не дійшли до кінця
-			 // Розмір поточної порції
-				int currentChunkSize = Math.Min(bytes.Length - offset, CHUNK_SIZE);
+		private readonly HttpListener _httpListener;
+		private readonly int _port;
+		private readonly FirewallManager _firewallManager;
 
-				// Записуємо в потік байти та зміщуємо offset
-				stream.Write(bytes, offset, currentChunkSize);
-				offset += currentChunkSize;
-			}
+		internal Server(int port)
+		{
+			_httpListener = new HttpListener();
+			_httpListener.Prefixes.Add($"http://+:{port}/");
+			_port = port;
+			_firewallManager = new FirewallManager($"{FIREWALL_RULE_NAME_PREFIX} {port}");
 		}
-		private static async Task<string> ReadAsync(NetworkStream stream)
-		{// Метод зчитує байти від серверу
-			List<byte> allBytes = new List<byte>();
-			byte[] buffer = new byte[CHUNK_SIZE];
-			int bytesRead;
 
-			do
-			{// Додаємо до списку масив байтів
-				bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-				allBytes.AddRange(buffer.Take(bytesRead));
-			} while (stream.DataAvailable);
+		internal void Start()
+		{
+			_httpListener.Start();
+			_firewallManager.AddFirewallRule(_port);
 
-			return Encoding.UTF8.GetString(allBytes.ToArray());
+			Task.Run(() => HandleRequests());
 		}
-		private static async Task ProcessClientAsync(TcpClient clientSocket)
-		{// Метод, який асинхронно виконує запити клієнтів
-			try
+
+		private async Task HandleRequests()
+		{
+			while (_httpListener.IsListening)
 			{
-				NetworkStream clientStream = clientSocket.GetStream();
-				byte[] bytes = new byte[CHUNK_SIZE];// Зчитуємо дані клієнта
-				string query = await ReadAsync(clientStream);
-
-				if (query.StartsWith("SELECT"))
-				{// Якщо потрібно повернути результат
-					DataTable dt = DatabaseManager.ExecuteReturnQuery(query);// Отримуємо таблицю потрібних даних
-
-					// Відправлення одного рядку даних через роздільник
-					string message = DataTableToString(dt);
-
-					Send(message, clientStream);
-				}
-				else// Виконуємо запит
-					DatabaseManager.ExecuteQuery(query);
-
-				await clientStream.FlushAsync();
-			}
-			finally
-			{ clientSocket.Close(); }
-		}
-		private static string DataTableToString(DataTable dt)
-		{// Метод, який перетворює дані з DataTable на string, з роздільником
-			string res = string.Empty;
-
-			for (int i = 0; i < dt.Rows.Count; i++)
-				for (int j = 0; j < dt.Rows[i].ItemArray.Length; j++)
-				{
-					// Записуємо елемент
-					res += dt.Rows[i].ItemArray[j].ToString();
-
-					// Якщо не останній елемент, то додаємо роздільник
-					if (i != dt.Rows.Count - 1 || j != dt.Rows[i].ItemArray.Length - 1)
-						res += SEPARATOR;
-				}
-			return res;
-		}
-
-		internal static async Task StartAsync()
-		{// Метод запускає сервер
-			serverSocket = new TcpListener(System.Net.IPAddress.Any, 7124);
-			serverSocket.Start();
-			serverIsRunning = true;
-
-			while (serverIsRunning)
-			{// Очікуємо клієнта
-				TcpClient clientSocket = await serverSocket.AcceptTcpClientAsync();
-				_ = ProcessClientAsync(clientSocket);
+				var context = await _httpListener.GetContextAsync();
+				_ = ProcessRequest(context);
 			}
 		}
 
-		internal static void Stop()
-		{// Метод зупиняє сервер
-			serverIsRunning = false;
-			serverSocket?.Stop();
+
+
+
+
+		private async Task ProcessRequest(HttpListenerContext context)
+		{
+			if (context.Request.RawUrl == "/favicon.ico")
+			{// Ignore request for favicon.ico
+				context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+				context.Response.Close();
+				return;
+			}
+
+			if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateLoginUrl"]))
+				await HandleCandidateLoginRequest(context);
+			//else if (context.Request.RawUrl.Contains(ConfigurationManager.AppSettings["gameLobbyUrl"]))
+			//	await HandleLobbyRequest(context, clientIPAddress);
+			//else if (context.Request.RawUrl.Contains(ConfigurationManager.AppSettings["gameUrl"]))
+			//	await HandleGameRequest(context, clientIPAddress);
+
+			context.Response.Close();
+		}
+		private async Task HandleCandidateLoginRequest(HttpListenerContext context)
+		{
+			Candidate candidate = null;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+				candidate = await HandlePostCandidateLoginRequest(context);
+
+			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+			await SendResponseToClient(context, response);
+		}
+		private async Task<Candidate> HandlePostCandidateLoginRequest(HttpListenerContext context)
+		{
+			CandidateLoginDTO candidateLoginDTO = null;
+
+			using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+			{
+				string jsonData = await reader.ReadToEndAsync();
+				candidateLoginDTO = JsonConvert.DeserializeObject<CandidateLoginDTO>(jsonData);
+			}
+
+			Candidate candidate = DatabaseManager.GetCandidate(candidateLoginDTO.Login,
+				candidateLoginDTO.Password);
+			return candidate;
+		}
+
+
+
+
+
+
+
+
+
+		private async Task SendResponseToClient(HttpListenerContext context, string response)
+		{
+			byte[] responseBytes = Encoding.UTF8.GetBytes(response);
+			context.Response.StatusCode = (int)HttpStatusCode.OK;
+			context.Response.ContentLength64 = responseBytes.Length;
+
+			await context.Response.OutputStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+		}
+
+		internal void Stop()
+		{
+			if (_httpListener.IsListening)
+			{
+				_httpListener.Stop();
+				_httpListener.Close();
+				_firewallManager.RemoveFirewallRule();
+			}
 		}
 	}
 }

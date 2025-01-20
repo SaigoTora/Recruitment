@@ -88,8 +88,6 @@ namespace RecruitmentServer.Forms
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
 				pictureBoxDown, pictureBoxUp, pictureBoxTheme);
 			SetTheme(_account.Theme);
-
-			_ = Server.StartAsync();
 		}
 
 		private void ButtonAssignment_Click(object sender, EventArgs e)
@@ -964,7 +962,6 @@ namespace RecruitmentServer.Forms
 
 			_labelEventHandlers.UnsubscribeAll();
 			_pictureBoxEventHandlers.UnsubscribeAll();
-			Server.Stop();
 		}
 	}
 }
