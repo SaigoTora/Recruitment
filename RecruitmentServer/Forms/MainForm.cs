@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
-using RecruitmentServer.Utilities.ServerUtilities;
+using SharedModels.Search;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -28,7 +28,7 @@ namespace RecruitmentServer.Forms
 
 	internal partial class MainForm : BaseForm, IThemeChange
 	{
-		private const int COUNT_ON_PAGE = 10;
+		private const int COUNT_ON_PAGE = 3;
 		private const int DEFAULT_SEARCH_DATE = 5;
 		private const int SCROLL_PADDING = 6;
 
@@ -37,7 +37,7 @@ namespace RecruitmentServer.Forms
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
 		private readonly Account _account;
-		private ServerSearcher _searcher;
+		private FullSearcher _searcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
@@ -639,7 +639,7 @@ namespace RecruitmentServer.Forms
 					position, Server.SEPARATOR, _account.Theme);
 			}
 
-			_searcher = new ServerSearcher(position, GetDateByComboBoxDate(), Min, Max,
+			_searcher = new FullSearcher(position, GetDateByComboBoxDate(), Min, Max,
 				isRelevance, status, fullName, GetSortOption());
 		}
 
@@ -657,20 +657,20 @@ namespace RecruitmentServer.Forms
 
 			return (min, max);
 		}
-		private ServerSortOption GetSortOption()
+		private SortOption GetSortOption()
 		{
-			ServerSortOption sortOption = ServerSortOption.Date;
+			SortOption sortOption = SortOption.Date;
 
 			if (comboBoxSort.SelectedIndex == 1)
-				sortOption = ServerSortOption.AlphabetPosition;
+				sortOption = SortOption.AlphabetPosition;
 			else if (comboBoxSort.SelectedIndex == 2)
 			{
 				if (_panelsInfo == PanelsInfo.Vacancy)
-					sortOption = ServerSortOption.NumberOfApplications;
+					sortOption = SortOption.NumberOfApplications;
 				else if (_panelsInfo == PanelsInfo.Application)
-					sortOption = ServerSortOption.NumberOfPoints;
+					sortOption = SortOption.NumberOfPoints;
 				else if (_panelsInfo == PanelsInfo.Employee)
-					sortOption = ServerSortOption.AlphabetName;
+					sortOption = SortOption.AlphabetName;
 			}
 
 			return sortOption;

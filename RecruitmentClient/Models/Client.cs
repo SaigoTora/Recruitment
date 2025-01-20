@@ -9,19 +9,25 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-using RecruitmentClient.Utilities.ClientUtilities;
 using SharedModels.DTOs;
 using SharedModels.Models;
+using SharedModels.Search;
 
 namespace RecruitmentClient.Models
 {
 	internal class Client
-	{// Клієнт
+	{
+		private const string MEDIA_TYPE = "application/json";
+
 		private static readonly HttpClient httpClient;
 		private readonly string _serverAddress;
 
 		private readonly string _candidateLoginUrl
 			= ConfigurationManager.AppSettings["candidateLoginUrl"];
+		private readonly string _vacanciesCountUrl
+			= ConfigurationManager.AppSettings["vacanciesCountUrl"];
+		private readonly string _vacanciesUrl
+			= ConfigurationManager.AppSettings["vacanciesUrl"];
 
 		internal Client(IPAddress IPaddress, int port)
 			=> _serverAddress = $"{IPaddress}:{port}";
@@ -38,10 +44,10 @@ namespace RecruitmentClient.Models
 			string jsonContent = JsonConvert.SerializeObject(candidateLoginDTO,
 				Formatting.Indented);
 
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8,
-				"application/json"))
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
 			{
-				HttpResponseMessage response = await httpClient.PostAsync($"http://{_serverAddress}{_candidateLoginUrl}", httpContent);
+				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
+					$"{_serverAddress}{_candidateLoginUrl}", httpContent);
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -49,6 +55,40 @@ namespace RecruitmentClient.Models
 			}
 		}
 
+		#region Vacancy
+		internal async Task<int> PostFreeVacanciesCountAsync(
+			AccountSearchSettingsDTO accountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(accountSearch,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
+					$"{_serverAddress}{_vacanciesCountUrl}", httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<int>(jsonResponse);
+			}
+		}
+		internal async Task<List<Vacancy>> PostFreeVacanciesAsync(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
+					$"{_serverAddress}{_vacanciesUrl}", httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<List<Vacancy>>(jsonResponse);
+			}
+		}
+		#endregion
 
 
 
@@ -133,45 +173,7 @@ namespace RecruitmentClient.Models
 			return arr;
 		}
 
-		internal static int GetCountVacancies(string login, ClientSearcher searcher)
-		{// Метод повертає кількість вакансій для користувача
-			string condition = string.Empty;
-			if (searcher != null)
-				condition = searcher.GetFilter("date_publication");
-
-			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Vacancy " +
-				"WHERE relevance = 'True' AND (SELECT COUNT(id) FROM Application " +
-				"WHERE id_vacancy = View_Vacancy.id AND id_candidate = " +
-				$"(SELECT id FROM Candidate WHERE login = '{login}')) = 0 {condition}")[0]);
-		}
-		internal static List<Vacancy> GetFreeVacancies(string login, int offset, int amount, ClientSearcher searcher)
-		{// Метод, який повертає список актуальних вакансій, на які ще не відправляв заявки користувач
-			List<Vacancy> vacancies = new List<Vacancy>();
-			string condition = string.Empty, orderBy;
-			if (searcher != null)
-			{
-				condition = searcher.GetFilter("date_publication");
-				orderBy = searcher.GetSort("date_publication");
-			}
-			else
-			{ orderBy = "ORDER BY date_publication DESC"; }
-
-			string[] arr = SendToServerAndGetResult("SELECT id,position_name,position_description,salary,date_publication,info " +
-				"FROM View_Vacancy WHERE relevance = 'True' AND " +
-				"(SELECT COUNT(id) FROM Application WHERE id_vacancy = View_Vacancy.id AND id_candidate = " +
-				$"(SELECT id FROM Candidate WHERE login = '{login}')) = 0 {condition} {orderBy} " +
-				$"OFFSET {offset} ROWS FETCH NEXT {amount} ROWS ONLY");
-
-			if (arr.Length < 6)
-				return null;
-			for (int i = 0; i < arr.Length; i += 6)
-			{
-				vacancies.Add(new Vacancy(Int32.Parse(arr[i]), arr[i + 1], arr[i + 2], Decimal.Parse(arr[i + 3]), DateTime.Parse(arr[i + 4]).ToLocalTime(), arr[i + 5]));
-			}
-
-			return vacancies;
-		}
-		internal static int GetCountApplications(string login, ClientSearcher searcher)
+		internal static int GetCountApplications(string login, FullSearcher searcher)
 		{// Метод повертає кількість заявок користувача
 			string condition = string.Empty;
 			if (searcher != null)
@@ -180,7 +182,7 @@ namespace RecruitmentClient.Models
 			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}') {condition}")[0]);
 		}
-		internal static List<Application> GetApplications(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<Application> GetApplications(string login, int offset, int amount, FullSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
 			List<Application> applications = new List<Application>();
 			string condition = string.Empty, orderBy;
@@ -209,7 +211,7 @@ namespace RecruitmentClient.Models
 
 			return applications;
 		}
-		internal static int GetCountInterviews(string login, ClientSearcher searcher)
+		internal static int GetCountInterviews(string login, FullSearcher searcher)
 		{// Метод повертає кількість співбесід користувача
 			string condition = string.Empty;
 			if (searcher != null)
@@ -219,7 +221,7 @@ namespace RecruitmentClient.Models
 				"WHERE id_application IN (SELECT id FROM Application " +
 				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}')) {condition}")[0]);
 		}
-		internal static List<Interview> GetInterviews(string login, int offset, int amount, ClientSearcher searcher)
+		internal static List<Interview> GetInterviews(string login, int offset, int amount, FullSearcher searcher)
 		{// Метод, який повертає список заявок, які відправляв користувач
 			List<Interview> interviews = new List<Interview>();
 			string condition = string.Empty, orderBy;
@@ -249,38 +251,6 @@ namespace RecruitmentClient.Models
 			return interviews;
 		}
 
-		internal static Requirement GetRequirement(int vacancyId)
-		{// Метод, який повертає вимоги для заданої вакансії
-			string[] arr = SendToServerAndGetResult($"SELECT city,age_min,age_max," +
-				$"exp_min,diploma,no_chronic_diseases,driver_license,no_smoker," +
-				$"no_drink_alcohol,business_trip_opportunity,student" +
-				$" FROM Requirement WHERE Requirement.id = (SELECT id FROM Vacancy WHERE id = {vacancyId})");
-
-			string city = arr[0] == "" ? null : arr[0];
-			bool? student;// Знаходимо вимогу "student"
-			if (arr[10] == "")
-				student = null;
-			else
-				student = bool.Parse(arr[10]);
-
-			return new Requirement(city, byte.Parse(arr[1]), byte.Parse(arr[2]), int.Parse(arr[3]), bool.Parse(arr[4]), bool.Parse(arr[5]), bool.Parse(arr[6]), bool.Parse(arr[7]), bool.Parse(arr[8]), bool.Parse(arr[9]), student);
-		}
-		internal static string GetRequirementEducationDegree(int vacancyId)
-		{// Метод, який повертає вимоги до ступенів освіти для заданої вакансії
-			string[] arr = SendToServerAndGetResult("SELECT degree FROM Education_Degree WHERE id IN " +
-				"(SELECT id_education_degree FROM EducationDegree_Requirement " +
-				$"WHERE id_requirement = (SELECT id_requirement FROM Vacancy WHERE Vacancy.id = {vacancyId}))");
-
-			if (arr.Length == 1 && arr[0] == "")// Якщо результату немає
-				return null;
-
-			string s = string.Empty;
-			for (int i = 0; i < arr.Length; i++)
-				s += $"{arr[i]}, ";
-
-			return s.TrimEnd(' ').TrimEnd(',').ToLower();
-
-		}
 
 		internal static string[] GetFamilyStatuses() // Сімейні стани
 			=> SendToServerAndGetResult("SELECT status FROM Family_Status ORDER BY id");

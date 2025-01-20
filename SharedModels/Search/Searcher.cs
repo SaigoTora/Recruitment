@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RecruitmentLibrary.Search
+namespace SharedModels.Search
 {
 	public class Searcher
 	{

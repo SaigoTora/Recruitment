@@ -2,6 +2,7 @@
 using RecruitmentServer.Models.DataBase;
 using SharedModels.DTOs;
 using SharedModels.Models;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net;
@@ -35,7 +36,6 @@ namespace RecruitmentServer.Models
 
 			Task.Run(() => HandleRequests());
 		}
-
 		private async Task HandleRequests()
 		{
 			while (_httpListener.IsListening)
@@ -61,13 +61,16 @@ namespace RecruitmentServer.Models
 			if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateLoginUrl"]))
 				await HandleCandidateLoginRequest(context);
-			//else if (context.Request.RawUrl.Contains(ConfigurationManager.AppSettings["gameLobbyUrl"]))
-			//	await HandleLobbyRequest(context, clientIPAddress);
-			//else if (context.Request.RawUrl.Contains(ConfigurationManager.AppSettings["gameUrl"]))
-			//	await HandleGameRequest(context, clientIPAddress);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["vacanciesCountUrl"]))
+				await HandleVacanciesCountRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["vacanciesUrl"]))
+				await HandleVacanciesRequest(context);
 
 			context.Response.Close();
 		}
+
 		private async Task HandleCandidateLoginRequest(HttpListenerContext context)
 		{
 			Candidate candidate = null;
@@ -82,7 +85,8 @@ namespace RecruitmentServer.Models
 		{
 			CandidateLoginDTO candidateLoginDTO = null;
 
-			using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+			using (var reader = new StreamReader(context.Request.InputStream,
+				context.Request.ContentEncoding))
 			{
 				string jsonData = await reader.ReadToEndAsync();
 				candidateLoginDTO = JsonConvert.DeserializeObject<CandidateLoginDTO>(jsonData);
@@ -93,8 +97,54 @@ namespace RecruitmentServer.Models
 			return candidate;
 		}
 
+		private async Task HandleVacanciesCountRequest(HttpListenerContext context)
+		{
+			int vacanciesCount = 0;
 
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+				vacanciesCount = await HandlePostVacanciesCountRequest(context);
 
+			string response = JsonConvert.SerializeObject(vacanciesCount, Formatting.Indented);
+			await SendResponseToClient(context, response);
+		}
+		private async Task<int> HandlePostVacanciesCountRequest(HttpListenerContext context)
+		{
+			AccountSearchSettingsDTO accountSearch = null;
+
+			using (var reader = new StreamReader(context.Request.InputStream,
+				context.Request.ContentEncoding))
+			{
+				string jsonData = await reader.ReadToEndAsync();
+				accountSearch = JsonConvert.DeserializeObject<AccountSearchSettingsDTO>(jsonData);
+			}
+
+			return DatabaseManager.GetVacanciesCount(accountSearch);
+		}
+
+		private async Task HandleVacanciesRequest(HttpListenerContext context)
+		{
+			List<Vacancy> vacancies = new List<Vacancy>();
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+				vacancies = await HandlePostVacanciesRequest(context);
+
+			string response = JsonConvert.SerializeObject(vacancies, Formatting.Indented);
+			await SendResponseToClient(context, response);
+		}
+		private async Task<List<Vacancy>> HandlePostVacanciesRequest(HttpListenerContext context)
+		{
+			PagedAccountSearchSettingsDTO pagedAccountSearch = null;
+
+			using (var reader = new StreamReader(context.Request.InputStream,
+				context.Request.ContentEncoding))
+			{
+				string jsonData = await reader.ReadToEndAsync();
+				pagedAccountSearch = JsonConvert.DeserializeObject<PagedAccountSearchSettingsDTO>(
+					jsonData);
+			}
+
+			return DatabaseManager.GetVacancies(pagedAccountSearch);
+		}
 
 
 

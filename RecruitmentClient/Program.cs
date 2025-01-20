@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Forms;
@@ -28,7 +29,7 @@ namespace RecruitmentClient
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static async void Main()
+		static void Main()
 		{
 			CultureInfo.CurrentCulture = new CultureInfo("uk-UA");
 			Application.EnableVisualStyles();
@@ -44,7 +45,11 @@ namespace RecruitmentClient
 				{
 					CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(account.Login,
 						account.Password);
-					account.candidate = await Client.PostCandidateLoginAsync(candidateLoginDTO);
+					account.candidate = null;
+					Task.Run(async () =>
+					{
+						account.candidate = await Client.PostCandidateLoginAsync(candidateLoginDTO);
+					}).Wait();
 				}
 				catch (SocketException)
 				{

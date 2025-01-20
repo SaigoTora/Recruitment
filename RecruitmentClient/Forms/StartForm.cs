@@ -211,6 +211,7 @@ namespace RecruitmentClient.Forms
 		#region Login
 		private async void ButtonLogin_Click(object sender, EventArgs e)
 		{
+			buttonLogin.Enabled = false;
 			SetDefaultLabels(_account.Theme);
 			Validator validator = new Validator();
 
@@ -220,13 +221,24 @@ namespace RecruitmentClient.Forms
 				textBoxPassword.Text, Client.SEPARATOR, _account.Theme);
 
 			if (!validator.IsDataValid)
+			{
+				buttonLogin.Enabled = true;
 				return;
+			}
 
 			try
 			{
 				CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(textBoxLogin.Text,
 					textBoxPassword.Text);
-				Candidate candidate = await Program.Client.PostCandidateLoginAsync(candidateLoginDTO);
+				Candidate candidate = await Program.Client.
+					PostCandidateLoginAsync(candidateLoginDTO);
+				if (candidate == null)
+				{
+					buttonLogin.Enabled = true;
+					HandleUserNotFound();
+					return;
+				}
+
 				_account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
 				_account.candidate = candidate;
 				if (NeedToRemember)
@@ -234,13 +246,12 @@ namespace RecruitmentClient.Forms
 
 				OpenMainForm();
 			}
-			catch (ArgumentException ae)
-			{ HandleUserNotFound(ae); }
 			catch (SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 					"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				buttonLogin.Enabled = true;
 			}
 		}
 
@@ -272,20 +283,20 @@ namespace RecruitmentClient.Forms
 				$"\nЛаскаво просимо!", _account.Theme, "Успіх",
 				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
-		private void HandleUserNotFound(ArgumentException argumentException)
+		private void HandleUserNotFound()
 		{
 			byte MAX_COUNT_WRONG_LOGIN = 3;
 
-			string msg = string.Empty;
+			string countMessage = string.Empty;
 			_countWrongLogin++;
 			if (_countWrongLogin >= MAX_COUNT_WRONG_LOGIN)
 			{
 				_ = BlockActionsAfterFailedAttempts();
-				msg = $"\nВи перевищили ліміт уведення неправильних даних.";
+				countMessage = $"\nВи перевищили ліміт уведення неправильних даних.";
 				_countWrongLogin = 0;
 			}
 
-			CustomMessageBox.Show($"{argumentException.Message} {msg}",
+			CustomMessageBox.Show($"Логін та/або пароль введені не вірно! {countMessage}",
 				_account.Theme, "Помилка", CustomMessageBoxButtons.OK,
 				CustomMessageBoxIcon.Error);
 		}

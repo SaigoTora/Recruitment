@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
@@ -51,8 +52,11 @@ namespace RecruitmentClient.Forms
 		private void SetupRequirements()
 		{
 			_requirements = string.Empty;
-			_requirements = Client.GetRequirement(_vacancy.Id).ToString();
-			string educationDegrees = Client.GetRequirementEducationDegree(_vacancy.Id);
+			_requirements = _vacancy.Requirement.ToString();
+			string educationDegrees = string.Join(", ",
+				_vacancy.Requirement.EducationDegreeRequirements.Select(
+					edr => edr.EducationDegree.Degree.ToLower()));
+
 			if (educationDegrees != null)
 			{
 				if (_requirements != string.Empty)

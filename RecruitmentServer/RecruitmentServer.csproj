@@ -122,7 +122,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RecruitmentDB.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\ServerUtilities\ServerSearcher.cs" />
     <Compile Include="Forms\PointsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,6 +272,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>RecruitmentDB.mdf</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\ServerUtilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

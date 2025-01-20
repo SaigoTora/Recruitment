@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
-using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentLibrary.Serialization;
 using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
@@ -15,6 +14,9 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Search;
+using SharedModels.DTOs;
+using System.Threading.Tasks;
 
 namespace RecruitmentClient.Forms
 {
@@ -37,7 +39,7 @@ namespace RecruitmentClient.Forms
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
 		private readonly Account _account;
-		private ClientSearcher _searcher;
+		private FullSearcher _searcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
@@ -134,7 +136,7 @@ namespace RecruitmentClient.Forms
 			else if (_panelsInfo == PanelsInfo.Interview)
 				LabelNavigation_Click(labelInterview, e);
 		}
-		private void LabelNavigation_Click(object sender, EventArgs e)
+		private async void LabelNavigation_Click(object sender, EventArgs e)
 		{
 			if (!(sender is Label label)) return;
 
@@ -149,7 +151,7 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
-				CreateAndSetupFirstPanels(label);
+				await CreateAndSetupFirstPanels(label);
 			}
 			catch (SocketException)
 			{
@@ -195,12 +197,12 @@ namespace RecruitmentClient.Forms
 		}
 
 		#region First creating panels
-		private void CreateAndSetupFirstPanels(Label label)
+		private async Task CreateAndSetupFirstPanels(Label label)
 		{
 			if (label == labelVacancy)
 			{
-				SetupVacancies();
-				CreateVacancies();
+				await SetupVacancies();
+				await CreateVacancies();
 			}
 			else if (label == labelApplication)
 			{
@@ -213,7 +215,7 @@ namespace RecruitmentClient.Forms
 				CreateInterviews();
 			}
 		}
-		private void SetupVacancies()
+		private async Task SetupVacancies()
 		{
 			const string newSortingElement = "За зарплатою";
 
@@ -226,7 +228,9 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.Add(newSortingElement);
 
 			_panelsInfo = PanelsInfo.Vacancy;
-			_totalItemsToDisplay = Client.GetCountVacancies(_account.Login, _searcher);
+			AccountSearchSettingsDTO accountSearch
+				= new AccountSearchSettingsDTO(_account.Login, _searcher);
+			_totalItemsToDisplay = await Program.Client.PostFreeVacanciesCountAsync(accountSearch);
 		}
 		private void SetupApplications()
 		{
@@ -301,13 +305,16 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Creating panels
-		private void CreateVacancies()
+		private async Task CreateVacancies()
 		{
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Vacancy> vacancies = Client.GetFreeVacancies(_account.Login,
-				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
+			PagedAccountSearchSettingsDTO pagedAccountSearch =
+				new PagedAccountSearchSettingsDTO(_account.Login, _searcher, _createdPanels.Count,
+				COUNT_PANELS_ON_PAGE);
+			List<Vacancy> vacancies = await Program.Client.PostFreeVacanciesAsync(
+				pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
 			for (int i = 0; i < vacancies.Count; i++)
@@ -542,14 +549,14 @@ namespace RecruitmentClient.Forms
 			validator.CheckBannedChar(new Label() { Text = "Посада" },
 				position, Client.SEPARATOR, _account.Theme);
 
-			ClientSortOption sortOption = ClientSortOption.Date;// Sorting
+			SortOption sortOption = SortOption.Date;// Sorting
 			if (comboBoxSort.SelectedIndex == 1)
-				sortOption = ClientSortOption.Alphabet;
+				sortOption = SortOption.AlphabetPosition;
 			else if (comboBoxSort.SelectedIndex == 2)
-				sortOption = ClientSortOption.Salary;
+				sortOption = SortOption.Salary;
 
-			_searcher = new ClientSearcher(position, GetDateByComboBoxDate(),
-				minSalary, maxSalary, sortOption);
+			_searcher = new FullSearcher(position, GetDateByComboBoxDate(),
+				minSalary, maxSalary, null, null, null, sortOption);
 		}
 		private DateTime? GetDateByComboBoxDate()
 		{// Method that returns a date or null depending on the comboBoxDate index
@@ -663,12 +670,12 @@ namespace RecruitmentClient.Forms
 
 		private void TextBoxMinSalarySearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MinSalary.ToString();
+			string searcherText = _searcher?.MinValue.ToString();
 			TextBoxSearchLeave(textBoxMinSalarySearch.Text, searcherText);
 		}
 		private void TextBoxMaxSalarySearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MaxSalary.ToString();
+			string searcherText = _searcher?.MaxValue.ToString();
 			TextBoxSearchLeave(textBoxMaxSalarySearch.Text, searcherText);
 		}
 		private void TextBoxSearchLeave(string text, string searcherText)
@@ -705,7 +712,7 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Content panel event handlers
-		private void FlpContent_Scroll(object sender, ScrollEventArgs e)
+		private async void FlpContent_Scroll(object sender, ScrollEventArgs e)
 		{
 			if (flpContent.VerticalScroll.Value + flpContent.Height
 				>= flpContent.VerticalScroll.Maximum)
@@ -714,7 +721,7 @@ namespace RecruitmentClient.Forms
 				try
 				{
 					if (_panelsInfo == PanelsInfo.Vacancy)
-						CreateVacancies();
+						await CreateVacancies();
 					else if (_panelsInfo == PanelsInfo.Application)
 						CreateApplications();
 					else if (_panelsInfo == PanelsInfo.Interview)

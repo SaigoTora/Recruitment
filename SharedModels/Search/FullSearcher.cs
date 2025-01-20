@@ -1,29 +1,28 @@
 ﻿using System;
 
-using RecruitmentLibrary.Search;
-
-namespace RecruitmentServer.Utilities.ServerUtilities
+namespace SharedModels.Search
 {
-	internal enum ServerSortOption : byte
+	public enum SortOption : byte
 	{
 		Date,
+		Salary,
 		AlphabetPosition,
 		AlphabetName,
 		NumberOfApplications,
 		NumberOfPoints,
 	}
 
-	internal class ServerSearcher : Searcher
+	public class FullSearcher : Searcher
 	{
-		internal int? MinValue { get; private set; }
-		internal int? MaxValue { get; private set; }
-		internal bool? IsRelevance { get; private set; }
-		internal string Status { get; private set; }
-		internal string FullName { get; private set; }
-		internal ServerSortOption SortOption { get; private set; }
+		public int? MinValue { get; private set; }
+		public int? MaxValue { get; private set; }
+		public bool? IsRelevance { get; private set; }
+		public string Status { get; private set; }
+		public string FullName { get; private set; }
+		public SortOption SortOption { get; private set; }
 
-		internal ServerSearcher(string position, DateTime? minDate, int? min, int? max,
-			bool? isRelevance, string status, string fullName, ServerSortOption sortOption)
+		public FullSearcher(string position, DateTime? minDate, int? min, int? max,
+			bool? isRelevance, string status, string fullName, SortOption sortOption)
 			: base(position, minDate)
 		{
 			MinValue = min;
@@ -34,7 +33,7 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 			SortOption = sortOption;
 		}
 
-		internal string GetFilter(string dateName, string minMaxName)
+		public string GetFilter(string dateName, string minMaxName)
 		{
 			string result = "1 = 1 " + GetFilter(dateName);
 
@@ -52,18 +51,18 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 
 			return result.TrimEnd(' ');
 		}
-		internal string GetSort(string dateName)
+		public string GetSort(string dateName)
 		{
 			string result = "ORDER BY ";
-			if (SortOption == ServerSortOption.Date)
+			if (SortOption == SortOption.Date)
 				result += $"{dateName} DESC";
-			else if (SortOption == ServerSortOption.AlphabetPosition)
+			else if (SortOption == SortOption.AlphabetPosition)
 				result += $"position_name ASC";
-			else if (SortOption == ServerSortOption.AlphabetName)
+			else if (SortOption == SortOption.AlphabetName)
 				result += $"surname,name,father_name ASC";
-			else if (SortOption == ServerSortOption.NumberOfApplications)
+			else if (SortOption == SortOption.NumberOfApplications)
 				result += "application_count DESC";
-			else if (SortOption == ServerSortOption.NumberOfPoints)
+			else if (SortOption == SortOption.NumberOfPoints)
 				result += "scores DESC";
 			else
 				result = string.Empty;

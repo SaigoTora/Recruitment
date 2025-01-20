@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-
-using RecruitmentServer.Utilities.ServerUtilities;
+using SharedModels.DTOs;
 using SharedModels.Models;
+using SharedModels.Search;
 
 namespace RecruitmentServer.Models.DataBase
 {
@@ -132,7 +132,7 @@ namespace RecruitmentServer.Models.DataBase
 			vacancy.ChangeDatePublication(vacancy.DatePublication.ToLocalTime());
 			return vacancy;
 		}
-		private static List<Vacancy> GetVacancies(ServerSearcher searcher)
+		private static List<Vacancy> GetVacancies(FullSearcher searcher)
 		{
 			var vacancies = _vacancyRepo.GetAll();
 			vacancies.ForEach(v => v.ChangeDatePublication(v.DatePublication.ToLocalTime()));
@@ -163,23 +163,34 @@ namespace RecruitmentServer.Models.DataBase
 
 			switch (searcher.SortOption)
 			{
-				case ServerSortOption.Date:
+				case SortOption.Date:
 					return vacancies.OrderByDescending(v => v.DatePublication).ToList();
-				case ServerSortOption.AlphabetPosition:
+				case SortOption.AlphabetPosition:
 					return vacancies.OrderBy(v => v.Position.Name).ToList();
-				case ServerSortOption.NumberOfApplications:
+				case SortOption.NumberOfApplications:
 					return vacancies.OrderByDescending(v => v.Applications.Count).ToList();
 				default: return vacancies.ToList();
 			}
 		}
-		internal static int GetVacanciesCount(ServerSearcher searcher)
+		internal static int GetVacanciesCount(FullSearcher searcher)
 			=> GetVacancies(searcher).Count;
-		internal static List<Vacancy> GetVacancies(int offset, int amount,
-			ServerSearcher searcher)
+		internal static List<Vacancy> GetVacancies(int index, int count,
+			FullSearcher searcher)
 		{
 			var vacancies = GetVacancies(searcher);
-			return vacancies.GetRange(offset, Math.Min(vacancies.Count, amount));
+			return vacancies.GetRange(index, Math.Min(vacancies.Count - index, count));
 		}
+		internal static int GetVacanciesCount(AccountSearchSettingsDTO accountSearch)
+			=> GetVacancies(accountSearch.Searcher)
+				.Where(v => v.Relevance
+				&& v.Applications.All(a => a.Candidate.Login != accountSearch.Login))
+				.Count();
+		internal static List<Vacancy> GetVacancies(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			=> GetVacancies(pagedAccountSearch.StartIndex, pagedAccountSearch.Count,
+				pagedAccountSearch.Searcher).Where(v => v.Relevance
+				&& v.Applications.All(a => a.Candidate.Login != pagedAccountSearch.Login))
+				.ToList();
 
 		internal static Application GetApplication(int applicationId)
 		{
@@ -187,7 +198,7 @@ namespace RecruitmentServer.Models.DataBase
 			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
 			return application;
 		}
-		private static List<Application> GetApplications(ServerSearcher searcher)
+		private static List<Application> GetApplications(FullSearcher searcher)
 		{
 			var applications = _applicationRepo.GetAll();
 			applications.ForEach(a => a.ChangeDateSubmission(a.DateSubmission.ToLocalTime()));
@@ -218,22 +229,22 @@ namespace RecruitmentServer.Models.DataBase
 
 			switch (searcher.SortOption)
 			{
-				case ServerSortOption.Date:
+				case SortOption.Date:
 					return applications.OrderByDescending(a => a.DateSubmission).ToList();
-				case ServerSortOption.AlphabetPosition:
+				case SortOption.AlphabetPosition:
 					return applications.OrderBy(a => a.Vacancy.Position.Name).ToList();
-				case ServerSortOption.NumberOfPoints:
+				case SortOption.NumberOfPoints:
 					return applications.OrderByDescending(a => a.Scores).ToList();
 				default: return applications.ToList();
 			}
 		}
-		internal static int GetApplicationsCount(ServerSearcher searcher)
+		internal static int GetApplicationsCount(FullSearcher searcher)
 			=> GetApplications(searcher).Count;
-		internal static List<Application> GetApplications(int offset, int amount,
-			ServerSearcher searcher)
+		internal static List<Application> GetApplications(int index, int count,
+			FullSearcher searcher)
 		{
 			var applications = GetApplications(searcher);
-			return applications.GetRange(offset, Math.Min(applications.Count, amount));
+			return applications.GetRange(index, Math.Min(applications.Count - index, count));
 		}
 		internal static Application GetApplication(int vacancyId, int candidateId)
 		{
@@ -244,7 +255,7 @@ namespace RecruitmentServer.Models.DataBase
 		}
 
 
-		private static List<Interview> GetInterviews(ServerSearcher searcher)
+		private static List<Interview> GetInterviews(FullSearcher searcher)
 		{
 			var interviews = _interviewRepo.GetAll();
 			interviews.ForEach(i => i.ChangeDateEvent(i.DateEvent.ToLocalTime()));
@@ -267,23 +278,23 @@ namespace RecruitmentServer.Models.DataBase
 
 			switch (searcher.SortOption)
 			{
-				case ServerSortOption.Date:
+				case SortOption.Date:
 					return interviews.OrderByDescending(i => i.DateEvent).ToList();
-				case ServerSortOption.AlphabetPosition:
+				case SortOption.AlphabetPosition:
 					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name).ToList();
 				default: return interviews.ToList();
 			}
 		}
-		internal static int GetInterviewsCount(ServerSearcher searcher)
+		internal static int GetInterviewsCount(FullSearcher searcher)
 			=> GetInterviews(searcher).Count;
-		internal static List<Interview> GetInterviews(int offset, int amount,
-			ServerSearcher searcher)
+		internal static List<Interview> GetInterviews(int index, int count,
+			FullSearcher searcher)
 		{
 			var interviews = GetInterviews(searcher);
-			return interviews.GetRange(offset, Math.Min(interviews.Count, amount));
+			return interviews.GetRange(index, Math.Min(interviews.Count - index, count));
 		}
 
-		private static List<Employee> GetEmployees(ServerSearcher searcher)
+		private static List<Employee> GetEmployees(FullSearcher searcher)
 		{
 			var employees = _employeeRepo.GetAll();
 
@@ -306,23 +317,23 @@ namespace RecruitmentServer.Models.DataBase
 
 			switch (searcher.SortOption)
 			{
-				case ServerSortOption.Date:
+				case SortOption.Date:
 					return employees.OrderByDescending(e => e.DateEmployment).ToList();
-				case ServerSortOption.AlphabetPosition:
+				case SortOption.AlphabetPosition:
 					return employees.
 						OrderBy(e => e.Interview.Application.Vacancy.Position.Name).ToList();
-				case ServerSortOption.AlphabetName:
+				case SortOption.AlphabetName:
 					return employees.OrderBy(e => e.GetFullName).ToList();
 				default: return employees.ToList();
 			}
 		}
-		internal static int GetEmployeesCount(ServerSearcher searcher)
+		internal static int GetEmployeesCount(FullSearcher searcher)
 			=> GetEmployees(searcher).Count;
-		internal static List<Employee> GetEmployees(int offset, int amount,
-			ServerSearcher searcher)
+		internal static List<Employee> GetEmployees(int index, int count,
+			FullSearcher searcher)
 		{
 			var employees = GetEmployees(searcher);
-			return employees.GetRange(offset, Math.Min(employees.Count, amount));
+			return employees.GetRange(index, Math.Min(employees.Count - index, count));
 		}
 
 		internal static List<AssignmentItem> GetAssignmentItems()

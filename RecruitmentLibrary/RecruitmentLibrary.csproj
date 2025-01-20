@@ -34,6 +34,9 @@
     <Reference Include="Guna.UI2, Version=2.0.4.6, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
       <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.6\lib\net48\Guna.UI2.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -49,20 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Search\Searcher.cs" />
     <Compile Include="Assignment\AssignmentSolver.cs" />
     <Compile Include="Serialization\Serializator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharedModels\SharedModels.csproj">
-      <Project>{ab1c077b-d981-4d31-bfe9-c87f466a151f}</Project>
-      <Name>SharedModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UIHelpers\UIHelpers.csproj">
-      <Project>{49f42a8b-4e71-4075-987b-66cd7d258ec2}</Project>
-      <Name>UIHelpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
