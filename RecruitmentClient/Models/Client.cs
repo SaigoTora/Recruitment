@@ -17,6 +17,7 @@ namespace RecruitmentClient.Models
 {
 	internal class Client
 	{
+		private const string HTTP_PREFIX = "http://";
 		private const string MEDIA_TYPE = "application/json";
 
 		private static readonly HttpClient httpClient;
@@ -28,9 +29,19 @@ namespace RecruitmentClient.Models
 			= ConfigurationManager.AppSettings["vacanciesCountUrl"];
 		private readonly string _vacanciesUrl
 			= ConfigurationManager.AppSettings["vacanciesUrl"];
+		private readonly string _applicationsCountUrl
+			= ConfigurationManager.AppSettings["applicationsCountUrl"];
+		private readonly string _applicationsCreateUrl
+			= ConfigurationManager.AppSettings["applicationsCreateUrl"];
+		private readonly string _applicationsUrl
+			= ConfigurationManager.AppSettings["applicationsUrl"];
+		private readonly string _interviewsCountUrl
+			= ConfigurationManager.AppSettings["interviewsCountUrl"];
+		private readonly string _interviewsUrl
+			= ConfigurationManager.AppSettings["interviewsUrl"];
 
 		internal Client(IPAddress IPaddress, int port)
-			=> _serverAddress = $"{IPaddress}:{port}";
+			=> _serverAddress = $"{HTTP_PREFIX}{IPaddress}:{port}";
 		static Client()
 		{
 			httpClient = new HttpClient()
@@ -46,8 +57,8 @@ namespace RecruitmentClient.Models
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
 			{
-				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
-					$"{_serverAddress}{_candidateLoginUrl}", httpContent);
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_candidateLoginUrl, httpContent);
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -64,8 +75,8 @@ namespace RecruitmentClient.Models
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
 			{
-				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
-					$"{_serverAddress}{_vacanciesCountUrl}", httpContent);
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_vacanciesCountUrl, httpContent);
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -80,8 +91,8 @@ namespace RecruitmentClient.Models
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
 			{
-				HttpResponseMessage response = await httpClient.PostAsync($"http://" +
-					$"{_serverAddress}{_vacanciesUrl}", httpContent);
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_vacanciesUrl, httpContent);
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -90,11 +101,88 @@ namespace RecruitmentClient.Models
 		}
 		#endregion
 
+		#region Application
+		internal async Task<int> PostApplicationsCountAsync(
+			AccountSearchSettingsDTO accountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(accountSearch,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_applicationsCountUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<int>(jsonResponse);
+			}
+		}
+		internal async Task PostApplicationsCreateAsync(Application application)
+		{
+			string jsonContent = JsonConvert.SerializeObject(application,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_applicationsCreateUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+			}
+		}
+		internal async Task<List<Application>> PostApplicationsAsync(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_applicationsUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<List<Application>>(jsonResponse);
+			}
+		}
+		#endregion
 
 
+		#region Interview
+		internal async Task<int> PostInterviewsCountAsync(
+			AccountSearchSettingsDTO accountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(accountSearch,
+				Formatting.Indented);
 
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_interviewsCountUrl, httpContent);
+				response.EnsureSuccessStatusCode();
 
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<int>(jsonResponse);
+			}
+		}
+		internal async Task<List<Interview>> PostInterviewsAsync(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
+		{
+			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
+				Formatting.Indented);
 
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_interviewsUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<List<Interview>>(jsonResponse);
+			}
+		}
+		#endregion
 
 
 
@@ -173,83 +261,6 @@ namespace RecruitmentClient.Models
 			return arr;
 		}
 
-		internal static int GetCountApplications(string login, FullSearcher searcher)
-		{// Метод повертає кількість заявок користувача
-			string condition = string.Empty;
-			if (searcher != null)
-				condition = searcher.GetFilter("date_submission");
-
-			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Application " +
-				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}') {condition}")[0]);
-		}
-		internal static List<Application> GetApplications(string login, int offset, int amount, FullSearcher searcher)
-		{// Метод, який повертає список заявок, які відправляв користувач
-			List<Application> applications = new List<Application>();
-			string condition = string.Empty, orderBy;
-			if (searcher != null)
-			{
-				condition = searcher.GetFilter("date_submission");
-				orderBy = searcher.GetSort("date_submission");
-			}
-			else
-			{ orderBy = "ORDER BY date_submission DESC"; }
-
-			string[] arr = SendToServerAndGetResult("SELECT position_name,position_description," +
-				"status,date_submission,reason_rejection " +
-				"FROM View_Application WHERE id_candidate = " +
-				$"(SELECT id FROM Candidate WHERE login = '{login}') {condition} {orderBy} " +
-				$"OFFSET {offset} ROWS FETCH NEXT {amount} ROWS ONLY");
-
-			if (arr.Length < 5)
-				return null;
-			for (int i = 0; i < arr.Length; i += 5)
-			{
-				applications.Add(new Application(arr[i], arr[i + 1],
-					arr[i + 2],
-					DateTime.Parse(arr[i + 3]).ToLocalTime(), arr[i + 4]));
-			}
-
-			return applications;
-		}
-		internal static int GetCountInterviews(string login, FullSearcher searcher)
-		{// Метод повертає кількість співбесід користувача
-			string condition = string.Empty;
-			if (searcher != null)
-				condition = searcher.GetFilter("date_event");
-
-			return Int32.Parse(SendToServerAndGetResult("SELECT COUNT(id) as id FROM View_Interview " +
-				"WHERE id_application IN (SELECT id FROM Application " +
-				$"WHERE id_candidate = (SELECT id FROM Candidate WHERE login = '{login}')) {condition}")[0]);
-		}
-		internal static List<Interview> GetInterviews(string login, int offset, int amount, FullSearcher searcher)
-		{// Метод, який повертає список заявок, які відправляв користувач
-			List<Interview> interviews = new List<Interview>();
-			string condition = string.Empty, orderBy;
-			if (searcher != null)
-			{
-				condition = searcher.GetFilter("date_event");
-				orderBy = searcher.GetSort("date_event");
-			}
-			else
-			{ orderBy = "ORDER BY date_event DESC"; }
-
-			string[] arr = SendToServerAndGetResult("SELECT position_name," +
-				"position_description,status,date_event " +
-				"FROM View_Interview WHERE id_application IN " +
-				"(SELECT id FROM Application  WHERE id_candidate = " +
-				$"(SELECT id FROM Candidate WHERE login = '{login}')) {condition} {orderBy} " +
-				$"OFFSET {offset} ROWS FETCH NEXT {amount} ROWS ONLY");
-
-			if (arr.Length < 4)
-				return null;
-			for (int i = 0; i < arr.Length; i += 4)
-			{
-				interviews.Add(new Interview(arr[i], arr[i + 1], arr[i + 2],
-					DateTime.Parse(arr[i + 3]).ToLocalTime()));
-			}
-
-			return interviews;
-		}
 
 
 		internal static string[] GetFamilyStatuses() // Сімейні стани
@@ -458,12 +469,6 @@ namespace RecruitmentClient.Models
 				$"INSERT INTO Candidate(surname,name,father_name,login,password,phone,birthday,email,id_questionnaire) " +
 				$"values('{candidate.Surname}','{candidate.Name}',{fatherName},'{account.Login}', " +
 				$"'{account.Password}','{candidate.Phone}','{candidate.Birthday:yyyy-MM-dd}','{candidate.Email}',@id_q)");
-		}
-		internal static void CreateApplication(string login, string info, int vacancyId)
-		{// Метод, який створює заявку на роботу
-			info = info == "" ? "NULL" : $"'{info}'";
-			SendToServer("INSERT INTO Application(date_submission,additional_info,id_application_status,id_candidate,id_vacancy)" +
-				$" values('{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}',{info},1,(SELECT id FROM Candidate WHERE login = '{login}'),{vacancyId})");
 		}
 	}
 }

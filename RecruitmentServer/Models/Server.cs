@@ -67,6 +67,21 @@ namespace RecruitmentServer.Models
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["vacanciesUrl"]))
 				await HandleVacanciesRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["applicationsCountUrl"]))
+				await HandleApplicationsCountRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["applicationsCreateUrl"]))
+				await HandleApplicationsCreateRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["applicationsUrl"]))
+				await HandleApplicationsRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["interviewsCountUrl"]))
+				await HandleInterviewsCountRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["interviewsUrl"]))
+				await HandleInterviewsRequest(context);
 
 			context.Response.Close();
 		}
@@ -76,82 +91,139 @@ namespace RecruitmentServer.Models
 			Candidate candidate = null;
 
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
-				candidate = await HandlePostCandidateLoginRequest(context);
-
-			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-			await SendResponseToClient(context, response);
-		}
-		private async Task<Candidate> HandlePostCandidateLoginRequest(HttpListenerContext context)
-		{
-			CandidateLoginDTO candidateLoginDTO = null;
-
-			using (var reader = new StreamReader(context.Request.InputStream,
-				context.Request.ContentEncoding))
 			{
-				string jsonData = await reader.ReadToEndAsync();
-				candidateLoginDTO = JsonConvert.DeserializeObject<CandidateLoginDTO>(jsonData);
+				CandidateLoginDTO candidateLoginDTO =
+					await DeserializeFromRequestAsync<CandidateLoginDTO>(context);
+				candidate = DatabaseManager.GetCandidate(candidateLoginDTO.Login,
+					candidateLoginDTO.Password);
 			}
 
-			Candidate candidate = DatabaseManager.GetCandidate(candidateLoginDTO.Login,
-				candidateLoginDTO.Password);
-			return candidate;
+			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
 		}
 
+		#region Vacancy
 		private async Task HandleVacanciesCountRequest(HttpListenerContext context)
 		{
 			int vacanciesCount = 0;
 
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
-				vacanciesCount = await HandlePostVacanciesCountRequest(context);
-
-			string response = JsonConvert.SerializeObject(vacanciesCount, Formatting.Indented);
-			await SendResponseToClient(context, response);
-		}
-		private async Task<int> HandlePostVacanciesCountRequest(HttpListenerContext context)
-		{
-			AccountSearchSettingsDTO accountSearch = null;
-
-			using (var reader = new StreamReader(context.Request.InputStream,
-				context.Request.ContentEncoding))
 			{
-				string jsonData = await reader.ReadToEndAsync();
-				accountSearch = JsonConvert.DeserializeObject<AccountSearchSettingsDTO>(jsonData);
+				AccountSearchSettingsDTO accountSearch =
+					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
+				vacanciesCount = DatabaseManager.GetVacanciesCount(accountSearch);
 			}
 
-			return DatabaseManager.GetVacanciesCount(accountSearch);
+			string response = JsonConvert.SerializeObject(vacanciesCount, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
 		}
-
 		private async Task HandleVacanciesRequest(HttpListenerContext context)
 		{
 			List<Vacancy> vacancies = new List<Vacancy>();
 
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
-				vacancies = await HandlePostVacanciesRequest(context);
+			{
+				PagedAccountSearchSettingsDTO pagedAccountSearch =
+					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
+				vacancies = DatabaseManager.GetVacancies(pagedAccountSearch);
+			}
 
 			string response = JsonConvert.SerializeObject(vacancies, Formatting.Indented);
-			await SendResponseToClient(context, response);
+			await SendResponseToClientAsync(context, response);
 		}
-		private async Task<List<Vacancy>> HandlePostVacanciesRequest(HttpListenerContext context)
+		#endregion
+
+		#region Application
+		private async Task HandleApplicationsCountRequest(HttpListenerContext context)
 		{
-			PagedAccountSearchSettingsDTO pagedAccountSearch = null;
+			int applicationsCount = 0;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				AccountSearchSettingsDTO accountSearch =
+					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
+				applicationsCount = DatabaseManager.GetApplicationsCount(accountSearch);
+			}
+
+			string response = JsonConvert.SerializeObject(applicationsCount, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleApplicationsRequest(HttpListenerContext context)
+		{
+			List<Application> applications = new List<Application>();
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				PagedAccountSearchSettingsDTO pagedAccountSearch =
+					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
+				applications = DatabaseManager.GetApplications(pagedAccountSearch);
+			}
+
+			string response = JsonConvert.SerializeObject(applications, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleApplicationsCreateRequest(HttpListenerContext context)
+		{
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				Application application =
+					await DeserializeFromRequestAsync<Application>(context);
+				application.ChangeStatusId(1);
+				DatabaseManager.CreateApplication(application);
+			}
+
+			await SendResponseToClientAsync(context, string.Empty);
+		}
+		#endregion
+
+		#region Interview
+		private async Task HandleInterviewsCountRequest(HttpListenerContext context)
+		{
+			int interviewsCount = 0;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				AccountSearchSettingsDTO accountSearch =
+					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
+				interviewsCount = DatabaseManager.GetInterviewsCount(accountSearch);
+			}
+
+			string response = JsonConvert.SerializeObject(interviewsCount, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleInterviewsRequest(HttpListenerContext context)
+		{
+			List<Interview> interviews = new List<Interview>();
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				PagedAccountSearchSettingsDTO pagedAccountSearch =
+					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
+				interviews = DatabaseManager.GetInterviews(pagedAccountSearch);
+			}
+
+			string response = JsonConvert.SerializeObject(interviews, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		#endregion
+
+
+
+
+		private async Task<T> DeserializeFromRequestAsync<T>(HttpListenerContext context)
+		{
+			T result = default;
 
 			using (var reader = new StreamReader(context.Request.InputStream,
 				context.Request.ContentEncoding))
 			{
 				string jsonData = await reader.ReadToEndAsync();
-				pagedAccountSearch = JsonConvert.DeserializeObject<PagedAccountSearchSettingsDTO>(
-					jsonData);
+				result = JsonConvert.DeserializeObject<T>(jsonData);
 			}
 
-			return DatabaseManager.GetVacancies(pagedAccountSearch);
+			return result;
 		}
-
-
-
-
-
-
-		private async Task SendResponseToClient(HttpListenerContext context, string response)
+		private async Task SendResponseToClientAsync(HttpListenerContext context, string response)
 		{
 			byte[] responseBytes = Encoding.UTF8.GetBytes(response);
 			context.Response.StatusCode = (int)HttpStatusCode.OK;

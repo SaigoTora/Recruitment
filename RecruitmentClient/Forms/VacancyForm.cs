@@ -14,10 +14,10 @@ namespace RecruitmentClient.Forms
 {
 	internal partial class VacancyForm : BaseForm, IThemeChange
 	{
+		private readonly Account _account;
 		private readonly Vacancy _vacancy;
 		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
-		private readonly Theme _currentTheme;
 
 		private string _requirements;
 
@@ -28,10 +28,11 @@ namespace RecruitmentClient.Forms
 
 			customTitleBar = new CustomTitleBar(this, "Вакансія", minimizeBox: false,
 				maximizeBox: false);
+
+			_account = account;
 			_vacancy = vacancy;
 			_login = login;
 			_refresh = refresh;
-			_currentTheme = account.Theme;
 		}
 		private void VacancyForm_Load(object sender, EventArgs e)
 		{
@@ -46,7 +47,7 @@ namespace RecruitmentClient.Forms
 				labelAdditionalInfoTitle, richTextBoxAdditionalInfo);
 			SetupRequirements();
 
-			SetTheme(_currentTheme);
+			SetTheme(_account.Theme);
 		}
 
 		private void SetupRequirements()
@@ -82,17 +83,17 @@ namespace RecruitmentClient.Forms
 			=> richTextBoxClientAdditionalInfo.Focus();
 		private void ButtonRequirements_Click(object sender, EventArgs e)
 		{
-			CustomMessageBox.Show(_requirements, _currentTheme, "Вимоги",
+			CustomMessageBox.Show(_requirements, _account.Theme, "Вимоги",
 				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information, 550);
 		}
-		private void ButtonSend_Click(object sender, EventArgs e)
+		private async void ButtonSend_Click(object sender, EventArgs e)
 		{
 			richTextBoxClientAdditionalInfo.Text =
 				richTextBoxClientAdditionalInfo.Text.Trim(' ', '\r', '\n');
 
 			Validator validator = new Validator();
 			validator.CheckBannedChar(labelClientAdditionalInfoTitle,
-				richTextBoxClientAdditionalInfo.Text, Client.SEPARATOR, _currentTheme);
+				richTextBoxClientAdditionalInfo.Text, Client.SEPARATOR, _account.Theme);
 			if (!validator.IsDataValid)
 			{
 				richTextBoxClientAdditionalInfo.Focus();
@@ -100,20 +101,22 @@ namespace RecruitmentClient.Forms
 			}
 			try
 			{
-				Client.CreateApplication(_login,
-					richTextBoxClientAdditionalInfo.Text, _vacancy.Id);
+				SharedModels.Models.Application application = new SharedModels.Models.Application(
+					DateTime.UtcNow, richTextBoxClientAdditionalInfo.Text, default,
+					_account.candidate.Id, _vacancy.Id);
+				await Program.Client.PostApplicationsCreateAsync(application);
 				_refresh(EventArgs.Empty);
 				Close();
 				CustomMessageBox.Show("Заявка була відправлена успішно!\n" +
 					"Будь ласка, регулярно переглядайте вкладки заявок та співбесід.",
-					_currentTheme, "Успішно", CustomMessageBoxButtons.OK,
+					_account.Theme, "Успішно", CustomMessageBoxButtons.OK,
 					CustomMessageBoxIcon.Information);
 			}
 			catch (SocketException)
 			{
 				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
 					"\nСпробуйте, будь ласка, відправити заявку пізніше.",
-					_currentTheme, "Помилка підключення",
+					_account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
 		}

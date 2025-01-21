@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using SharedModels.DTOs;
 using SharedModels.Models;
@@ -29,10 +28,6 @@ namespace RecruitmentServer.Models.DataBase
 		private static readonly BaseRepo<EducationForm> _educationFormRepo;
 		private static readonly BaseRepo<Position> _positionRepo;
 
-		// Рядок підключення
-		private const string CONNECT_STR = @"Data Source=(LocalDB)\MSSQLLocalDB;
-			AttachDbFilename=|DataDirectory|\RecruitmentDB.mdf;Integrated Security=True";
-
 		static DatabaseManager()
 		{
 			_context = new RecruitmentEntities();
@@ -54,31 +49,13 @@ namespace RecruitmentServer.Models.DataBase
 			DatabaseInitializer.Initialize(_context);
 		}
 
-		internal static void ExecuteQuery(string commandStr)
-		{// Метод, який виконує запит до БД
-			SqlConnection connection = new SqlConnection(CONNECT_STR);
-			connection.Open();// Відкриваємо підключення до БД
-			SqlCommand command = new SqlCommand(commandStr, connection);
-			command.ExecuteNonQuery();// Запускаємо команду
-			connection.Close();// Закриваємо підключення
-		}
-		internal static DataTable ExecuteReturnQuery(string commandStr)
-		{// Метод, який виконує запит до БД та повертає таблицю
-			SqlConnection connection = new SqlConnection(CONNECT_STR);
-			connection.Open();// Відкриваємо підключення до БД
-			SqlCommand command = new SqlCommand(commandStr, connection);
-			SqlDataReader reader = command.ExecuteReader();// Запускаємо команду
-			DataTable table = new DataTable();
-			table.Load(reader);
-			connection.Close();// Закриваємо підключення
-			return table;
-		}
-
 		#region Create
 		internal static void CreatePosition(Position position)
 			=> _positionRepo.Add(position);
 		internal static void CreateVacancy(Vacancy vacancy)
 			=> _vacancyRepo.Add(vacancy);
+		internal static void CreateApplication(Application application)
+			=> _applicationRepo.Add(application);
 		internal static void CreateRequirement(Requirement requirement)
 			=> _requirementRepo.Add(requirement);
 		internal static void CreatePoint(Point point)
@@ -126,6 +103,7 @@ namespace RecruitmentServer.Models.DataBase
 			return s.TrimEnd(' ', ',').ToLower();
 		}
 
+		#region Vacancy
 		internal static Vacancy GetVacancy(int vacancyId)
 		{
 			Vacancy vacancy = _vacancyRepo.GetOne(vacancyId);
@@ -187,17 +165,33 @@ namespace RecruitmentServer.Models.DataBase
 				.Count();
 		internal static List<Vacancy> GetVacancies(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
-			=> GetVacancies(pagedAccountSearch.StartIndex, pagedAccountSearch.Count,
-				pagedAccountSearch.Searcher).Where(v => v.Relevance
+		{
+			var filteredList = GetVacancies(pagedAccountSearch.Searcher)
+				.Where(v => v.Relevance
 				&& v.Applications.All(a => a.Candidate.Login != pagedAccountSearch.Login))
 				.ToList();
 
+			return filteredList.GetRange(pagedAccountSearch.StartIndex,
+				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
+					pagedAccountSearch.Count));
+		}
+		#endregion
+
+		#region Application
 		internal static Application GetApplication(int applicationId)
 		{
 			Application application = _applicationRepo.GetOne(applicationId);
 			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
 			return application;
 		}
+		internal static Application GetApplication(int vacancyId, int candidateId)
+		{
+			Application application = _applicationRepo.GetAll().
+				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
+			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
+			return application;
+		}
+
 		private static List<Application> GetApplications(FullSearcher searcher)
 		{
 			var applications = _applicationRepo.GetAll();
@@ -246,15 +240,22 @@ namespace RecruitmentServer.Models.DataBase
 			var applications = GetApplications(searcher);
 			return applications.GetRange(index, Math.Min(applications.Count - index, count));
 		}
-		internal static Application GetApplication(int vacancyId, int candidateId)
+		internal static int GetApplicationsCount(AccountSearchSettingsDTO accountSearch)
+			=> GetApplications(accountSearch.Searcher)
+			.Where(a => a.Candidate.Login == accountSearch.Login).Count();
+		internal static List<Application> GetApplications(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
-			Application application = _applicationRepo.GetAll().
-				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
-			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
-			return application;
+			var filteredList = GetApplications(pagedAccountSearch.Searcher)
+				.Where(a => a.Candidate.Login == pagedAccountSearch.Login).ToList();
+
+			return filteredList.GetRange(pagedAccountSearch.StartIndex,
+				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
+					pagedAccountSearch.Count));
 		}
+		#endregion
 
-
+		#region Interview
 		private static List<Interview> GetInterviews(FullSearcher searcher)
 		{
 			var interviews = _interviewRepo.GetAll();
@@ -293,7 +294,22 @@ namespace RecruitmentServer.Models.DataBase
 			var interviews = GetInterviews(searcher);
 			return interviews.GetRange(index, Math.Min(interviews.Count - index, count));
 		}
+		internal static int GetInterviewsCount(AccountSearchSettingsDTO accountSearch)
+			=> GetInterviews(accountSearch.Searcher)
+				.Where(i => i.Application.Candidate.Login == accountSearch.Login).Count();
+		internal static List<Interview> GetInterviews(
+			PagedAccountSearchSettingsDTO pagedAccountSearch)
+		{
+			var filteredList = GetInterviews(pagedAccountSearch.Searcher)
+				.Where(i => i.Application.Candidate.Login == pagedAccountSearch.Login).ToList();
 
+			return filteredList.GetRange(pagedAccountSearch.StartIndex,
+				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
+					pagedAccountSearch.Count));
+		}
+		#endregion
+
+		#region Employee
 		private static List<Employee> GetEmployees(FullSearcher searcher)
 		{
 			var employees = _employeeRepo.GetAll();
@@ -335,6 +351,7 @@ namespace RecruitmentServer.Models.DataBase
 			var employees = GetEmployees(searcher);
 			return employees.GetRange(index, Math.Min(employees.Count - index, count));
 		}
+		#endregion
 
 		internal static List<AssignmentItem> GetAssignmentItems()
 		{// Applications will NOT be accepted if the vacancies have at least one interview

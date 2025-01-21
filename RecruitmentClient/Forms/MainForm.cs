@@ -151,7 +151,7 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
-				await CreateAndSetupFirstPanels(label);
+				await CreateAndSetupFirstPanelsAsync(label);
 			}
 			catch (SocketException)
 			{
@@ -197,25 +197,25 @@ namespace RecruitmentClient.Forms
 		}
 
 		#region First creating panels
-		private async Task CreateAndSetupFirstPanels(Label label)
+		private async Task CreateAndSetupFirstPanelsAsync(Label label)
 		{
 			if (label == labelVacancy)
 			{
-				await SetupVacancies();
-				await CreateVacancies();
+				await SetupVacanciesAsync();
+				await CreateVacanciesAsync();
 			}
 			else if (label == labelApplication)
 			{
-				SetupApplications();
-				CreateApplications();
+				await SetupApplicationsAsync();
+				await CreateApplicationsAsync();
 			}
 			else if (label == labelInterview)
 			{
-				SetupInterviews();
-				CreateInterviews();
+				await SetupInterviewsAsync();
+				await CreateInterviewsAsync();
 			}
 		}
-		private async Task SetupVacancies()
+		private async Task SetupVacanciesAsync()
 		{
 			const string newSortingElement = "За зарплатою";
 
@@ -232,7 +232,7 @@ namespace RecruitmentClient.Forms
 				= new AccountSearchSettingsDTO(_account.Login, _searcher);
 			_totalItemsToDisplay = await Program.Client.PostFreeVacanciesCountAsync(accountSearch);
 		}
-		private void SetupApplications()
+		private async Task SetupApplicationsAsync()
 		{
 			SetSalarySearchVisible(false);
 			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
@@ -243,9 +243,11 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Application;
-			_totalItemsToDisplay = Client.GetCountApplications(_account.Login, _searcher);
+			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(_account.Login,
+				_searcher);
+			_totalItemsToDisplay = await Program.Client.PostApplicationsCountAsync(accountSearch);
 		}
-		private void SetupInterviews()
+		private async Task SetupInterviewsAsync()
 		{
 			SetSalarySearchVisible(false);
 			if (_panelsInfo == PanelsInfo.None || _panelsInfo == PanelsInfo.Vacancy)
@@ -256,7 +258,9 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Interview;
-			_totalItemsToDisplay = Client.GetCountInterviews(_account.Login, _searcher);
+			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(_account.Login,
+				_searcher);
+			_totalItemsToDisplay = await Program.Client.PostInterviewsCountAsync(accountSearch);
 		}
 
 		private void SetSalarySearchVisible(bool visible)
@@ -305,7 +309,7 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Creating panels
-		private async Task CreateVacancies()
+		private async Task CreateVacanciesAsync()
 		{
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
@@ -326,14 +330,15 @@ namespace RecruitmentClient.Forms
 			ShowPanels(panels);
 			_createdPanels.AddRange(panels);
 		}
-		private void CreateApplications()
+		private async Task CreateApplicationsAsync()
 		{
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
+			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
+				_account.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
-				Client.GetApplications(_account.Login, _createdPanels.Count,
-				COUNT_PANELS_ON_PAGE, _searcher);
+				await Program.Client.PostApplicationsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
 
 			for (int i = 0; i < applications.Count; i++)
@@ -345,13 +350,15 @@ namespace RecruitmentClient.Forms
 			ShowPanels(panels);
 			_createdPanels.AddRange(panels);
 		}
-		private void CreateInterviews()
+		private async Task CreateInterviewsAsync()
 		{
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
-			List<Interview> interviews = Client.GetInterviews(_account.Login,
-				_createdPanels.Count, COUNT_PANELS_ON_PAGE, _searcher);
+			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
+				_account.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+			List<Interview> interviews =
+				await Program.Client.PostInterviewsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
 			for (int i = 0; i < interviews.Count; i++)
@@ -721,11 +728,11 @@ namespace RecruitmentClient.Forms
 				try
 				{
 					if (_panelsInfo == PanelsInfo.Vacancy)
-						await CreateVacancies();
+						await CreateVacanciesAsync();
 					else if (_panelsInfo == PanelsInfo.Application)
-						CreateApplications();
+						await CreateApplicationsAsync();
 					else if (_panelsInfo == PanelsInfo.Interview)
-						CreateInterviews();
+						await CreateInterviewsAsync();
 				}
 				catch (SocketException)
 				{

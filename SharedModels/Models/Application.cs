@@ -23,10 +23,13 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public string ReasonRejection { get; private set; }
 		[Column("id_application_status")]
+		[JsonProperty]
 		public int ApplicationStatusId { get; private set; }
 		[Column("id_candidate")]
+		[JsonProperty]
 		public int CandidateId { get; private set; }
 		[Column("id_vacancy")]
+		[JsonProperty]
 		public int VacancyId { get; private set; }
 		[JsonProperty]
 		public virtual ApplicationStatus ApplicationStatus { get; private set; }
