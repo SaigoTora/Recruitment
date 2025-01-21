@@ -76,7 +76,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			buttonProfile.Text = _account.candidate.Name;
+			buttonProfile.Text = _account.Candidate.Name;
 
 			pictureBoxExit.Visible = Serializator.SerializationFileExists
 				(Program.SerializePath);
@@ -121,7 +121,7 @@ namespace RecruitmentClient.Forms
 			pf.Show();
 			pf.FormClosed += (s, args) =>
 			{
-				buttonProfile.Text = _account.candidate.Name;
+				buttonProfile.Text = _account.Candidate.Name;
 				Enabled = true;
 				panelUp.Focus();
 			};
@@ -229,7 +229,7 @@ namespace RecruitmentClient.Forms
 
 			_panelsInfo = PanelsInfo.Vacancy;
 			AccountSearchSettingsDTO accountSearch
-				= new AccountSearchSettingsDTO(_account.Login, _searcher);
+				= new AccountSearchSettingsDTO(_account.Candidate.Login, _searcher);
 			_totalItemsToDisplay = await Program.Client.PostFreeVacanciesCountAsync(accountSearch);
 		}
 		private async Task SetupApplicationsAsync()
@@ -243,8 +243,8 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Application;
-			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(_account.Login,
-				_searcher);
+			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
+				_account.Candidate.Login, _searcher);
 			_totalItemsToDisplay = await Program.Client.PostApplicationsCountAsync(accountSearch);
 		}
 		private async Task SetupInterviewsAsync()
@@ -258,8 +258,8 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Interview;
-			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(_account.Login,
-				_searcher);
+			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
+				_account.Candidate.Login, _searcher);
 			_totalItemsToDisplay = await Program.Client.PostInterviewsCountAsync(accountSearch);
 		}
 
@@ -315,8 +315,8 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch =
-				new PagedAccountSearchSettingsDTO(_account.Login, _searcher, _createdPanels.Count,
-				COUNT_PANELS_ON_PAGE);
+				new PagedAccountSearchSettingsDTO(_account.Candidate.Login, _searcher,
+				_createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Vacancy> vacancies = await Program.Client.PostFreeVacanciesAsync(
 				pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
@@ -336,7 +336,7 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+				_account.Candidate.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
 				await Program.Client.PostApplicationsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -356,7 +356,7 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+				_account.Candidate.Login, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Interview> interviews =
 				await Program.Client.PostInterviewsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
@@ -510,7 +510,7 @@ namespace RecruitmentClient.Forms
 			try
 			{
 				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
-					_account.Login, SelectLabel);
+					_account.Candidate.Login, SelectLabel);
 				vacancyForm.ShowDialog();
 			}
 			catch (SocketException)

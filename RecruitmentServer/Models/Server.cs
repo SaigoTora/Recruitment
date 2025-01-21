@@ -59,6 +59,9 @@ namespace RecruitmentServer.Models
 			}
 
 			if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateRegisterUrl"]))
+				await HandleCandidateRegisterRequest(context);
+			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateLoginUrl"]))
 				await HandleCandidateLoginRequest(context);
 			else if (context.Request.RawUrl.Contains(
@@ -86,6 +89,20 @@ namespace RecruitmentServer.Models
 			context.Response.Close();
 		}
 
+		#region Candidate
+		private async Task HandleCandidateRegisterRequest(HttpListenerContext context)
+		{
+			Candidate candidate = null;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				candidate = await DeserializeFromRequestAsync<Candidate>(context);
+				candidate = DatabaseManager.CreateCandidate(candidate);
+			}
+
+			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
 		private async Task HandleCandidateLoginRequest(HttpListenerContext context)
 		{
 			Candidate candidate = null;
@@ -101,6 +118,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
+		#endregion
 
 		#region Vacancy
 		private async Task HandleVacanciesCountRequest(HttpListenerContext context)
@@ -148,6 +166,18 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(applicationsCount, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
+		private async Task HandleApplicationsCreateRequest(HttpListenerContext context)
+		{
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				Application application =
+					await DeserializeFromRequestAsync<Application>(context);
+				application.ChangeStatusId(1);
+				DatabaseManager.CreateApplication(application);
+			}
+
+			await SendResponseToClientAsync(context, string.Empty);
+		}
 		private async Task HandleApplicationsRequest(HttpListenerContext context)
 		{
 			List<Application> applications = new List<Application>();
@@ -161,18 +191,6 @@ namespace RecruitmentServer.Models
 
 			string response = JsonConvert.SerializeObject(applications, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
-		}
-		private async Task HandleApplicationsCreateRequest(HttpListenerContext context)
-		{
-			if (context.Request.HttpMethod == HttpMethod.Post.Method)
-			{
-				Application application =
-					await DeserializeFromRequestAsync<Application>(context);
-				application.ChangeStatusId(1);
-				DatabaseManager.CreateApplication(application);
-			}
-
-			await SendResponseToClientAsync(context, string.Empty);
 		}
 		#endregion
 

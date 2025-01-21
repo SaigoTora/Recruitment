@@ -43,12 +43,13 @@ namespace RecruitmentClient
 			{
 				try
 				{
-					CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(account.Login,
-						account.Password);
-					account.candidate = null;
+					CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(
+						account.Candidate.Login, account.Candidate.Password);
+					account.Candidate = null;
 					Task.Run(async () =>
 					{
-						account.candidate = await Client.PostCandidateLoginAsync(candidateLoginDTO);
+						account.Candidate =
+							await Client.PostCandidateLoginAsync(candidateLoginDTO);
 					}).Wait();
 				}
 				catch (SocketException)

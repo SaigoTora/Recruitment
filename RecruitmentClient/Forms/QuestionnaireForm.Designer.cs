@@ -1292,6 +1292,7 @@
 			// 
 			this.radioButtonDrinkAlcoholNo.Animated = true;
 			this.radioButtonDrinkAlcoholNo.BackColor = System.Drawing.Color.Transparent;
+			this.radioButtonDrinkAlcoholNo.Checked = true;
 			this.radioButtonDrinkAlcoholNo.CheckedState.BorderColor = System.Drawing.Color.Black;
 			this.radioButtonDrinkAlcoholNo.CheckedState.BorderThickness = 2;
 			this.radioButtonDrinkAlcoholNo.CheckedState.FillColor = System.Drawing.Color.Transparent;
@@ -1388,6 +1389,7 @@
 			// 
 			this.radioButtonSmokerNo.Animated = true;
 			this.radioButtonSmokerNo.BackColor = System.Drawing.Color.Transparent;
+			this.radioButtonSmokerNo.Checked = true;
 			this.radioButtonSmokerNo.CheckedState.BorderColor = System.Drawing.Color.Black;
 			this.radioButtonSmokerNo.CheckedState.BorderThickness = 2;
 			this.radioButtonSmokerNo.CheckedState.FillColor = System.Drawing.Color.Transparent;
@@ -1484,6 +1486,7 @@
 			// 
 			this.radioButtonDriverLicenseNo.Animated = true;
 			this.radioButtonDriverLicenseNo.BackColor = System.Drawing.Color.Transparent;
+			this.radioButtonDriverLicenseNo.Checked = true;
 			this.radioButtonDriverLicenseNo.CheckedState.BorderColor = System.Drawing.Color.Black;
 			this.radioButtonDriverLicenseNo.CheckedState.BorderThickness = 2;
 			this.radioButtonDriverLicenseNo.CheckedState.FillColor = System.Drawing.Color.Transparent;

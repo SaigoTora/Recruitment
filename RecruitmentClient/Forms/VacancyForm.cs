@@ -103,7 +103,7 @@ namespace RecruitmentClient.Forms
 			{
 				SharedModels.Models.Application application = new SharedModels.Models.Application(
 					DateTime.UtcNow, richTextBoxClientAdditionalInfo.Text, default,
-					_account.candidate.Id, _vacancy.Id);
+					_account.Candidate.Id, _vacancy.Id);
 				await Program.Client.PostApplicationsCreateAsync(application);
 				_refresh(EventArgs.Empty);
 				Close();

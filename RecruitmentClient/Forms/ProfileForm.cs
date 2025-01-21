@@ -12,6 +12,7 @@ using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
 using RecruitmentLibrary.Serialization;
+using System.Threading.Tasks;
 
 namespace RecruitmentClient.Forms
 {
@@ -21,24 +22,25 @@ namespace RecruitmentClient.Forms
 		private readonly StartForm _startForm;
 		private readonly Candidate _oldCandidate;
 
-		internal ProfileForm(Account account)
-		{// Constructor for changing data
+		private ProfileForm()
+		{
 			InitializeComponent();
 
 			customTitleBar = new CustomTitleBar(this, "Профіль",
 				Properties.Resources.profile, maximizeBox: false);
+		}
+		internal ProfileForm(Account account)
+			: this()
+		{// Constructor for changing data
+
 			_account = account;
-			if (_account.candidate == null)
-				_account.candidate = new Candidate();
-			else
-			{
-				_oldCandidate = (Candidate)_account.candidate.Clone();
-				SetFormData(_account);
-			}
+			_oldCandidate = (Candidate)_account.Candidate.Clone();
+			SetFormData(_account);
 		}
 		internal ProfileForm(Account account, StartForm startForm)
-			: this(account)
+			: this()
 		{// Constructor for creation
+			_account = account;
 			_startForm = startForm;
 		}
 		private void ProfileForm_Load(object sender, EventArgs e)
@@ -53,16 +55,16 @@ namespace RecruitmentClient.Forms
 
 		private void SetFormData(Account account)
 		{
-			textBoxSurname.Text = account.candidate.Surname;
-			textBoxName.Text = account.candidate.Name;
-			textBoxFatherName.Text = account.candidate.FatherName;
+			textBoxSurname.Text = account.Candidate.Surname;
+			textBoxName.Text = account.Candidate.Name;
+			textBoxFatherName.Text = account.Candidate.FatherName;
 
-			textBoxPhone1.Text = account.candidate.Phone.Substring(4, 3);
-			textBoxPhone2.Text = account.candidate.Phone.Substring(7, 3);
-			textBoxPhone3.Text = account.candidate.Phone.Substring(10, 3);
+			textBoxPhone1.Text = account.Candidate.Phone.Substring(4, 3);
+			textBoxPhone2.Text = account.Candidate.Phone.Substring(7, 3);
+			textBoxPhone3.Text = account.Candidate.Phone.Substring(10, 3);
 
-			dateTimePickerBirthday.Value = account.candidate.Birthday;
-			textBoxEmail.Text = account.candidate.Email;
+			dateTimePickerBirthday.Value = account.Candidate.Birthday;
+			textBoxEmail.Text = account.Candidate.Email;
 		}
 
 		private void SetDefaultLabels(Theme theme)
@@ -72,10 +74,10 @@ namespace RecruitmentClient.Forms
 		}
 		private bool CheckUniquePhoneAndEmail()
 		{
-			return (ClientUniqueChecker.IsPhoneNumberUnique(labelPhone, _account.Login,
+			return (ClientUniqueChecker.IsPhoneNumberUnique(labelPhone, _account.Candidate.Login,
 						$"{labelPhoneStart.Text}{textBoxPhone1.Text}{textBoxPhone2.Text}" +
 						$"{textBoxPhone3.Text}", _account.Theme)
-						&& ClientUniqueChecker.IsEmailUnique(labelEmail, _account.Login,
+						&& ClientUniqueChecker.IsEmailUnique(labelEmail, _account.Candidate.Login,
 						textBoxEmail.Text, _account.Theme));
 		}
 		private bool CheckValidData()
@@ -125,7 +127,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CheckValidQuestionnairе(ref bool isDataValid)
 		{
-			if (_account.candidate.Questionnaire == null)
+			if (_account.Candidate.Questionnaire == null)
 			{
 				if (isDataValid)
 				{
@@ -190,7 +192,7 @@ namespace RecruitmentClient.Forms
 			Visible = false;
 		}
 
-		private void ButtonApply_Click(object sender, EventArgs e)
+		private async void ButtonApply_Click(object sender, EventArgs e)
 		{
 			if (CheckValidData())
 				try
@@ -198,15 +200,16 @@ namespace RecruitmentClient.Forms
 					if (CheckUniquePhoneAndEmail() == false)
 						return;
 
-					_account.candidate = new Candidate(textBoxSurname.Text,
+					_account.Candidate = new Candidate(textBoxSurname.Text,
 						textBoxName.Text, textBoxFatherName.Text,
+						_account.Candidate.Login, _account.Candidate.Password,
 						$"{labelPhoneStart.Text}{textBoxPhone1.Text}" +
 						$"{textBoxPhone2.Text}{textBoxPhone3.Text}",
 						dateTimePickerBirthday.Value, textBoxEmail.Text,
-						_account.candidate.Questionnaire);
+						_account.Candidate.Questionnaire);
 
 					if (_startForm != null)
-						CreateCandidate();
+						await CreateCandidateAsync();
 					else
 						UpdateCandidate();
 				}
@@ -218,13 +221,13 @@ namespace RecruitmentClient.Forms
 						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 				}
 		}
-		private void CreateCandidate()
+		private async Task CreateCandidateAsync()
 		{
 			if (!ClientUniqueChecker.IsLoginUnique(new Label() { Text = "Логін" },
-				_account.Login, _account.Theme))
+				_account.Candidate.Login, _account.Theme))
 				return;
 
-			Client.CreateCandidate(_account);
+			_account.Candidate = await Program.Client.PostCandidateRegisterAsync(_account.Candidate);
 			if (_startForm.NeedToRemember)
 				Serializator.Serialize(_account,
 					Program.SerializePath, Program.EncryptKey);
@@ -244,7 +247,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void UpdateCandidate()
 		{
-			Client.ChangeCandidate(_account.Login, _oldCandidate, _account.candidate);
+			Client.ChangeCandidate(_account.Candidate.Login, _oldCandidate, _account.Candidate);
 			if (Serializator.SerializationFileExists(Program.SerializePath))
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 
@@ -259,7 +262,6 @@ namespace RecruitmentClient.Forms
 			if (_startForm != null)
 			{
 				_startForm.Visible = true;
-				_account.candidate = null;
 			}
 		}
 	}

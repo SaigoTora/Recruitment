@@ -49,9 +49,11 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public string Email { get; private set; }
 		[Column("id_questionnaire")]
+		[JsonIgnore]
 		public int QuestionnaireId { get; private set; }
 		[JsonProperty]
 		public virtual Questionnaire Questionnaire { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
@@ -74,10 +76,15 @@ namespace SharedModels.Models
 			Password = password;
 			QuestionnaireId = questionnaireId;
 		}
-		public Candidate(string surname, string name, string fatherName, string phone,
-			DateTime birthday, string email, Questionnaire questionnaire)
+		public Candidate(string surname, string name, string fatherName, string login,
+			string password, string phone, DateTime birthday, string email,
+			Questionnaire questionnaire)
 			: this(surname, name, fatherName, phone, birthday, email)
-			=> Questionnaire = questionnaire;
+		{
+			Login = login;
+			Password = password;
+			Questionnaire = questionnaire;
+		}
 
 		public object Clone()
 		{
@@ -90,6 +97,11 @@ namespace SharedModels.Models
 			};
 
 			return newCandidate;
+		}
+		public void ChangeLoginPassword(string login, string password)
+		{
+			Login = login;
+			Password = password;
 		}
 	}
 }

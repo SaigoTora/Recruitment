@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Serialization;
+
 using SharedModels.Models;
 using UIHelpers.Themes;
 
@@ -7,18 +9,24 @@ namespace RecruitmentClient.Models
 	[Serializable]
 	public class Account
 	{
-		[NonSerialized]
-		public Candidate candidate;
+		public Candidate Candidate;
 		public Theme Theme;
-		public string Login { get; private set; }
-		public string Password { get; private set; }
+		[NonSerialized]
+		private Candidate _tempCandidate;
 
-		public Account() { }
+		public Account()
+			=> Candidate = new Candidate();
 
-		public void SetLoginPassword(string login, string password)
+		[OnSerializing]
+		private void OnSerializing(StreamingContext context)
 		{
-			Login = login;
-			Password = password;
+			_tempCandidate = (Candidate)Candidate.Clone();
+			string login = Candidate.Login, password = Candidate.Password;
+			Candidate = new Candidate();
+			Candidate.ChangeLoginPassword(login, password);
 		}
+		[OnSerialized]
+		private void OnSerialized(StreamingContext context)
+			=> Candidate = _tempCandidate;
 	}
 }

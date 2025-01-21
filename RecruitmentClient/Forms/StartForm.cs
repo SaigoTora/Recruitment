@@ -63,7 +63,7 @@ namespace RecruitmentClient.Forms
 		private void SetFormElementsForChangePassword()
 		{
 			Icon = Properties.Resources.profile;
-			textBoxLogin.Text = _account.Login;
+			textBoxLogin.Text = _account.Candidate.Login;
 			textBoxLogin.ReadOnly = true;
 			textBoxLogin.BorderThickness = 0;
 			ActiveControl = textBoxPassword;
@@ -121,7 +121,8 @@ namespace RecruitmentClient.Forms
 					if (ClientUniqueChecker.IsLoginUnique(labelLogin,
 						textBoxLogin.Text, _account.Theme))
 					{
-						_account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
+						_account.Candidate.ChangeLoginPassword(textBoxLogin.Text,
+							textBoxPassword.Text);
 						ProfileForm pf = new ProfileForm(_account, this);
 						pf.Show();
 						Visible = false;
@@ -239,8 +240,8 @@ namespace RecruitmentClient.Forms
 					return;
 				}
 
-				_account.SetLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
-				_account.candidate = candidate;
+				_account.Candidate.ChangeLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
+				_account.Candidate = candidate;
 				if (NeedToRemember)
 					Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 
@@ -314,7 +315,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CheckOldPassword()
 		{
-			if (_account.Password != textBoxPassword.Text)
+			if (_account.Candidate.Password != textBoxPassword.Text)
 				CustomMessageBox.Show("Старий пароль введений не вірно!", _account.Theme,
 					"Помилка", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			else
@@ -322,7 +323,7 @@ namespace RecruitmentClient.Forms
 		}
 		private void CheckNewPassword()
 		{
-			if (_account.Password == textBoxPassword.Text)
+			if (_account.Candidate.Password == textBoxPassword.Text)
 				CustomMessageBox.Show("Новий пароль не може співпадати зі старим!",
 					_account.Theme, "Помилка", CustomMessageBoxButtons.OK,
 					CustomMessageBoxIcon.Error);
@@ -364,8 +365,8 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
-				Client.ChangePassword(_account.Login,
-					_account.Password, textBoxPassword.Text);
+				Client.ChangePassword(_account.Candidate.Login,
+					_account.Candidate.Password, textBoxPassword.Text);
 			}
 			catch (SocketException)
 			{
@@ -374,7 +375,7 @@ namespace RecruitmentClient.Forms
 					_account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
-			_account.SetLoginPassword(_account.Login, textBoxPassword.Text);
+			_account.Candidate.ChangeLoginPassword(_account.Candidate.Login, textBoxPassword.Text);
 		}
 		#endregion
 

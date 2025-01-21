@@ -23,6 +23,8 @@ namespace RecruitmentClient.Models
 		private static readonly HttpClient httpClient;
 		private readonly string _serverAddress;
 
+		private readonly string _candidateRegisterUrl
+			= ConfigurationManager.AppSettings["candidateRegisterUrl"];
 		private readonly string _candidateLoginUrl
 			= ConfigurationManager.AppSettings["candidateLoginUrl"];
 		private readonly string _vacanciesCountUrl
@@ -46,10 +48,26 @@ namespace RecruitmentClient.Models
 		{
 			httpClient = new HttpClient()
 			{
-				Timeout = TimeSpan.FromSeconds(3)
+				Timeout = TimeSpan.FromSeconds(10)
 			};
 		}
+		#region Candidate
+		internal async Task<Candidate> PostCandidateRegisterAsync(
+			Candidate candidate)
+		{
+			string jsonContent = JsonConvert.SerializeObject(candidate,
+				Formatting.Indented);
 
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_candidateRegisterUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
+			}
+		}
 		internal async Task<Candidate> PostCandidateLoginAsync(CandidateLoginDTO candidateLoginDTO)
 		{
 			string jsonContent = JsonConvert.SerializeObject(candidateLoginDTO,
@@ -65,6 +83,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
 			}
 		}
+		#endregion
 
 		#region Vacancy
 		internal async Task<int> PostFreeVacanciesCountAsync(
@@ -102,8 +121,7 @@ namespace RecruitmentClient.Models
 		#endregion
 
 		#region Application
-		internal async Task<int> PostApplicationsCountAsync(
-			AccountSearchSettingsDTO accountSearch)
+		internal async Task<int> PostApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(accountSearch,
 				Formatting.Indented);
@@ -147,7 +165,6 @@ namespace RecruitmentClient.Models
 			}
 		}
 		#endregion
-
 
 		#region Interview
 		internal async Task<int> PostInterviewsCountAsync(
@@ -215,20 +232,6 @@ namespace RecruitmentClient.Models
 				offset += currentChunkSize;
 			}
 		}
-		private static string Read(NetworkStream stream)
-		{// Метод зчитує байти від серверу
-			List<byte> allBytes = new List<byte>();
-			byte[] buffer = new byte[CHUNK_SIZE];
-			int bytesRead;
-
-			do
-			{// Додаємо до списку масив байтів
-				bytesRead = stream.Read(buffer, 0, buffer.Length);
-				allBytes.AddRange(buffer.Take(bytesRead));
-			} while (bytesRead > 0);
-
-			return Encoding.UTF8.GetString(allBytes.ToArray());
-		}
 
 		private static void SendToServer(string message)
 		{// Метод, який просто відправляє дані на сервер
@@ -240,45 +243,33 @@ namespace RecruitmentClient.Models
 			stream.Close();// Закриваємо stream та client
 			client.Close();
 		}
-		private static string[] SendToServerAndGetResult(string message)
-		{// Метод, який відправляє дані на сервер та повертає результат
-			TcpClient client = new TcpClient("127.0.0.1", 7124);// Підключаємось
-			NetworkStream stream = client.GetStream();
-
-			Send(message, stream);// Відправляємо дані на сервер
-
-			string response = Read(stream);
-
-			stream.Close();// Закриваємо stream та client
-			client.Close();
-
-			// Отримуємо масив рядків відповідей
-			string[] arr = response.Split(SEPARATOR);
-			for (int i = 0; i < arr.Length; i++)
-				if (arr[i] == "NULL")
-					arr[i] = "";
-
-			return arr;
-		}
 
 
 
 		internal static string[] GetFamilyStatuses() // Сімейні стани
-			=> SendToServerAndGetResult("SELECT status FROM Family_Status ORDER BY id");
+		{
+			return new string[] { "Одружений(а)","Неодружений(а)","Розлучений(а)",
+				"Вдівець/вдова","Цивільний шлюб"};
+			//return SendToServerAndGetResult("SELECT status FROM Family_Status ORDER BY id");
+		}
 		internal static string[] GetBusinessTripOpportunities() // Можливості відряджень
-			=> SendToServerAndGetResult("SELECT opportunity FROM Business_Trip_Opportunity ORDER BY id");
+		{
+			return new string[] { "Часто", "Іноді", "Ніколи" };
+			//return SendToServerAndGetResult("SELECT opportunity FROM Business_Trip_Opportunity ORDER BY id");
+		}
 
 		// Методи для перевірки унікальності
 		private static bool CandidateDataIsUnique(string login, string dbField, string value)
 		{// Метод, який перевіряє значення поля кандидата на унікальність
-			string message = $"SELECT COUNT(id) FROM Candidate WHERE {dbField} = '{value}'";
-			if (login != null)// Якщо логін вказаний
-				message += $" AND login != '{login}'";
+		 //string message = $"SELECT COUNT(id) FROM Candidate WHERE {dbField} = '{value}'";
+		 //if (login != null)// Якщо логін вказаний
+		 //	message += $" AND login != '{login}'";
 
-			string[] arr = SendToServerAndGetResult(message);
-			if (Int32.Parse(arr[0]) > 0)// Якщо унікальність відсутня
-				return false;
+			//string[] arr = SendToServerAndGetResult(message);
+			//if (Int32.Parse(arr[0]) > 0)// Якщо унікальність відсутня
+			//	return false;
 			return true;
+
 		}
 		internal static bool EmailIsUnique(string login, string email) => CandidateDataIsUnique(login, "email", email);
 		internal static bool PhoneIsUnique(string login, string phone) => CandidateDataIsUnique(login, "phone", phone);
@@ -441,34 +432,6 @@ namespace RecruitmentClient.Models
 					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.EducationDegreeId},{item.EducationFormId}) ";
 
 			return res;
-		}
-		internal static void CreateCandidate(Account account)
-		{// Метод який створює на сервері кандидата
-
-			// Оголошуємо змінні
-			Candidate candidate = account.candidate;
-			Questionnaire questionnaire = candidate.Questionnaire;
-			Health health = questionnaire.Health;
-
-			string fatherName = candidate.FatherName == "" ? "NULL" : $"'{candidate.FatherName}'";
-			string chronicDiseases = health.ChronicDiseases == "" ? "NULL" : $"'{health.ChronicDiseases}'";
-			string info = questionnaire.AdditionalInfo == "" ? "NULL" : $"'{questionnaire.AdditionalInfo}'";
-
-			// Відправляємо запит
-			SendToServer($"INSERT INTO Health(chronic_diseases,smoker,drink_alcohol) " +
-				$"values({chronicDiseases}, '{health.Smoker}', '{health.DrinkAlcohol}') " +
-				$"INSERT INTO Questionnaire(nationality,city,children_amount,experience,driver_license,readiness,additional_info, " +
-				$"id_health,id_family_status,id_business_trip_opportunity) " +
-				$"values('{questionnaire.Nationality}','{questionnaire.City}',{questionnaire.ChildrenAmount}, " +
-				$"{questionnaire.Experience},'{questionnaire.DriverLicense}',{questionnaire.Readiness}, " +
-				$"{info},SCOPE_IDENTITY(),{questionnaire.FamilyStatusId}, " +
-				$"{questionnaire.BusinessTripOpportunityId}) " +
-				$"DECLARE @id_q int " +
-				$"SET @id_q = SCOPE_IDENTITY() " + CreateLanguages(questionnaire.Languages.ToList(), "@id_q") +
-				CreateEducations(questionnaire.Educations.ToList(), "@id_q") +
-				$"INSERT INTO Candidate(surname,name,father_name,login,password,phone,birthday,email,id_questionnaire) " +
-				$"values('{candidate.Surname}','{candidate.Name}',{fatherName},'{account.Login}', " +
-				$"'{account.Password}','{candidate.Phone}','{candidate.Birthday:yyyy-MM-dd}','{candidate.Email}',@id_q)");
 		}
 	}
 }

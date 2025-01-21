@@ -49,7 +49,7 @@ namespace RecruitmentClient.Forms
 			_account = account;
 			if (startForm == null)
 			{
-				_oldQuestionnaire = (Questionnaire)_account.candidate.Questionnaire.Clone();
+				_oldQuestionnaire = (Questionnaire)_account.Candidate.Questionnaire.Clone();
 				_formOpenForChange = true;
 			}
 
@@ -68,9 +68,9 @@ namespace RecruitmentClient.Forms
 			ResetEducationFields();
 			comboBoxNationality.Focus();
 
-			if (_account.candidate.Questionnaire == null)
+			if (_account.Candidate.Questionnaire == null)
 			{
-				_account.candidate.Questionnaire = new Questionnaire();
+				_account.Candidate.Questionnaire = new Questionnaire();
 				comboBoxNationality.SelectedIndex =
 					comboBoxNationality.FindString(DEFAULT_NATIONALITY);
 				comboBoxLanguage.SelectedIndex =
@@ -78,7 +78,7 @@ namespace RecruitmentClient.Forms
 				ButtonAddEducation_Click(new Object(), EventArgs.Empty);
 			}
 			else
-				SetFormFields(_account.candidate.Questionnaire);
+				SetFormFields(_account.Candidate.Questionnaire);
 
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonDriverLicenseNo,
 				radioButtonDriverLicenseYes, radioButtonSmokerNo, radioButtonSmokerYes,
@@ -374,8 +374,8 @@ namespace RecruitmentClient.Forms
 				{
 					try
 					{
-						Client.ChangeQuestionnaire(_account.Login, _oldQuestionnaire,
-							_account.candidate.Questionnaire);
+						Client.ChangeQuestionnaire(_account.Candidate.Login, _oldQuestionnaire,
+							_account.Candidate.Questionnaire);
 					}
 					catch (SocketException)
 					{
@@ -406,7 +406,7 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = ReadLanguagesFromForm();
 			List<Education> educations = ReadEducationsFromForm();
 
-			_account.candidate.Questionnaire =
+			_account.Candidate.Questionnaire =
 				new Questionnaire(comboBoxNationality.SelectedItem.ToString(),
 				textBoxCity.Text, (int)numericUpDownChildrenAmount.Value,
 				(int)numericUpDownExperience.Value, radioButtonDriverLicenseYes.Checked,
@@ -420,7 +420,7 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = new List<Language>(MAX_LANGUAGE_COUNT);
 			for (int i = 0; i < _languages.Count; i++)
 				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(),
-					(int)_languages[i].NUDLevel.Value, _account.candidate.QuestionnaireId));
+					(int)_languages[i].NUDLevel.Value, _account.Candidate.QuestionnaireId));
 
 			return languages;
 		}
@@ -432,7 +432,7 @@ namespace RecruitmentClient.Forms
 					_educations[i].TextBoxSpecialty.Text,
 					(int)_educations[i].NUD_YearAdmission.Value,
 					_educations[i].DTP_DateEnd.Value,
-					_account.candidate.QuestionnaireId,
+					_account.Candidate.QuestionnaireId,
 					_educations[i].CB_EducationDegree.SelectedIndex + 1,
 					_educations[i].CB_EducationForm.SelectedIndex + 1));
 
@@ -635,8 +635,8 @@ namespace RecruitmentClient.Forms
 
 			if (result != DialogResult.Yes)
 				e.Cancel = true;
-			else if (_account.candidate.Questionnaire.City == null)
-				_account.candidate.Questionnaire = null;
+			else if (_account.Candidate.Questionnaire.City == null)
+				_account.Candidate.Questionnaire = null;
 		}
 		private void QuestionnaireForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

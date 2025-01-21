@@ -29,8 +29,10 @@ namespace SharedModels.Models
 		[Column("id_questionnaire")]
 		public int QuestionnaireId { get; private set; }
 		[Column("id_education_degree")]
+		[JsonProperty]
 		public int EducationDegreeId { get; private set; }
 		[Column("id_education_form")]
+		[JsonProperty]
 		public int EducationFormId { get; private set; }
 		[JsonProperty]
 		public virtual EducationDegree EducationDegree { get; private set; }

@@ -37,10 +37,13 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public string AdditionalInfo { get; private set; }
 		[Column("id_health")]
+		[JsonProperty]
 		public int HealthId { get; private set; }
 		[Column("id_family_status")]
+		[JsonProperty]
 		public int FamilyStatusId { get; private set; }
 		[Column("id_business_trip_opportunity")]
+		[JsonProperty]
 		public int BusinessTripOpportunityId { get; private set; }
 		[JsonProperty]
 		public virtual Health Health { get; private set; }

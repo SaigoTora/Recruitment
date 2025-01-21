@@ -50,6 +50,11 @@ namespace RecruitmentServer.Models.DataBase
 		}
 
 		#region Create
+		internal static Candidate CreateCandidate(Candidate candidate)
+		{
+			_candidateRepo.Add(candidate);
+			return candidate;
+		}
 		internal static void CreatePosition(Position position)
 			=> _positionRepo.Add(position);
 		internal static void CreateVacancy(Vacancy vacancy)
