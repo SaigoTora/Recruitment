@@ -65,6 +65,15 @@ namespace RecruitmentServer.Models
 				ConfigurationManager.AppSettings["candidateLoginUrl"]))
 				await HandleCandidateLoginRequest(context);
 			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateChangePasswordUrl"]))
+				await HandleCandidateChangePasswordRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateUrl"]))
+				await HandleCandidateRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["questionnaireUrl"]))
+				await HandleQuestionnaireRequest(context);
+			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["vacanciesCountUrl"]))
 				await HandleVacanciesCountRequest(context);
 			else if (context.Request.RawUrl.Contains(
@@ -111,11 +120,48 @@ namespace RecruitmentServer.Models
 			{
 				CandidateLoginDTO candidateLoginDTO =
 					await DeserializeFromRequestAsync<CandidateLoginDTO>(context);
-				candidate = DatabaseManager.GetCandidate(candidateLoginDTO.Login,
-					candidateLoginDTO.Password);
+				candidate = DatabaseManager.GetCandidate(candidateLoginDTO);
 			}
 
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleCandidateChangePasswordRequest(HttpListenerContext context)
+		{
+			if (context.Request.HttpMethod == HttpMethod.Put.Method)
+			{
+				CandidateChangePasswordDTO candidateChangePassword =
+					await DeserializeFromRequestAsync<CandidateChangePasswordDTO>(context);
+				DatabaseManager.UpdateCandidatePassword(candidateChangePassword);
+			}
+
+			await SendResponseToClientAsync(context, string.Empty);
+		}
+		private async Task HandleCandidateRequest(HttpListenerContext context)
+		{
+			Candidate candidate = null;
+
+			if (context.Request.HttpMethod == HttpMethod.Put.Method)
+			{
+				candidate = await DeserializeFromRequestAsync<Candidate>(context);
+				candidate = DatabaseManager.UpdateCandidate(candidate.Id, candidate);
+			}
+
+			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleQuestionnaireRequest(HttpListenerContext context)
+		{
+			Questionnaire questionnaire = null;
+
+			if (context.Request.HttpMethod == HttpMethod.Put.Method)
+			{
+				questionnaire = await DeserializeFromRequestAsync<Questionnaire>(context);
+				questionnaire = DatabaseManager.UpdateQuestionnaire(questionnaire.Id,
+					questionnaire);
+			}
+
+			string response = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
 		#endregion

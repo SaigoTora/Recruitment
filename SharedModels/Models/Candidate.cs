@@ -76,11 +76,12 @@ namespace SharedModels.Models
 			Password = password;
 			QuestionnaireId = questionnaireId;
 		}
-		public Candidate(string surname, string name, string fatherName, string login,
+		public Candidate(int id, string surname, string name, string fatherName, string login,
 			string password, string phone, DateTime birthday, string email,
 			Questionnaire questionnaire)
 			: this(surname, name, fatherName, phone, birthday, email)
 		{
+			Id = id;
 			Login = login;
 			Password = password;
 			Questionnaire = questionnaire;

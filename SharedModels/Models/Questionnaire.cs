@@ -6,6 +6,7 @@ namespace SharedModels.Models
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
+	using System.Linq;
 
 	[Table("Questionnaire")]
 	[Serializable]
@@ -46,7 +47,7 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public int BusinessTripOpportunityId { get; private set; }
 		[JsonProperty]
-		public virtual Health Health { get; private set; }
+		public virtual Health Health { get; set; }
 		[JsonProperty]
 		public virtual FamilyStatus FamilyStatus { get; private set; }
 		[JsonProperty]
@@ -84,14 +85,16 @@ namespace SharedModels.Models
 		{
 			HealthId = healthId;
 		}
-		public Questionnaire(string nationality, string city, int childrenAmount,
+		public Questionnaire(int id, string nationality, string city, int childrenAmount,
 			int experience, bool driverLicense, int readiness, string additionalInfo,
 			Health health, int familyStatusId, int businessTripOpportunityId,
 			List<Language> languages, List<Education> educations)
 			: this(nationality, city, childrenAmount, experience, driverLicense,
 				  readiness, additionalInfo, familyStatusId, businessTripOpportunityId)
 		{
+			Id = id;
 			Health = health;
+			HealthId = Health.Id;
 			Languages = languages;
 			Educations = educations;
 		}
@@ -106,11 +109,10 @@ namespace SharedModels.Models
 			foreach (var education in Educations)
 				educations.Add((Education)education?.Clone());
 
-			var newQuestionnaire = new Questionnaire(Nationality, City, ChildrenAmount, Experience,
+			var newQuestionnaire = new Questionnaire(Id, Nationality, City, ChildrenAmount, Experience,
 				DriverLicense, Readiness, AdditionalInfo, health, FamilyStatusId,
 				BusinessTripOpportunityId, languages, educations)
 			{
-				Id = this.Id,
 				HealthId = this.HealthId,
 				FamilyStatus = this.FamilyStatus,
 				BusinessTripOpportunity = this.BusinessTripOpportunity,

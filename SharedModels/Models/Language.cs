@@ -30,6 +30,11 @@ namespace SharedModels.Models
 			Level = level;
 			QuestionnaireId = questionnaireId;
 		}
+		public Language(int id, string name, int level, int questionnaireId)
+			: this(name, level, questionnaireId)
+		{
+			Id = id;
+		}
 
 		public object Clone()
 		{
@@ -40,6 +45,11 @@ namespace SharedModels.Models
 			};
 
 			return newLanguage;
+		}
+		public void Change(string name, int level)
+		{
+			Name = name;
+			Level = level;
 		}
 	}
 }

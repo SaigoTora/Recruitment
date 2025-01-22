@@ -27,6 +27,12 @@ namespace RecruitmentClient.Models
 			= ConfigurationManager.AppSettings["candidateRegisterUrl"];
 		private readonly string _candidateLoginUrl
 			= ConfigurationManager.AppSettings["candidateLoginUrl"];
+		private readonly string _candidateChangePasswordUrl
+			= ConfigurationManager.AppSettings["candidateChangePasswordUrl"];
+		private readonly string _candidateUrl
+			= ConfigurationManager.AppSettings["candidateUrl"];
+		private readonly string _questionnaireUrl
+			= ConfigurationManager.AppSettings["questionnaireUrl"];
 		private readonly string _vacanciesCountUrl
 			= ConfigurationManager.AppSettings["vacanciesCountUrl"];
 		private readonly string _vacanciesUrl
@@ -51,12 +57,12 @@ namespace RecruitmentClient.Models
 				Timeout = TimeSpan.FromSeconds(10)
 			};
 		}
+
 		#region Candidate
 		internal async Task<Candidate> PostCandidateRegisterAsync(
 			Candidate candidate)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidate,
-				Formatting.Indented);
+			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
 			{
@@ -81,6 +87,47 @@ namespace RecruitmentClient.Models
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
+			}
+		}
+		internal async Task PutCandidatePasswordAsync(
+			CandidateChangePasswordDTO candidateChangePassword)
+		{
+			string jsonContent = JsonConvert.SerializeObject(candidateChangePassword,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
+					_candidateChangePasswordUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+			}
+		}
+		internal async Task<Candidate> PutCandidateAsync(Candidate candidate)
+		{
+			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
+					_candidateUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
+			}
+		}
+		internal async Task<Questionnaire> PutQuestionnaireAsync(Questionnaire questionnaire)
+		{
+			string jsonContent = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
+					_questionnaireUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<Questionnaire>(jsonResponse);
 			}
 		}
 		#endregion
@@ -214,37 +261,7 @@ namespace RecruitmentClient.Models
 
 
 
-		private const int CHUNK_SIZE = 1024;// Розмір порції при передачі даних
 		internal const char SEPARATOR = '¤';// Роздільник
-
-		private static void Send(string message, NetworkStream stream)
-		{// Метод відправляє байти до серверу
-			byte[] bytes = Encoding.UTF8.GetBytes(message);
-			int offset = 0;
-
-			while (offset < bytes.Length)
-			{// Поки не дійшли до кінця
-			 // Розмір поточної порції
-				int currentChunkSize = Math.Min(bytes.Length - offset, CHUNK_SIZE);
-
-				// Записуємо в потік байти та зміщуємо offset
-				stream.Write(bytes, offset, currentChunkSize);
-				offset += currentChunkSize;
-			}
-		}
-
-		private static void SendToServer(string message)
-		{// Метод, який просто відправляє дані на сервер
-			TcpClient client = new TcpClient("127.0.0.1", 7124);// Підключаємось
-			NetworkStream stream = client.GetStream();
-
-			Send(message, stream);// Відправляємо дані на сервер
-
-			stream.Close();// Закриваємо stream та client
-			client.Close();
-		}
-
-
 
 		internal static string[] GetFamilyStatuses() // Сімейні стани
 		{
@@ -274,164 +291,5 @@ namespace RecruitmentClient.Models
 		internal static bool EmailIsUnique(string login, string email) => CandidateDataIsUnique(login, "email", email);
 		internal static bool PhoneIsUnique(string login, string phone) => CandidateDataIsUnique(login, "phone", phone);
 		internal static bool LoginIsUnique(string login) => CandidateDataIsUnique(null, "login", login);
-
-		// Методи для зміни даних на сервері
-		private static string Change(string field, string oldS, string newS, bool isString = true)
-		{
-			string res = string.Empty;
-			if (oldS != newS)
-			{
-				if (newS == "")
-				{
-					newS = "NULL";
-					isString = false;
-				}
-				if (isString)
-					res += $" {field} = '{newS}',";
-				else
-					res += $" {field} = {newS},";
-			}
-			return res;
-		}
-		private static string Change(string field, int oldI, int newI)
-			=> Change(field, oldI.ToString(), newI.ToString(), false);
-		private static string Change(string field, bool oldB, bool newB)
-			=> Change(field, oldB.ToString(), newB.ToString());
-		private static void ChangeHealth(string login, Health oldH, Health newH)
-		{// Метод, який змінює здоров’я на сервері
-			string message = "UPDATE Health SET";
-			message += Change("chronic_diseases", oldH.ChronicDiseases, newH.ChronicDiseases);
-			message += Change("smoker", oldH.Smoker, newH.Smoker);
-			message += Change("drink_alcohol", oldH.DrinkAlcohol, newH.DrinkAlcohol);
-			message = message.TrimEnd(',');// Видаляємо останню кому
-
-			if (message != "UPDATE Health SET")// Якщо потрібно змінити дані
-				SendToServer(message + $" WHERE id = (SELECT id_health FROM Questionnaire " +
-					$"WHERE id = (SELECT id_questionnaire FROM Candidate WHERE login = '{login}'))");
-		}
-		private static void ChangeLanguages(string login, List<Language> oldL, List<Language> newL)
-		{// Метод, який змінює мови на сервері
-			int n = Math.Min(oldL.Count, newL.Count);
-			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
-				$" FROM Candidate WHERE login = '{login}')";
-			for (int i = 0; i < n; i++)
-			{
-				string message = "UPDATE Language SET";
-				message += Change("name", oldL[i].Name, newL[i].Name);
-				message += Change("level", oldL[i].Level, newL[i].Level);
-				message = message.TrimEnd(',');// Видаляємо останню кому
-
-				if (message != "UPDATE Language SET")// Якщо потрібно змінити дані
-					SendToServer(message + condition + $" AND name = '{oldL[i].Name}'");
-			}
-
-			if (oldL.Count > newL.Count)// Якщо кількість мов зменшилась
-				for (int i = newL.Count; i < oldL.Count; i++)
-					SendToServer("DELETE FROM Language" + condition + $" AND name = '{oldL[i].Name}'");
-
-			else if (oldL.Count < newL.Count)// Якщо кількість мов збільшилась
-				SendToServer(CreateLanguages(newL.GetRange(oldL.Count, newL.Count - oldL.Count),
-					$"(SELECT id_questionnaire FROM Candidate WHERE login = '{login}')"));
-		}
-		private static void ChangeEducations(string login, List<Education> oldE, List<Education> newE)
-		{// Метод, який змінює освіти на сервері
-			int n = Math.Min(oldE.Count, newE.Count);
-			string condition = $" WHERE id_questionnaire = (SELECT id_questionnaire" +
-				$" FROM Candidate WHERE login = '{login}')";
-			for (int i = 0; i < n; i++)
-			{
-				string message = "UPDATE Education SET";
-				message += Change("name_institution", oldE[i].NameInstitution, newE[i].NameInstitution);
-				message += Change("specialty", oldE[i].Specialty, newE[i].Specialty);
-				message += Change("year_admission", oldE[i].YearAdmission, newE[i].YearAdmission);
-				message += Change("date_end", oldE[i].DateEnd.ToString("yyyy-MM-dd"), newE[i].DateEnd.ToString("yyyy-MM-dd"));
-				message += Change("id_education_degree", oldE[i].EducationDegreeId, newE[i].EducationDegreeId);
-				message += Change("id_education_form", oldE[i].EducationFormId, newE[i].EducationFormId);
-				message = message.TrimEnd(',');// Видаляємо останню кому
-
-				if (message != "UPDATE Education SET")// Якщо потрібно змінити дані
-					SendToServer(message + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
-						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
-						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].EducationDegreeId} AND id_education_form = {oldE[i].EducationFormId}");
-			}
-
-			if (oldE.Count > newE.Count)// Якщо кількість освіт зменшилась
-				for (int i = newE.Count; i < oldE.Count; i++)
-					SendToServer("DELETE FROM Education" + condition + $" AND name_institution = '{oldE[i].NameInstitution}'" +
-						$" AND specialty = '{oldE[i].Specialty}' AND year_admission = {oldE[i].YearAdmission}" +
-						$" AND date_end = '{oldE[i].DateEnd:yyyy-MM-dd}' AND id_education_degree =" +
-						$" {oldE[i].EducationDegreeId} AND id_education_form = {oldE[i].EducationFormId}");
-
-			else if (oldE.Count < newE.Count)// Якщо кількість освіт збільшилась
-				SendToServer(CreateEducations(newE.GetRange(oldE.Count, newE.Count - oldE.Count),
-					$"(SELECT id_questionnaire FROM Candidate WHERE login = '{login}')"));
-		}
-
-
-		internal static void ChangeQuestionnaire(string login, Questionnaire oldQ, Questionnaire newQ)
-		{// Метод, який змінює анкету на сервері
-			string message = "UPDATE Questionnaire SET";
-			message += Change("nationality", oldQ.Nationality, newQ.Nationality);
-			message += Change("city", oldQ.City, newQ.City);
-			message += Change("children_amount", oldQ.ChildrenAmount, newQ.ChildrenAmount);
-			message += Change("experience", oldQ.Experience, newQ.Experience);
-			message += Change("driver_license", oldQ.DriverLicense, newQ.DriverLicense);
-			message += Change("readiness", oldQ.Readiness, newQ.Readiness);
-			message += Change("additional_info", oldQ.AdditionalInfo, newQ.AdditionalInfo);
-			message += Change("id_family_status", oldQ.FamilyStatusId, newQ.FamilyStatusId);
-			message += Change("id_business_trip_opportunity", oldQ.BusinessTripOpportunityId, newQ.BusinessTripOpportunityId);
-			message = message.TrimEnd(',');// Видаляємо останню кому
-
-			if (message != "UPDATE Questionnaire SET")// Якщо потрібно змінити дані
-				SendToServer(message + $" WHERE id = (SELECT id_questionnaire FROM Candidate WHERE login = '{login}')");
-
-			ChangeHealth(login, oldQ.Health, newQ.Health);
-			ChangeLanguages(login, oldQ.Languages.ToList(), newQ.Languages.ToList());
-			ChangeEducations(login, oldQ.Educations.ToList(), newQ.Educations.ToList());
-		}
-		internal static void ChangeCandidate(string login, Candidate oldC, Candidate newC)
-		{// Метод, який змінює кандидата на сервері
-			string message = "UPDATE Candidate SET";
-			message += Change("surname", oldC.Surname, newC.Surname);
-			message += Change("name", oldC.Name, newC.Name);
-			message += Change("father_name", oldC.FatherName, newC.FatherName);
-			message += Change("phone", oldC.Phone, newC.Phone);
-			message += Change("birthday", oldC.Birthday.ToString("yyyy-MM-dd"), newC.Birthday.ToString("yyyy-MM-dd"));
-			message += Change("email", oldC.Email, newC.Email);
-			message = message.TrimEnd(',');// Видаляємо останню кому
-
-			if (message != "UPDATE Candidate SET")// Якщо потрібно змінити дані
-				SendToServer(message + $" WHERE login = '{login}'");
-		}
-		internal static void ChangePassword(string login, string oldPassword, string newPassword)
-		{// Метод змінює пароль кандидата
-			SendToServer($"UPDATE Candidate SET password = '{newPassword}' " +
-				$"WHERE login = '{login}' AND password = '{oldPassword}'");
-		}
-
-		// Методи для створення даних на сервері
-		private static string CreateLanguages(List<Language> languages, string idQuestionnaire)
-		{// Метод який повертає запит створення мов
-			string res = string.Empty;
-
-			foreach (Language item in languages)
-				res += $"INSERT INTO Language(name,level,id_questionnaire) " +
-				$"values('{item.Name}',{item.Level},{idQuestionnaire}) ";
-
-			return res;
-		}
-		private static string CreateEducations(List<Education> educations, string idQuestionnaire)
-		{// Метод який повертає запит створення освіт
-			string res = string.Empty;
-
-			foreach (Education item in educations)
-				res += $"INSERT INTO Education(name_institution,specialty,year_admission," +
-					$"date_end,id_questionnaire,id_education_degree,id_education_form) " +
-					$"values('{item.NameInstitution}','{item.Specialty}',{item.YearAdmission}," +
-					$"'{item.DateEnd:yyyy-MM-dd}',{idQuestionnaire},{item.EducationDegreeId},{item.EducationFormId}) ";
-
-			return res;
-		}
 	}
 }

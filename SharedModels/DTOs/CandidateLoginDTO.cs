@@ -11,7 +11,7 @@ namespace SharedModels.DTOs
 		[JsonProperty]
 		public string Password { get; private set; }
 
-		public CandidateLoginDTO() { }
+		[JsonConstructor]
 		public CandidateLoginDTO(string login, string password)
 		{
 			Login = login;

@@ -363,7 +363,7 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Form Validation and submission
-		private void ButtonApply_Click(object sender, EventArgs e)
+		private async void ButtonApply_Click(object sender, EventArgs e)
 		{
 			SetDefaultLabels();
 
@@ -374,8 +374,9 @@ namespace RecruitmentClient.Forms
 				{
 					try
 					{
-						Client.ChangeQuestionnaire(_account.Candidate.Login, _oldQuestionnaire,
-							_account.Candidate.Questionnaire);
+						_account.Candidate.Questionnaire =
+							await Program.Client.PutQuestionnaireAsync(
+								_account.Candidate.Questionnaire);
 					}
 					catch (SocketException)
 					{
@@ -407,10 +408,11 @@ namespace RecruitmentClient.Forms
 			List<Education> educations = ReadEducationsFromForm();
 
 			_account.Candidate.Questionnaire =
-				new Questionnaire(comboBoxNationality.SelectedItem.ToString(),
-				textBoxCity.Text, (int)numericUpDownChildrenAmount.Value,
-				(int)numericUpDownExperience.Value, radioButtonDriverLicenseYes.Checked,
-				(int)numericUpDownReadiness.Value, richTextBoxAdditionalInfo.Text,
+				new Questionnaire(_account.Candidate.Questionnaire.Id,
+				comboBoxNationality.SelectedItem.ToString(), textBoxCity.Text,
+				(int)numericUpDownChildrenAmount.Value, (int)numericUpDownExperience.Value,
+				radioButtonDriverLicenseYes.Checked, (int)numericUpDownReadiness.Value,
+				richTextBoxAdditionalInfo.Text,
 				new Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
 				radioButtonDrinkAlcoholYes.Checked), comboBoxFamilyStatus.SelectedIndex + 1,
 				comboBoxBusinessTripOpportunity.SelectedIndex + 1, languages, educations);
@@ -420,7 +422,7 @@ namespace RecruitmentClient.Forms
 			List<Language> languages = new List<Language>(MAX_LANGUAGE_COUNT);
 			for (int i = 0; i < _languages.Count; i++)
 				languages.Add(new Language(_languages[i].ComboBoxName.SelectedItem.ToString(),
-					(int)_languages[i].NUDLevel.Value, _account.Candidate.QuestionnaireId));
+					(int)_languages[i].NUDLevel.Value, _account.Candidate.Questionnaire.Id));
 
 			return languages;
 		}
@@ -432,7 +434,7 @@ namespace RecruitmentClient.Forms
 					_educations[i].TextBoxSpecialty.Text,
 					(int)_educations[i].NUD_YearAdmission.Value,
 					_educations[i].DTP_DateEnd.Value,
-					_account.Candidate.QuestionnaireId,
+					_account.Candidate.Questionnaire.Id,
 					_educations[i].CB_EducationDegree.SelectedIndex + 1,
 					_educations[i].CB_EducationForm.SelectedIndex + 1));
 

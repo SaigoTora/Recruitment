@@ -67,5 +67,15 @@ namespace SharedModels.Models
 
 			return newEducation;
 		}
+		public void Change(string nameInstitution, string specialty, int yearAdmission,
+			DateTime dateEnd, int educationDegreeId, int educationFormId)
+		{
+			NameInstitution = nameInstitution;
+			Specialty = specialty;
+			YearAdmission = yearAdmission;
+			DateEnd = dateEnd;
+			EducationDegreeId = educationDegreeId;
+			EducationFormId = educationFormId;
+		}
 	}
 }

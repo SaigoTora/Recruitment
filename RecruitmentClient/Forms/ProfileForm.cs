@@ -197,10 +197,10 @@ namespace RecruitmentClient.Forms
 			if (CheckValidData())
 				try
 				{
-					if (CheckUniquePhoneAndEmail() == false)
+					if (!CheckUniquePhoneAndEmail())
 						return;
 
-					_account.Candidate = new Candidate(textBoxSurname.Text,
+					_account.Candidate = new Candidate(_account.Candidate.Id, textBoxSurname.Text,
 						textBoxName.Text, textBoxFatherName.Text,
 						_account.Candidate.Login, _account.Candidate.Password,
 						$"{labelPhoneStart.Text}{textBoxPhone1.Text}" +
@@ -211,7 +211,7 @@ namespace RecruitmentClient.Forms
 					if (_startForm != null)
 						await CreateCandidateAsync();
 					else
-						UpdateCandidate();
+						await UpdateCandidateAsync();
 				}
 				catch (SocketException)
 				{
@@ -227,10 +227,10 @@ namespace RecruitmentClient.Forms
 				_account.Candidate.Login, _account.Theme))
 				return;
 
-			_account.Candidate = await Program.Client.PostCandidateRegisterAsync(_account.Candidate);
+			_account.Candidate = await Program.Client.PostCandidateRegisterAsync(
+				_account.Candidate);
 			if (_startForm.NeedToRemember)
-				Serializator.Serialize(_account,
-					Program.SerializePath, Program.EncryptKey);
+				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 
 			OpenMainForm();
 		}
@@ -245,9 +245,9 @@ namespace RecruitmentClient.Forms
 			};
 			Visible = false;
 		}
-		private void UpdateCandidate()
+		private async Task UpdateCandidateAsync()
 		{
-			Client.ChangeCandidate(_account.Candidate.Login, _oldCandidate, _account.Candidate);
+			_account.Candidate = await Program.Client.PutCandidateAsync(_account.Candidate);
 			if (Serializator.SerializationFileExists(Program.SerializePath))
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 

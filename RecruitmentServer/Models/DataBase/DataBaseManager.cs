@@ -16,6 +16,9 @@ namespace RecruitmentServer.Models.DataBase
 		private static readonly BaseRepo<Interview> _interviewRepo;
 		private static readonly BaseRepo<Application> _applicationRepo;
 		private static readonly BaseRepo<Candidate> _candidateRepo;
+		private static readonly BaseRepo<Education> _educationRepo;
+		private static readonly BaseRepo<Language> _languageRepo;
+		private static readonly BaseRepo<Questionnaire> _questionnaireRepo;
 		private static readonly BaseRepo<Vacancy> _vacancyRepo;
 		private static readonly BaseRepo<EducationDegreeRequirement>
 			_educationDegreeRequirementRepo;
@@ -24,6 +27,7 @@ namespace RecruitmentServer.Models.DataBase
 		private static readonly BaseRepo<InterviewStatus> _interviewStatusRepo;
 		private static readonly BaseRepo<FamilyStatus> _familyStatusRepo;
 		private static readonly BaseRepo<BusinessTripOpportunity> _businessTripOpportunityRepo;
+		private static readonly BaseRepo<Health> _healthRepo;
 		private static readonly BaseRepo<EducationDegree> _educationDegreeRepo;
 		private static readonly BaseRepo<EducationForm> _educationFormRepo;
 		private static readonly BaseRepo<Position> _positionRepo;
@@ -35,6 +39,9 @@ namespace RecruitmentServer.Models.DataBase
 			_interviewRepo = new BaseRepo<Interview>(_context);
 			_applicationRepo = new BaseRepo<Application>(_context);
 			_candidateRepo = new BaseRepo<Candidate>(_context);
+			_educationRepo = new BaseRepo<Education>(_context);
+			_languageRepo = new BaseRepo<Language>(_context);
+			_questionnaireRepo = new BaseRepo<Questionnaire>(_context);
 			_vacancyRepo = new BaseRepo<Vacancy>(_context);
 			_educationDegreeRequirementRepo = new BaseRepo<EducationDegreeRequirement>(_context);
 			_requirementRepo = new BaseRepo<Requirement>(_context);
@@ -42,6 +49,7 @@ namespace RecruitmentServer.Models.DataBase
 			_interviewStatusRepo = new BaseRepo<InterviewStatus>(_context);
 			_familyStatusRepo = new BaseRepo<FamilyStatus>(_context);
 			_businessTripOpportunityRepo = new BaseRepo<BusinessTripOpportunity>(_context);
+			_healthRepo = new BaseRepo<Health>(_context);
 			_educationDegreeRepo = new BaseRepo<EducationDegree>(_context);
 			_educationFormRepo = new BaseRepo<EducationForm>(_context);
 			_positionRepo = new BaseRepo<Position>(_context);
@@ -55,6 +63,10 @@ namespace RecruitmentServer.Models.DataBase
 			_candidateRepo.Add(candidate);
 			return candidate;
 		}
+		private static void CreateEducation(Education education)
+			=> _educationRepo.Add(education);
+		private static void CreateLanguage(Language language)
+			=> _languageRepo.Add(language);
 		internal static void CreatePosition(Position position)
 			=> _positionRepo.Add(position);
 		internal static void CreateVacancy(Vacancy vacancy)
@@ -80,9 +92,9 @@ namespace RecruitmentServer.Models.DataBase
 			=> _employeeRepo.GetAll().Find(employee => employee.InterviewId == interviewId);
 		internal static Candidate GetCandidate(int candidateId)
 			=> _candidateRepo.GetOne(candidateId);
-		internal static Candidate GetCandidate(string login, string password)
+		internal static Candidate GetCandidate(CandidateLoginDTO candidateLogin)
 			=> _candidateRepo.GetAll().FirstOrDefault(c =>
-				c.Login == login && c.Password == password);
+				c.Login == candidateLogin.Login && c.Password == candidateLogin.Password);
 		internal static Requirement GetRequirement(int requirementId)
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);
@@ -417,11 +429,136 @@ namespace RecruitmentServer.Models.DataBase
 			applicationToUpdate.ChangeReasonRejection(reasonRejection);
 			_applicationRepo.Save(applicationToUpdate);
 		}
+
+		#region Candidate
+		internal static Candidate UpdateCandidate(int candidateId, Candidate candidate)
+		{
+			Candidate candidateToUpdate = _candidateRepo.GetOne(candidateId);
+			if (candidateToUpdate == null)
+				return candidateToUpdate;
+
+			_context.Entry(candidateToUpdate).CurrentValues.SetValues(candidate);
+
+			if (candidate.Questionnaire != null)
+				UpdateQuestionnaire(candidate, candidateToUpdate);
+
+			_candidateRepo.Save(candidateToUpdate);
+
+			return candidateToUpdate;
+		}
+		private static void UpdateQuestionnaire(Candidate candidate, Candidate candidateToUpdate)
+		{
+			Questionnaire questionnaireToUpdate =
+				_questionnaireRepo.GetOne(candidate.Questionnaire.Id);
+
+			if (questionnaireToUpdate != null)
+				candidateToUpdate.Questionnaire = questionnaireToUpdate;
+			else
+			{
+				_questionnaireRepo.Add(candidate.Questionnaire);
+				candidateToUpdate.Questionnaire = candidate.Questionnaire;
+			}
+		}
+
+		internal static void UpdateCandidatePassword(
+			CandidateChangePasswordDTO candidateChangePassword)
+		{
+			Candidate candidate = _candidateRepo.GetOne(candidateChangePassword.CandidateId);
+			candidate.ChangeLoginPassword(candidate.Login, candidateChangePassword.NewPassword);
+			_candidateRepo.Save(candidate);
+		}
+		#endregion
+
+		#region Questionnaire
+		internal static Questionnaire UpdateQuestionnaire(int questionnaireId,
+			Questionnaire questionnaire)
+		{
+			var questionnaireToUpdate = _questionnaireRepo.GetOne(questionnaireId);
+			if (questionnaireToUpdate == null)
+				return questionnaireToUpdate;
+
+			_context.Entry(questionnaireToUpdate).CurrentValues.SetValues(questionnaire);
+
+			if (questionnaire.Health != null)
+				UpdateHealth(questionnaire, questionnaireToUpdate);
+
+			if (questionnaire.Languages != null)
+				UpdateLanguages(questionnaire.Languages.ToArray(),
+					questionnaireToUpdate.Languages.ToArray(), questionnaireToUpdate.Id);
+
+			if (questionnaire.Educations != null)
+				UpdateEducations(questionnaire.Educations.ToArray(),
+					questionnaireToUpdate.Educations.ToArray(), questionnaireToUpdate.Id);
+
+			_questionnaireRepo.Save(questionnaireToUpdate);
+
+			return questionnaireToUpdate;
+		}
+		private static void UpdateHealth(Questionnaire questionnaire,
+			Questionnaire questionnaireToUpdate)
+		{
+			Health healthToUpdate =
+				_healthRepo.GetOne(questionnaire.Health.Id);
+
+			if (healthToUpdate != null)
+				questionnaireToUpdate.Health = healthToUpdate;
+			else
+			{
+				_healthRepo.Add(questionnaire.Health);
+				questionnaireToUpdate.Health = questionnaire.Health;
+			}
+		}
+		private static void UpdateLanguages(Language[] languages,
+			Language[] languagesToUpdate, int questionnaireId)
+		{
+			for (int i = 0;
+				i < Math.Min(languages.Length, languagesToUpdate.Length);
+				i++)
+			{
+				Language newLanguage = languages[i];
+				languagesToUpdate[i].Change(newLanguage.Name, newLanguage.Level);
+			}
+
+			if (languages.Length > languagesToUpdate.Length)
+				for (int i = languagesToUpdate.Length; i < languages.Length; i++)
+					CreateLanguage(new Language(languages[i].Name, languages[i].Level,
+						questionnaireId));
+			else if (languages.Length < languagesToUpdate.Length)
+				for (int i = languages.Length; i < languagesToUpdate.Length; i++)
+					DeleteLanguage(languagesToUpdate[i]);
+		}
+		private static void UpdateEducations(Education[] educations,
+			Education[] educationsToUpdate, int questionnaireId)
+		{
+			for (int i = 0;
+				i < Math.Min(educations.Length, educationsToUpdate.Length);
+				i++)
+			{
+				Education newEducation = educations[i];
+				educationsToUpdate[i].Change(newEducation.NameInstitution, newEducation.Specialty,
+					newEducation.YearAdmission, newEducation.DateEnd,
+					newEducation.EducationDegreeId, newEducation.EducationFormId);
+			}
+
+			if (educations.Length > educationsToUpdate.Length)
+				for (int i = educationsToUpdate.Length; i < educations.Length; i++)
+					CreateEducation(new Education(educations[i].NameInstitution,
+						educations[i].Specialty, educations[i].YearAdmission,
+						educations[i].DateEnd, questionnaireId, educations[i].EducationDegreeId,
+						educations[i].EducationFormId));
+			else if (educations.Length < educationsToUpdate.Length)
+				for (int i = educations.Length; i < educationsToUpdate.Length; i++)
+					DeleteEducation(educationsToUpdate[i]);
+		}
+		#endregion
 		#endregion
 
 		#region Delete
 		internal static void DeleteVacancy(Vacancy vacancy) => _vacancyRepo.Delete(vacancy);
 		internal static void DeleteEmployee(Employee employee) => _employeeRepo.Delete(employee);
+		internal static void DeleteEducation(Education education)
+			=> _educationRepo.Delete(education);
+		internal static void DeleteLanguage(Language language) => _languageRepo.Delete(language);
 		#endregion
 
 		public static void Dispose()
@@ -432,6 +569,9 @@ namespace RecruitmentServer.Models.DataBase
 			_interviewRepo?.Dispose();
 			_applicationRepo?.Dispose();
 			_candidateRepo?.Dispose();
+			_educationRepo?.Dispose();
+			_languageRepo?.Dispose();
+			_questionnaireRepo?.Dispose();
 			_vacancyRepo?.Dispose();
 			_educationDegreeRequirementRepo?.Dispose();
 			_requirementRepo?.Dispose();
@@ -439,6 +579,7 @@ namespace RecruitmentServer.Models.DataBase
 			_interviewStatusRepo?.Dispose();
 			_familyStatusRepo?.Dispose();
 			_businessTripOpportunityRepo?.Dispose();
+			_healthRepo?.Dispose();
 			_educationDegreeRepo?.Dispose();
 			_educationFormRepo?.Dispose();
 			_positionRepo?.Dispose();

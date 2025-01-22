@@ -240,8 +240,9 @@ namespace RecruitmentClient.Forms
 					return;
 				}
 
-				_account.Candidate.ChangeLoginPassword(textBoxLogin.Text, textBoxPassword.Text);
 				_account.Candidate = candidate;
+				_account.Candidate.ChangeLoginPassword(candidateLoginDTO.Login,
+					candidateLoginDTO.Password);
 				if (NeedToRemember)
 					Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 
@@ -304,14 +305,14 @@ namespace RecruitmentClient.Forms
 		#endregion
 
 		#region Change password
-		private void ButtonChangePassword_Click(object sender, EventArgs e)
+		private async void ButtonChangePassword_Click(object sender, EventArgs e)
 		{
 			SetDefaultLabels(_account.Theme);
 
 			if (!labelPassword2.Visible && !textBoxPassword2.Visible)
 				CheckOldPassword();
 			else if (CheckValidInputData())
-				CheckNewPassword();
+				await CheckNewPasswordAsync();
 		}
 		private void CheckOldPassword()
 		{
@@ -321,7 +322,7 @@ namespace RecruitmentClient.Forms
 			else
 				SetUpFormToEnterNewPassword();
 		}
-		private void CheckNewPassword()
+		private async Task CheckNewPasswordAsync()
 		{
 			if (_account.Candidate.Password == textBoxPassword.Text)
 				CustomMessageBox.Show("Новий пароль не може співпадати зі старим!",
@@ -334,7 +335,7 @@ namespace RecruitmentClient.Forms
 					CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 				if (result == DialogResult.Yes)
 				{
-					ChangePassword();
+					await ChangePasswordAsync();
 
 					if (Serializator.SerializationFileExists(Program.SerializePath))
 						Serializator.Serialize(_account, Program.SerializePath,
@@ -361,12 +362,14 @@ namespace RecruitmentClient.Forms
 				_account.Theme, "Підтверджено",
 				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
-		private void ChangePassword()
+		private async Task ChangePasswordAsync()
 		{
 			try
 			{
-				Client.ChangePassword(_account.Candidate.Login,
-					_account.Candidate.Password, textBoxPassword.Text);
+				var candidateChangePassword = new CandidateChangePasswordDTO(_account.Candidate.Id,
+					textBoxPassword.Text);
+				await Program.Client.PutCandidatePasswordAsync(
+					candidateChangePassword);
 			}
 			catch (SocketException)
 			{
