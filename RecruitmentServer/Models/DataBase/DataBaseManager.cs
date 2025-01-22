@@ -370,6 +370,17 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		#endregion
 
+		#region Check unique
+		internal static bool CheckCandidateLoginUnique(StringDataUniqueDTO stringDataUnique)
+			=> !_candidateRepo.GetAll().Any(c => c.Login == stringDataUnique.Data);
+		internal static bool CheckCandidatePhoneUnique(StringDataUniqueDTO stringDataUnique)
+			=> !_candidateRepo.GetAll().Any(c => c.Phone == stringDataUnique.Data
+				&& c.Id != stringDataUnique.CandidateId);
+		internal static bool CheckCandidateEmailUnique(StringDataUniqueDTO stringDataUnique)
+			=> !_candidateRepo.GetAll().Any(c => c.Email == stringDataUnique.Data
+				&& c.Id != stringDataUnique.CandidateId);
+		#endregion
+
 		internal static List<AssignmentItem> GetAssignmentItems()
 		{// Applications will NOT be accepted if the vacancies have at least one interview
 		 // with the status "Candidate invited" or "Candidate awaiting decision"
@@ -394,6 +405,8 @@ namespace RecruitmentServer.Models.DataBase
 
 			return assignmentItems;
 		}
+
+
 		#endregion
 
 		#region Update

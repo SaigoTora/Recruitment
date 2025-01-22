@@ -2,16 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
 using SharedModels.DTOs;
 using SharedModels.Models;
-using SharedModels.Search;
 
 namespace RecruitmentClient.Models
 {
@@ -23,6 +20,12 @@ namespace RecruitmentClient.Models
 		private static readonly HttpClient httpClient;
 		private readonly string _serverAddress;
 
+		private readonly string _candidateIsLoginUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"];
+		private readonly string _candidateIsPhoneUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"];
+		private readonly string _candidateIsEmailUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"];
 		private readonly string _candidateRegisterUrl
 			= ConfigurationManager.AppSettings["candidateRegisterUrl"];
 		private readonly string _candidateLoginUrl
@@ -74,9 +77,9 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
 			}
 		}
-		internal async Task<Candidate> PostCandidateLoginAsync(CandidateLoginDTO candidateLoginDTO)
+		internal async Task<Candidate> PostCandidateLoginAsync(CandidateLoginDTO candidateLogin)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidateLoginDTO,
+			string jsonContent = JsonConvert.SerializeObject(candidateLogin,
 				Formatting.Indented);
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
@@ -130,6 +133,57 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Questionnaire>(jsonResponse);
 			}
 		}
+
+		#region Check unique
+		internal async Task<bool> CheckCandidateLoginUniqueAsync(
+			StringDataUniqueDTO stringDataUnique)
+		{
+			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_candidateIsLoginUniqueUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+			}
+		}
+		internal async Task<bool> CheckCandidatePhoneUniqueAsync(
+			StringDataUniqueDTO stringDataUnique)
+		{
+			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_candidateIsPhoneUniqueUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+			}
+		}
+		internal async Task<bool> CheckCandidateEmailUniqueAsync(
+			StringDataUniqueDTO stringDataUnique)
+		{
+			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_candidateIsEmailUniqueUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+			}
+		}
+		#endregion
 		#endregion
 
 		#region Vacancy
@@ -274,22 +328,5 @@ namespace RecruitmentClient.Models
 			return new string[] { "Часто", "Іноді", "Ніколи" };
 			//return SendToServerAndGetResult("SELECT opportunity FROM Business_Trip_Opportunity ORDER BY id");
 		}
-
-		// Методи для перевірки унікальності
-		private static bool CandidateDataIsUnique(string login, string dbField, string value)
-		{// Метод, який перевіряє значення поля кандидата на унікальність
-		 //string message = $"SELECT COUNT(id) FROM Candidate WHERE {dbField} = '{value}'";
-		 //if (login != null)// Якщо логін вказаний
-		 //	message += $" AND login != '{login}'";
-
-			//string[] arr = SendToServerAndGetResult(message);
-			//if (Int32.Parse(arr[0]) > 0)// Якщо унікальність відсутня
-			//	return false;
-			return true;
-
-		}
-		internal static bool EmailIsUnique(string login, string email) => CandidateDataIsUnique(login, "email", email);
-		internal static bool PhoneIsUnique(string login, string phone) => CandidateDataIsUnique(login, "phone", phone);
-		internal static bool LoginIsUnique(string login) => CandidateDataIsUnique(null, "login", login);
 	}
 }

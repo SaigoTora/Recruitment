@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
-using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Serialization;
 using SharedModels.DTOs;
 using SharedModels.Models;
@@ -111,15 +110,16 @@ namespace RecruitmentClient.Forms
 			textBoxPassword2.Visible = false;
 			textBoxPassword2.Text = string.Empty;
 		}
-		private void ButtonRegisterContinue_Click(object sender, EventArgs e)
+		private async void ButtonRegisterContinue_Click(object sender, EventArgs e)
 		{
 			SetDefaultLabels(_account.Theme);
 
 			if (CheckValidInputData())
 				try
 				{
-					if (ClientUniqueChecker.IsLoginUnique(labelLogin,
-						textBoxLogin.Text, _account.Theme))
+					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(labelLogin,
+						textBoxLogin.Text, _account.Theme);
+					if (isLoginUnique)
 					{
 						_account.Candidate.ChangeLoginPassword(textBoxLogin.Text,
 							textBoxPassword.Text);
@@ -229,10 +229,10 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
-				CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(textBoxLogin.Text,
+				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(textBoxLogin.Text,
 					textBoxPassword.Text);
 				Candidate candidate = await Program.Client.
-					PostCandidateLoginAsync(candidateLoginDTO);
+					PostCandidateLoginAsync(candidateLogin);
 				if (candidate == null)
 				{
 					buttonLogin.Enabled = true;
@@ -241,8 +241,8 @@ namespace RecruitmentClient.Forms
 				}
 
 				_account.Candidate = candidate;
-				_account.Candidate.ChangeLoginPassword(candidateLoginDTO.Login,
-					candidateLoginDTO.Password);
+				_account.Candidate.ChangeLoginPassword(candidateLogin.Login,
+					candidateLogin.Password);
 				if (NeedToRemember)
 					Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 

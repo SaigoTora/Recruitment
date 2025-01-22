@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Forms;
 using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Serialization;
 using SharedModels.DTOs;
 using UIHelpers.Forms;
@@ -23,6 +24,7 @@ namespace RecruitmentClient
 		internal static readonly string EncryptKey =
 			ConfigurationManager.AppSettings["encryptKey"];
 		internal static Client Client { get; private set; }
+		internal static readonly UniqueChecker UniqueChecker = new UniqueChecker();
 		private static readonly int _port = int.Parse(ConfigurationManager.AppSettings["port"]);
 
 		/// <summary>
@@ -43,13 +45,13 @@ namespace RecruitmentClient
 			{
 				try
 				{
-					CandidateLoginDTO candidateLoginDTO = new CandidateLoginDTO(
+					CandidateLoginDTO candidateLogin = new CandidateLoginDTO(
 						account.Candidate.Login, account.Candidate.Password);
 					account.Candidate = null;
 					Task.Run(async () =>
 					{
 						account.Candidate =
-							await Client.PostCandidateLoginAsync(candidateLoginDTO);
+							await Client.PostCandidateLoginAsync(candidateLogin);
 					}).Wait();
 				}
 				catch (SocketException)

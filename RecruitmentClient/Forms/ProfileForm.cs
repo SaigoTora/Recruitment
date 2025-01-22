@@ -72,13 +72,15 @@ namespace RecruitmentClient.Forms
 			ValidationFeedbackManager.ResetLabelsToDefault(theme, labelSurname,
 				labelName, labelFatherName, labelPhone, labelEmail);
 		}
-		private bool CheckUniquePhoneAndEmail()
+		private async Task<bool> CheckDataUniqueAsync()
 		{
-			return (ClientUniqueChecker.IsPhoneNumberUnique(labelPhone, _account.Candidate.Login,
-						$"{labelPhoneStart.Text}{textBoxPhone1.Text}{textBoxPhone2.Text}" +
-						$"{textBoxPhone3.Text}", _account.Theme)
-						&& ClientUniqueChecker.IsEmailUnique(labelEmail, _account.Candidate.Login,
-						textBoxEmail.Text, _account.Theme));
+			bool isPhoneUnique = await Program.UniqueChecker.CheckPhoneUniqueAsync(labelPhone,
+				_account.Candidate.Id, $"{labelPhoneStart.Text}" +
+				$"{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}", _account.Theme);
+			bool isEmailUnique = await Program.UniqueChecker.CheckEmailUniqueAsync(labelEmail,
+				_account.Candidate.Id, textBoxEmail.Text, _account.Theme);
+
+			return (isPhoneUnique && isEmailUnique);
 		}
 		private bool CheckValidData()
 		{
@@ -197,7 +199,8 @@ namespace RecruitmentClient.Forms
 			if (CheckValidData())
 				try
 				{
-					if (!CheckUniquePhoneAndEmail())
+					bool isDataUnique = await CheckDataUniqueAsync();
+					if (!isDataUnique)
 						return;
 
 					_account.Candidate = new Candidate(_account.Candidate.Id, textBoxSurname.Text,
@@ -223,8 +226,9 @@ namespace RecruitmentClient.Forms
 		}
 		private async Task CreateCandidateAsync()
 		{
-			if (!ClientUniqueChecker.IsLoginUnique(new Label() { Text = "Логін" },
-				_account.Candidate.Login, _account.Theme))
+			bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(new Label()
+			{ Text = "Логін" }, _account.Candidate.Login, _account.Theme);
+			if (!isLoginUnique)
 				return;
 
 			_account.Candidate = await Program.Client.PostCandidateRegisterAsync(

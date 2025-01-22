@@ -59,6 +59,15 @@ namespace RecruitmentServer.Models
 			}
 
 			if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"]))
+				await HandleCandidateLoginUniqueRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"]))
+				await HandleCandidatePhoneUniqueRequest(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"]))
+				await HandleCandidateEmailUniqueRequest(context);
+			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateRegisterUrl"]))
 				await HandleCandidateRegisterRequest(context);
 			else if (context.Request.RawUrl.Contains(
@@ -118,9 +127,9 @@ namespace RecruitmentServer.Models
 
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				CandidateLoginDTO candidateLoginDTO =
+				CandidateLoginDTO candidateLogin =
 					await DeserializeFromRequestAsync<CandidateLoginDTO>(context);
-				candidate = DatabaseManager.GetCandidate(candidateLoginDTO);
+				candidate = DatabaseManager.GetCandidate(candidateLogin);
 			}
 
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
@@ -164,6 +173,51 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
+
+		#region Check unique
+		private async Task HandleCandidateLoginUniqueRequest(HttpListenerContext context)
+		{
+			bool isUnique = false;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				StringDataUniqueDTO stringDataUnique =
+					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
+				isUnique = DatabaseManager.CheckCandidateLoginUnique(stringDataUnique);
+			}
+
+			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleCandidatePhoneUniqueRequest(HttpListenerContext context)
+		{
+			bool isUnique = false;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				StringDataUniqueDTO stringDataUnique =
+					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
+				isUnique = DatabaseManager.CheckCandidatePhoneUnique(stringDataUnique);
+			}
+
+			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleCandidateEmailUniqueRequest(HttpListenerContext context)
+		{
+			bool isUnique = false;
+
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				StringDataUniqueDTO stringDataUnique =
+					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
+				isUnique = DatabaseManager.CheckCandidateEmailUnique(stringDataUnique);
+			}
+
+			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		#endregion
 		#endregion
 
 		#region Vacancy
