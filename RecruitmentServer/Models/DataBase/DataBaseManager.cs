@@ -178,14 +178,14 @@ namespace RecruitmentServer.Models.DataBase
 		internal static int GetVacanciesCount(AccountSearchSettingsDTO accountSearch)
 			=> GetVacancies(accountSearch.Searcher)
 				.Where(v => v.Relevance
-				&& v.Applications.All(a => a.Candidate.Login != accountSearch.Login))
+				&& v.Applications.All(a => a.Candidate.Id != accountSearch.CandidateId))
 				.Count();
 		internal static List<Vacancy> GetVacancies(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			var filteredList = GetVacancies(pagedAccountSearch.Searcher)
 				.Where(v => v.Relevance
-				&& v.Applications.All(a => a.Candidate.Login != pagedAccountSearch.Login))
+				&& v.Applications.All(a => a.Candidate.Id != pagedAccountSearch.CandidateId))
 				.ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
@@ -259,12 +259,12 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		internal static int GetApplicationsCount(AccountSearchSettingsDTO accountSearch)
 			=> GetApplications(accountSearch.Searcher)
-			.Where(a => a.Candidate.Login == accountSearch.Login).Count();
+			.Where(a => a.Candidate.Id == accountSearch.CandidateId).Count();
 		internal static List<Application> GetApplications(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			var filteredList = GetApplications(pagedAccountSearch.Searcher)
-				.Where(a => a.Candidate.Login == pagedAccountSearch.Login).ToList();
+				.Where(a => a.Candidate.Id == pagedAccountSearch.CandidateId).ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
 				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
@@ -313,12 +313,12 @@ namespace RecruitmentServer.Models.DataBase
 		}
 		internal static int GetInterviewsCount(AccountSearchSettingsDTO accountSearch)
 			=> GetInterviews(accountSearch.Searcher)
-				.Where(i => i.Application.Candidate.Login == accountSearch.Login).Count();
+				.Where(i => i.Application.Candidate.Id == accountSearch.CandidateId).Count();
 		internal static List<Interview> GetInterviews(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			var filteredList = GetInterviews(pagedAccountSearch.Searcher)
-				.Where(i => i.Application.Candidate.Login == pagedAccountSearch.Login).ToList();
+				.Where(i => i.Application.Candidate.Id == pagedAccountSearch.CandidateId).ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
 				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
@@ -405,8 +405,6 @@ namespace RecruitmentServer.Models.DataBase
 
 			return assignmentItems;
 		}
-
-
 		#endregion
 
 		#region Update

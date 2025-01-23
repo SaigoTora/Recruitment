@@ -8,14 +8,14 @@ namespace SharedModels.DTOs
 	public class AccountSearchSettingsDTO
 	{
 		[JsonProperty]
-		public string Login { get; set; }
+		public int CandidateId { get; set; }
 		[JsonProperty]
 		public FullSearcher Searcher { get; set; }
 
 		[JsonConstructor]
-		public AccountSearchSettingsDTO(string login, FullSearcher searcher)
+		public AccountSearchSettingsDTO(int candidateId, FullSearcher searcher)
 		{
-			Login = login;
+			CandidateId = candidateId;
 			Searcher = searcher;
 		}
 	}
