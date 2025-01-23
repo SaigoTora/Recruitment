@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RecruitmentServer.Models.DataBase;
-using SharedModels.DTOs;
-using SharedModels.Models;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -9,6 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
+using RecruitmentServer.Models.DataBase;
+using SharedModels.DTOs;
+using SharedModels.Models;
 
 namespace RecruitmentServer.Models
 {
@@ -34,22 +35,18 @@ namespace RecruitmentServer.Models
 			_httpListener.Start();
 			_firewallManager.AddFirewallRule(_port);
 
-			Task.Run(() => HandleRequests());
+			Task.Run(() => HandleRequestsAsync());
 		}
-		private async Task HandleRequests()
+		private async Task HandleRequestsAsync()
 		{
 			while (_httpListener.IsListening)
 			{
 				var context = await _httpListener.GetContextAsync();
-				_ = ProcessRequest(context);
+				_ = ProcessRequestAsync(context);
 			}
 		}
 
-
-
-
-
-		private async Task ProcessRequest(HttpListenerContext context)
+		private async Task ProcessRequestAsync(HttpListenerContext context)
 		{
 			if (context.Request.RawUrl == "/favicon.ico")
 			{// Ignore request for favicon.ico
@@ -60,55 +57,61 @@ namespace RecruitmentServer.Models
 
 			if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"]))
-				await HandleCandidateLoginUniqueRequest(context);
+				await HandleCandidateLoginUniqueRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"]))
-				await HandleCandidatePhoneUniqueRequest(context);
+				await HandleCandidatePhoneUniqueRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"]))
-				await HandleCandidateEmailUniqueRequest(context);
+				await HandleCandidateEmailUniqueRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateRegisterUrl"]))
-				await HandleCandidateRegisterRequest(context);
+				await HandleCandidateRegisterRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateLoginUrl"]))
-				await HandleCandidateLoginRequest(context);
+				await HandleCandidateLoginRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateChangePasswordUrl"]))
-				await HandleCandidateChangePasswordRequest(context);
+				await HandleCandidateChangePasswordRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["candidateUrl"]))
-				await HandleCandidateRequest(context);
+				await HandleCandidateRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["questionnaireUrl"]))
-				await HandleQuestionnaireRequest(context);
+				await HandleQuestionnaireRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["vacanciesCountUrl"]))
-				await HandleVacanciesCountRequest(context);
+				await HandleVacanciesCountRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["vacanciesUrl"]))
-				await HandleVacanciesRequest(context);
+				await HandleVacanciesRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["applicationsCountUrl"]))
-				await HandleApplicationsCountRequest(context);
+				await HandleApplicationsCountRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["applicationsCreateUrl"]))
-				await HandleApplicationsCreateRequest(context);
+				await HandleApplicationsCreateRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["applicationsUrl"]))
-				await HandleApplicationsRequest(context);
+				await HandleApplicationsRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["interviewsCountUrl"]))
-				await HandleInterviewsCountRequest(context);
+				await HandleInterviewsCountRequestAsync(context);
 			else if (context.Request.RawUrl.Contains(
 				ConfigurationManager.AppSettings["interviewsUrl"]))
-				await HandleInterviewsRequest(context);
+				await HandleInterviewsRequestAsync(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["familyStatusesUrl"]))
+				await HandleFamilyStatusesRequestAsync(context);
+			else if (context.Request.RawUrl.Contains(
+				ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"]))
+				await HandleBusinessTripOpportunitiesRequestAsync(context);
 
 			context.Response.Close();
 		}
 
 		#region Candidate
-		private async Task HandleCandidateRegisterRequest(HttpListenerContext context)
+		private async Task HandleCandidateRegisterRequestAsync(HttpListenerContext context)
 		{
 			Candidate candidate = null;
 
@@ -121,7 +124,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateLoginRequest(HttpListenerContext context)
+		private async Task HandleCandidateLoginRequestAsync(HttpListenerContext context)
 		{
 			Candidate candidate = null;
 
@@ -135,7 +138,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateChangePasswordRequest(HttpListenerContext context)
+		private async Task HandleCandidateChangePasswordRequestAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
@@ -146,7 +149,7 @@ namespace RecruitmentServer.Models
 
 			await SendResponseToClientAsync(context, string.Empty);
 		}
-		private async Task HandleCandidateRequest(HttpListenerContext context)
+		private async Task HandleCandidateRequestAsync(HttpListenerContext context)
 		{
 			Candidate candidate = null;
 
@@ -159,7 +162,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleQuestionnaireRequest(HttpListenerContext context)
+		private async Task HandleQuestionnaireRequestAsync(HttpListenerContext context)
 		{
 			Questionnaire questionnaire = null;
 
@@ -175,7 +178,7 @@ namespace RecruitmentServer.Models
 		}
 
 		#region Check unique
-		private async Task HandleCandidateLoginUniqueRequest(HttpListenerContext context)
+		private async Task HandleCandidateLoginUniqueRequestAsync(HttpListenerContext context)
 		{
 			bool isUnique = false;
 
@@ -189,7 +192,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidatePhoneUniqueRequest(HttpListenerContext context)
+		private async Task HandleCandidatePhoneUniqueRequestAsync(HttpListenerContext context)
 		{
 			bool isUnique = false;
 
@@ -203,7 +206,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateEmailUniqueRequest(HttpListenerContext context)
+		private async Task HandleCandidateEmailUniqueRequestAsync(HttpListenerContext context)
 		{
 			bool isUnique = false;
 
@@ -221,7 +224,7 @@ namespace RecruitmentServer.Models
 		#endregion
 
 		#region Vacancy
-		private async Task HandleVacanciesCountRequest(HttpListenerContext context)
+		private async Task HandleVacanciesCountRequestAsync(HttpListenerContext context)
 		{
 			int vacanciesCount = 0;
 
@@ -235,7 +238,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(vacanciesCount, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleVacanciesRequest(HttpListenerContext context)
+		private async Task HandleVacanciesRequestAsync(HttpListenerContext context)
 		{
 			List<Vacancy> vacancies = new List<Vacancy>();
 
@@ -252,7 +255,7 @@ namespace RecruitmentServer.Models
 		#endregion
 
 		#region Application
-		private async Task HandleApplicationsCountRequest(HttpListenerContext context)
+		private async Task HandleApplicationsCountRequestAsync(HttpListenerContext context)
 		{
 			int applicationsCount = 0;
 
@@ -266,7 +269,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(applicationsCount, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleApplicationsCreateRequest(HttpListenerContext context)
+		private async Task HandleApplicationsCreateRequestAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
@@ -278,7 +281,7 @@ namespace RecruitmentServer.Models
 
 			await SendResponseToClientAsync(context, string.Empty);
 		}
-		private async Task HandleApplicationsRequest(HttpListenerContext context)
+		private async Task HandleApplicationsRequestAsync(HttpListenerContext context)
 		{
 			List<Application> applications = new List<Application>();
 
@@ -295,7 +298,7 @@ namespace RecruitmentServer.Models
 		#endregion
 
 		#region Interview
-		private async Task HandleInterviewsCountRequest(HttpListenerContext context)
+		private async Task HandleInterviewsCountRequestAsync(HttpListenerContext context)
 		{
 			int interviewsCount = 0;
 
@@ -309,7 +312,7 @@ namespace RecruitmentServer.Models
 			string response = JsonConvert.SerializeObject(interviewsCount, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleInterviewsRequest(HttpListenerContext context)
+		private async Task HandleInterviewsRequestAsync(HttpListenerContext context)
 		{
 			List<Interview> interviews = new List<Interview>();
 
@@ -325,8 +328,27 @@ namespace RecruitmentServer.Models
 		}
 		#endregion
 
+		private async Task HandleFamilyStatusesRequestAsync(HttpListenerContext context)
+		{
+			FamilyStatus[] familyStatuses = null;
 
+			if (context.Request.HttpMethod == HttpMethod.Get.Method)
+				familyStatuses = DatabaseManager.GetFamilyStatuses();
 
+			string response = JsonConvert.SerializeObject(familyStatuses, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		private async Task HandleBusinessTripOpportunitiesRequestAsync(HttpListenerContext context)
+		{
+			BusinessTripOpportunity[] businessTripOpportunities = null;
+
+			if (context.Request.HttpMethod == HttpMethod.Get.Method)
+				businessTripOpportunities = DatabaseManager.GetBusinessTripOpportunities();
+
+			string response = JsonConvert.SerializeObject(businessTripOpportunities,
+				Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
 
 		private async Task<T> DeserializeFromRequestAsync<T>(HttpListenerContext context)
 		{

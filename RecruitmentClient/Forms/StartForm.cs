@@ -257,7 +257,7 @@ namespace RecruitmentClient.Forms
 			}
 		}
 
-		private async Task BlockActionsAfterFailedAttempts()
+		private async Task BlockActionsAsync()
 		{
 			const byte TIME_INACTIVITY = 15;
 
@@ -293,7 +293,7 @@ namespace RecruitmentClient.Forms
 			_countWrongLogin++;
 			if (_countWrongLogin >= MAX_COUNT_WRONG_LOGIN)
 			{
-				_ = BlockActionsAfterFailedAttempts();
+				_ = BlockActionsAsync();
 				countMessage = $"\nВи перевищили ліміт уведення неправильних даних.";
 				_countWrongLogin = 0;
 			}

@@ -50,6 +50,11 @@ namespace RecruitmentClient.Models
 			= ConfigurationManager.AppSettings["interviewsCountUrl"];
 		private readonly string _interviewsUrl
 			= ConfigurationManager.AppSettings["interviewsUrl"];
+		private readonly string _familyStatusesUrl
+			= ConfigurationManager.AppSettings["familyStatusesUrl"];
+		private readonly string _businessTripOpportunitiesUrl
+			= ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"];
+		internal const char SEPARATOR = '¤';
 
 		internal Client(IPAddress IPaddress, int port)
 			=> _serverAddress = $"{HTTP_PREFIX}{IPaddress}:{port}";
@@ -302,31 +307,25 @@ namespace RecruitmentClient.Models
 		}
 		#endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-		internal const char SEPARATOR = '¤';// Роздільник
-
-		internal static string[] GetFamilyStatuses() // Сімейні стани
+		#region Static data
+		internal async Task<FamilyStatus[]> GetFamilyStatusesAsync()
 		{
-			return new string[] { "Одружений(а)","Неодружений(а)","Розлучений(а)",
-				"Вдівець/вдова","Цивільний шлюб"};
-			//return SendToServerAndGetResult("SELECT status FROM Family_Status ORDER BY id");
+			HttpResponseMessage response = await httpClient.GetAsync($"{_serverAddress}" +
+				$"{_familyStatusesUrl}");
+			response.EnsureSuccessStatusCode();
+
+			string jsonResponse = await response.Content.ReadAsStringAsync();
+			return JsonConvert.DeserializeObject<FamilyStatus[]>(jsonResponse);
 		}
-		internal static string[] GetBusinessTripOpportunities() // Можливості відряджень
+		internal async Task<BusinessTripOpportunity[]> GetBusinessTripOpportunitiesAsync()
 		{
-			return new string[] { "Часто", "Іноді", "Ніколи" };
-			//return SendToServerAndGetResult("SELECT opportunity FROM Business_Trip_Opportunity ORDER BY id");
+			HttpResponseMessage response = await httpClient.GetAsync($"{_serverAddress}" +
+				$"{_businessTripOpportunitiesUrl}");
+			response.EnsureSuccessStatusCode();
+
+			string jsonResponse = await response.Content.ReadAsStringAsync();
+			return JsonConvert.DeserializeObject<BusinessTripOpportunity[]>(jsonResponse);
 		}
+		#endregion
 	}
 }

@@ -1,19 +1,30 @@
-﻿using RecruitmentClient.Models;
+﻿using SharedModels.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RecruitmentClient.Utilities.ClientUtilities
 {
 	internal static class StaticDataFromDB
 	{
-		internal static string[] FamilyStatuses { get; private set; }
-		internal static string[] BusinessTripOpportunities { get; private set; }
+		private static FamilyStatus[] _familyStatuses;
+		private static BusinessTripOpportunity[] _businessTripOpportunities;
 
 		internal static void SetData()
 		{
-			if (FamilyStatuses == null && BusinessTripOpportunities == null)
+			if (_familyStatuses == null && _businessTripOpportunities == null)
 			{
-				FamilyStatuses = Client.GetFamilyStatuses();
-				BusinessTripOpportunities = Client.GetBusinessTripOpportunities();
+				Task.Run(async () =>
+				{
+					_familyStatuses = await Program.Client.GetFamilyStatusesAsync();
+					_businessTripOpportunities =
+					await Program.Client.GetBusinessTripOpportunitiesAsync();
+				}).Wait();
 			}
 		}
+
+		internal static string[] GetFamilyStatuses()
+			=> _familyStatuses.Select(fs => fs.Status).ToArray();
+		internal static string[] GetBusinessTripOpportunities()
+			=> _businessTripOpportunities.Select(bto => bto.Opportunity).ToArray();
 	}
 }

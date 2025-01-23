@@ -99,14 +99,14 @@ namespace RecruitmentServer.Models.DataBase
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);
 
-		internal static List<FamilyStatus> GetFamilyStatuses()
-			=> _familyStatusRepo.GetAll();
-		internal static List<BusinessTripOpportunity> GetBusinessTrips()
-			=> _businessTripOpportunityRepo.GetAll();
-		internal static List<EducationDegree> GetEducationDegrees()
-			=> _educationDegreeRepo.GetAll();
-		internal static List<EducationForm> GetEducationForms()
-			=> _educationFormRepo.GetAll();
+		internal static FamilyStatus[] GetFamilyStatuses()
+			=> _familyStatusRepo.GetAll().OrderBy(fs => fs.Id).ToArray();
+		internal static BusinessTripOpportunity[] GetBusinessTripOpportunities()
+			=> _businessTripOpportunityRepo.GetAll().OrderBy(bto => bto.Id).ToArray();
+		internal static EducationDegree[] GetEducationDegrees()
+			=> _educationDegreeRepo.GetAll().OrderBy(ed => ed.Id).ToArray();
+		internal static EducationForm[] GetEducationForms()
+			=> _educationFormRepo.GetAll().OrderBy(ef => ef.Id).ToArray();
 		internal static string GetRequirementEducationDegree(int requirementId)
 		{
 			var degrees = _educationDegreeRequirementRepo.GetAll().

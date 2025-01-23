@@ -85,7 +85,7 @@ namespace RecruitmentClient.Models
 
 			return devicesWithOpenPort;
 		}
-		private async Task<bool> IsPortOpenAsync(IPAddress ip, int timeout = 300)
+		private async Task<bool> IsPortOpenAsync(IPAddress ip, int timeout = 500)
 		{
 			try
 			{

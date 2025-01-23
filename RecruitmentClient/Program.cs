@@ -72,7 +72,11 @@ namespace RecruitmentClient
 		{
 			Theme theme = account == null ? default : account.Theme;
 			LocalNetworkScanner scanner = new LocalNetworkScanner(_port);
-			List<IPAddress> address = scanner.ScanLocalNetworkAsync().Result;
+			List<IPAddress> address = null;
+			Task.Run(async () =>
+			{
+				address = await scanner.ScanLocalNetworkAsync();
+			}).Wait();
 
 			if (address == null || address.Count <= 0)
 			{

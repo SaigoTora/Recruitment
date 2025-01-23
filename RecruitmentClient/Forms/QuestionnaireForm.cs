@@ -152,9 +152,9 @@ namespace RecruitmentClient.Forms
 		private void SetComboBoxItems()
 		{
 			StaticDataFromDB.SetData();
-			comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.FamilyStatuses);
+			comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.GetFamilyStatuses());
 			comboBoxBusinessTripOpportunity.Items.AddRange(
-				StaticDataFromDB.BusinessTripOpportunities);
+				StaticDataFromDB.GetBusinessTripOpportunities());
 		}
 		private void ResetEducationFields()
 		{
