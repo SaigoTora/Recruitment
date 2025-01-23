@@ -1,11 +1,11 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Vacancy")]
 	[Serializable]
 	public partial class Vacancy : EntityBase
@@ -23,12 +23,15 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public bool Relevance { get; private set; }
 		[Column("id_point")]
+		[JsonProperty]
 		public int PointId { get; private set; }
 		[Column("id_requirement")]
+		[JsonProperty]
 		public int RequirementId { get; private set; }
 		[Column("id_position")]
+		[JsonProperty]
 		public int PositionId { get; private set; }
-		[JsonIgnore]
+		[JsonProperty]
 		public virtual Point Point { get; private set; }
 		[JsonProperty]
 		public virtual Position Position { get; private set; }
@@ -38,7 +41,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
-		public Vacancy() { }
+		private Vacancy() { }
 		public Vacancy(decimal salary, DateTime datePublication, string info, int pointId,
 			int requirementId, int positionId)
 		{
@@ -49,16 +52,6 @@ namespace SharedModels.Models
 			PointId = pointId;
 			RequirementId = requirementId;
 			PositionId = positionId;
-		}
-		public Vacancy(int id, string positionName, string positionDescription,
-			decimal salary, DateTime datePublication, string info)
-			: base(id)
-		{
-			Position.ChangeName(positionName);
-			Position.ChangeDescription(positionDescription);
-			Salary = salary;
-			DatePublication = datePublication;
-			Info = info;
 		}
 
 		public void ChangeRelevance(bool relevance) => Relevance = relevance;

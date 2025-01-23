@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Position")]
 	[Serializable]
 	public partial class Position : EntityBase
@@ -23,7 +23,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 
-		public Position() { }
+		private Position() { }
 		public Position(string name, string description)
 		{
 			Name = name;

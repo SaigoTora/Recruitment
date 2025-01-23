@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Application_Status")]
 	[Serializable]
 	public partial class ApplicationStatus : EntityBase
@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
-		public ApplicationStatus() { }
+		private ApplicationStatus() { }
 		public ApplicationStatus(string status)
 			=> Status = status;
 	}

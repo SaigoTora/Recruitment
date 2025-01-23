@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Education_Degree")]
 	[Serializable]
 	public partial class EducationDegree : EntityBase
@@ -26,7 +26,7 @@ namespace SharedModels.Models
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirements
 		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
 
-		public EducationDegree() { }
+		private EducationDegree() { }
 		public EducationDegree(string degree)
 			=> Degree = degree;
 	}

@@ -11,7 +11,7 @@ namespace Base
 		[JsonProperty]
 		public int Id { get; protected set; }
 
-		public EntityBase() { }
+		protected EntityBase() { }
 		public EntityBase(int id)
 			=> Id = id;
 	}

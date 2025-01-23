@@ -1,11 +1,11 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Application")]
 	[Serializable]
 	public partial class Application : EntityBase
@@ -41,7 +41,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Interview> Interviews { get; private set; }
 			= new HashSet<Interview>();
 
-		public Application() { }
+		private Application() { }
 		public Application(DateTime dateSubmission, string additionalInfo, int applicationStatusId,
 			int candidateId, int vacancyId)
 		{

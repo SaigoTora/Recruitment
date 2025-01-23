@@ -1,11 +1,11 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Language")]
 	[Serializable]
 	public partial class Language : EntityBase, ICloneable
@@ -19,21 +19,17 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public int Level { get; private set; }
 		[Column("id_questionnaire")]
+		[JsonProperty]
 		public int QuestionnaireId { get; private set; }
 		[JsonIgnore]
 		public virtual Questionnaire Questionnaire { get; private set; }
 
-		public Language() { }
+		private Language() { }
 		public Language(string name, int level, int questionnaireId)
 		{
 			Name = name;
 			Level = level;
 			QuestionnaireId = questionnaireId;
-		}
-		public Language(int id, string name, int level, int questionnaireId)
-			: this(name, level, questionnaireId)
-		{
-			Id = id;
 		}
 
 		public object Clone()

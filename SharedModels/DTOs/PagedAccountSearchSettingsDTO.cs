@@ -8,9 +8,9 @@ namespace SharedModels.DTOs
 	public class PagedAccountSearchSettingsDTO : AccountSearchSettingsDTO
 	{
 		[JsonProperty]
-		public int StartIndex { get; set; }
+		public int StartIndex { get; private set; }
 		[JsonProperty]
-		public int Count { get; set; }
+		public int Count { get; private set; }
 
 		[JsonConstructor]
 		public PagedAccountSearchSettingsDTO(int candidateId, FullSearcher searcher,

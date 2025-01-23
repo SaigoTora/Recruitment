@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Education_Form")]
 	[Serializable]
 	public partial class EducationForm : EntityBase
@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Education> Educations { get; private set; }
 			= new HashSet<Education>();
 
-		public EducationForm() { }
+		private EducationForm() { }
 		public EducationForm(string form)
 			=> Form = form;
 	}

@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Business_Trip_Opportunity")]
 	[Serializable]
 	public partial class BusinessTripOpportunity : EntityBase
@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 
-		public BusinessTripOpportunity() { }
+		private BusinessTripOpportunity() { }
 		public BusinessTripOpportunity(string opportunity)
 			=> Opportunity = opportunity;
 	}

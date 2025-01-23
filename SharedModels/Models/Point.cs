@@ -1,42 +1,61 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Point")]
+	[Serializable]
 	public partial class Point : EntityBase
 	{
 		[Column("age_under_18")]
+		[JsonProperty]
 		public int AgeUnder18 { get; private set; }
 		[Column("age_18_30")]
+		[JsonProperty]
 		public int Age18_30 { get; private set; }
 		[Column("age_30_50")]
+		[JsonProperty]
 		public int Age30_50 { get; private set; }
 		[Column("age_over_50")]
+		[JsonProperty]
 		public int AgeOver50 { get; private set; }
 		[Column("exp_none")]
+		[JsonProperty]
 		public int ExpNone { get; private set; }
 		[Column("exp_under_year")]
+		[JsonProperty]
 		public int ExpUnderYear { get; private set; }
 		[Column("exp_1_3")]
+		[JsonProperty]
 		public int Exp1_3 { get; private set; }
 		[Column("exp_over_3")]
+		[JsonProperty]
 		public int ExpOver3 { get; private set; }
 		[Column("diploma")]
+		[JsonProperty]
 		public int Diploma { get; private set; }
 		[Column("no_chronic_diseases")]
+		[JsonProperty]
 		public int NoChronicDiseases { get; private set; }
 		[Column("driver_license")]
+		[JsonProperty]
 		public int DriverLicense { get; private set; }
 		[Column("no_smoker")]
+		[JsonProperty]
 		public int NoSmoker { get; private set; }
 		[Column("no_drink_alcohol")]
+		[JsonProperty]
 		public int NoDrinkAlcohol { get; private set; }
 		[Column("business_trip_opportunity")]
+		[JsonProperty]
 		public int BusinessTripOpportunity { get; private set; }
+		[JsonProperty]
 		public virtual ICollection<EducationDegreePoint> Degrees
 		{ get; private set; }
+		[JsonIgnore]
 		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 

@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Family_Status")]
 	[Serializable]
 	public partial class FamilyStatus : EntityBase
@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 
-		public FamilyStatus() { }
+		private FamilyStatus() { }
 		public FamilyStatus(string status)
 			=> Status = status;
 	}

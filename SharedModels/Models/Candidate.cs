@@ -1,12 +1,12 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Candidate")]
 	[Serializable]
 	public partial class Candidate : EntityBase, ICloneable
@@ -49,7 +49,7 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public string Email { get; private set; }
 		[Column("id_questionnaire")]
-		[JsonIgnore]
+		[JsonProperty]
 		public int QuestionnaireId { get; private set; }
 		[JsonProperty]
 		public virtual Questionnaire Questionnaire { get; set; }

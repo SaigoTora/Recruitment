@@ -1,11 +1,11 @@
+using Base;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SharedModels.Models
 {
-	using Base;
-	using Newtonsoft.Json;
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations.Schema;
-
 	[Table("Interview")]
 	[Serializable]
 	public partial class Interview : EntityBase
@@ -17,6 +17,7 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public int ApplicationId { get; private set; }
 		[Column("id_interview_status")]
+		[JsonProperty]
 		public int InterviewStatusId { get; private set; }
 		[JsonProperty]
 		public virtual Application Application { get; private set; }
@@ -26,20 +27,12 @@ namespace SharedModels.Models
 		public virtual ICollection<Employee> Employees { get; private set; }
 			= new HashSet<Employee>();
 
-		public Interview() { }
+		private Interview() { }
 		public Interview(DateTime dateEvent, int applicationId, int interviewStatusId)
 		{
 			DateEvent = dateEvent;
 			ApplicationId = applicationId;
 			InterviewStatusId = interviewStatusId;
-		}
-		public Interview(string positionName, string positionDescription,
-			string status, DateTime dateEvent)
-		{
-			Application?.Vacancy?.Position?.ChangeName(positionName);
-			Application?.Vacancy?.Position?.ChangeDescription(positionDescription);
-			InterviewStatus = new InterviewStatus(status);
-			DateEvent = dateEvent;
 		}
 
 		public void ChangeDateEvent(DateTime dateEvent)
