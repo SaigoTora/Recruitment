@@ -78,74 +78,30 @@ namespace RecruitmentClient.Models
 		#region Candidate
 		internal async Task<Candidate> CreateCandidateAsync(Candidate candidate)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_candidateRegisterUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<Candidate>(candidate, HttpMethod.Post,
+				_candidateRegisterUrl);
 		}
 		internal async Task<Candidate> LoginCandidateAsync(CandidateLoginDTO candidateLogin)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidateLogin,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_candidateLoginUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<Candidate>(candidateLogin, HttpMethod.Post,
+				_candidateLoginUrl);
 		}
+
 		internal async Task UpdateCandidatePasswordAsync(
 			CandidateChangePasswordDTO candidateChangePassword)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidateChangePassword,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
-					_candidateChangePasswordUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-			}
+			await SendDataAsync(candidateChangePassword, HttpMethod.Put,
+			_candidateChangePasswordUrl);
 		}
-
 		internal async Task<Candidate> UpdateCandidateAsync(Candidate candidate)
 		{
-			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
-					_candidateUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<Candidate>(candidate, HttpMethod.Put,
+				_candidateUrl);
 		}
 		internal async Task<Questionnaire> UpdateQuestionnaireAsync(Questionnaire questionnaire)
 		{
-			string jsonContent = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PutAsync(_serverAddress +
-					_questionnaireUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<Questionnaire>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<Questionnaire>(questionnaire, HttpMethod.Put,
+				_questionnaireUrl);
 		}
 
 		#region Check unique
@@ -155,23 +111,13 @@ namespace RecruitmentClient.Models
 			if (_uniqueLogins.Contains(stringDataUnique.Data))
 				return false;
 
-			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
-				Formatting.Indented);
+			bool isUnique = await SendAndReceiveDataAsync<bool>(stringDataUnique, HttpMethod.Post,
+				_candidateIsLoginUniqueUrl);
 
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_candidateIsLoginUniqueUrl, httpContent);
-				response.EnsureSuccessStatusCode();
+			if (!isUnique)
+				_uniqueLogins.Add(stringDataUnique.Data);
 
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
-
-				if (!isUnique)
-					_uniqueLogins.Add(stringDataUnique.Data);
-
-				return isUnique;
-			}
+			return isUnique;
 		}
 		internal async Task<bool> CheckCandidatePhoneUniqueAsync(
 			StringDataUniqueDTO stringDataUnique)
@@ -179,23 +125,13 @@ namespace RecruitmentClient.Models
 			if (_uniquePhones.Contains(stringDataUnique.Data))
 				return false;
 
-			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
-				Formatting.Indented);
+			bool isUnique = await SendAndReceiveDataAsync<bool>(stringDataUnique, HttpMethod.Post,
+				_candidateIsPhoneUniqueUrl);
 
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_candidateIsPhoneUniqueUrl, httpContent);
-				response.EnsureSuccessStatusCode();
+			if (!isUnique)
+				_uniquePhones.Add(stringDataUnique.Data);
 
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
-
-				if (!isUnique)
-					_uniquePhones.Add(stringDataUnique.Data);
-
-				return isUnique;
-			}
+			return isUnique;
 		}
 		internal async Task<bool> CheckCandidateEmailUniqueAsync(
 			StringDataUniqueDTO stringDataUnique)
@@ -203,23 +139,13 @@ namespace RecruitmentClient.Models
 			if (_uniqueEmails.Contains(stringDataUnique.Data))
 				return false;
 
-			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
-				Formatting.Indented);
+			bool isUnique = await SendAndReceiveDataAsync<bool>(stringDataUnique, HttpMethod.Post,
+				_candidateIsEmailUniqueUrl);
 
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_candidateIsEmailUniqueUrl, httpContent);
-				response.EnsureSuccessStatusCode();
+			if (!isUnique)
+				_uniqueEmails.Add(stringDataUnique.Data);
 
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
-
-				if (!isUnique)
-					_uniqueEmails.Add(stringDataUnique.Data);
-
-				return isUnique;
-			}
+			return isUnique;
 		}
 		#endregion
 		#endregion
@@ -228,81 +154,31 @@ namespace RecruitmentClient.Models
 		internal async Task<int> GetFreeVacanciesCountAsync(
 			AccountSearchSettingsDTO accountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(accountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_vacanciesCountUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<int>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
+				_vacanciesCountUrl);
 		}
 		internal async Task<List<Vacancy>> GetFreeVacanciesAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_vacanciesUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<List<Vacancy>>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<List<Vacancy>>(pagedAccountSearch,
+				HttpMethod.Post, _vacanciesUrl);
 		}
 		#endregion
 
 		#region Application
 		internal async Task CreateApplicationAsync(Application application)
-		{
-			string jsonContent = JsonConvert.SerializeObject(application,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_applicationsCreateUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-			}
-		}
+			=> await SendDataAsync(application, HttpMethod.Post, _applicationsCreateUrl);
 
 		internal async Task<int> GetApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(accountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_applicationsCountUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<int>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
+				_applicationsCountUrl);
 		}
 		internal async Task<List<Application>> GetApplicationsAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_applicationsUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<List<Application>>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<List<Application>>(pagedAccountSearch,
+				HttpMethod.Post, _applicationsUrl);
 		}
 		#endregion
 
@@ -310,55 +186,80 @@ namespace RecruitmentClient.Models
 		internal async Task<int> GetInterviewsCountAsync(
 			AccountSearchSettingsDTO accountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(accountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_interviewsCountUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<int>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
+				_interviewsCountUrl);
 		}
 		internal async Task<List<Interview>> GetInterviewsAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
-			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_interviewsUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<List<Interview>>(jsonResponse);
-			}
+			return await SendAndReceiveDataAsync<List<Interview>>(pagedAccountSearch,
+				HttpMethod.Post, _interviewsUrl);
 		}
 		#endregion
 
 		#region Static data
 		internal async Task<FamilyStatus[]> GetFamilyStatusesAsync()
-		{
-			HttpResponseMessage response = await httpClient.GetAsync($"{_serverAddress}" +
-				$"{_familyStatusesUrl}");
-			response.EnsureSuccessStatusCode();
-
-			string jsonResponse = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<FamilyStatus[]>(jsonResponse);
-		}
+			=> await ReceiveDataAsync<FamilyStatus[]>(_familyStatusesUrl);
 		internal async Task<BusinessTripOpportunity[]> GetBusinessTripOpportunitiesAsync()
+			=> await ReceiveDataAsync<BusinessTripOpportunity[]>(_businessTripOpportunitiesUrl);
+		#endregion
+
+		#region General methods
+		private async Task<T> SendAndReceiveDataAsync<T>(object value, HttpMethod httpMethod,
+			string endpoint)
 		{
-			HttpResponseMessage response = await httpClient.GetAsync($"{_serverAddress}" +
-				$"{_businessTripOpportunitiesUrl}");
+			string jsonContent = JsonConvert.SerializeObject(value, Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = null;
+				if (httpMethod == HttpMethod.Post)
+					response = await httpClient.PostAsync(_serverAddress +
+						endpoint, httpContent);
+				else if (httpMethod == HttpMethod.Put)
+					response = await httpClient.PutAsync(_serverAddress +
+						endpoint, httpContent);
+				else
+				{
+					throw new NotSupportedException($"HTTP method '{httpMethod}' " +
+						$"is not supported in {nameof(SendAndReceiveDataAsync)}.");
+				}
+				response.EnsureSuccessStatusCode();
+
+				string jsonResponse = await response.Content.ReadAsStringAsync();
+				return JsonConvert.DeserializeObject<T>(jsonResponse);
+			}
+		}
+		private async Task SendDataAsync(object value, HttpMethod httpMethod,
+			string endpoint)
+		{
+			string jsonContent = JsonConvert.SerializeObject(value, Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = null;
+				if (httpMethod == HttpMethod.Post)
+					response = await httpClient.PostAsync(_serverAddress +
+						endpoint, httpContent);
+				else if (httpMethod == HttpMethod.Put)
+					response = await httpClient.PutAsync(_serverAddress +
+						endpoint, httpContent);
+				else
+				{
+					throw new NotSupportedException($"HTTP method '{httpMethod}' " +
+						$"is not supported in {nameof(SendDataAsync)}.");
+				}
+				response.EnsureSuccessStatusCode();
+			}
+		}
+		private async Task<T> ReceiveDataAsync<T>(string endpoint)
+		{
+			HttpResponseMessage response = await httpClient.GetAsync(_serverAddress +
+				endpoint);
 			response.EnsureSuccessStatusCode();
 
 			string jsonResponse = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<BusinessTripOpportunity[]>(jsonResponse);
+			return JsonConvert.DeserializeObject<T>(jsonResponse);
 		}
 		#endregion
 	}
