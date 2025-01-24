@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using RecruitmentServer.Models.DataBase;
 using SharedModels.DTOs;
 using SharedModels.Models;
+using System;
 
 namespace RecruitmentServer.Models
 {
@@ -20,6 +21,8 @@ namespace RecruitmentServer.Models
 		private readonly HttpListener _httpListener;
 		private readonly int _port;
 		private readonly FirewallManager _firewallManager;
+		private readonly Dictionary<string, Func<HttpListenerContext, Task>> _endpointHandlers
+			= new Dictionary<string, Func<HttpListenerContext, Task>>();
 
 		internal Server(int port)
 		{
@@ -27,8 +30,53 @@ namespace RecruitmentServer.Models
 			_httpListener.Prefixes.Add($"http://+:{port}/");
 			_port = port;
 			_firewallManager = new FirewallManager($"{FIREWALL_RULE_NAME_PREFIX} {port}");
+			InitializeEndpoints();
 		}
 
+		internal void InitializeEndpoints()
+		{
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateRegisterUrl"],
+				HandleCandidateRegisterRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateLoginUrl"],
+				HandleCandidateLoginRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateChangePasswordUrl"],
+				HandleCandidateChangePasswordRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateUrl"],
+				HandleCandidateRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["questionnaireUrl"],
+				HandleQuestionnaireRequestAsync);
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"],
+				HandleCandidateLoginUniqueRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"],
+				HandleCandidatePhoneUniqueRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"],
+				HandleCandidateEmailUniqueRequestAsync);
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["vacanciesCountUrl"],
+				HandleVacanciesCountRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["vacanciesUrl"],
+				HandleVacanciesRequestAsync);
+
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsCreateUrl"],
+				HandleApplicationsCreateRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsCountUrl"],
+				HandleApplicationsCountRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsUrl"],
+				HandleApplicationsRequestAsync);
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsCountUrl"],
+				HandleInterviewsCountRequestAsync);
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsUrl"],
+				HandleInterviewsRequestAsync);
+
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["familyStatusesUrl"],
+				HandleFamilyStatusesRequestAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"],
+				HandleBusinessTripOpportunitiesRequestAsync);
+		}
 		internal void Start()
 		{
 			_httpListener.Start();
@@ -44,7 +92,6 @@ namespace RecruitmentServer.Models
 				_ = ProcessRequestAsync(context);
 			}
 		}
-
 		private async Task ProcessRequestAsync(HttpListenerContext context)
 		{
 			if (context.Request.RawUrl == "/favicon.ico")
@@ -54,58 +101,7 @@ namespace RecruitmentServer.Models
 				return;
 			}
 
-			if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"]))
-				await HandleCandidateLoginUniqueRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"]))
-				await HandleCandidatePhoneUniqueRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"]))
-				await HandleCandidateEmailUniqueRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateRegisterUrl"]))
-				await HandleCandidateRegisterRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateLoginUrl"]))
-				await HandleCandidateLoginRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateChangePasswordUrl"]))
-				await HandleCandidateChangePasswordRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["candidateUrl"]))
-				await HandleCandidateRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["questionnaireUrl"]))
-				await HandleQuestionnaireRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["vacanciesCountUrl"]))
-				await HandleVacanciesCountRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["vacanciesUrl"]))
-				await HandleVacanciesRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["applicationsCountUrl"]))
-				await HandleApplicationsCountRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["applicationsCreateUrl"]))
-				await HandleApplicationsCreateRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["applicationsUrl"]))
-				await HandleApplicationsRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["interviewsCountUrl"]))
-				await HandleInterviewsCountRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["interviewsUrl"]))
-				await HandleInterviewsRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["familyStatusesUrl"]))
-				await HandleFamilyStatusesRequestAsync(context);
-			else if (context.Request.RawUrl.Contains(
-				ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"]))
-				await HandleBusinessTripOpportunitiesRequestAsync(context);
-
+			await _endpointHandlers[context.Request.RawUrl](context);
 			context.Response.Close();
 		}
 

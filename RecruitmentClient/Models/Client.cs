@@ -43,10 +43,10 @@ namespace RecruitmentClient.Models
 		private readonly string _vacanciesUrl
 			= ConfigurationManager.AppSettings["vacanciesUrl"];
 
-		private readonly string _applicationsCountUrl
-			= ConfigurationManager.AppSettings["applicationsCountUrl"];
 		private readonly string _applicationsCreateUrl
 			= ConfigurationManager.AppSettings["applicationsCreateUrl"];
+		private readonly string _applicationsCountUrl
+			= ConfigurationManager.AppSettings["applicationsCountUrl"];
 		private readonly string _applicationsUrl
 			= ConfigurationManager.AppSettings["applicationsUrl"];
 
