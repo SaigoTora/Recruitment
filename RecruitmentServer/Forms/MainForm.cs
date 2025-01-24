@@ -647,9 +647,9 @@ namespace RecruitmentServer.Forms
 		{
 			int? min = null, max = null;// Minimum and maximum
 			if (textBoxMin.Text != "")
-				min = Int32.Parse(textBoxMin.Text);
+				min = int.Parse(textBoxMin.Text);
 			if (textBoxMax.Text != "")
-				max = Int32.Parse(textBoxMax.Text);
+				max = int.Parse(textBoxMax.Text);
 			if (min != null && max != null && min > max)
 				CustomMessageBox.Show("Мінімальне значення не може бути більше максимального!",
 					_account.Theme, "Помилка пошуку",

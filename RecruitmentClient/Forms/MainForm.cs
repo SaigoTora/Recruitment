@@ -509,8 +509,7 @@ namespace RecruitmentClient.Forms
 			Vacancy vacancy = _buttonVacancyMap[button];
 			try
 			{
-				VacancyForm vacancyForm = new VacancyForm(_account, vacancy,
-					_account.Candidate.Login, SelectLabel);
+				VacancyForm vacancyForm = new VacancyForm(_account, vacancy, SelectLabel);
 				vacancyForm.ShowDialog();
 			}
 			catch (SocketException)
@@ -543,9 +542,9 @@ namespace RecruitmentClient.Forms
 		{
 			int? minSalary = null, maxSalary = null;// Salary
 			if (!string.IsNullOrWhiteSpace(textBoxMinSalarySearch.Text))
-				minSalary = Int32.Parse(textBoxMinSalarySearch.Text);
+				minSalary = int.Parse(textBoxMinSalarySearch.Text);
 			if (!string.IsNullOrWhiteSpace(textBoxMaxSalarySearch.Text))
-				maxSalary = Int32.Parse(textBoxMaxSalarySearch.Text);
+				maxSalary = int.Parse(textBoxMaxSalarySearch.Text);
 			if (minSalary != null && maxSalary != null && minSalary > maxSalary)
 				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
 					_account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK,

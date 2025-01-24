@@ -20,12 +20,7 @@ namespace RecruitmentClient.Models
 		private static readonly HttpClient httpClient;
 		private readonly string _serverAddress;
 
-		private readonly string _candidateIsLoginUniqueUrl
-			= ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"];
-		private readonly string _candidateIsPhoneUniqueUrl
-			= ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"];
-		private readonly string _candidateIsEmailUniqueUrl
-			= ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"];
+		#region URLs
 		private readonly string _candidateRegisterUrl
 			= ConfigurationManager.AppSettings["candidateRegisterUrl"];
 		private readonly string _candidateLoginUrl
@@ -36,25 +31,40 @@ namespace RecruitmentClient.Models
 			= ConfigurationManager.AppSettings["candidateUrl"];
 		private readonly string _questionnaireUrl
 			= ConfigurationManager.AppSettings["questionnaireUrl"];
+		private readonly string _candidateIsLoginUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"];
+		private readonly string _candidateIsPhoneUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"];
+		private readonly string _candidateIsEmailUniqueUrl
+			= ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"];
+
 		private readonly string _vacanciesCountUrl
 			= ConfigurationManager.AppSettings["vacanciesCountUrl"];
 		private readonly string _vacanciesUrl
 			= ConfigurationManager.AppSettings["vacanciesUrl"];
+
 		private readonly string _applicationsCountUrl
 			= ConfigurationManager.AppSettings["applicationsCountUrl"];
 		private readonly string _applicationsCreateUrl
 			= ConfigurationManager.AppSettings["applicationsCreateUrl"];
 		private readonly string _applicationsUrl
 			= ConfigurationManager.AppSettings["applicationsUrl"];
+
 		private readonly string _interviewsCountUrl
 			= ConfigurationManager.AppSettings["interviewsCountUrl"];
 		private readonly string _interviewsUrl
 			= ConfigurationManager.AppSettings["interviewsUrl"];
+
 		private readonly string _familyStatusesUrl
 			= ConfigurationManager.AppSettings["familyStatusesUrl"];
 		private readonly string _businessTripOpportunitiesUrl
 			= ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"];
+		#endregion
+
 		internal const char SEPARATOR = '¤';
+		private readonly List<string> _uniqueLogins = new List<string>();
+		private readonly List<string> _uniquePhones = new List<string>();
+		private readonly List<string> _uniqueEmails = new List<string>();
 
 		internal Client(IPAddress IPaddress, int port)
 			=> _serverAddress = $"{HTTP_PREFIX}{IPaddress}:{port}";
@@ -143,6 +153,9 @@ namespace RecruitmentClient.Models
 		internal async Task<bool> CheckCandidateLoginUniqueAsync(
 			StringDataUniqueDTO stringDataUnique)
 		{
+			if (_uniqueLogins.Contains(stringDataUnique.Data))
+				return false;
+
 			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
 				Formatting.Indented);
 
@@ -153,12 +166,20 @@ namespace RecruitmentClient.Models
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+				if (!isUnique)
+					_uniqueLogins.Add(stringDataUnique.Data);
+
+				return isUnique;
 			}
 		}
 		internal async Task<bool> CheckCandidatePhoneUniqueAsync(
 			StringDataUniqueDTO stringDataUnique)
 		{
+			if (_uniquePhones.Contains(stringDataUnique.Data))
+				return false;
+
 			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
 				Formatting.Indented);
 
@@ -169,12 +190,20 @@ namespace RecruitmentClient.Models
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+				if (!isUnique)
+					_uniquePhones.Add(stringDataUnique.Data);
+
+				return isUnique;
 			}
 		}
 		internal async Task<bool> CheckCandidateEmailUniqueAsync(
 			StringDataUniqueDTO stringDataUnique)
 		{
+			if (_uniqueEmails.Contains(stringDataUnique.Data))
+				return false;
+
 			string jsonContent = JsonConvert.SerializeObject(stringDataUnique,
 				Formatting.Indented);
 
@@ -185,7 +214,12 @@ namespace RecruitmentClient.Models
 				response.EnsureSuccessStatusCode();
 
 				string jsonResponse = await response.Content.ReadAsStringAsync();
-				return JsonConvert.DeserializeObject<bool>(jsonResponse);
+				bool isUnique = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+				if (!isUnique)
+					_uniqueEmails.Add(stringDataUnique.Data);
+
+				return isUnique;
 			}
 		}
 		#endregion

@@ -368,8 +368,11 @@ namespace RecruitmentClient.Forms
 			{
 				var candidateChangePassword = new CandidateChangePasswordDTO(_account.Candidate.Id,
 					textBoxPassword.Text);
+
 				await Program.Client.PutCandidatePasswordAsync(
 					candidateChangePassword);
+				_account.Candidate.ChangeLoginPassword(_account.Candidate.Login,
+					candidateChangePassword.NewPassword);
 			}
 			catch (SocketException)
 			{
@@ -378,7 +381,6 @@ namespace RecruitmentClient.Forms
 					_account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
 			}
-			_account.Candidate.ChangeLoginPassword(_account.Candidate.Login, textBoxPassword.Text);
 		}
 		#endregion
 

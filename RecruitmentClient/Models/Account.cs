@@ -7,14 +7,14 @@ using UIHelpers.Themes;
 namespace RecruitmentClient.Models
 {
 	[Serializable]
-	public class Account
+	internal class Account
 	{
-		public Candidate Candidate;
-		public Theme Theme;
+		internal Candidate Candidate;
+		internal Theme Theme;
 		[NonSerialized]
 		private Candidate _tempCandidate;
 
-		public Account()
+		internal Account()
 			=> Candidate = new Candidate();
 
 		[OnSerializing]

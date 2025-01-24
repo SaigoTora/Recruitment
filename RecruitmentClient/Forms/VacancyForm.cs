@@ -16,13 +16,11 @@ namespace RecruitmentClient.Forms
 	{
 		private readonly Account _account;
 		private readonly Vacancy _vacancy;
-		private readonly string _login;
 		private readonly Action<EventArgs> _refresh;
 
 		private string _requirements;
 
-		internal VacancyForm(Account account, Vacancy vacancy,
-			string login, Action<EventArgs> refresh)
+		internal VacancyForm(Account account, Vacancy vacancy, Action<EventArgs> refresh)
 		{
 			InitializeComponent();
 
@@ -31,7 +29,6 @@ namespace RecruitmentClient.Forms
 
 			_account = account;
 			_vacancy = vacancy;
-			_login = login;
 			_refresh = refresh;
 		}
 		private void VacancyForm_Load(object sender, EventArgs e)

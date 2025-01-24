@@ -58,7 +58,8 @@ namespace RecruitmentServer.Forms
 			{
 				item = comboBoxDegrees.Items[i] as DataRowView;
 
-				EducationDegreePoint pointDegree = new EducationDegreePoint(0, _point.Id, int.Parse(item[0].ToString()));
+				EducationDegreePoint pointDegree = new EducationDegreePoint(0, _point.Id,
+					int.Parse(item[0].ToString()));
 				_degreesPoints[i] = pointDegree;
 			}
 		}
