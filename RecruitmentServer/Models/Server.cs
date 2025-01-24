@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -10,7 +11,6 @@ using System.Threading.Tasks;
 using RecruitmentServer.Models.DataBase;
 using SharedModels.DTOs;
 using SharedModels.Models;
-using System;
 
 namespace RecruitmentServer.Models
 {
@@ -36,46 +36,46 @@ namespace RecruitmentServer.Models
 		internal void InitializeEndpoints()
 		{
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateRegisterUrl"],
-				HandleCandidateRegisterRequestAsync);
+				HandleCandidateRegisterAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateLoginUrl"],
-				HandleCandidateLoginRequestAsync);
+				HandleCandidateLoginAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateChangePasswordUrl"],
-				HandleCandidateChangePasswordRequestAsync);
+				HandleCandidateChangePasswordAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateUrl"],
-				HandleCandidateRequestAsync);
+				HandleCandidateAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["questionnaireUrl"],
-				HandleQuestionnaireRequestAsync);
+				HandleQuestionnaireAsync);
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsLoginUniqueUrl"],
-				HandleCandidateLoginUniqueRequestAsync);
+				HandleCandidateLoginUniqueAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsPhoneUniqueUrl"],
-				HandleCandidatePhoneUniqueRequestAsync);
+				HandleCandidatePhoneUniqueAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateIsEmailUniqueUrl"],
-				HandleCandidateEmailUniqueRequestAsync);
+				HandleCandidateEmailUniqueAsync);
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["vacanciesCountUrl"],
-				HandleVacanciesCountRequestAsync);
+				HandleVacanciesCountAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["vacanciesUrl"],
-				HandleVacanciesRequestAsync);
+				HandleVacanciesAsync);
 
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsCreateUrl"],
-				HandleApplicationsCreateRequestAsync);
+				HandleApplicationCreateAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsCountUrl"],
-				HandleApplicationsCountRequestAsync);
+				HandleApplicationsCountAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["applicationsUrl"],
-				HandleApplicationsRequestAsync);
+				HandleApplicationsAsync);
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsCountUrl"],
-				HandleInterviewsCountRequestAsync);
+				HandleInterviewsCountAsync);
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsUrl"],
-				HandleInterviewsRequestAsync);
+				HandleInterviewsAsync);
 
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["familyStatusesUrl"],
-				HandleFamilyStatusesRequestAsync);
+				HandleFamilyStatusesAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"],
-				HandleBusinessTripOpportunitiesRequestAsync);
+				HandleBusinessTripOpportunitiesAsync);
 		}
 		internal void Start()
 		{
@@ -106,244 +106,190 @@ namespace RecruitmentServer.Models
 		}
 
 		#region Candidate
-		private async Task HandleCandidateRegisterRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateRegisterAsync(HttpListenerContext context)
 		{
-			Candidate candidate = null;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				candidate = await DeserializeFromRequestAsync<Candidate>(context);
-				candidate = DatabaseManager.CreateCandidate(candidate);
+				await HandleRequestWithUpdateAsync<Candidate>(context,
+					c => DatabaseManager.CreateCandidate(c));
 			}
-
-			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateLoginRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateLoginAsync(HttpListenerContext context)
 		{
-			Candidate candidate = null;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				CandidateLoginDTO candidateLogin =
-					await DeserializeFromRequestAsync<CandidateLoginDTO>(context);
-				candidate = DatabaseManager.GetCandidate(candidateLogin);
+				await HandleRequestAndRespondAsync<CandidateLoginDTO, Candidate>(context,
+					cl => DatabaseManager.GetCandidate(cl));
 			}
-
-			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateChangePasswordRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateChangePasswordAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
-				CandidateChangePasswordDTO candidateChangePassword =
-					await DeserializeFromRequestAsync<CandidateChangePasswordDTO>(context);
-				DatabaseManager.UpdateCandidatePassword(candidateChangePassword);
+				await HandleRequestWithoutResponseAsync<CandidateChangePasswordDTO>(context,
+					ccpDTO => DatabaseManager.UpdateCandidatePassword(ccpDTO));
 			}
-
-			await SendResponseToClientAsync(context, string.Empty);
 		}
-		private async Task HandleCandidateRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateAsync(HttpListenerContext context)
 		{
-			Candidate candidate = null;
-
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
-				candidate = await DeserializeFromRequestAsync<Candidate>(context);
-				candidate = DatabaseManager.UpdateCandidate(candidate.Id, candidate);
+				await HandleRequestWithUpdateAsync<Candidate>(context,
+					c => DatabaseManager.UpdateCandidate(c.Id, c));
 			}
-
-			string response = JsonConvert.SerializeObject(candidate, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleQuestionnaireRequestAsync(HttpListenerContext context)
+		private async Task HandleQuestionnaireAsync(HttpListenerContext context)
 		{
-			Questionnaire questionnaire = null;
-
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
-				questionnaire = await DeserializeFromRequestAsync<Questionnaire>(context);
-				questionnaire = DatabaseManager.UpdateQuestionnaire(questionnaire.Id,
-					questionnaire);
+				await HandleRequestWithUpdateAsync<Questionnaire>(context,
+					q => DatabaseManager.UpdateQuestionnaire(q.Id, q));
 			}
-
-			string response = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
 
 		#region Check unique
-		private async Task HandleCandidateLoginUniqueRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateLoginUniqueAsync(HttpListenerContext context)
 		{
-			bool isUnique = false;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				StringDataUniqueDTO stringDataUnique =
-					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
-				isUnique = DatabaseManager.CheckCandidateLoginUnique(stringDataUnique);
+				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
+					sduDTO => DatabaseManager.CheckCandidateLoginUnique(sduDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidatePhoneUniqueRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidatePhoneUniqueAsync(HttpListenerContext context)
 		{
-			bool isUnique = false;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				StringDataUniqueDTO stringDataUnique =
-					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
-				isUnique = DatabaseManager.CheckCandidatePhoneUnique(stringDataUnique);
+				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
+					sduDTO => DatabaseManager.CheckCandidatePhoneUnique(sduDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleCandidateEmailUniqueRequestAsync(HttpListenerContext context)
+		private async Task HandleCandidateEmailUniqueAsync(HttpListenerContext context)
 		{
-			bool isUnique = false;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				StringDataUniqueDTO stringDataUnique =
-					await DeserializeFromRequestAsync<StringDataUniqueDTO>(context);
-				isUnique = DatabaseManager.CheckCandidateEmailUnique(stringDataUnique);
+				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
+					sduDTO => DatabaseManager.CheckCandidateEmailUnique(sduDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(isUnique, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
 		#endregion
 		#endregion
 
 		#region Vacancy
-		private async Task HandleVacanciesCountRequestAsync(HttpListenerContext context)
+		private async Task HandleVacanciesCountAsync(HttpListenerContext context)
 		{
-			int vacanciesCount = 0;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				AccountSearchSettingsDTO accountSearch =
-					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
-				vacanciesCount = DatabaseManager.GetVacanciesCount(accountSearch);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
+					acssDTO => DatabaseManager.GetVacanciesCount(acssDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(vacanciesCount, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleVacanciesRequestAsync(HttpListenerContext context)
+		private async Task HandleVacanciesAsync(HttpListenerContext context)
 		{
-			List<Vacancy> vacancies = new List<Vacancy>();
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				PagedAccountSearchSettingsDTO pagedAccountSearch =
-					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
-				vacancies = DatabaseManager.GetVacancies(pagedAccountSearch);
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Vacancy>>(context,
+					pacssDTO => DatabaseManager.GetVacancies(pacssDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(vacancies, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
 		#endregion
 
 		#region Application
-		private async Task HandleApplicationsCountRequestAsync(HttpListenerContext context)
+		private async Task HandleApplicationCreateAsync(HttpListenerContext context)
 		{
-			int applicationsCount = 0;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				AccountSearchSettingsDTO accountSearch =
-					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
-				applicationsCount = DatabaseManager.GetApplicationsCount(accountSearch);
+				await HandleRequestWithoutResponseAsync<Application>(context, a =>
+				{
+					a.ChangeStatusId(1);
+					DatabaseManager.CreateApplication(a);
+				});
 			}
-
-			string response = JsonConvert.SerializeObject(applicationsCount, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleApplicationsCreateRequestAsync(HttpListenerContext context)
+
+		private async Task HandleApplicationsCountAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				Application application =
-					await DeserializeFromRequestAsync<Application>(context);
-				application.ChangeStatusId(1);
-				DatabaseManager.CreateApplication(application);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
+					acssDTO => DatabaseManager.GetApplicationsCount(acssDTO));
 			}
-
-			await SendResponseToClientAsync(context, string.Empty);
 		}
-		private async Task HandleApplicationsRequestAsync(HttpListenerContext context)
+		private async Task HandleApplicationsAsync(HttpListenerContext context)
 		{
-			List<Application> applications = new List<Application>();
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				PagedAccountSearchSettingsDTO pagedAccountSearch =
-					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
-				applications = DatabaseManager.GetApplications(pagedAccountSearch);
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Application>>(
+					context, pacssDTO => DatabaseManager.GetApplications(pacssDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(applications, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
 		#endregion
 
 		#region Interview
-		private async Task HandleInterviewsCountRequestAsync(HttpListenerContext context)
+		private async Task HandleInterviewsCountAsync(HttpListenerContext context)
 		{
-			int interviewsCount = 0;
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				AccountSearchSettingsDTO accountSearch =
-					await DeserializeFromRequestAsync<AccountSearchSettingsDTO>(context);
-				interviewsCount = DatabaseManager.GetInterviewsCount(accountSearch);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
+					acssDTO => DatabaseManager.GetInterviewsCount(acssDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(interviewsCount, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleInterviewsRequestAsync(HttpListenerContext context)
+		private async Task HandleInterviewsAsync(HttpListenerContext context)
 		{
-			List<Interview> interviews = new List<Interview>();
-
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				PagedAccountSearchSettingsDTO pagedAccountSearch =
-					await DeserializeFromRequestAsync<PagedAccountSearchSettingsDTO>(context);
-				interviews = DatabaseManager.GetInterviews(pagedAccountSearch);
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Interview>>(
+					context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO));
 			}
-
-			string response = JsonConvert.SerializeObject(interviews, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
 		}
 		#endregion
 
-		private async Task HandleFamilyStatusesRequestAsync(HttpListenerContext context)
+		#region Static data
+		private async Task HandleFamilyStatusesAsync(HttpListenerContext context)
 		{
-			FamilyStatus[] familyStatuses = null;
-
 			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				familyStatuses = DatabaseManager.GetFamilyStatuses();
+				await RespondAsync(context, DatabaseManager.GetFamilyStatuses());
+		}
+		private async Task HandleBusinessTripOpportunitiesAsync(HttpListenerContext context)
+		{
+			if (context.Request.HttpMethod == HttpMethod.Get.Method)
+				await RespondAsync(context, DatabaseManager.GetBusinessTripOpportunities());
+		}
+		#endregion
 
-			string response = JsonConvert.SerializeObject(familyStatuses, Formatting.Indented);
+		#region General methods
+		private async Task HandleRequestAndRespondAsync<T1, T2>(HttpListenerContext context,
+			Func<T1, T2> responseHandler)
+		{
+			T1 request = await DeserializeFromRequestAsync<T1>(context);
+			T2 responseObject = responseHandler(request);
+
+			string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
-		private async Task HandleBusinessTripOpportunitiesRequestAsync(HttpListenerContext context)
+		private async Task HandleRequestWithUpdateAsync<T>(HttpListenerContext context,
+			Func<T, T> responseHandler)
 		{
-			BusinessTripOpportunity[] businessTripOpportunities = null;
+			T request = await DeserializeFromRequestAsync<T>(context);
+			request = responseHandler(request);
 
-			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				businessTripOpportunities = DatabaseManager.GetBusinessTripOpportunities();
-
-			string response = JsonConvert.SerializeObject(businessTripOpportunities,
-				Formatting.Indented);
+			string response = JsonConvert.SerializeObject(request, Formatting.Indented);
 			await SendResponseToClientAsync(context, response);
 		}
+		private async Task HandleRequestWithoutResponseAsync<T>(HttpListenerContext context,
+			Action<T> responseHandler)
+		{
+			T request = await DeserializeFromRequestAsync<T>(context);
+			responseHandler(request);
+
+			await SendResponseToClientAsync(context, string.Empty);
+		}
+		private async Task RespondAsync<T>(HttpListenerContext context, T responseObject)
+		{
+			string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
+			await SendResponseToClientAsync(context, response);
+		}
+		#endregion
 
 		private async Task<T> DeserializeFromRequestAsync<T>(HttpListenerContext context)
 		{
