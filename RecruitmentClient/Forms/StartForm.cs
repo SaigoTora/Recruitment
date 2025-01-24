@@ -232,7 +232,7 @@ namespace RecruitmentClient.Forms
 				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(textBoxLogin.Text,
 					textBoxPassword.Text);
 				Candidate candidate = await Program.Client.
-					PostCandidateLoginAsync(candidateLogin);
+					LoginCandidateAsync(candidateLogin);
 				if (candidate == null)
 				{
 					buttonLogin.Enabled = true;
@@ -369,7 +369,7 @@ namespace RecruitmentClient.Forms
 				var candidateChangePassword = new CandidateChangePasswordDTO(_account.Candidate.Id,
 					textBoxPassword.Text);
 
-				await Program.Client.PutCandidatePasswordAsync(
+				await Program.Client.UpdateCandidatePasswordAsync(
 					candidateChangePassword);
 				_account.Candidate.ChangeLoginPassword(_account.Candidate.Login,
 					candidateChangePassword.NewPassword);

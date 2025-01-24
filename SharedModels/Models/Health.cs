@@ -9,7 +9,7 @@ namespace SharedModels.Models
 {
 	[Table("Health")]
 	[Serializable]
-	public partial class Health : EntityBase, ICloneable
+	public partial class Health : EntityBase, ICloneable, IEquatable<Health>
 	{
 		[Column("chronic_diseases")]
 		[StringLength(256)]
@@ -42,6 +42,18 @@ namespace SharedModels.Models
 			};
 
 			return newHealth;
+		}
+
+		public bool Equals(Health other)
+		{
+			if (other == null)
+				return false;
+
+			if (ChronicDiseases != other.ChronicDiseases || Smoker != other.Smoker
+				|| DrinkAlcohol != other.DrinkAlcohol)
+				return false;
+
+			return true;
 		}
 	}
 }

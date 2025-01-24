@@ -51,7 +51,7 @@ namespace RecruitmentClient
 					Task.Run(async () =>
 					{
 						account.Candidate =
-							await Client.PostCandidateLoginAsync(candidateLogin);
+							await Client.LoginCandidateAsync(candidateLogin);
 					}).Wait();
 				}
 				catch (SocketException)

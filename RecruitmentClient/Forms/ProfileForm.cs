@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
-using RecruitmentClient.Utilities.FormUtilities;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
@@ -190,7 +189,11 @@ namespace RecruitmentClient.Forms
 		{
 			QuestionnaireForm qf = new QuestionnaireForm(_account, _startForm);
 			qf.Show();
-			qf.FormClosed += (s, args) => { Visible = true; };
+			qf.FormClosed += (s, args) =>
+			{
+				Visible = true;
+				_oldCandidate.Questionnaire = _account.Candidate.Questionnaire;
+			};
 			Visible = false;
 		}
 
@@ -214,7 +217,11 @@ namespace RecruitmentClient.Forms
 					if (_startForm != null)
 						await CreateCandidateAsync();
 					else
-						await UpdateCandidateAsync();
+					{
+						if (!_account.Candidate.Equals(_oldCandidate))
+							await UpdateCandidateAsync();
+						Close();
+					}
 				}
 				catch (SocketException)
 				{
@@ -231,7 +238,7 @@ namespace RecruitmentClient.Forms
 			if (!isLoginUnique)
 				return;
 
-			_account.Candidate = await Program.Client.PostCandidateRegisterAsync(
+			_account.Candidate = await Program.Client.CreateCandidateAsync(
 				_account.Candidate);
 			if (_startForm.NeedToRemember)
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
@@ -251,11 +258,9 @@ namespace RecruitmentClient.Forms
 		}
 		private async Task UpdateCandidateAsync()
 		{
-			_account.Candidate = await Program.Client.PutCandidateAsync(_account.Candidate);
+			_account.Candidate = await Program.Client.UpdateCandidateAsync(_account.Candidate);
 			if (Serializator.SerializationFileExists(Program.SerializePath))
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
-
-			Close();
 		}
 
 		public void SetTheme(Theme theme)

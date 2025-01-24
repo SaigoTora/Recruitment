@@ -8,7 +8,7 @@ namespace SharedModels.Models
 {
 	[Table("Language")]
 	[Serializable]
-	public partial class Language : EntityBase, ICloneable
+	public partial class Language : EntityBase, ICloneable, IEquatable<Language>
 	{
 		[Column("name")]
 		[Required]
@@ -32,6 +32,12 @@ namespace SharedModels.Models
 			QuestionnaireId = questionnaireId;
 		}
 
+		public void Change(string name, int level)
+		{
+			Name = name;
+			Level = level;
+		}
+
 		public object Clone()
 		{
 			Language newLanguage = new Language(Name, Level, QuestionnaireId)
@@ -42,10 +48,16 @@ namespace SharedModels.Models
 
 			return newLanguage;
 		}
-		public void Change(string name, int level)
+
+		public bool Equals(Language other)
 		{
-			Name = name;
-			Level = level;
+			if (other == null)
+				return false;
+
+			if (Name != other.Name || Level != other.Level)
+				return false;
+
+			return true;
 		}
 	}
 }

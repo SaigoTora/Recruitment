@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SharedModels.Models
 {
 	[Table("Questionnaire")]
 	[Serializable]
-	public partial class Questionnaire : EntityBase, ICloneable
+	public partial class Questionnaire : EntityBase, ICloneable, IEquatable<Questionnaire>
 	{
 		[Column("nationality")]
 		[Required]
@@ -50,7 +51,7 @@ namespace SharedModels.Models
 		[JsonProperty]
 		public virtual FamilyStatus FamilyStatus { get; private set; }
 		[JsonProperty]
-		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; private set; }
+		public virtual BusinessTripOpportunity BusinessTripOpportunity { get; set; }
 		[JsonProperty]
 		public virtual ICollection<Language> Languages { get; private set; }
 			= new HashSet<Language>();
@@ -119,6 +120,27 @@ namespace SharedModels.Models
 			};
 
 			return newQuestionnaire;
+		}
+
+		public bool Equals(Questionnaire other)
+		{
+			if (other == null)
+				return false;
+
+			if (Nationality != other.Nationality || City != other.City
+				|| ChildrenAmount != other.ChildrenAmount || Experience != other.Experience
+				|| DriverLicense != other.DriverLicense || Readiness != other.Readiness
+				|| AdditionalInfo != other.AdditionalInfo
+				|| (Health != null && !Health.Equals(other.Health))
+				|| FamilyStatusId != other.FamilyStatusId
+				|| BusinessTripOpportunityId != other.BusinessTripOpportunityId
+				|| Languages.Count != other.Languages.Count
+				|| !Languages.SequenceEqual(other.Languages)
+				|| Educations.Count != other.Educations.Count
+				|| !Educations.SequenceEqual(other.Educations))
+				return false;
+
+			return true;
 		}
 	}
 }

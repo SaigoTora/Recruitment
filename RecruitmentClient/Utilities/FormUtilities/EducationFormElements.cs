@@ -104,6 +104,7 @@ namespace RecruitmentClient.Utilities.FormUtilities
 				EqualityComparer<Guna2ComboBox>.Default.GetHashCode(CB_EducationDegree);
 			hashCode = hashCode * -1521134295 +
 				EqualityComparer<Guna2ComboBox>.Default.GetHashCode(CB_EducationForm);
+
 			return hashCode;
 		}
 	}

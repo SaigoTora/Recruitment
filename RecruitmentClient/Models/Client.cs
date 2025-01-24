@@ -77,8 +77,7 @@ namespace RecruitmentClient.Models
 		}
 
 		#region Candidate
-		internal async Task<Candidate> PostCandidateRegisterAsync(
-			Candidate candidate)
+		internal async Task<Candidate> CreateCandidateAsync(Candidate candidate)
 		{
 			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 
@@ -92,7 +91,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
 			}
 		}
-		internal async Task<Candidate> PostCandidateLoginAsync(CandidateLoginDTO candidateLogin)
+		internal async Task<Candidate> LoginCandidateAsync(CandidateLoginDTO candidateLogin)
 		{
 			string jsonContent = JsonConvert.SerializeObject(candidateLogin,
 				Formatting.Indented);
@@ -107,7 +106,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
 			}
 		}
-		internal async Task PutCandidatePasswordAsync(
+		internal async Task UpdateCandidatePasswordAsync(
 			CandidateChangePasswordDTO candidateChangePassword)
 		{
 			string jsonContent = JsonConvert.SerializeObject(candidateChangePassword,
@@ -120,7 +119,8 @@ namespace RecruitmentClient.Models
 				response.EnsureSuccessStatusCode();
 			}
 		}
-		internal async Task<Candidate> PutCandidateAsync(Candidate candidate)
+
+		internal async Task<Candidate> UpdateCandidateAsync(Candidate candidate)
 		{
 			string jsonContent = JsonConvert.SerializeObject(candidate, Formatting.Indented);
 
@@ -134,7 +134,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<Candidate>(jsonResponse);
 			}
 		}
-		internal async Task<Questionnaire> PutQuestionnaireAsync(Questionnaire questionnaire)
+		internal async Task<Questionnaire> UpdateQuestionnaireAsync(Questionnaire questionnaire)
 		{
 			string jsonContent = JsonConvert.SerializeObject(questionnaire, Formatting.Indented);
 
@@ -226,7 +226,7 @@ namespace RecruitmentClient.Models
 		#endregion
 
 		#region Vacancy
-		internal async Task<int> PostFreeVacanciesCountAsync(
+		internal async Task<int> GetFreeVacanciesCountAsync(
 			AccountSearchSettingsDTO accountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(accountSearch,
@@ -242,7 +242,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<int>(jsonResponse);
 			}
 		}
-		internal async Task<List<Vacancy>> PostFreeVacanciesAsync(
+		internal async Task<List<Vacancy>> GetFreeVacanciesAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
@@ -261,7 +261,20 @@ namespace RecruitmentClient.Models
 		#endregion
 
 		#region Application
-		internal async Task<int> PostApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
+		internal async Task CreateApplicationAsync(Application application)
+		{
+			string jsonContent = JsonConvert.SerializeObject(application,
+				Formatting.Indented);
+
+			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
+			{
+				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
+					_applicationsCreateUrl, httpContent);
+				response.EnsureSuccessStatusCode();
+			}
+		}
+
+		internal async Task<int> GetApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(accountSearch,
 				Formatting.Indented);
@@ -276,19 +289,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<int>(jsonResponse);
 			}
 		}
-		internal async Task PostApplicationsCreateAsync(Application application)
-		{
-			string jsonContent = JsonConvert.SerializeObject(application,
-				Formatting.Indented);
-
-			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
-			{
-				HttpResponseMessage response = await httpClient.PostAsync(_serverAddress +
-					_applicationsCreateUrl, httpContent);
-				response.EnsureSuccessStatusCode();
-			}
-		}
-		internal async Task<List<Application>> PostApplicationsAsync(
+		internal async Task<List<Application>> GetApplicationsAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,
@@ -307,7 +308,7 @@ namespace RecruitmentClient.Models
 		#endregion
 
 		#region Interview
-		internal async Task<int> PostInterviewsCountAsync(
+		internal async Task<int> GetInterviewsCountAsync(
 			AccountSearchSettingsDTO accountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(accountSearch,
@@ -323,7 +324,7 @@ namespace RecruitmentClient.Models
 				return JsonConvert.DeserializeObject<int>(jsonResponse);
 			}
 		}
-		internal async Task<List<Interview>> PostInterviewsAsync(
+		internal async Task<List<Interview>> GetInterviewsAsync(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			string jsonContent = JsonConvert.SerializeObject(pagedAccountSearch,

@@ -9,7 +9,7 @@ namespace SharedModels.Models
 {
 	[Table("Candidate")]
 	[Serializable]
-	public partial class Candidate : EntityBase, ICloneable
+	public partial class Candidate : EntityBase, ICloneable, IEquatable<Candidate>
 	{
 		[Column("login")]
 		[Required]
@@ -87,6 +87,11 @@ namespace SharedModels.Models
 			Questionnaire = questionnaire;
 		}
 
+		public void ChangeLoginPassword(string login, string password)
+		{
+			Login = login;
+			Password = password;
+		}
 		public object Clone()
 		{
 			var newCandidate = new Candidate(Surname, Name, FatherName, Login, Password, Phone,
@@ -99,10 +104,19 @@ namespace SharedModels.Models
 
 			return newCandidate;
 		}
-		public void ChangeLoginPassword(string login, string password)
+
+		public bool Equals(Candidate other)
 		{
-			Login = login;
-			Password = password;
+			if (other == null)
+				return false;
+
+			if (Login != other.Login || Password != other.Password || Surname != other.Surname
+				|| Name != other.Name || FatherName != other.FatherName || Phone != other.Phone
+				|| Birthday != other.Birthday || Email != other.Email
+				|| (Questionnaire != null && !Questionnaire.Equals(other.Questionnaire)))
+				return false;
+
+			return true;
 		}
 	}
 }

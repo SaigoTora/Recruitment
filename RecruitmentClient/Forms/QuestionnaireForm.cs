@@ -24,10 +24,10 @@ namespace RecruitmentClient.Forms
 		private const string DEFAULT_NATIONALITY = "Україна";
 		private const string DEFAULT_LANGUAGE = "Українська";
 
+		private Questionnaire _oldQuestionnaire = null;
 		private readonly int _defaultYearAdmission = DateTime.Today.Year - 4;
 
 		private readonly Account _account;
-		private readonly Questionnaire _oldQuestionnaire = null;
 		private readonly bool _formOpenForChange = false;
 		private readonly RadioButtonEventHandlers _radionButtonEventHandlers =
 			new RadioButtonEventHandlers();
@@ -49,8 +49,8 @@ namespace RecruitmentClient.Forms
 			_account = account;
 			if (startForm == null)
 			{
-				_oldQuestionnaire = (Questionnaire)_account.Candidate.Questionnaire.Clone();
 				_formOpenForChange = true;
+				_oldQuestionnaire = (Questionnaire)_account.Candidate.Questionnaire.Clone();
 			}
 
 			_languages.Add(new LanguageFormElements(panelLanguage, labelLanguage,
@@ -80,6 +80,8 @@ namespace RecruitmentClient.Forms
 			else
 				SetFormFields(_account.Candidate.Questionnaire);
 
+
+			_oldQuestionnaire = ReadQuestionnaireFromForm();
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonDriverLicenseNo,
 				radioButtonDriverLicenseYes, radioButtonSmokerNo, radioButtonSmokerYes,
 				radioButtonDrinkAlcoholNo, radioButtonDrinkAlcoholYes);
@@ -369,14 +371,15 @@ namespace RecruitmentClient.Forms
 
 			if (CheckValidData())
 			{
-				FillQuestionnaireWithFormData();
+				_account.Candidate.Questionnaire = ReadQuestionnaireFromForm();
 				if (_formOpenForChange)
 				{
 					try
 					{
-						_account.Candidate.Questionnaire =
-							await Program.Client.PutQuestionnaireAsync(
-								_account.Candidate.Questionnaire);
+						if (!_account.Candidate.Questionnaire.Equals(_oldQuestionnaire))
+							_account.Candidate.Questionnaire =
+								await Program.Client.UpdateQuestionnaireAsync(
+									_account.Candidate.Questionnaire);
 					}
 					catch (SocketException)
 					{
@@ -402,13 +405,12 @@ namespace RecruitmentClient.Forms
 				_educations[i].SetDefaultLabels(_account.Theme);
 		}
 
-		private void FillQuestionnaireWithFormData()
+		private Questionnaire ReadQuestionnaireFromForm()
 		{
 			List<Language> languages = ReadLanguagesFromForm();
 			List<Education> educations = ReadEducationsFromForm();
 
-			_account.Candidate.Questionnaire =
-				new Questionnaire(_account.Candidate.Questionnaire.Id,
+			return new Questionnaire(_account.Candidate.Questionnaire.Id,
 				comboBoxNationality.SelectedItem.ToString(), textBoxCity.Text,
 				(int)numericUpDownChildrenAmount.Value, (int)numericUpDownExperience.Value,
 				radioButtonDriverLicenseYes.Checked, (int)numericUpDownReadiness.Value,

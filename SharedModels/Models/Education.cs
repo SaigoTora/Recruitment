@@ -8,7 +8,7 @@ namespace SharedModels.Models
 {
 	[Table("Education")]
 	[Serializable]
-	public partial class Education : EntityBase, ICloneable
+	public partial class Education : EntityBase, ICloneable, IEquatable<Education>
 	{
 		[Column("name_institution")]
 		[Required]
@@ -55,6 +55,17 @@ namespace SharedModels.Models
 			EducationFormId = educationFormId;
 		}
 
+		public void Change(string nameInstitution, string specialty, int yearAdmission,
+			DateTime dateEnd, int educationDegreeId, int educationFormId)
+		{
+			NameInstitution = nameInstitution;
+			Specialty = specialty;
+			YearAdmission = yearAdmission;
+			DateEnd = dateEnd;
+			EducationDegreeId = educationDegreeId;
+			EducationFormId = educationFormId;
+		}
+
 		public object Clone()
 		{
 			var newEducation = new Education(NameInstitution, Specialty, YearAdmission, DateEnd,
@@ -68,15 +79,19 @@ namespace SharedModels.Models
 
 			return newEducation;
 		}
-		public void Change(string nameInstitution, string specialty, int yearAdmission,
-			DateTime dateEnd, int educationDegreeId, int educationFormId)
+
+		public bool Equals(Education other)
 		{
-			NameInstitution = nameInstitution;
-			Specialty = specialty;
-			YearAdmission = yearAdmission;
-			DateEnd = dateEnd;
-			EducationDegreeId = educationDegreeId;
-			EducationFormId = educationFormId;
+			if (other == null)
+				return false;
+
+			if (NameInstitution != other.NameInstitution || Specialty != other.Specialty
+				|| YearAdmission != other.YearAdmission || DateEnd != other.DateEnd
+				|| EducationDegreeId != other.EducationDegreeId
+				|| EducationFormId != other.EducationFormId)
+				return false;
+
+			return true;
 		}
 	}
 }

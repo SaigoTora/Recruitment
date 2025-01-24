@@ -101,7 +101,7 @@ namespace RecruitmentClient.Forms
 				SharedModels.Models.Application application = new SharedModels.Models.Application(
 					DateTime.UtcNow, richTextBoxClientAdditionalInfo.Text, default,
 					_account.Candidate.Id, _vacancy.Id);
-				await Program.Client.PostApplicationsCreateAsync(application);
+				await Program.Client.CreateApplicationAsync(application);
 				_refresh(EventArgs.Empty);
 				Close();
 				CustomMessageBox.Show("Заявка була відправлена успішно!\n" +
