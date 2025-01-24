@@ -16,7 +16,6 @@ namespace RecruitmentServer.Models
 	internal class Server
 	{
 		private const string FIREWALL_RULE_NAME_PREFIX = "Recruitment";
-		internal const char SEPARATOR = '¤';
 
 		private readonly HttpListener _httpListener;
 		private readonly int _port;

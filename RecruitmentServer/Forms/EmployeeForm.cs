@@ -161,8 +161,6 @@ namespace RecruitmentServer.Forms
 		{
 			Validator validator = new Validator();
 			Label labelPosition = new Label() { Text = "Посада" };
-			validator.CheckBannedChar(labelPosition, textBoxPosition.Text,
-				Server.SEPARATOR, _account.Theme);
 			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
 
 			return validator.IsDataValid;

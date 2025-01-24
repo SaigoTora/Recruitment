@@ -18,13 +18,6 @@ namespace UIHelpers.Validation
 			_languageCharacterSets.Add(ValidLanguage.ENG, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		}
 
-		public void CheckBannedChar(Label label, string text, char banChar, Theme theme)
-		{
-			if (text.Contains(banChar.ToString()))
-				ValidationFeedbackManager.HighlightInvalidLabel(label,
-					$"{label.Text.TrimEnd(':')} не може мати такий символ: {banChar}.",
-					theme, ref _isDataValid);
-		}
 		public void CheckMinLength(Label label, Control focus, int minLength, Theme theme)
 		{
 			if (focus.Text.Length < minLength)

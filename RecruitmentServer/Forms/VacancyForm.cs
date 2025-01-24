@@ -247,17 +247,10 @@ namespace RecruitmentServer.Forms
 				labelAdditionalInfoTitle);
 
 			Validator validator = new Validator();
-			validator.CheckBannedChar(labelPosition, textBoxPosition.Text, Server.SEPARATOR,
-				_account.Theme);
 			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
 			validator.CheckSymbols(labelSalaryTitle, textBoxSalary, _account.Theme,
 				ValidLanguage.None, "0123456789,");
 			validator.CheckMinLength(labelSalaryTitle, textBoxSalary, 1, _account.Theme);
-
-			validator.CheckBannedChar(labelPositionDescriptionTitle,
-				richTextBoxPositionDescription.Text, Server.SEPARATOR, _account.Theme);
-			validator.CheckBannedChar(labelAdditionalInfoTitle,
-				richTextBoxAdditionalInfo.Text, Server.SEPARATOR, _account.Theme);
 
 			bool isDataValid = validator.IsDataValid;
 			ValidateRequirements(ref isDataValid);

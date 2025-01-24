@@ -632,11 +632,7 @@ namespace RecruitmentServer.Forms
 					isRelevance = comboBoxStatus.SelectedIndex == 2;
 				if (!isRelevance.HasValue && comboBoxStatus.SelectedIndex != 0)
 					status = comboBoxStatus.Items[comboBoxStatus.SelectedIndex].ToString();
-
 				position = textBoxSearch.Text;// Position
-				Validator validator = new Validator();
-				validator.CheckBannedChar(new Label() { Text = "Посада" },
-					position, Server.SEPARATOR, _account.Theme);
 			}
 
 			_searcher = new FullSearcher(position, GetDateByComboBoxDate(), Min, Max,

@@ -120,11 +120,6 @@ namespace RecruitmentClient.Forms
 					$"Він повинен мати наступний вигляд: [1;∞)@[2;∞).[2;∞), " +
 					$"де запис [n;m) - кількість символів.", _account.Theme,
 					ref isDataValid, textBoxEmail);
-
-			if (email.Contains(Client.SEPARATOR.ToString()))
-				ValidationFeedbackManager.HighlightInvalidLabel(labelEmail,
-					$"E-mail не може мати такий символ: {Client.SEPARATOR}.",
-					_account.Theme, ref isDataValid, textBoxEmail);
 		}
 		private void CheckValidQuestionnairе(ref bool isDataValid)
 		{

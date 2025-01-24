@@ -214,18 +214,6 @@ namespace RecruitmentClient.Forms
 		{
 			buttonLogin.Enabled = false;
 			SetDefaultLabels(_account.Theme);
-			Validator validator = new Validator();
-
-			validator.CheckBannedChar(labelLogin, textBoxLogin.Text,
-				Client.SEPARATOR, _account.Theme);
-			validator.CheckBannedChar(labelPassword,
-				textBoxPassword.Text, Client.SEPARATOR, _account.Theme);
-
-			if (!validator.IsDataValid)
-			{
-				buttonLogin.Enabled = true;
-				return;
-			}
 
 			try
 			{

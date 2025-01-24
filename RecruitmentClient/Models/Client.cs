@@ -61,7 +61,6 @@ namespace RecruitmentClient.Models
 			= ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"];
 		#endregion
 
-		internal const char SEPARATOR = '¤';
 		private readonly List<string> _uniqueLogins = new List<string>();
 		private readonly List<string> _uniquePhones = new List<string>();
 		private readonly List<string> _uniqueEmails = new List<string>();

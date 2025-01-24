@@ -451,8 +451,6 @@ namespace RecruitmentClient.Forms
 			validator.CheckMinLength(labelCity, textBoxCity, 2, _account.Theme);
 			validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases,
 				_account.Theme, ValidLanguage.UA, "’- 0123456789");
-			validator.CheckBannedChar(labelAdditionalInfo, richTextBoxAdditionalInfo.Text,
-				Client.SEPARATOR, _account.Theme);
 
 			bool isDataValid = validator.IsDataValid;
 			CheckValidEducations(ref isDataValid);

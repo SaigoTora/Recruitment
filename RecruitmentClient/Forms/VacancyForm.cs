@@ -88,14 +88,6 @@ namespace RecruitmentClient.Forms
 			richTextBoxClientAdditionalInfo.Text =
 				richTextBoxClientAdditionalInfo.Text.Trim(' ', '\r', '\n');
 
-			Validator validator = new Validator();
-			validator.CheckBannedChar(labelClientAdditionalInfoTitle,
-				richTextBoxClientAdditionalInfo.Text, Client.SEPARATOR, _account.Theme);
-			if (!validator.IsDataValid)
-			{
-				richTextBoxClientAdditionalInfo.Focus();
-				return;
-			}
 			try
 			{
 				SharedModels.Models.Application application = new SharedModels.Models.Application(

@@ -551,9 +551,6 @@ namespace RecruitmentClient.Forms
 					CustomMessageBoxIcon.Warning);
 
 			string position = textBoxPositionSearch.Text;// Position
-			Validator validator = new Validator();
-			validator.CheckBannedChar(new Label() { Text = "Посада" },
-				position, Client.SEPARATOR, _account.Theme);
 
 			SortOption sortOption = SortOption.Date;// Sorting
 			if (comboBoxSort.SelectedIndex == 1)

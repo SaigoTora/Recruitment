@@ -142,11 +142,7 @@ namespace RecruitmentServer.Forms
 			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelCity,
 				labelAge);
 
-			Validator validator = new Validator();
-			validator.CheckBannedChar(labelCity, textBoxCity.Text, Server.SEPARATOR,
-				_account.Theme);
-
-			bool isDataValid = validator.IsDataValid;
+			bool isDataValid = true;
 			if (numericUpDownAgeMin.Value > numericUpDownAgeMax.Value)
 			{
 				ValidationFeedbackManager.HighlightInvalidLabel(labelAge, "Мінімальний вік "

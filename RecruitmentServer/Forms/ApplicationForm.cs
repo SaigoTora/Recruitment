@@ -93,14 +93,6 @@ namespace RecruitmentServer.Forms
 		}
 		private void ButtonApply_Click(object sender, EventArgs e)
 		{
-			if (comboBoxDecision.Text == "Відхилена")
-			{
-				Validator validator = new Validator();
-				validator.CheckBannedChar(labelReason, richTextBoxReason.Text,
-					Server.SEPARATOR, _account.Theme);
-				if (!validator.IsDataValid)
-					return;
-			}
 			DateTime dateTime = new DateTime(dateTimePickerInterview.Value.Year,
 				dateTimePickerInterview.Value.Month, dateTimePickerInterview.Value.Day,
 				(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
