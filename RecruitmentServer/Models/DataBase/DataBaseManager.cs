@@ -114,18 +114,6 @@ namespace RecruitmentServer.Models.DataBase
 			=> _educationDegreeRepo.GetAll().OrderBy(ed => ed.Id).ToArray();
 		internal static EducationForm[] GetEducationForms()
 			=> _educationFormRepo.GetAll().OrderBy(ef => ef.Id).ToArray();
-		internal static string GetRequirementEducationDegree(int requirementId)
-		{
-			var degrees = _educationDegreeRequirementRepo.GetAll().
-				Where(edr => edr.RequirementId == requirementId).
-				Select(edr => edr.EducationDegree?.Degree); ;
-
-			string s = string.Empty;
-			foreach (string degree in degrees)
-				s += $"{degree}, ";
-
-			return s.TrimEnd(' ', ',').ToLower();
-		}
 
 		#region Vacancy
 		internal static Vacancy GetVacancy(int vacancyId)

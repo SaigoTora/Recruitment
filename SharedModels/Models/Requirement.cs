@@ -89,6 +89,8 @@ namespace SharedModels.Models
 			EducationDegreeRequirements = educationDegreeRequirements;
 		}
 
+		public void ChangeCity(string city) => City = city;
+
 		public override string ToString()
 		{
 			string res = string.Empty;

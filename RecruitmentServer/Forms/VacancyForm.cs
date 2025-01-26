@@ -164,8 +164,9 @@ namespace RecruitmentServer.Forms
 		private void ButtonRequirementShow_Click(object sender, EventArgs e)
 		{
 			string requirement = DatabaseManager.GetRequirement(_vacancy.RequirementId).ToString();
-			string educationDegrees = DatabaseManager.GetRequirementEducationDegree(
-				_vacancy.RequirementId);
+			string educationDegrees = string.Join(", ",
+				_vacancy.Requirement.EducationDegreeRequirements.Select(
+					edr => edr.EducationDegree.Degree.ToLower()));
 
 			if (educationDegrees != null && educationDegrees != string.Empty)
 			{
@@ -209,6 +210,10 @@ namespace RecruitmentServer.Forms
 			if (CheckValidData())
 			{
 				DatabaseManager.CreatePoint(_point);
+				string city = string.IsNullOrWhiteSpace(_requirement.City)
+					? null
+					: _requirement.City;
+				_requirement.ChangeCity(city);
 				DatabaseManager.CreateRequirement(_requirement);
 
 				int requirementId = _requirement.Id;
