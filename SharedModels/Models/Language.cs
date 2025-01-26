@@ -24,7 +24,7 @@ namespace SharedModels.Models
 		[JsonIgnore]
 		public virtual Questionnaire Questionnaire { get; private set; }
 
-		private Language() { }
+		public Language() { }
 		public Language(string name, int level, int questionnaireId)
 		{
 			Name = name;

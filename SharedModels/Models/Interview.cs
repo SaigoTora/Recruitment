@@ -27,7 +27,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Employee> Employees { get; private set; }
 			= new HashSet<Employee>();
 
-		private Interview() { }
+		public Interview() { }
 		public Interview(DateTime dateEvent, int applicationId, int interviewStatusId)
 		{
 			DateEvent = dateEvent;
@@ -35,6 +35,8 @@ namespace SharedModels.Models
 			InterviewStatusId = interviewStatusId;
 		}
 
+		public DateTime GetLocalDateEvent()
+			=> DateEvent.ToLocalTime();
 		public void ChangeDateEvent(DateTime dateEvent)
 			=> DateEvent = dateEvent;
 		public void ChangeStatusId(InterviewStatus interviewStatus)

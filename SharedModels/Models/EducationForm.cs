@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Education> Educations { get; private set; }
 			= new HashSet<Education>();
 
-		private EducationForm() { }
+		public EducationForm() { }
 		public EducationForm(string form)
 			=> Form = form;
 	}

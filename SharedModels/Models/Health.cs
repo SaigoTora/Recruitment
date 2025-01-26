@@ -25,7 +25,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 
-		private Health() { }
+		public Health() { }
 		public Health(string chronicDiseases, bool smoker, bool drinkAlcohol)
 		{
 			ChronicDiseases = chronicDiseases;

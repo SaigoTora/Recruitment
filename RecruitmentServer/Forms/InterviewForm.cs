@@ -51,7 +51,7 @@ namespace RecruitmentServer.Forms
 		{
 			textBoxPosition.Text = interview.Application.Vacancy.Position.Name;
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
-				interview.DateEvent.ToLocalTime().ToString("d MMMM yyyy HH:mm");
+				interview.GetLocalDateEvent().ToString("d MMMM yyyy HH:mm");
 
 			if (interview.InterviewStatus.Status == "Прийнято"
 				|| interview.InterviewStatus.Status == "Не прийнято")
@@ -64,7 +64,7 @@ namespace RecruitmentServer.Forms
 			if (interview.InterviewStatus.Status == "Кандидат запрошений")
 				buttonChangeDate.Visible = true;
 
-			dateTimePickerInterview.MinDate = interview.DateEvent.Date;
+			dateTimePickerInterview.MinDate = interview.GetLocalDateEvent().Date;
 			dateTimePickerInterview.MaxDate = DateTime.Now.AddMonths(1).Date;
 			if (interview.InterviewStatus.Status == "Кандидат чекає на рішення")
 				comboBoxDecision.SelectedIndex = 1;
@@ -95,9 +95,9 @@ namespace RecruitmentServer.Forms
 			Size = new Size(Width, Height + panelDate.Height);
 			comboBoxDecision.Enabled = false;
 			panelDate.Visible = true;
-			dateTimePickerInterview.Value = _interview.DateEvent.ToLocalTime();
-			numericUpDownHours.Value = _interview.DateEvent.ToLocalTime().Hour;
-			numericUpDownMinutes.Value = _interview.DateEvent.ToLocalTime().Minute;
+			dateTimePickerInterview.Value = _interview.GetLocalDateEvent();
+			numericUpDownHours.Value = _interview.GetLocalDateEvent().Hour;
+			numericUpDownMinutes.Value = _interview.GetLocalDateEvent().Minute;
 			buttonChangeApply.Visible = true;
 
 			buttonChangeDate.Text = "Назад";
@@ -129,6 +129,12 @@ namespace RecruitmentServer.Forms
 				dateTimePickerInterview.Value.Month, dateTimePickerInterview.Value.Day,
 				(int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, 0);
 
+			if (_interview.GetLocalDateEvent() == dateTime)
+			{
+				ButtonChangeDateBack_Click(sender, e);
+				return;
+			}
+
 			if (DateTime.Now >= dateTime)
 			{
 				CustomMessageBox.Show("Ви не можете встановити час, який раніше за поточний!",
@@ -136,7 +142,7 @@ namespace RecruitmentServer.Forms
 					CustomMessageBoxIcon.Error, 440);
 				return;
 			}
-			if (_interview.DateEvent.ToLocalTime() >= dateTime)
+			if (_interview.GetLocalDateEvent() >= dateTime)
 			{
 				DialogResult result = CustomMessageBox.Show("Ви впевнені, що хочете змінити " +
 					"дату та час співбесіди? Рекомендується не встановлювати їх на раніше, " +
@@ -147,17 +153,16 @@ namespace RecruitmentServer.Forms
 					return;
 			}
 
-			_interview.ChangeDateEvent(dateTime);
 			DatabaseManager.UpdateInterviewDateEvent(_interview.Id, dateTime.ToUniversalTime());
 			ButtonChangeDateBack_Click(sender, e);
 			labelDateEvent.Text = "Дата і час проведення співбесіди: " +
-				_interview.DateEvent.ToLocalTime().ToString("d MMMM yyyy HH:mm");
+				_interview.GetLocalDateEvent().ToString("d MMMM yyyy HH:mm");
 			_actionAfterChange(EventArgs.Empty);
 		}
 		private void ButtonApply_Click(object sender, EventArgs e)
 		{
 			DialogResult result;
-			if (DateTime.Now < _interview.DateEvent)
+			if (DateTime.Now < _interview.GetLocalDateEvent())
 			{
 				if (comboBoxDecision.Text == "Прийнято")
 				{

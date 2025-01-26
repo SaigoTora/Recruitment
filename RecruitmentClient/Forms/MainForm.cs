@@ -390,7 +390,7 @@ namespace RecruitmentClient.Forms
 			_vacancyCreator.CreateLabel(labelSalaryV, $"{vacancy.Salary:0.##}" +
 				$" {CURRENCY}");
 			Label labelDate = _vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
-				ConvertDateToString(vacancy.DatePublication));
+				ConvertDateToString(vacancy.GetLocalDatePublication()));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
 			Guna2GradientButton button = _vacancyCreator.CreateButton(buttonVacancy);
@@ -403,7 +403,7 @@ namespace RecruitmentClient.Forms
 
 			_applicationCreator.CreateLabel(labelPositionA, application.Vacancy.Position.Name);
 			Label labelDate = _applicationCreator.CreateLabel(labelDateSubmissionA,
-				DATE_PREFIX + ConvertDateToString(application.DateSubmission));
+				DATE_PREFIX + ConvertDateToString(application.GetLocalDateSubmission()));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
 			_applicationCreator.CreateLabel(labelStatusA, application.ApplicationStatus.Status);
@@ -428,7 +428,7 @@ namespace RecruitmentClient.Forms
 				interview.Application.Vacancy.Position.Name);
 			_interviewCreator.CreateLabel(labelStatusI, interview.InterviewStatus.Status);
 			Label labelDate = _interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
-				ConvertDateToString(interview.DateEvent));
+				ConvertDateToString(interview.GetLocalDateEvent()));
 			AdjustLabelLocation(labelDate, panelVacancy);
 
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(

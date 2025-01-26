@@ -36,7 +36,7 @@ namespace RecruitmentClient.Forms
 			richTextBoxPosition.Text = _vacancy.Position.Name;
 			richTextBoxSalary.Text = $"{_vacancy.Salary:0.##}" + " грн.";
 			labelDatePublication.Text = "Дата публікації: " +
-				_vacancy.DatePublication.ToString("yyyy-MM-dd");
+				_vacancy.GetLocalDatePublication().ToString("yyyy-MM-dd");
 
 			SetupInformation(_vacancy.Position.Description, labelPositionDescriptionTitle,
 				richTextBoxPositionDescription);

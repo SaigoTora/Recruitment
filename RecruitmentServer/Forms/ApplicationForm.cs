@@ -42,7 +42,7 @@ namespace RecruitmentServer.Forms
 			textBoxPosition.Text = application.Vacancy.Position.Name;
 			labelScores.Text = "Балів: " + application.Scores;
 			labelDatePublication.Text = "Дата і час подачі: " +
-				application.DateSubmission.ToString("d MMMM yyyy HH:mm");
+				application.GetLocalDateSubmission().ToString("d MMMM yyyy HH:mm");
 
 			if (application.AdditionalInfo != null && application.AdditionalInfo.Length > 0)
 				richTextBoxAdditionalInfo.Text = application.AdditionalInfo;

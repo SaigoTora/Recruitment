@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
-		private ApplicationStatus() { }
+		public ApplicationStatus() { }
 		public ApplicationStatus(string status)
 			=> Status = status;
 	}

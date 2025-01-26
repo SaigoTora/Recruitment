@@ -26,7 +26,7 @@ namespace SharedModels.Models
 		public virtual ICollection<EducationDegreeRequirement> EducationDegreeRequirements
 		{ get; private set; } = new HashSet<EducationDegreeRequirement>();
 
-		private EducationDegree() { }
+		public EducationDegree() { }
 		public EducationDegree(string degree)
 			=> Degree = degree;
 	}

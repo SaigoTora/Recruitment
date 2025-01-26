@@ -5,10 +5,10 @@ using UIHelpers.Themes;
 namespace RecruitmentServer.Models
 {
 	[Serializable]
-	public class Account
+	internal class Account
 	{
-		public Theme Theme;
+		internal Theme Theme;
 
-		public Account() { }
+		internal Account() { }
 	}
 }

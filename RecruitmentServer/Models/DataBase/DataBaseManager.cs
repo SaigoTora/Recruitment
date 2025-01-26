@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+
 using SharedModels.DTOs;
 using SharedModels.Models;
 using SharedModels.Search;
@@ -31,6 +32,7 @@ namespace RecruitmentServer.Models.DataBase
 		private static readonly BaseRepo<EducationDegree> _educationDegreeRepo;
 		private static readonly BaseRepo<EducationForm> _educationFormRepo;
 		private static readonly BaseRepo<Position> _positionRepo;
+		private static readonly BaseRepo<ApplicationStatus> _applicationStatusRepo;
 
 		static DatabaseManager()
 		{
@@ -53,6 +55,7 @@ namespace RecruitmentServer.Models.DataBase
 			_educationDegreeRepo = new BaseRepo<EducationDegree>(_context);
 			_educationFormRepo = new BaseRepo<EducationForm>(_context);
 			_positionRepo = new BaseRepo<Position>(_context);
+			_applicationStatusRepo = new BaseRepo<ApplicationStatus>(_context);
 
 			DatabaseInitializer.Initialize(_context);
 		}
@@ -72,7 +75,11 @@ namespace RecruitmentServer.Models.DataBase
 		internal static void CreateVacancy(Vacancy vacancy)
 			=> _vacancyRepo.Add(vacancy);
 		internal static void CreateApplication(Application application)
-			=> _applicationRepo.Add(application);
+		{
+			application.ChangeStatus(_applicationStatusRepo.GetOne(1));
+			application.ChangeDateSubmission(DateTime.UtcNow);
+			_applicationRepo.Add(application);
+		}
 		internal static void CreateRequirement(Requirement requirement)
 			=> _requirementRepo.Add(requirement);
 		internal static void CreatePoint(Point point)
@@ -122,18 +129,13 @@ namespace RecruitmentServer.Models.DataBase
 
 		#region Vacancy
 		internal static Vacancy GetVacancy(int vacancyId)
-		{
-			Vacancy vacancy = _vacancyRepo.GetOne(vacancyId);
-			vacancy.ChangeDatePublication(vacancy.DatePublication.ToLocalTime());
-			return vacancy;
-		}
+			=> _vacancyRepo.GetOne(vacancyId);
 		private static List<Vacancy> GetVacancies(FullSearcher searcher)
 		{
 			var vacancies = _vacancyRepo.GetAll();
-			vacancies.ForEach(v => v.ChangeDatePublication(v.DatePublication.ToLocalTime()));
 
 			if (searcher == null)
-				return vacancies.OrderByDescending(v => v.DatePublication).ToList();
+				return vacancies.OrderByDescending(v => v.GetLocalDatePublication()).ToList();
 
 			if (searcher.Position != null)
 				vacancies = vacancies.
@@ -141,7 +143,8 @@ namespace RecruitmentServer.Models.DataBase
 					Contains(searcher.Position.ToLower())).ToList();
 
 			if (searcher.MinDate.HasValue)
-				vacancies = vacancies.Where(v => v.DatePublication > searcher.MinDate).ToList();
+				vacancies = vacancies.Where(v => v.GetLocalDatePublication() > searcher.MinDate)
+					.ToList();
 
 			if (searcher.MinValue.HasValue)
 				vacancies = vacancies.
@@ -159,7 +162,7 @@ namespace RecruitmentServer.Models.DataBase
 			switch (searcher.SortOption)
 			{
 				case SortOption.Date:
-					return vacancies.OrderByDescending(v => v.DatePublication).ToList();
+					return vacancies.OrderByDescending(v => v.GetLocalDatePublication()).ToList();
 				case SortOption.AlphabetPosition:
 					return vacancies.OrderBy(v => v.Position.Name).ToList();
 				case SortOption.NumberOfApplications:
@@ -196,26 +199,17 @@ namespace RecruitmentServer.Models.DataBase
 
 		#region Application
 		internal static Application GetApplication(int applicationId)
-		{
-			Application application = _applicationRepo.GetOne(applicationId);
-			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
-			return application;
-		}
+			=> _applicationRepo.GetOne(applicationId);
 		internal static Application GetApplication(int vacancyId, int candidateId)
-		{
-			Application application = _applicationRepo.GetAll().
+			=> _applicationRepo.GetAll().
 				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
-			application.ChangeDateSubmission(application.DateSubmission.ToLocalTime());
-			return application;
-		}
 
 		private static List<Application> GetApplications(FullSearcher searcher)
 		{
 			var applications = _applicationRepo.GetAll();
-			applications.ForEach(a => a.ChangeDateSubmission(a.DateSubmission.ToLocalTime()));
 
 			if (searcher == null)
-				return applications.OrderByDescending(a => a.DateSubmission).ToList();
+				return applications.OrderByDescending(a => a.GetLocalDateSubmission()).ToList();
 
 			if (searcher.Position != null)
 				applications = applications.
@@ -224,7 +218,7 @@ namespace RecruitmentServer.Models.DataBase
 
 			if (searcher.MinDate.HasValue)
 				applications = applications.
-					Where(a => a.DateSubmission > searcher.MinDate).ToList();
+					Where(a => a.GetLocalDateSubmission() > searcher.MinDate).ToList();
 
 			if (searcher.MinValue.HasValue)
 				applications = applications.
@@ -241,7 +235,8 @@ namespace RecruitmentServer.Models.DataBase
 			switch (searcher.SortOption)
 			{
 				case SortOption.Date:
-					return applications.OrderByDescending(a => a.DateSubmission).ToList();
+					return applications.OrderByDescending(a => a.GetLocalDateSubmission())
+						.ToList();
 				case SortOption.AlphabetPosition:
 					return applications.OrderBy(a => a.Vacancy.Position.Name).ToList();
 				case SortOption.NumberOfPoints:
@@ -276,10 +271,9 @@ namespace RecruitmentServer.Models.DataBase
 		private static List<Interview> GetInterviews(FullSearcher searcher)
 		{
 			var interviews = _interviewRepo.GetAll();
-			interviews.ForEach(i => i.ChangeDateEvent(i.DateEvent.ToLocalTime()));
 
 			if (searcher == null)
-				return interviews.OrderByDescending(i => i.DateEvent).ToList();
+				return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
 
 			if (searcher.Position != null)
 				interviews = interviews.
@@ -288,7 +282,7 @@ namespace RecruitmentServer.Models.DataBase
 
 			if (searcher.MinDate.HasValue)
 				interviews = interviews.
-					Where(i => i.DateEvent > searcher.MinDate).ToList();
+					Where(i => i.GetLocalDateEvent() > searcher.MinDate).ToList();
 
 			if (searcher.Status != null)
 				interviews = interviews.
@@ -297,7 +291,7 @@ namespace RecruitmentServer.Models.DataBase
 			switch (searcher.SortOption)
 			{
 				case SortOption.Date:
-					return interviews.OrderByDescending(i => i.DateEvent).ToList();
+					return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
 				case SortOption.AlphabetPosition:
 					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name).ToList();
 				default: return interviews.ToList();
@@ -572,7 +566,7 @@ namespace RecruitmentServer.Models.DataBase
 		internal static void DeleteLanguage(Language language) => _languageRepo.Delete(language);
 		#endregion
 
-		public static void Dispose()
+		internal static void Dispose()
 		{
 			_context?.Dispose();
 
@@ -594,6 +588,7 @@ namespace RecruitmentServer.Models.DataBase
 			_educationDegreeRepo?.Dispose();
 			_educationFormRepo?.Dispose();
 			_positionRepo?.Dispose();
+			_applicationStatusRepo?.Dispose();
 		}
 	}
 }

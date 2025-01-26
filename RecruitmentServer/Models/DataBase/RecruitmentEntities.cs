@@ -18,7 +18,8 @@ namespace RecruitmentServer.Models.DataBase
 		public virtual DbSet<Language> Languages { get; set; }
 		public virtual DbSet<Questionnaire> Questionnaires { get; set; }
 		public virtual DbSet<Vacancy> Vacancies { get; set; }
-		public virtual DbSet<EducationDegreeRequirement> EducationDegreeRequirements { get; set; }
+		public virtual DbSet<EducationDegreeRequirement> EducationDegreeRequirements
+		{ get; set; }
 		public virtual DbSet<Requirement> Requirements { get; set; }
 		public virtual DbSet<EducationDegreePoint> EducationDegreePoints { get; set; }
 		public virtual DbSet<Point> Points { get; set; }

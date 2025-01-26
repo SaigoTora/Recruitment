@@ -42,7 +42,7 @@ namespace SharedModels.Models
 		[JsonIgnore]
 		public virtual Questionnaire Questionnaire { get; private set; }
 
-		private Education() { }
+		public Education() { }
 		public Education(string nameInstitution, string specialty, int yearAdmission,
 			DateTime dateEnd, int questionnaireId, int educationDegreeId, int educationFormId)
 		{

@@ -13,7 +13,7 @@ namespace RecruitmentClient.Models
 
 		private readonly int _port;
 
-		public LocalNetworkScanner(int port)
+		internal LocalNetworkScanner(int port)
 			=> _port = port;
 
 		internal async Task<List<IPAddress>> ScanLocalNetworkAsync()

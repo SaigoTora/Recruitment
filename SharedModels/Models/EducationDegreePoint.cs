@@ -23,7 +23,7 @@ namespace SharedModels.Models
 		[JsonIgnore]
 		public virtual Point Point { get; private set; }
 
-		private EducationDegreePoint() { }
+		public EducationDegreePoint() { }
 		public EducationDegreePoint(int points, int pointId, int educationDegreeId)
 		{
 			Points = points;

@@ -14,8 +14,10 @@ namespace RecruitmentServer.Models.DataBase
 	{
 		private static RecruitmentEntities _context;
 
-		public static void Initialize(RecruitmentEntities context)
+		internal static void Initialize(RecruitmentEntities context)
 		{
+			_context = context;
+
 			bool parseResult = bool.TryParse(ConfigurationManager.AppSettings["seedData"],
 				out bool shouldSeedData);
 			if (!parseResult)
@@ -23,7 +25,6 @@ namespace RecruitmentServer.Models.DataBase
 
 			if (shouldSeedData)
 			{
-				_context = context;
 				ClearDatabase();
 				SeedDatabase();
 			}

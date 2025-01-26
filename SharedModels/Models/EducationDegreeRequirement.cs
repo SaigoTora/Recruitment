@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		[JsonIgnore]
 		public virtual Requirement Requirement { get; private set; }
 
-		private EducationDegreeRequirement() { }
+		public EducationDegreeRequirement() { }
 		public EducationDegreeRequirement(int requirementId, int educationDegreeId)
 		{
 			RequirementId = requirementId;

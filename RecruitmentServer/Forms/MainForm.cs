@@ -10,7 +10,6 @@ using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
-using UIHelpers.Validation;
 using SharedModels.Models;
 using RecruitmentLibrary.Serialization;
 using RecruitmentServer.Models.DataBase;
@@ -421,7 +420,7 @@ namespace RecruitmentServer.Forms
 			_vacancyCreator.CreateLabel(labelCountV, COUNT_PREFIX +
 				vacancy.Applications.Count.ToString());
 			_vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
-				ConvertDateToString(vacancy.DatePublication));
+				ConvertDateToString(vacancy.GetLocalDatePublication()));
 
 			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";
 			_vacancyCreator.CreateLabel(labelRelevance, relevance);
@@ -442,7 +441,7 @@ namespace RecruitmentServer.Forms
 			_applicationCreator.CreateLabel(labelScores, SCORES_PREFIX +
 				application.Scores.ToString());
 			_applicationCreator.CreateLabel(labelDateSubmissionA, DATE_PREFIX +
-				ConvertDateToString(application.DateSubmission));
+				ConvertDateToString(application.GetLocalDateSubmission()));
 
 			_applicationCreator.CreateLabel(labelStatusA, application.ApplicationStatus.Status);
 			Guna2PictureBox picture = _applicationCreator.CreatePictureBox(
@@ -460,7 +459,7 @@ namespace RecruitmentServer.Forms
 			_interviewCreator.CreateLabel(labelPositionI,
 				interview.Application.Vacancy.Position.Name);
 			_interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
-				ConvertDateToString(interview.DateEvent));
+				ConvertDateToString(interview.GetLocalDateEvent()));
 
 			_interviewCreator.CreateLabel(labelStatusI, interview?.InterviewStatus?.Status);
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(

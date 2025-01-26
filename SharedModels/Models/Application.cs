@@ -41,7 +41,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Interview> Interviews { get; private set; }
 			= new HashSet<Interview>();
 
-		private Application() { }
+		public Application() { }
 		public Application(DateTime dateSubmission, string additionalInfo, int applicationStatusId,
 			int candidateId, int vacancyId)
 		{
@@ -51,21 +51,19 @@ namespace SharedModels.Models
 			CandidateId = candidateId;
 			VacancyId = vacancyId;
 		}
-		public Application(string positionName, string positionDescription, string status,
-			DateTime dateSubmission, string reasonRejection)
-		{
-			Vacancy?.Position?.ChangeName(positionName);
-			Vacancy?.Position?.ChangeDescription(positionDescription);
-			ApplicationStatus = new ApplicationStatus(status);
-			DateSubmission = dateSubmission;
-			ReasonRejection = reasonRejection;
-		}
 
+		public DateTime GetLocalDateSubmission()
+			=> DateSubmission.ToLocalTime();
 		public void ChangeDateSubmission(DateTime dateSubmission)
 			=> DateSubmission = dateSubmission;
 		public void ChangeReasonRejection(string reasonRejection)
 			=> ReasonRejection = reasonRejection;
 		public void ChangeStatusId(int applicationStatusId)
 			=> ApplicationStatusId = applicationStatusId;
+		public void ChangeStatus(ApplicationStatus status)
+		{
+			ApplicationStatus = status;
+			ApplicationStatusId = status.Id;
+		}
 	}
 }

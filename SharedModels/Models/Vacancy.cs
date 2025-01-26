@@ -41,7 +41,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Application> Applications { get; private set; }
 			= new HashSet<Application>();
 
-		private Vacancy() { }
+		public Vacancy() { }
 		public Vacancy(decimal salary, DateTime datePublication, string info, int pointId,
 			int requirementId, int positionId)
 		{
@@ -54,8 +54,8 @@ namespace SharedModels.Models
 			PositionId = positionId;
 		}
 
+		public DateTime GetLocalDatePublication()
+			=> DatePublication.ToLocalTime();
 		public void ChangeRelevance(bool relevance) => Relevance = relevance;
-		public void ChangeDatePublication(DateTime datePublication)
-			=> DatePublication = datePublication;
 	}
 }

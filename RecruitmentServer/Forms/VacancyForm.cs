@@ -10,6 +10,7 @@ using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
 using RecruitmentServer.Models.DataBase;
+using System.Linq;
 
 namespace RecruitmentServer.Forms
 {
@@ -83,7 +84,7 @@ namespace RecruitmentServer.Forms
 			labelApplicationCount.Text = "Кількість заявок: " +
 				vacancy.Applications.Count.ToString();
 			labelDatePublication.Text = "Дата публікації: " +
-				vacancy.DatePublication.ToString("yyyy-MM-dd");
+				vacancy.GetLocalDatePublication().ToString("yyyy-MM-dd");
 			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";
 			labelRelevance.Text = relevance;
 			richTextBoxPositionDescription.Text = vacancy.Position.Description;

@@ -20,7 +20,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Questionnaire> Questionnaires { get; private set; }
 			= new HashSet<Questionnaire>();
 
-		private FamilyStatus() { }
+		public FamilyStatus() { }
 		public FamilyStatus(string status)
 			=> Status = status;
 	}

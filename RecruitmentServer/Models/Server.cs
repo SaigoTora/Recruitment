@@ -199,11 +199,8 @@ namespace RecruitmentServer.Models
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestWithoutResponseAsync<Application>(context, a =>
-				{
-					a.ChangeStatusId(1);
-					DatabaseManager.CreateApplication(a);
-				});
+				await HandleRequestWithoutResponseAsync<Application>(context,
+					a => DatabaseManager.CreateApplication(a));
 			}
 		}
 

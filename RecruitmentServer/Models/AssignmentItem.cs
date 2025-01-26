@@ -6,8 +6,7 @@
 		internal int CandidateId { get; private set; }
 		internal int Scores { get; private set; }
 
-		public AssignmentItem() { }
-		public AssignmentItem(int vacancyId, int candidateId, int scores)
+		internal AssignmentItem(int vacancyId, int candidateId, int scores)
 		{
 			VacancyId = vacancyId;
 			CandidateId = candidateId;

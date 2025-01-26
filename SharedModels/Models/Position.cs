@@ -23,7 +23,7 @@ namespace SharedModels.Models
 		public virtual ICollection<Vacancy> Vacancies { get; private set; }
 			= new HashSet<Vacancy>();
 
-		private Position() { }
+		public Position() { }
 		public Position(string name, string description)
 		{
 			Name = name;

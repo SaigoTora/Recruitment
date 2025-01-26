@@ -61,7 +61,7 @@ namespace SharedModels.Models
 		[JsonIgnore]
 		public string GetFullName => $"{Surname.ToUpper()} {Name} {FatherName}";
 
-		private Employee() { }
+		public Employee() { }
 		public Employee(string surname, string name, string fatherName, string position,
 			string city, string phone, DateTime birthday, string email, decimal salary,
 			DateTime dateEmployment)
