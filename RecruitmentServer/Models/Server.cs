@@ -94,16 +94,30 @@ namespace RecruitmentServer.Models
 		}
 		private async Task ProcessRequestAsync(HttpListenerContext context)
 		{
-			if (context.Request.RawUrl == "/favicon.ico")
-			{// Ignore request for favicon.ico
-				context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-				context.Response.Close();
-				return;
-			}
+			try
+			{
+				if (context.Request.RawUrl == "/favicon.ico")
+				{// Ignore request for favicon.ico
+					RespondWithStatus(context, HttpStatusCode.NotFound);
+					return;
+				}
 
-			await _endpointHandlers[context.Request.RawUrl](context);
+				if (_endpointHandlers.TryGetValue(context.Request.RawUrl, out var handler))
+					await handler(context);
+				else
+					RespondWithStatus(context, HttpStatusCode.NotFound);
+			}
+			finally
+			{
+				context.Response.Close();
+			}
+		}
+		private void RespondWithStatus(HttpListenerContext context, HttpStatusCode statusCode)
+		{
+			context.Response.StatusCode = (int)statusCode;
 			context.Response.Close();
 		}
+
 
 		#region Candidate
 		private async Task HandleCandidateRegisterAsync(HttpListenerContext context)
@@ -111,40 +125,51 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestWithUpdateAsync<Candidate>(context,
-					c => DatabaseManager.CreateCandidate(c));
+					c => DatabaseManager.CreateCandidate(c), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleCandidateLoginAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<CandidateLoginDTO, Candidate>(context,
-					cl => DatabaseManager.GetCandidate(cl));
+					cl => DatabaseManager.GetCandidate(cl), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleCandidateChangePasswordAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
 				await HandleRequestWithoutResponseAsync<CandidateChangePasswordDTO>(context,
-					ccpDTO => DatabaseManager.UpdateCandidatePassword(ccpDTO));
+					ccpDTO => DatabaseManager.UpdateCandidatePassword(ccpDTO),
+					HttpStatusCode.NoContent);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleCandidateAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
 				await HandleRequestWithUpdateAsync<Candidate>(context,
-					c => DatabaseManager.UpdateCandidate(c.Id, c));
+					c => DatabaseManager.UpdateCandidate(c.Id, c), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleQuestionnaireAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
 				await HandleRequestWithUpdateAsync<Questionnaire>(context,
-					q => DatabaseManager.UpdateQuestionnaire(q.Id, q));
+					q => DatabaseManager.UpdateQuestionnaire(q.Id, q), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 
 		#region Check unique
@@ -153,24 +178,33 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
-					sduDTO => DatabaseManager.CheckCandidateLoginUnique(sduDTO));
+					sduDTO => DatabaseManager.CheckCandidateLoginUnique(sduDTO),
+					HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleCandidatePhoneUniqueAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
-					sduDTO => DatabaseManager.CheckCandidatePhoneUnique(sduDTO));
+					sduDTO => DatabaseManager.CheckCandidatePhoneUnique(sduDTO),
+					HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleCandidateEmailUniqueAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<StringDataUniqueDTO, bool>(context,
-					sduDTO => DatabaseManager.CheckCandidateEmailUnique(sduDTO));
+					sduDTO => DatabaseManager.CheckCandidateEmailUnique(sduDTO),
+					HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		#endregion
 		#endregion
@@ -181,16 +215,21 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetVacanciesCount(acssDTO));
+					acssDTO => DatabaseManager.GetVacanciesCount(acssDTO), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleVacanciesAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Vacancy>>(context,
-					pacssDTO => DatabaseManager.GetVacancies(pacssDTO));
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Vacancy>>(
+					context, pacssDTO => DatabaseManager.GetVacancies(pacssDTO),
+					HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		#endregion
 
@@ -200,8 +239,10 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestWithoutResponseAsync<Application>(context,
-					a => DatabaseManager.CreateApplication(a));
+					a => DatabaseManager.CreateApplication(a), HttpStatusCode.Created);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 
 		private async Task HandleApplicationsCountAsync(HttpListenerContext context)
@@ -209,16 +250,21 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetApplicationsCount(acssDTO));
+					acssDTO => DatabaseManager.GetApplicationsCount(acssDTO), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleApplicationsAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Application>>(
-					context, pacssDTO => DatabaseManager.GetApplications(pacssDTO));
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO,
+					List<Application>>(context,
+					pacssDTO => DatabaseManager.GetApplications(pacssDTO), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		#endregion
 
@@ -228,16 +274,21 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetInterviewsCount(acssDTO));
+					acssDTO => DatabaseManager.GetInterviewsCount(acssDTO), HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleInterviewsAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
 				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Interview>>(
-					context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO));
+					context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO),
+					HttpStatusCode.OK);
 			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		#endregion
 
@@ -245,46 +296,81 @@ namespace RecruitmentServer.Models
 		private async Task HandleFamilyStatusesAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				await RespondAsync(context, DatabaseManager.GetFamilyStatuses());
+				await RespondAsync(context, DatabaseManager.GetFamilyStatuses(),
+					HttpStatusCode.OK);
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		private async Task HandleBusinessTripOpportunitiesAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				await RespondAsync(context, DatabaseManager.GetBusinessTripOpportunities());
+				await RespondAsync(context, DatabaseManager.GetBusinessTripOpportunities(),
+					HttpStatusCode.OK);
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
 		}
 		#endregion
 
 		#region General methods
 		private async Task HandleRequestAndRespondAsync<T1, T2>(HttpListenerContext context,
-			Func<T1, T2> responseHandler)
+			Func<T1, T2> responseHandler, HttpStatusCode statusCode)
 		{
-			T1 request = await DeserializeFromRequestAsync<T1>(context);
-			T2 responseObject = responseHandler(request);
+			try
+			{
+				T1 request = await DeserializeFromRequestAsync<T1>(context);
+				T2 responseObject = responseHandler(request);
 
-			string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
+				string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
+				await SendResponseToClientAsync(context, response, statusCode);
+			}
+			catch (Exception ex)
+			{
+				await HandleErrorAsync(context, ex, HttpStatusCode.BadRequest);
+			}
 		}
 		private async Task HandleRequestWithUpdateAsync<T>(HttpListenerContext context,
-			Func<T, T> responseHandler)
+			Func<T, T> responseHandler, HttpStatusCode statusCode)
 		{
-			T request = await DeserializeFromRequestAsync<T>(context);
-			request = responseHandler(request);
+			try
+			{
+				T request = await DeserializeFromRequestAsync<T>(context);
+				request = responseHandler(request);
 
-			string response = JsonConvert.SerializeObject(request, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
+				string response = JsonConvert.SerializeObject(request, Formatting.Indented);
+				await SendResponseToClientAsync(context, response, statusCode);
+			}
+			catch (Exception ex)
+			{
+				await HandleErrorAsync(context, ex, HttpStatusCode.BadRequest);
+			}
 		}
 		private async Task HandleRequestWithoutResponseAsync<T>(HttpListenerContext context,
-			Action<T> responseHandler)
+			Action<T> responseHandler, HttpStatusCode statusCode)
 		{
-			T request = await DeserializeFromRequestAsync<T>(context);
-			responseHandler(request);
+			try
+			{
+				T request = await DeserializeFromRequestAsync<T>(context);
+				responseHandler(request);
 
-			await SendResponseToClientAsync(context, string.Empty);
+				await SendResponseToClientAsync(context, string.Empty, statusCode);
+			}
+			catch (Exception ex)
+			{
+				await HandleErrorAsync(context, ex, HttpStatusCode.BadRequest);
+			}
 		}
-		private async Task RespondAsync<T>(HttpListenerContext context, T responseObject)
+		private async Task RespondAsync<T>(HttpListenerContext context, T responseObject,
+			HttpStatusCode statusCode)
 		{
-			string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
-			await SendResponseToClientAsync(context, response);
+			try
+			{
+				string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
+				await SendResponseToClientAsync(context, response, statusCode);
+			}
+			catch (Exception ex)
+			{
+				await HandleErrorAsync(context, ex, HttpStatusCode.InternalServerError);
+			}
 		}
 		#endregion
 
@@ -301,10 +387,23 @@ namespace RecruitmentServer.Models
 
 			return result;
 		}
-		private async Task SendResponseToClientAsync(HttpListenerContext context, string response)
+		private async Task HandleErrorAsync(HttpListenerContext context, Exception ex,
+			HttpStatusCode statusCode)
+		{
+			var errorResponse = new
+			{
+				Message = "An error occurred",
+				Details = ex.Message
+			};
+
+			string errorJson = JsonConvert.SerializeObject(errorResponse, Formatting.Indented);
+			await SendResponseToClientAsync(context, errorJson, statusCode);
+		}
+		private async Task SendResponseToClientAsync(HttpListenerContext context,
+			string response, HttpStatusCode statusCode)
 		{
 			byte[] responseBytes = Encoding.UTF8.GetBytes(response);
-			context.Response.StatusCode = (int)HttpStatusCode.OK;
+			context.Response.StatusCode = (int)statusCode;
 			context.Response.ContentLength64 = responseBytes.Length;
 
 			await context.Response.OutputStream.WriteAsync(responseBytes, 0, responseBytes.Length);
