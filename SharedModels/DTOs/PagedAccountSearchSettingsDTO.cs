@@ -13,9 +13,9 @@ namespace SharedModels.DTOs
 		public int Count { get; private set; }
 
 		[JsonConstructor]
-		public PagedAccountSearchSettingsDTO(int candidateId, FullSearcher searcher,
-			int startIndex, int count)
-			: base(candidateId, searcher)
+		public PagedAccountSearchSettingsDTO(CandidateLoginDTO candidateLogin,
+			FullSearcher searcher, int startIndex, int count)
+			: base(candidateLogin, searcher)
 		{
 			StartIndex = startIndex;
 			Count = count;

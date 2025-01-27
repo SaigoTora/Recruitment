@@ -74,10 +74,12 @@ namespace RecruitmentServer.Models.DataBase
 			=> _positionRepo.Add(position);
 		internal static void CreateVacancy(Vacancy vacancy)
 			=> _vacancyRepo.Add(vacancy);
-		internal static void CreateApplication(Application application)
+		internal static void CreateApplication(CreateApplicationDTO createApplication)
 		{
-			application.ChangeStatus(_applicationStatusRepo.GetOne(1));
-			application.ChangeDateSubmission(DateTime.UtcNow);
+			Candidate candidate = GetCandidate(createApplication.CandidateLogin);
+
+			Application application = new Application(DateTime.UtcNow,
+				createApplication.AdditionalInfo, 1, candidate.Id, createApplication.VacancyId);
 			_applicationRepo.Add(application);
 		}
 		internal static void CreateRequirement(Requirement requirement)
@@ -100,8 +102,13 @@ namespace RecruitmentServer.Models.DataBase
 		internal static Candidate GetCandidate(int candidateId)
 			=> _candidateRepo.GetOne(candidateId);
 		internal static Candidate GetCandidate(CandidateLoginDTO candidateLogin)
-			=> _candidateRepo.GetAll().FirstOrDefault(c =>
+		{
+			Candidate candidate = _candidateRepo.GetAll().FirstOrDefault(c =>
 				c.Login == candidateLogin.Login && c.Password == candidateLogin.Password);
+
+			return candidate
+				?? throw new UnauthorizedAccessException("Invalid login or password.");
+		}
 		internal static Requirement GetRequirement(int requirementId)
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);
@@ -167,16 +174,24 @@ namespace RecruitmentServer.Models.DataBase
 			return vacancies.GetRange(index, Math.Min(vacancies.Count - index, count));
 		}
 		internal static int GetVacanciesCount(AccountSearchSettingsDTO accountSearch)
-			=> GetVacancies(accountSearch.Searcher)
-				.Where(v => v.Relevance
-				&& v.Applications.All(a => a.Candidate.Id != accountSearch.CandidateId))
+		{
+			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
+
+			return GetVacancies(accountSearch.Searcher)
+				.Where(v => v.Relevance && v.Applications.All(a
+					=> candidate.Login != a.Candidate.Login
+					&& candidate.Password != a.Candidate.Password))
 				.Count();
+		}
 		internal static List<Vacancy> GetVacancies(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
+			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
+
 			var filteredList = GetVacancies(pagedAccountSearch.Searcher)
-				.Where(v => v.Relevance
-				&& v.Applications.All(a => a.Candidate.Id != pagedAccountSearch.CandidateId))
+				.Where(v => v.Relevance && v.Applications.All(a
+					=> candidate.Login != a.Candidate.Login
+					&& candidate.Password != a.Candidate.Password))
 				.ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
@@ -241,13 +256,23 @@ namespace RecruitmentServer.Models.DataBase
 			return applications.GetRange(index, Math.Min(applications.Count - index, count));
 		}
 		internal static int GetApplicationsCount(AccountSearchSettingsDTO accountSearch)
-			=> GetApplications(accountSearch.Searcher)
-			.Where(a => a.Candidate.Id == accountSearch.CandidateId).Count();
+		{
+			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
+
+			return GetApplications(accountSearch.Searcher)
+			.Where(a => candidate.Login == a.Candidate.Login
+				&& candidate.Password == a.Candidate.Password)
+			.Count();
+		}
 		internal static List<Application> GetApplications(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
+			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
+
 			var filteredList = GetApplications(pagedAccountSearch.Searcher)
-				.Where(a => a.Candidate.Id == pagedAccountSearch.CandidateId).ToList();
+				.Where(a => candidate.Login == a.Candidate.Login
+					&& candidate.Password == a.Candidate.Password)
+				.ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
 				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
@@ -294,13 +319,23 @@ namespace RecruitmentServer.Models.DataBase
 			return interviews.GetRange(index, Math.Min(interviews.Count - index, count));
 		}
 		internal static int GetInterviewsCount(AccountSearchSettingsDTO accountSearch)
-			=> GetInterviews(accountSearch.Searcher)
-				.Where(i => i.Application.Candidate.Id == accountSearch.CandidateId).Count();
+		{
+			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
+
+			return GetInterviews(accountSearch.Searcher)
+				.Where(i => candidate.Login == i.Application.Candidate.Login
+					&& candidate.Password == i.Application.Candidate.Password)
+				.Count();
+		}
 		internal static List<Interview> GetInterviews(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
+			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
+
 			var filteredList = GetInterviews(pagedAccountSearch.Searcher)
-				.Where(i => i.Application.Candidate.Id == pagedAccountSearch.CandidateId).ToList();
+				.Where(i => candidate.Login == i.Application.Candidate.Login
+					&& candidate.Password == i.Application.Candidate.Password)
+				.ToList();
 
 			return filteredList.GetRange(pagedAccountSearch.StartIndex,
 				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
@@ -356,11 +391,19 @@ namespace RecruitmentServer.Models.DataBase
 		internal static bool CheckCandidateLoginUnique(StringDataUniqueDTO stringDataUnique)
 			=> !_candidateRepo.GetAll().Any(c => c.Login == stringDataUnique.Data);
 		internal static bool CheckCandidatePhoneUnique(StringDataUniqueDTO stringDataUnique)
-			=> !_candidateRepo.GetAll().Any(c => c.Phone == stringDataUnique.Data
-				&& c.Id != stringDataUnique.CandidateId);
+		{
+			Candidate candidate = GetCandidate(stringDataUnique.CandidateLogin);
+
+			return !_candidateRepo.GetAll().Any(c => c.Phone == stringDataUnique.Data
+				&& candidate.Login != c.Login && candidate.Password != c.Password);
+		}
 		internal static bool CheckCandidateEmailUnique(StringDataUniqueDTO stringDataUnique)
-			=> !_candidateRepo.GetAll().Any(c => c.Email == stringDataUnique.Data
-				&& c.Id != stringDataUnique.CandidateId);
+		{
+			Candidate candidate = GetCandidate(stringDataUnique.CandidateLogin);
+
+			return !_candidateRepo.GetAll().Any(c => c.Email == stringDataUnique.Data
+				&& candidate.Login != c.Login && candidate.Password != c.Password);
+		}
 		#endregion
 
 		internal static List<AssignmentItem> GetAssignmentItems()
@@ -424,9 +467,10 @@ namespace RecruitmentServer.Models.DataBase
 		}
 
 		#region Candidate
-		internal static Candidate UpdateCandidate(int candidateId, Candidate candidate)
+		internal static Candidate UpdateCandidate(Candidate candidate)
 		{
-			Candidate candidateToUpdate = _candidateRepo.GetOne(candidateId);
+			Candidate candidateToUpdate = GetCandidate(new CandidateLoginDTO(candidate.Login,
+				candidate.Password));
 			if (candidateToUpdate == null)
 				return candidateToUpdate;
 
@@ -456,31 +500,34 @@ namespace RecruitmentServer.Models.DataBase
 		internal static void UpdateCandidatePassword(
 			CandidateChangePasswordDTO candidateChangePassword)
 		{
-			Candidate candidate = _candidateRepo.GetOne(candidateChangePassword.CandidateId);
+			Candidate candidate = GetCandidate(candidateChangePassword.CandidateLogin);
 			candidate.ChangeLoginPassword(candidate.Login, candidateChangePassword.NewPassword);
 			_candidateRepo.Save(candidate);
 		}
 		#endregion
 
 		#region Questionnaire
-		internal static Questionnaire UpdateQuestionnaire(int questionnaireId,
-			Questionnaire questionnaire)
+		internal static Questionnaire UpdateQuestionnaire(
+			QuestionnaireChangeDTO questionnaireChange)
 		{
-			var questionnaireToUpdate = _questionnaireRepo.GetOne(questionnaireId);
+			Candidate candidate = GetCandidate(questionnaireChange.CandidateLogin);
+
+			var questionnaireToUpdate = _questionnaireRepo.GetOne(candidate.QuestionnaireId);
 			if (questionnaireToUpdate == null)
 				return questionnaireToUpdate;
 
-			_context.Entry(questionnaireToUpdate).CurrentValues.SetValues(questionnaire);
+			_context.Entry(questionnaireToUpdate).CurrentValues.SetValues(
+				questionnaireChange.Questionnaire);
 
-			if (questionnaire.Health != null)
-				UpdateHealth(questionnaire, questionnaireToUpdate);
+			if (questionnaireChange.Questionnaire.Health != null)
+				UpdateHealth(questionnaireChange.Questionnaire, questionnaireToUpdate);
 
-			if (questionnaire.Languages != null)
-				UpdateLanguages(questionnaire.Languages.ToArray(),
+			if (questionnaireChange.Questionnaire.Languages != null)
+				UpdateLanguages(questionnaireChange.Questionnaire.Languages.ToArray(),
 					questionnaireToUpdate.Languages.ToArray(), questionnaireToUpdate.Id);
 
-			if (questionnaire.Educations != null)
-				UpdateEducations(questionnaire.Educations.ToArray(),
+			if (questionnaireChange.Questionnaire.Educations != null)
+				UpdateEducations(questionnaireChange.Questionnaire.Educations.ToArray(),
 					questionnaireToUpdate.Educations.ToArray(), questionnaireToUpdate.Id);
 
 			_questionnaireRepo.Save(questionnaireToUpdate);

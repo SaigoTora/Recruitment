@@ -229,7 +229,7 @@ namespace RecruitmentClient.Forms
 
 			_panelsInfo = PanelsInfo.Vacancy;
 			AccountSearchSettingsDTO accountSearch
-				= new AccountSearchSettingsDTO(_account.Candidate.Id, _searcher);
+				= new AccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher);
 			_totalItemsToDisplay = await Program.Client.GetFreeVacanciesCountAsync(accountSearch);
 		}
 		private async Task SetupApplicationsAsync()
@@ -244,7 +244,7 @@ namespace RecruitmentClient.Forms
 
 			_panelsInfo = PanelsInfo.Application;
 			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
-				_account.Candidate.Id, _searcher);
+				_account.GetCandidateLogin(), _searcher);
 			_totalItemsToDisplay = await Program.Client.GetApplicationsCountAsync(accountSearch);
 		}
 		private async Task SetupInterviewsAsync()
@@ -259,7 +259,7 @@ namespace RecruitmentClient.Forms
 
 			_panelsInfo = PanelsInfo.Interview;
 			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
-				_account.Candidate.Id, _searcher);
+				_account.GetCandidateLogin(), _searcher);
 			_totalItemsToDisplay = await Program.Client.GetInterviewsCountAsync(accountSearch);
 		}
 
@@ -315,7 +315,7 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch =
-				new PagedAccountSearchSettingsDTO(_account.Candidate.Id, _searcher,
+				new PagedAccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Vacancy> vacancies = await Program.Client.GetFreeVacanciesAsync(
 				pagedAccountSearch);
@@ -336,7 +336,7 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.Candidate.Id, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+				_account.GetCandidateLogin(), _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
 				await Program.Client.GetApplicationsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -356,7 +356,8 @@ namespace RecruitmentClient.Forms
 				return;
 
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.Candidate.Id, _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+				_account.GetCandidateLogin(), _searcher, _createdPanels.Count,
+				COUNT_PANELS_ON_PAGE);
 			List<Interview> interviews =
 				await Program.Client.GetInterviewsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];

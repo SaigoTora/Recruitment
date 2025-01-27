@@ -354,8 +354,8 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
-				var candidateChangePassword = new CandidateChangePasswordDTO(_account.Candidate.Id,
-					textBoxPassword.Text);
+				var candidateChangePassword = new CandidateChangePasswordDTO(
+					_account.GetCandidateLogin(), textBoxPassword.Text);
 
 				await Program.Client.UpdateCandidatePasswordAsync(
 					candidateChangePassword);

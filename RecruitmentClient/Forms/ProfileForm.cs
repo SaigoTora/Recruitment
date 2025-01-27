@@ -74,10 +74,10 @@ namespace RecruitmentClient.Forms
 		private async Task<bool> CheckDataUniqueAsync()
 		{
 			bool isPhoneUnique = await Program.UniqueChecker.CheckPhoneUniqueAsync(labelPhone,
-				_account.Candidate.Id, $"{labelPhoneStart.Text}" +
+				_account.GetCandidateLogin(), $"{labelPhoneStart.Text}" +
 				$"{textBoxPhone1.Text}{textBoxPhone2.Text}{textBoxPhone3.Text}", _account.Theme);
 			bool isEmailUnique = await Program.UniqueChecker.CheckEmailUniqueAsync(labelEmail,
-				_account.Candidate.Id, textBoxEmail.Text, _account.Theme);
+				_account.GetCandidateLogin(), textBoxEmail.Text, _account.Theme);
 
 			return (isPhoneUnique && isEmailUnique);
 		}

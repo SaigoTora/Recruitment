@@ -98,10 +98,11 @@ namespace RecruitmentClient.Models
 			return await SendAndReceiveDataAsync<Candidate>(candidate, HttpMethod.Put,
 				_candidateUrl);
 		}
-		internal async Task<Questionnaire> UpdateQuestionnaireAsync(Questionnaire questionnaire)
+		internal async Task<Questionnaire> UpdateQuestionnaireAsync(
+			QuestionnaireChangeDTO questionnaireChange)
 		{
-			return await SendAndReceiveDataAsync<Questionnaire>(questionnaire, HttpMethod.Put,
-				_questionnaireUrl);
+			return await SendAndReceiveDataAsync<Questionnaire>(questionnaireChange,
+				HttpMethod.Put, _questionnaireUrl);
 		}
 
 		#region Check unique
@@ -166,8 +167,8 @@ namespace RecruitmentClient.Models
 		#endregion
 
 		#region Application
-		internal async Task CreateApplicationAsync(Application application)
-			=> await SendDataAsync(application, HttpMethod.Post, _applicationsCreateUrl);
+		internal async Task CreateApplicationAsync(CreateApplicationDTO createApplication)
+			=> await SendDataAsync(createApplication, HttpMethod.Post, _applicationsCreateUrl);
 
 		internal async Task<int> GetApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
 		{

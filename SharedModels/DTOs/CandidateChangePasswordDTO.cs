@@ -7,14 +7,14 @@ namespace SharedModels.DTOs
 	public class CandidateChangePasswordDTO
 	{
 		[JsonProperty]
-		public int CandidateId { get; private set; }
+		public CandidateLoginDTO CandidateLogin { get; private set; }
 		[JsonProperty]
 		public string NewPassword { get; private set; }
 
 		[JsonConstructor]
-		public CandidateChangePasswordDTO(int candidateId, string newPassword)
+		public CandidateChangePasswordDTO(CandidateLoginDTO candidateLogin, string newPassword)
 		{
-			CandidateId = candidateId;
+			CandidateLogin = candidateLogin;
 			NewPassword = newPassword;
 		}
 	}

@@ -1,22 +1,23 @@
 ﻿using Newtonsoft.Json;
-using SharedModels.Search;
+using SharedModels.Models;
 using System;
 
 namespace SharedModels.DTOs
 {
 	[Serializable]
-	public class AccountSearchSettingsDTO
+	public class QuestionnaireChangeDTO
 	{
 		[JsonProperty]
 		public CandidateLoginDTO CandidateLogin { get; private set; }
 		[JsonProperty]
-		public FullSearcher Searcher { get; private set; }
+		public Questionnaire Questionnaire { get; private set; }
 
 		[JsonConstructor]
-		public AccountSearchSettingsDTO(CandidateLoginDTO candidateLogin, FullSearcher searcher)
+		public QuestionnaireChangeDTO(CandidateLoginDTO candidateLogin,
+			Questionnaire questionnaire)
 		{
 			CandidateLogin = candidateLogin;
-			Searcher = searcher;
+			Questionnaire = questionnaire;
 		}
 	}
 }

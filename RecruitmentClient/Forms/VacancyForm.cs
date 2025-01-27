@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
+using SharedModels.DTOs;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -90,10 +91,10 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
-				SharedModels.Models.Application application = new SharedModels.Models.Application(
-					DateTime.UtcNow, richTextBoxClientAdditionalInfo.Text, default,
-					_account.Candidate.Id, _vacancy.Id);
-				await Program.Client.CreateApplicationAsync(application);
+				CreateApplicationDTO createApplication = new CreateApplicationDTO(
+					_account.GetCandidateLogin(), richTextBoxClientAdditionalInfo.Text,
+					_vacancy.Id);
+				await Program.Client.CreateApplicationAsync(createApplication);
 				_refresh(EventArgs.Empty);
 				Close();
 				CustomMessageBox.Show("Заявка була відправлена успішно!\n" +

@@ -14,6 +14,7 @@ using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
 using System.Linq;
+using SharedModels.DTOs;
 
 namespace RecruitmentClient.Forms
 {
@@ -377,9 +378,14 @@ namespace RecruitmentClient.Forms
 					try
 					{
 						if (!_account.Candidate.Questionnaire.Equals(_oldQuestionnaire))
+						{
+							QuestionnaireChangeDTO questionnaireChange
+								= new QuestionnaireChangeDTO(_account.GetCandidateLogin(),
+								_account.Candidate.Questionnaire);
+
 							_account.Candidate.Questionnaire =
-								await Program.Client.UpdateQuestionnaireAsync(
-									_account.Candidate.Questionnaire);
+								await Program.Client.UpdateQuestionnaireAsync(questionnaireChange);
+						}
 					}
 					catch (SocketException)
 					{

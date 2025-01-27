@@ -7,14 +7,14 @@ namespace SharedModels.DTOs
 	public class StringDataUniqueDTO
 	{
 		[JsonProperty]
-		public int CandidateId { get; private set; }
+		public CandidateLoginDTO CandidateLogin { get; private set; }
 		[JsonProperty]
 		public string Data { get; private set; }
 
 		[JsonConstructor]
-		public StringDataUniqueDTO(int candidateId, string data)
+		public StringDataUniqueDTO(CandidateLoginDTO candidateLogin, string data)
 		{
-			CandidateId = candidateId;
+			CandidateLogin = candidateLogin;
 			Data = data;
 		}
 	}

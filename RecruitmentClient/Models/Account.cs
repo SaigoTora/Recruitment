@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
-
+using SharedModels.DTOs;
 using SharedModels.Models;
 using UIHelpers.Themes;
 
@@ -16,6 +16,9 @@ namespace RecruitmentClient.Models
 
 		internal Account()
 			=> Candidate = new Candidate();
+
+		internal CandidateLoginDTO GetCandidateLogin()
+			=> new CandidateLoginDTO(Candidate.Login, Candidate.Password);
 
 		[OnSerializing]
 		private void OnSerializing(StreamingContext context)

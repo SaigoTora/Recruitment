@@ -156,7 +156,7 @@ namespace RecruitmentServer.Models
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
 				await HandleRequestWithUpdateAsync<Candidate>(context,
-					c => DatabaseManager.UpdateCandidate(c.Id, c), HttpStatusCode.OK);
+					c => DatabaseManager.UpdateCandidate(c), HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -165,8 +165,8 @@ namespace RecruitmentServer.Models
 		{
 			if (context.Request.HttpMethod == HttpMethod.Put.Method)
 			{
-				await HandleRequestWithUpdateAsync<Questionnaire>(context,
-					q => DatabaseManager.UpdateQuestionnaire(q.Id, q), HttpStatusCode.OK);
+				await HandleRequestAndRespondAsync<QuestionnaireChangeDTO, Questionnaire>(context,
+					q => DatabaseManager.UpdateQuestionnaire(q), HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -238,8 +238,8 @@ namespace RecruitmentServer.Models
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestWithoutResponseAsync<Application>(context,
-					a => DatabaseManager.CreateApplication(a), HttpStatusCode.Created);
+				await HandleRequestWithoutResponseAsync<CreateApplicationDTO>(context,
+					ca => DatabaseManager.CreateApplication(ca), HttpStatusCode.Created);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -395,6 +395,9 @@ namespace RecruitmentServer.Models
 				Message = "An error occurred",
 				Details = ex.Message
 			};
+
+			if (ex.GetType() == typeof(UnauthorizedAccessException))
+				statusCode = HttpStatusCode.Unauthorized;
 
 			string errorJson = JsonConvert.SerializeObject(errorResponse, Formatting.Indented);
 			await SendResponseToClientAsync(context, errorJson, statusCode);

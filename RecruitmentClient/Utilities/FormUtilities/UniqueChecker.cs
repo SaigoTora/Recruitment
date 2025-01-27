@@ -25,10 +25,10 @@ namespace RecruitmentClient.Utilities.FormUtilities
 
 			return isLoginUnique;
 		}
-		internal async Task<bool> CheckPhoneUniqueAsync(Label label, int candidateId, string phone,
-			Theme theme)
+		internal async Task<bool> CheckPhoneUniqueAsync(Label label,
+			CandidateLoginDTO candidateLogin, string phone, Theme theme)
 		{
-			StringDataUniqueDTO stringDataUnique = new StringDataUniqueDTO(candidateId, phone);
+			StringDataUniqueDTO stringDataUnique = new StringDataUniqueDTO(candidateLogin, phone);
 			bool isPhoneUnique = await Program.Client.CheckCandidatePhoneUniqueAsync(
 				stringDataUnique);
 
@@ -42,10 +42,10 @@ namespace RecruitmentClient.Utilities.FormUtilities
 
 			return isPhoneUnique;
 		}
-		internal async Task<bool> CheckEmailUniqueAsync(Label label, int candidateId, string email,
-			Theme theme)
+		internal async Task<bool> CheckEmailUniqueAsync(Label label,
+			CandidateLoginDTO candidateLogin, string email, Theme theme)
 		{
-			StringDataUniqueDTO stringDataUnique = new StringDataUniqueDTO(candidateId, email);
+			StringDataUniqueDTO stringDataUnique = new StringDataUniqueDTO(candidateLogin, email);
 			bool isEmailUnique = await Program.Client.CheckCandidateEmailUniqueAsync(
 				stringDataUnique);
 
