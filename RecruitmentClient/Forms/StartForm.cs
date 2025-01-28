@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -122,8 +121,8 @@ namespace RecruitmentClient.Forms
 				{
 					buttonBack.Enabled = false;
 					buttonRegisterContinue.Enabled = false;
-					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(labelLogin,
-						textBoxLogin.Text, _account.Theme);
+					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(
+						labelLogin, textBoxLogin.Text, _account.Theme);
 					if (isLoginUnique)
 					{
 						_account.Candidate.ChangeLoginPassword(textBoxLogin.Text,

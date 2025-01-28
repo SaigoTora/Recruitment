@@ -12,16 +12,5 @@ namespace SharedModels.Search
 			Position = position;
 			MinDate = minDate;
 		}
-
-		public string GetFilter(string dateName)
-		{
-			string result = string.Empty;
-			if (Position != null && Position.Length != 0)
-				result += $"AND position_name LIKE '%{Position}%' ";
-			if (MinDate != null)
-				result += $"AND {dateName} > '{MinDate:yyyy-MM-dd}' ";
-
-			return result;
-		}
 	}
 }

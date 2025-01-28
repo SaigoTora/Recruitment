@@ -3,20 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
 using RecruitmentLibrary.Serialization;
+using SharedModels.DTOs;
 using SharedModels.Models;
+using SharedModels.Search;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
-using UIHelpers.Validation;
-using SharedModels.Search;
-using SharedModels.DTOs;
-using System.Threading.Tasks;
 
 namespace RecruitmentClient.Forms
 {
@@ -348,7 +346,8 @@ namespace RecruitmentClient.Forms
 
 			SetEnabledLabels(false, labelVacancy, labelInterview);
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.GetCandidateLogin(), _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+				_account.GetCandidateLogin(), _searcher, _createdPanels.Count,
+				COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
 				await Program.Client.GetApplicationsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];

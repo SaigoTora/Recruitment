@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using RecruitmentLibrary.Serialization;
+using RecruitmentServer.DataBase;
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using SharedModels.Search;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
-using SharedModels.Models;
-using RecruitmentLibrary.Serialization;
-using RecruitmentServer.DataBase;
 
 namespace RecruitmentServer.Forms
 {

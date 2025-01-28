@@ -1,18 +1,17 @@
 ﻿using Guna.UI2.WinForms;
 using System;
-using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
+using RecruitmentLibrary.Serialization;
+using RecruitmentLibrary.Validation;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using SharedModels.Models;
-using RecruitmentLibrary.Serialization;
-using System.Threading.Tasks;
-using RecruitmentLibrary.Validation;
 
 namespace RecruitmentClient.Forms
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using RecruitmentLibrary.Validation;
-using RecruitmentServer.Models;
 using RecruitmentServer.DataBase;
+using RecruitmentServer.Models;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -114,7 +115,8 @@ namespace RecruitmentServer.Forms
 				{
 					try
 					{
-						DatabaseManager.UpdateEmployeePositionName(_employee.Id, textBoxPosition.Text);
+						DatabaseManager.UpdateEmployeePositionName(_employee.Id,
+							textBoxPosition.Text);
 						_employee.ChangePosition(textBoxPosition.Text);
 						_actionAfterChange(EventArgs.Empty);
 					}

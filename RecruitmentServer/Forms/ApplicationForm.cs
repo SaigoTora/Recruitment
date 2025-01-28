@@ -2,13 +2,12 @@
 using System;
 using System.Windows.Forms;
 
+using RecruitmentServer.DataBase;
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
-using UIHelpers.Validation;
-using SharedModels.Models;
-using RecruitmentServer.DataBase;
 
 namespace RecruitmentServer.Forms
 {

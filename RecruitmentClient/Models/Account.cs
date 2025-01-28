@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+
 using SharedModels.DTOs;
 using SharedModels.Models;
 using UIHelpers.Themes;

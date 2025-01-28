@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+
 using RecruitmentServer.DataBase.Repositories.Base;
 using RecruitmentServer.Models;
 using SharedModels.DTOs;
@@ -139,8 +140,8 @@ namespace RecruitmentServer.DataBase
 			EducationDegree educationDegree = _educationDegreeRepo.GetOne(educationDegreeId);
 
 			return educationDegree
-				?? throw new KeyNotFoundException($"Education degree with id {educationDegreeId} " +
-				$"was not found.");
+				?? throw new KeyNotFoundException($"Education degree with id " +
+				$"{educationDegreeId} was not found.");
 		}
 		internal static EducationForm GetEducationForm(int educationFormId)
 		{

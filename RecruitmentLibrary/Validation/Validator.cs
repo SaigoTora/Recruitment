@@ -10,7 +10,8 @@ namespace RecruitmentLibrary.Validation
 		static Validator()
 		{
 			_languageCharacterSets.Add(ValidLanguage.None, string.Empty);
-			_languageCharacterSets.Add(ValidLanguage.Ukrainian, "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ");
+			_languageCharacterSets.Add(ValidLanguage.Ukrainian,
+				"АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ");
 			_languageCharacterSets.Add(ValidLanguage.English, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		}
 

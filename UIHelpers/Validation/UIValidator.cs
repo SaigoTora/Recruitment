@@ -34,7 +34,8 @@ namespace UIHelpers.Validation
 			// Forming an error line
 			string errorMessage = string.Empty;
 			if (language == ValidLanguage.None)
-				errorMessage = $"{label.Text} рядок може мати тільки такі символи: ({allowedChars}).";
+				errorMessage = $"{label.Text} рядок може мати тільки такі символи: " +
+					$"({allowedChars}).";
 			if (language == ValidLanguage.Ukrainian)
 				errorMessage = $"{label.Text} рядок може мати українські літери і такі символи: " +
 					$"({allowedChars}).";

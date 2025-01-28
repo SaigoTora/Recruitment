@@ -13,7 +13,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (!IsRuleExists())
 			{
-				string command = $"netsh advfirewall firewall add rule name=\"{_ruleName}\" dir=in action=allow protocol=TCP localport={port} profile=private";
+				string command = $"netsh advfirewall firewall add rule name=\"{_ruleName}\" " +
+					$"dir=in action=allow protocol=TCP localport={port} profile=private";
 				ExecuteCommand(command);
 			}
 		}

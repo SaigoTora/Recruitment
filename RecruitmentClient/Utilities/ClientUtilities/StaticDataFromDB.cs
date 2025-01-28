@@ -1,6 +1,7 @@
-﻿using SharedModels.Models;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
+using SharedModels.Models;
 
 namespace RecruitmentClient.Utilities.ClientUtilities
 {

@@ -18,7 +18,8 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 
 		internal async Task<List<IPAddress>> ScanLocalNetworkAsync()
 		{
-			string subnet = GetLocalSubnet() ?? throw new InvalidOperationException("Failed to determine subnet.");
+			string subnet = GetLocalSubnet()
+				?? throw new InvalidOperationException("Failed to determine subnet.");
 			List<IPAddress> allIPs = GetAllIPInSubnet(subnet);
 			return await ScanNetworkForPortAsync(allIPs);
 		}
@@ -27,7 +28,8 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 		{
 			foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
 				if (ni.OperationalStatus == OperationalStatus.Up)
-					foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+					foreach (UnicastIPAddressInformation ip in ni.GetIPProperties()
+						.UnicastAddresses)
 						if (ip.Address.AddressFamily == AddressFamily.InterNetwork) // IPv4
 						{
 							string localIP = ip.Address.ToString();

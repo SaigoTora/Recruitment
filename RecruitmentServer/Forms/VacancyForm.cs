@@ -1,17 +1,17 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
+using RecruitmentLibrary.Validation;
+using RecruitmentServer.DataBase;
 using RecruitmentServer.Models;
+using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using SharedModels.Models;
-using RecruitmentServer.DataBase;
-using System.Linq;
-using RecruitmentLibrary.Validation;
 
 namespace RecruitmentServer.Forms
 {

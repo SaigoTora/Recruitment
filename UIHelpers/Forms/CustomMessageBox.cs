@@ -30,12 +30,14 @@ namespace UIHelpers.Forms
 	{
 		private DialogResult _dialogResult = DialogResult.None;
 
-		private CustomMessageBox(string text, Theme theme, string caption, CustomMessageBoxButtons buttons,
-			CustomMessageBoxIcon icon, int width)
+		private CustomMessageBox(string text, Theme theme, string caption,
+			CustomMessageBoxButtons buttons, CustomMessageBoxIcon icon, int width)
 		{
 			InitializeComponent();
-			customTitleBar = new CustomTitleBar(this, caption, minimizeBox: false, maximizeBox: false);
-			base.guna2BorderlessForm.SetDrag(new Control[] { this, iconPicture, labelText, flpButtons });
+			customTitleBar = new CustomTitleBar(this, caption, minimizeBox: false,
+				maximizeBox: false);
+			base.guna2BorderlessForm.SetDrag(new Control[] { this, iconPicture,
+				labelText, flpButtons });
 			base.guna2BorderlessForm.TransparentWhileDrag = false;
 
 			labelText.Text = text;
@@ -60,12 +62,15 @@ namespace UIHelpers.Forms
 				case CustomMessageBoxButtons.OK:
 					ActiveControl = button1;
 					button2.Visible = false;
-					SetupButton(button1, "OK", DialogResult.OK, buttonFillColor.OK, buttonFillColor2.OK);
+					SetupButton(button1, "OK", DialogResult.OK, buttonFillColor.OK,
+						buttonFillColor2.OK);
 					break;
 				case CustomMessageBoxButtons.YesNo:
 					ActiveControl = button2;
-					SetupButton(button1, "Так", DialogResult.Yes, buttonFillColor.Yes, buttonFillColor2.Yes);
-					SetupButton(button2, "Ні", DialogResult.No, buttonFillColor.No, buttonFillColor2.No);
+					SetupButton(button1, "Так", DialogResult.Yes, buttonFillColor.Yes,
+						buttonFillColor2.Yes);
+					SetupButton(button2, "Ні", DialogResult.No, buttonFillColor.No,
+						buttonFillColor2.No);
 					break;
 				default:
 					throw new ArgumentException($"Unknown buttons: {buttons}", nameof(buttons));
@@ -81,10 +86,13 @@ namespace UIHelpers.Forms
 		}
 		private void SetIcon(CustomMessageBoxIcon icon)
 		{
-			(IconChar Error, IconChar Warning, IconChar Information, IconChar OK, IconChar Question) iconChar =
-				(IconChar.XmarkCircle, IconChar.Warning, IconChar.InfoCircle, IconChar.CheckCircle, IconChar.QuestionCircle);
-			(Color Error, Color Warning, Color Information, Color OK, Color Question) iconColor =
-				(Color.Red, Color.Yellow, Color.FromArgb(0, 149, 182), Color.Green, Color.SteelBlue);
+			(IconChar Error, IconChar Warning, IconChar Information, IconChar OK,
+				IconChar Question) iconChar
+				= (IconChar.XmarkCircle, IconChar.Warning, IconChar.InfoCircle,
+				IconChar.CheckCircle, IconChar.QuestionCircle);
+			(Color Error, Color Warning, Color Information, Color OK, Color Question) iconColor
+				= (Color.Red, Color.Yellow, Color.FromArgb(0, 149, 182), Color.Green,
+				Color.SteelBlue);
 
 			switch (icon)
 			{
@@ -136,7 +144,8 @@ namespace UIHelpers.Forms
 			CustomMessageBoxButtons buttons = CustomMessageBoxButtons.OK,
 			CustomMessageBoxIcon icon = CustomMessageBoxIcon.None, int width = 400)
 		{
-			CustomMessageBox messageBox = new CustomMessageBox(text, theme, caption, buttons, icon, width);
+			CustomMessageBox messageBox = new CustomMessageBox(text, theme, caption, buttons,
+				icon, width);
 			messageBox.ShowDialog();
 
 			return messageBox._dialogResult;

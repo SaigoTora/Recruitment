@@ -1,5 +1,6 @@
-using SharedModels.Models;
 using System.Data.Entity;
+
+using SharedModels.Models;
 
 namespace RecruitmentServer.DataBase
 {

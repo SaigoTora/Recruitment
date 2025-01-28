@@ -170,17 +170,20 @@ namespace RecruitmentServer.DataBase
 			if (minValue.HasValue && maxValue.HasValue)
 			{
 				if (value < minValue || value > maxValue)
-					throw new ArgumentException($"{name} must be between {minValue.Value} and {maxValue.Value} characters long.");
+					throw new ArgumentException($"{name} must be between {minValue.Value} " +
+						$"and {maxValue.Value} characters long.");
 			}
 			else if (minValue.HasValue && !maxValue.HasValue)
 			{
 				if (value < minValue)
-					throw new ArgumentException($"{name} must be at least {minValue.Value} characters long.");
+					throw new ArgumentException($"{name} must be at least {minValue.Value} " +
+						$"characters long.");
 			}
 			else if (!minValue.HasValue && maxValue.HasValue)
 			{
 				if (value > maxValue)
-					throw new ArgumentException($"{name} must be no more than {maxValue.Value} characters long.");
+					throw new ArgumentException($"{name} must be no more than {maxValue.Value} " +
+						$"characters long.");
 			}
 		}
 		#endregion

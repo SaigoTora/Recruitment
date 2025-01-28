@@ -12,7 +12,8 @@ namespace UIHelpers.ControlEventHandlers
 			foreach (Label label in labels)
 			{
 				if (controls.Contains(label))
-					throw new ArgumentException($"The Label '{label.Name}' is already subscribed.");
+					throw new ArgumentException($"The Label '{label.Name}' " +
+						$"is already subscribed.");
 
 				label.MouseEnter += LabelUnderline_MouseEnter;
 				label.MouseLeave += LabelUnderline_MouseLeave;

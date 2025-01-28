@@ -42,14 +42,16 @@ namespace UIHelpers.ControlEventHandlers
 			}
 
 			control.Size = new Size(control.Width + widthScaler, control.Height + heightScaler);
-			control.Location = new Point(control.Location.X - widthScaler / 2, control.Location.Y - heightScaler / 2);
+			control.Location = new Point(control.Location.X - widthScaler / 2,
+				control.Location.Y - heightScaler / 2);
 		}
 		protected void ResizeFont(T control, int value, bool isIncreasing)
 		{
 			if (!isIncreasing)
 				value *= -1;
 
-			control.Font = new Font(control.Font.FontFamily.Name, control.Font.Size + value, control.Font.Style);
+			control.Font = new Font(control.Font.FontFamily.Name, control.Font.Size + value,
+				control.Font.Style);
 		}
 		private int GetValueUsingPercentage(int number, int percent)
 		{

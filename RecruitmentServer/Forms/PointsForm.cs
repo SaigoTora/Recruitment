@@ -101,7 +101,8 @@ namespace RecruitmentServer.Forms
 			int index = FindDegreeIndexById(id);
 
 			if (index >= 0)
-				_degreesPoints[index] = new EducationDegreePoint((int)NUDDegree.Value, _point.Id, id);
+				_degreesPoints[index] = new EducationDegreePoint((int)NUDDegree.Value,
+					_point.Id, id);
 		}
 		private void ComboBoxDegrees_SelectedIndexChanged(object sender, EventArgs e)
 		{

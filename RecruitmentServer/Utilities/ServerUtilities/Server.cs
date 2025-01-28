@@ -372,7 +372,6 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 				await HandleErrorAsync(context, ex, HttpStatusCode.InternalServerError);
 			}
 		}
-		#endregion
 
 		private async Task<T> DeserializeFromRequestAsync<T>(HttpListenerContext context)
 		{
@@ -411,6 +410,7 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 
 			await context.Response.OutputStream.WriteAsync(responseBytes, 0, responseBytes.Length);
 		}
+		#endregion
 
 		internal void Stop()
 		{

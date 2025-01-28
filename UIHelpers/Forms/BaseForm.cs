@@ -52,13 +52,16 @@ namespace UIHelpers.Forms
 			{
 				var cursor = PointToClient(Cursor.Position);
 
-				if (cursor.X >= ClientSize.Width - RESIZE_HANDLE_SIZE && cursor.Y >= ClientSize.Height - RESIZE_HANDLE_SIZE)
+				if (cursor.X >= ClientSize.Width - RESIZE_HANDLE_SIZE
+					&& cursor.Y >= ClientSize.Height - RESIZE_HANDLE_SIZE)
 					m.Result = (IntPtr)HTBOTTOMRIGHT;
-				else if (cursor.X <= RESIZE_HANDLE_SIZE && cursor.Y >= ClientSize.Height - RESIZE_HANDLE_SIZE)
+				else if (cursor.X <= RESIZE_HANDLE_SIZE
+					&& cursor.Y >= ClientSize.Height - RESIZE_HANDLE_SIZE)
 					m.Result = (IntPtr)HTBOTTOMLEFT;
 				else if (cursor.X <= RESIZE_HANDLE_SIZE && cursor.Y <= RESIZE_HANDLE_SIZE)
 					m.Result = (IntPtr)HTTOPLEFT;
-				else if (cursor.X >= ClientSize.Width - RESIZE_HANDLE_SIZE && cursor.Y <= RESIZE_HANDLE_SIZE)
+				else if (cursor.X >= ClientSize.Width - RESIZE_HANDLE_SIZE
+					&& cursor.Y <= RESIZE_HANDLE_SIZE)
 					m.Result = (IntPtr)HTTOPRIGHT;
 				else if (cursor.X <= RESIZE_HANDLE_SIZE)
 					m.Result = (IntPtr)HTLEFT;
@@ -96,12 +99,12 @@ namespace UIHelpers.Forms
 			// BaseForm
 			// 
 			this.ClientSize = new System.Drawing.Size(284, 261);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.FormBorderStyle = FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "BaseForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BaseForm_FormClosed);
+			this.StartPosition = FormStartPosition.CenterScreen;
+			this.FormClosed += new FormClosedEventHandler(this.BaseForm_FormClosed);
 			this.ResumeLayout(false);
 
 		}

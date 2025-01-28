@@ -1,22 +1,21 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
 using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentClient.Utilities.FormUtilities;
+using RecruitmentLibrary.Validation;
+using SharedModels.DTOs;
+using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using SharedModels.Models;
-using System.Linq;
-using SharedModels.DTOs;
-using RecruitmentLibrary.Validation;
-using System.Threading.Tasks;
 
 namespace RecruitmentClient.Forms
 {
@@ -307,8 +306,10 @@ namespace RecruitmentClient.Forms
 				labelYearAdmission.Text);
 			Label labelEndDate = _educationCreator.CreateLabel(labelDateEnd,
 				labelDateEnd.Text);
-			Label labelDegree = _educationCreator.CreateLabel(labelEducationDegree, labelEducationDegree.Text);
-			Label labelForm = _educationCreator.CreateLabel(labelEducationForm, labelEducationForm.Text);
+			Label labelDegree = _educationCreator.CreateLabel(labelEducationDegree,
+				labelEducationDegree.Text);
+			Label labelForm = _educationCreator.CreateLabel(labelEducationForm,
+				labelEducationForm.Text);
 
 			Guna2TextBox textBoxInstitution = _educationCreator.
 				CreateTextBox(textBoxNameInstitution);

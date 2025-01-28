@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentServer.Models;
-using RecruitmentServer.DataBase;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
@@ -17,7 +15,6 @@ namespace RecruitmentServer.Forms
 	{
 		private const int INCREASE_FORM_HEIGHT = 100;
 
-		private readonly int _idBusinessTrip, _idFamilyStatus;
 		private readonly Account _account;
 		private readonly Candidate _candidate;
 		private readonly ControlCreator _languageCreator;
@@ -31,8 +28,6 @@ namespace RecruitmentServer.Forms
 				maximizeBox: false);
 			_account = account;
 			_candidate = candidate;
-			_idBusinessTrip = _candidate.Questionnaire.BusinessTripOpportunityId;
-			_idFamilyStatus = _candidate.Questionnaire.FamilyStatusId;
 
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);

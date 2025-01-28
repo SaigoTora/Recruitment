@@ -50,7 +50,8 @@ namespace RecruitmentLibrary.Serialization
 		{// XOR encryption method
 			byte[] keyBytes = Convert.FromBase64String(key);
 
-			using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite))
+			using (FileStream fileStream = new FileStream(path, FileMode.Open,
+				FileAccess.ReadWrite))
 			{
 				// Buffer of read data
 				byte[] buffer = new byte[4096];

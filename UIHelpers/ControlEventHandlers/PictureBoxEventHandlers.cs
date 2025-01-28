@@ -9,8 +9,8 @@ namespace UIHelpers.ControlEventHandlers
 	{
 		private const byte PICTURE_SIZE_PERCENT_SCALER = 7;
 
-		private readonly Dictionary<PictureBox, (Color defaultColor, Color hoverColor)> _colorPictures
-			= new Dictionary<PictureBox, (Color, Color)>();
+		private readonly Dictionary<PictureBox, (Color defaultColor, Color hoverColor)>
+			_colorPictures = new Dictionary<PictureBox, (Color, Color)>();
 
 		#region PictureBox hover
 		public void SubscribeToHover(params PictureBox[] pictureBoxes)
@@ -18,7 +18,8 @@ namespace UIHelpers.ControlEventHandlers
 			foreach (PictureBox pictureBox in pictureBoxes)
 			{
 				if (controls.Contains(pictureBox))
-					throw new ArgumentException($"The PictureBox '{pictureBox.Name}' is already subscribed.");
+					throw new ArgumentException($"The PictureBox '{pictureBox.Name}' " +
+						$"is already subscribed.");
 
 				pictureBox.MouseEnter += PictureBox_MouseEnter;
 				pictureBox.MouseLeave += PictureBox_MouseLeave;
@@ -30,7 +31,8 @@ namespace UIHelpers.ControlEventHandlers
 			foreach (PictureBox pictureBox in pictureBoxes)
 			{
 				if (controls.Contains(pictureBox))
-					throw new ArgumentException($"The PictureBox '{pictureBox.Name}' is already subscribed.");
+					throw new ArgumentException($"The PictureBox '{pictureBox.Name}' " +
+						$"is already subscribed.");
 
 				pictureBox.MouseEnter += PictureBoxColor_MouseEnter;
 				pictureBox.MouseLeave += PictureBoxColor_MouseLeave;
