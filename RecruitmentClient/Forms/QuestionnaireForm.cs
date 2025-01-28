@@ -16,6 +16,7 @@ using SharedModels.Models;
 using System.Linq;
 using SharedModels.DTOs;
 using RecruitmentLibrary.Validation;
+using System.Threading.Tasks;
 
 namespace RecruitmentClient.Forms
 {
@@ -155,10 +156,22 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetComboBoxItems()
 		{
-			StaticDataFromDB.SetData();
-			comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.GetFamilyStatuses());
-			comboBoxBusinessTripOpportunity.Items.AddRange(
-				StaticDataFromDB.GetBusinessTripOpportunities());
+			try
+			{
+				Enabled = false;
+				StaticDataFromDB.SetData();
+				comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.GetFamilyStatuses());
+				comboBoxBusinessTripOpportunity.Items.AddRange(
+					StaticDataFromDB.GetBusinessTripOpportunities());
+			}
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+			{
+				Program.HandleNetworkError();
+				return;
+			}
+			finally
+			{ Enabled = true; }
 		}
 		private void ResetEducationFields()
 		{
@@ -380,6 +393,7 @@ namespace RecruitmentClient.Forms
 					{
 						if (!_account.Candidate.Questionnaire.Equals(_oldQuestionnaire))
 						{
+							buttonApply.Enabled = false;
 							QuestionnaireChangeDTO questionnaireChange
 								= new QuestionnaireChangeDTO(_account.GetCandidateLogin(),
 								_account.Candidate.Questionnaire);
@@ -388,13 +402,14 @@ namespace RecruitmentClient.Forms
 								await Program.Client.UpdateQuestionnaireAsync(questionnaireChange);
 						}
 					}
-					catch (SocketException)
+					catch (Exception ex) when (ex is TaskCanceledException
+						|| ex is System.Net.Http.HttpRequestException)
 					{
-						CustomMessageBox.Show("Спроба підключитись до серверу " +
-							"завершилась не вдало.\nСпробуйте, будь ласка, пізніше.",
-							_account.Theme, "Помилка підключення",
-							CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+						Program.HandleNetworkError();
+						return;
 					}
+					finally
+					{ buttonApply.Enabled = true; }
 				}
 
 				FormClosing -= QuestionnaireForm_FormClosing;

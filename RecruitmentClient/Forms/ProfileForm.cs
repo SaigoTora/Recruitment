@@ -199,6 +199,7 @@ namespace RecruitmentClient.Forms
 			if (CheckValidData())
 				try
 				{
+					buttonApply.Enabled = false;
 					bool isDataUnique = await CheckDataUniqueAsync();
 					if (!isDataUnique)
 						return;
@@ -220,23 +221,31 @@ namespace RecruitmentClient.Forms
 						Close();
 					}
 				}
-				catch (SocketException)
-				{
-					CustomMessageBox.Show("Спроба підключитись до серверу " +
-						"завершилась не вдало.\nСпробуйте, будь ласка, пізніше.",
-						_account.Theme, "Помилка підключення",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
+				catch (Exception ex) when (ex is TaskCanceledException
+					|| ex is System.Net.Http.HttpRequestException)
+				{ Program.HandleNetworkError(); }
+				finally
+				{ buttonApply.Enabled = true; }
 		}
 		private async Task CreateCandidateAsync()
 		{
-			bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(new Label()
-			{ Text = "Логін" }, _account.Candidate.Login, _account.Theme);
-			if (!isLoginUnique)
-				return;
+			try
+			{
+				bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(new Label()
+				{ Text = "Логін" }, _account.Candidate.Login, _account.Theme);
+				if (!isLoginUnique)
+					return;
 
-			_account.Candidate = await Program.Client.CreateCandidateAsync(
-				_account.Candidate);
+				_account.Candidate = await Program.Client.CreateCandidateAsync(
+					_account.Candidate);
+			}
+			catch (Exception ex) when (ex is TaskCanceledException
+			|| ex is System.Net.Http.HttpRequestException)
+			{
+				Program.HandleNetworkError();
+				return;
+			}
+
 			if (_startForm.NeedToRemember)
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
 
@@ -255,9 +264,15 @@ namespace RecruitmentClient.Forms
 		}
 		private async Task UpdateCandidateAsync()
 		{
-			_account.Candidate = await Program.Client.UpdateCandidateAsync(_account.Candidate);
-			if (Serializator.SerializationFileExists(Program.SerializePath))
-				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
+			try
+			{
+				_account.Candidate = await Program.Client.UpdateCandidateAsync(_account.Candidate);
+				if (Serializator.SerializationFileExists(Program.SerializePath))
+					Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
+			}
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+			{ Program.HandleNetworkError(); }
 		}
 
 		public void SetTheme(Theme theme)

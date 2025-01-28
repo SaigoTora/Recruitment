@@ -102,7 +102,7 @@ namespace RecruitmentClient.Forms
 				Visible = false;
 				Serializator.DeleteSerializationFile(Program.SerializePath);
 				Process.Start(System.Windows.Forms.Application.ExecutablePath);
-				Environment.Exit(0);
+				System.Windows.Forms.Application.Exit();
 			}
 		}
 		private void ButtonPasswordChange_Click(object sender, EventArgs e)
@@ -153,12 +153,9 @@ namespace RecruitmentClient.Forms
 			{
 				await CreateAndSetupFirstPanelsAsync(label);
 			}
-			catch (SocketException)
-			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-			}
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+			{ Program.HandleNetworkError(); }
 			labelEmpty.Visible = _totalItemsToDisplay == 0;
 		}
 		private void ClearContentPanel()
@@ -195,6 +192,11 @@ namespace RecruitmentClient.Forms
 			comboBoxDate.SelectedIndex = DEFAULT_SEARCH_DATE;
 			comboBoxSort.SelectedIndex = 0;
 		}
+		private void SetEnabledLabels(bool enabled, params Label[] labels)
+		{
+			foreach (Label label in labels)
+				label.Enabled = enabled;
+		}
 
 		#region First creating panels
 		private async Task CreateAndSetupFirstPanelsAsync(Label label)
@@ -230,7 +232,9 @@ namespace RecruitmentClient.Forms
 			_panelsInfo = PanelsInfo.Vacancy;
 			AccountSearchSettingsDTO accountSearch
 				= new AccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher);
+			SetEnabledLabels(false, labelApplication, labelInterview);
 			_totalItemsToDisplay = await Program.Client.GetFreeVacanciesCountAsync(accountSearch);
+			SetEnabledLabels(true, labelApplication, labelInterview);
 		}
 		private async Task SetupApplicationsAsync()
 		{
@@ -245,7 +249,9 @@ namespace RecruitmentClient.Forms
 			_panelsInfo = PanelsInfo.Application;
 			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
 				_account.GetCandidateLogin(), _searcher);
+			SetEnabledLabels(false, labelVacancy, labelInterview);
 			_totalItemsToDisplay = await Program.Client.GetApplicationsCountAsync(accountSearch);
+			SetEnabledLabels(true, labelVacancy, labelInterview);
 		}
 		private async Task SetupInterviewsAsync()
 		{
@@ -260,7 +266,9 @@ namespace RecruitmentClient.Forms
 			_panelsInfo = PanelsInfo.Interview;
 			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
 				_account.GetCandidateLogin(), _searcher);
+			SetEnabledLabels(false, labelVacancy, labelApplication);
 			_totalItemsToDisplay = await Program.Client.GetInterviewsCountAsync(accountSearch);
+			SetEnabledLabels(true, labelVacancy, labelApplication);
 		}
 
 		private void SetSalarySearchVisible(bool visible)
@@ -314,6 +322,8 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
+
+			SetEnabledLabels(false, labelApplication, labelInterview);
 			PagedAccountSearchSettingsDTO pagedAccountSearch =
 				new PagedAccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher,
 				_createdPanels.Count, COUNT_PANELS_ON_PAGE);
@@ -327,6 +337,7 @@ namespace RecruitmentClient.Forms
 				CreateVacancy(vacancies[i]);
 			}
 
+			SetEnabledLabels(true, labelApplication, labelInterview);
 			ShowPanels(panels);
 			_createdPanels.AddRange(panels);
 		}
@@ -335,6 +346,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
+			SetEnabledLabels(false, labelVacancy, labelInterview);
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
 				_account.GetCandidateLogin(), _searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
@@ -347,6 +359,7 @@ namespace RecruitmentClient.Forms
 				CreateApplication(applications[i]);
 			}
 
+			SetEnabledLabels(true, labelVacancy, labelInterview);
 			ShowPanels(panels);
 			_createdPanels.AddRange(panels);
 		}
@@ -355,6 +368,7 @@ namespace RecruitmentClient.Forms
 			if (_createdPanels.Count >= _totalItemsToDisplay)
 				return;
 
+			SetEnabledLabels(false, labelVacancy, labelApplication);
 			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
 				_account.GetCandidateLogin(), _searcher, _createdPanels.Count,
 				COUNT_PANELS_ON_PAGE);
@@ -368,6 +382,7 @@ namespace RecruitmentClient.Forms
 				CreateInterview(interviews[i]);
 			}
 
+			SetEnabledLabels(true, labelVacancy, labelApplication);
 			ShowPanels(panels);
 			_createdPanels.AddRange(panels);
 		}
@@ -508,18 +523,8 @@ namespace RecruitmentClient.Forms
 				return;
 
 			Vacancy vacancy = _buttonVacancyMap[button];
-			try
-			{
-				VacancyForm vacancyForm = new VacancyForm(_account, vacancy, SelectLabel);
-				vacancyForm.ShowDialog();
-			}
-			catch (SocketException)
-			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
-					"не вдало.\nСпробуйте, будь ласка, пізніше.",
-					_account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-			}
+			VacancyForm vacancyForm = new VacancyForm(_account, vacancy, SelectLabel);
+			vacancyForm.ShowDialog();
 		}
 		private void ButtonReasonRejection_Click(object sender, EventArgs e)
 		{
@@ -731,12 +736,9 @@ namespace RecruitmentClient.Forms
 					else if (_panelsInfo == PanelsInfo.Interview)
 						await CreateInterviewsAsync();
 				}
-				catch (SocketException)
-				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-						"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
+				catch (Exception ex) when (ex is TaskCanceledException
+					|| ex is System.Net.Http.HttpRequestException)
+				{ Program.HandleNetworkError(); }
 				finally
 				{ flpContent.VerticalScroll.Enabled = true; }
 			}

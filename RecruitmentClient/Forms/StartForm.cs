@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Net.Sockets;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -115,9 +117,11 @@ namespace RecruitmentClient.Forms
 		{
 			SetDefaultLabels(_account.Theme);
 
-			if (CheckValidData())
+			if (CheckValidInputData())
 				try
 				{
+					buttonBack.Enabled = false;
+					buttonRegisterContinue.Enabled = false;
 					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(labelLogin,
 						textBoxLogin.Text, _account.Theme);
 					if (isLoginUnique)
@@ -129,12 +133,13 @@ namespace RecruitmentClient.Forms
 						Visible = false;
 					}
 				}
-				catch (SocketException)
+				catch (Exception ex) when (ex is TaskCanceledException
+					|| ex is HttpRequestException)
+				{ Program.HandleNetworkError(); }
+				finally
 				{
-					CustomMessageBox.Show("Спроба підключитись до серверу " +
-						"завершилась не вдало.\nСпробуйте пізніше.",
-						_account.Theme, "Помилка підключення",
-						CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+					buttonRegisterContinue.Enabled = true;
+					buttonBack.Enabled = true;
 				}
 		}
 
@@ -174,7 +179,7 @@ namespace RecruitmentClient.Forms
 		}
 		#endregion
 
-		private bool CheckValidData()
+		private bool CheckValidInputData()
 		{
 			UIValidator validator = new UIValidator();
 
@@ -213,21 +218,16 @@ namespace RecruitmentClient.Forms
 		#region Login
 		private async void ButtonLogin_Click(object sender, EventArgs e)
 		{
-			buttonLogin.Enabled = false;
 			SetDefaultLabels(_account.Theme);
 
 			try
 			{
+				labelRegisterStart.Enabled = false;
+				buttonLogin.Enabled = false;
 				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(textBoxLogin.Text,
 					textBoxPassword.Text);
 				Candidate candidate = await Program.Client.
 					LoginCandidateAsync(candidateLogin);
-				if (candidate == null)
-				{
-					buttonLogin.Enabled = true;
-					HandleUserNotFound();
-					return;
-				}
 
 				_account.Candidate = candidate;
 				_account.Candidate.ChangeLoginPassword(candidateLogin.Login,
@@ -237,11 +237,17 @@ namespace RecruitmentClient.Forms
 
 				OpenMainForm();
 			}
-			catch (SocketException)
+			catch (Exception ex) when (ex is TaskCanceledException
+			|| ex is HttpRequestException)
 			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, пізніше.", _account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				if (ex.Message.Contains(HttpStatusCode.Unauthorized.ToString()))
+					HandleUserNotFound();
+				else
+					Program.HandleNetworkError();
+			}
+			finally
+			{
+				labelRegisterStart.Enabled = true;
 				buttonLogin.Enabled = true;
 			}
 		}
@@ -300,7 +306,7 @@ namespace RecruitmentClient.Forms
 
 			if (!labelPassword2.Visible && !textBoxPassword2.Visible)
 				CheckOldPassword();
-			else if (CheckValidData())
+			else if (CheckValidInputData())
 				await CheckNewPasswordAsync();
 		}
 		private void CheckOldPassword()
@@ -324,7 +330,9 @@ namespace RecruitmentClient.Forms
 					CustomMessageBoxButtons.YesNo, CustomMessageBoxIcon.Warning);
 				if (result == DialogResult.Yes)
 				{
+					buttonLogin.Enabled = false;
 					await ChangePasswordAsync();
+					buttonLogin.Enabled = true;
 
 					if (Serializator.SerializationFileExists(Program.SerializePath))
 						Serializator.Serialize(_account, Program.SerializePath,
@@ -363,13 +371,9 @@ namespace RecruitmentClient.Forms
 				_account.Candidate.ChangeLoginPassword(_account.Candidate.Login,
 					candidateChangePassword.NewPassword);
 			}
-			catch (SocketException)
-			{
-				CustomMessageBox.Show("Спроба підключитись до серверу " +
-					"завершилась не вдало.\nСпробуйте, будь ласка, пізніше.",
-					_account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-			}
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is HttpRequestException)
+			{ Program.HandleNetworkError(); }
 		}
 		#endregion
 

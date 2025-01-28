@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -59,20 +58,26 @@ namespace RecruitmentClient
 					}).Wait();
 					Application.Run(new MainForm(_account));
 				}
-				catch (SocketException)
-				{
-					CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
-						"не вдало.\nСпробуйте, будь ласка, запустити програму пізніше.",
-						_account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-				}
 				catch (AggregateException)
 				{ HandleAccountFileError(); }
+				catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+				{ HandleNetworkError(); }
 			}
 			else
 				Application.Run(new StartForm());
 		}
 
+		internal static void HandleNetworkError()
+		{
+			Theme theme = _account?.Theme ?? default;
+			CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
+				"не вдало.\nСпробуйте, будь ласка, запустити програму пізніше.",
+				theme, "Помилка підключення",
+				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error, 440);
+
+			Application.Exit();
+		}
 		private static bool FindServer()
 		{
 			Theme theme = _account == null ? default : _account.Theme;
@@ -85,10 +90,7 @@ namespace RecruitmentClient
 
 			if (address == null || address.Count <= 0)
 			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
-					"не вдало.\nСпробуйте, будь ласка, запустити програму пізніше.",
-					theme, "Помилка підключення",
-				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				HandleNetworkError();
 				return false;
 			}
 

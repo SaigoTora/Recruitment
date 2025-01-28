@@ -209,6 +209,7 @@ namespace RecruitmentClient.Models
 		private async Task<T> SendAndReceiveDataAsync<T>(object value, HttpMethod httpMethod,
 			string endpoint)
 		{
+			await Task.Delay(3000);
 			string jsonContent = JsonConvert.SerializeObject(value, Formatting.Indented);
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
@@ -234,6 +235,7 @@ namespace RecruitmentClient.Models
 		private async Task SendDataAsync(object value, HttpMethod httpMethod,
 			string endpoint)
 		{
+			await Task.Delay(3000);
 			string jsonContent = JsonConvert.SerializeObject(value, Formatting.Indented);
 
 			using (var httpContent = new StringContent(jsonContent, Encoding.UTF8, MEDIA_TYPE))
@@ -255,6 +257,7 @@ namespace RecruitmentClient.Models
 		}
 		private async Task<T> ReceiveDataAsync<T>(string endpoint)
 		{
+			await Task.Delay(3000);
 			HttpResponseMessage response = await httpClient.GetAsync(_serverAddress +
 				endpoint);
 			response.EnsureSuccessStatusCode();

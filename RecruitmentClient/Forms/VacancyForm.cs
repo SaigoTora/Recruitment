@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
@@ -91,6 +92,9 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
+				richTextBoxClientAdditionalInfo.ReadOnly = true;
+				buttonRequirements.Enabled = false;
+				buttonSend.Enabled = false;
 				CreateApplicationDTO createApplication = new CreateApplicationDTO(
 					_account.GetCandidateLogin(), richTextBoxClientAdditionalInfo.Text,
 					_vacancy.Id);
@@ -102,12 +106,14 @@ namespace RecruitmentClient.Forms
 					_account.Theme, "Успішно", CustomMessageBoxButtons.OK,
 					CustomMessageBoxIcon.Information);
 			}
-			catch (SocketException)
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+			{ Program.HandleNetworkError(); }
+			finally
 			{
-				CustomMessageBox.Show("Спроба підключитись до серверу завершилась не вдало." +
-					"\nСпробуйте, будь ласка, відправити заявку пізніше.",
-					_account.Theme, "Помилка підключення",
-					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				richTextBoxClientAdditionalInfo.ReadOnly = false;
+				buttonRequirements.Enabled = true;
+				buttonSend.Enabled = true;
 			}
 		}
 
