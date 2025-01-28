@@ -26,6 +26,7 @@ namespace RecruitmentClient
 		internal static Client Client { get; private set; }
 		internal static readonly UniqueChecker UniqueChecker = new UniqueChecker();
 		private static readonly int _port = int.Parse(ConfigurationManager.AppSettings["port"]);
+		private static Account _account;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -37,40 +38,44 @@ namespace RecruitmentClient
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			Account account = Serializator.Deserialize<Account>(SerializePath, EncryptKey);
-			if (!FindServer(account))
+			_account = Serializator.Deserialize<Account>(SerializePath, EncryptKey);
+			if (!FindServer())
 				return;
 
-			if (account != null)
+			if (_account == null && Serializator.SerializationFileExists(SerializePath))
+				HandleAccountFileError();
+
+			else if (_account != null)
 			{
 				try
 				{
 					CandidateLoginDTO candidateLogin = new CandidateLoginDTO(
-						account.Candidate.Login, account.Candidate.Password);
-					account.Candidate = null;
+						_account.Candidate.Login, _account.Candidate.Password);
+					_account.Candidate = null;
 					Task.Run(async () =>
 					{
-						account.Candidate =
+						_account.Candidate =
 							await Client.LoginCandidateAsync(candidateLogin);
 					}).Wait();
+					Application.Run(new MainForm(_account));
 				}
 				catch (SocketException)
 				{
 					CustomMessageBox.Show("Спроба підключитись до серверу завершилась " +
 						"не вдало.\nСпробуйте, будь ласка, запустити програму пізніше.",
-						account.Theme, "Помилка підключення",
+						_account.Theme, "Помилка підключення",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
-					return;
 				}
-				Application.Run(new MainForm(account));
+				catch (AggregateException)
+				{ HandleAccountFileError(); }
 			}
 			else
 				Application.Run(new StartForm());
 		}
 
-		private static bool FindServer(Account account)
+		private static bool FindServer()
 		{
-			Theme theme = account == null ? default : account.Theme;
+			Theme theme = _account == null ? default : _account.Theme;
 			LocalNetworkScanner scanner = new LocalNetworkScanner(_port);
 			List<IPAddress> address = null;
 			Task.Run(async () =>
@@ -89,6 +94,15 @@ namespace RecruitmentClient
 
 			Client = new Client(address[0], _port);
 			return true;
+		}
+		private static void HandleAccountFileError()
+		{
+			CustomMessageBox.Show("Файл із даними про ваш акаунт було змінено. " +
+				"Будь ласка, повторно введіть свої дані для входу.",
+				default, "Помилка входу", CustomMessageBoxButtons.OK,
+				CustomMessageBoxIcon.Information);
+			Serializator.DeleteSerializationFile(SerializePath);
+			Application.Run(new StartForm());
 		}
 	}
 }

@@ -12,6 +12,7 @@ using UIHelpers.Validation;
 using SharedModels.Models;
 using RecruitmentLibrary.Serialization;
 using System.Threading.Tasks;
+using RecruitmentLibrary.Validation;
 
 namespace RecruitmentClient.Forms
 {
@@ -85,15 +86,15 @@ namespace RecruitmentClient.Forms
 		{
 			SetDefaultLabels(_account.Theme);
 
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 			validator.CheckSymbols(labelSurname, textBoxSurname,
-				_account.Theme, ValidLanguage.UA, "’-");
+				_account.Theme, ValidLanguage.Ukrainian, "'-");
 			validator.CheckMinLength(labelSurname, textBoxSurname, 2, _account.Theme);
 			validator.CheckSymbols(labelName, textBoxName, _account.Theme,
-				ValidLanguage.UA, "’-");
+				ValidLanguage.Ukrainian, "'-");
 			validator.CheckMinLength(labelName, textBoxName, 2, _account.Theme);
 			validator.CheckSymbols(labelFatherName, textBoxFatherName,
-				_account.Theme, ValidLanguage.UA, "’-");
+				_account.Theme, ValidLanguage.Ukrainian, "'-");
 
 			// Phone number
 			validator.CheckAllNumbers(labelPhone, textBoxPhone1, _account.Theme);
@@ -187,7 +188,8 @@ namespace RecruitmentClient.Forms
 			qf.FormClosed += (s, args) =>
 			{
 				Visible = true;
-				_oldCandidate.Questionnaire = _account.Candidate.Questionnaire;
+				if (_oldCandidate != null)
+					_oldCandidate.Questionnaire = _account.Candidate.Questionnaire;
 			};
 			Visible = false;
 		}

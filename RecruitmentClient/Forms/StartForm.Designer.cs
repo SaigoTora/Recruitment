@@ -330,7 +330,7 @@
 			this.labelRememberMe.Name = "labelRememberMe";
 			this.labelRememberMe.Size = new System.Drawing.Size(320, 23);
 			this.labelRememberMe.TabIndex = 8;
-			this.labelRememberMe.Text = "Запам’ятати мене на цьому ПК:";
+			this.labelRememberMe.Text = "Запам'ятати мене на цьому ПК:";
 			this.labelRememberMe.Click += new System.EventHandler(this.LabelRememberMe_Click);
 			// 
 			// checkBoxRememberMe

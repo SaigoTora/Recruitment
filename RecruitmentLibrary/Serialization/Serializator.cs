@@ -37,10 +37,7 @@ namespace RecruitmentLibrary.Serialization
 				}
 			}
 			catch
-			{
-				DeleteSerializationFile(path);
-				return null;
-			}
+			{ return null; }
 		}
 		public static bool SerializationFileExists(string path) => File.Exists(path);
 		public static void DeleteSerializationFile(string path)

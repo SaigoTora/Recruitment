@@ -11,6 +11,7 @@ using UIHelpers.Validation;
 using SharedModels.Models;
 using RecruitmentServer.Models.DataBase;
 using System.Linq;
+using RecruitmentLibrary.Validation;
 
 namespace RecruitmentServer.Forms
 {
@@ -252,7 +253,7 @@ namespace RecruitmentServer.Forms
 				labelSalaryTitle, labelPositionDescriptionTitle,
 				labelAdditionalInfoTitle);
 
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
 			validator.CheckSymbols(labelSalaryTitle, textBoxSalary, _account.Theme,
 				ValidLanguage.None, "0123456789,");

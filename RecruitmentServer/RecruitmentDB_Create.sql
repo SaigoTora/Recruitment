@@ -192,7 +192,7 @@ CREATE Table Language-- 15. Мови
 (
 id int NOT NULL IDENTITY(1,1) Primary Key,-- Код
 name nvarchar(64) NOT NULL,-- Мова
-level int NOT NULL default 1 check(level >= 1 AND level <= 10),-- Рівень [1;10]
+level int NOT NULL default 1 check(level >= 1),-- Рівень (1 та більше)
 id_questionnaire int NOT NULL,-- Код анкети
 Foreign key(id_questionnaire) References Questionnaire(id) ON DELETE CASCADE,-- Зовнішній ключ
 );
@@ -223,7 +223,7 @@ surname nvarchar(64) NOT NULL,-- Прізвище
 name nvarchar(64) NOT NULL,-- Ім'я
 father_name nvarchar(64) NULL,-- По-батькові
 phone nvarchar(13) UNIQUE NOT NULL default 'None' check(len(phone) >= 13),-- Номер телефону(мінімум 13 символів)
-birthday date NOT NULL default '2024-01-01' check(birthday < GETDATE()),-- Дата народження(пізніше ніж в день створення кандидата)
+birthday date NOT NULL default '2024-01-01' check(birthday < GETDATE()),-- Дата народження(не пізніше ніж в день створення кандидата)
 email nvarchar(64) UNIQUE NOT NULL default 'None' check (email LIKE '%_@__%.__%'),-- E-mail [1;∞)@[2;∞).[2;∞), де запис [n;m) - кількість символів
 id_questionnaire int UNIQUE NOT NULL,-- Код анкети
 Foreign key(id_questionnaire) References Questionnaire(id) ON DELETE CASCADE,-- Зовнішній ключ

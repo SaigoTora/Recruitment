@@ -63,6 +63,7 @@ namespace RecruitmentServer.Models.DataBase
 		#region Create
 		internal static Candidate CreateCandidate(Candidate candidate)
 		{
+			DatabaseValidator.CheckValidCandidate(candidate);
 			_candidateRepo.Add(candidate);
 			return candidate;
 		}
@@ -77,9 +78,10 @@ namespace RecruitmentServer.Models.DataBase
 		internal static void CreateApplication(CreateApplicationDTO createApplication)
 		{
 			Candidate candidate = GetCandidate(createApplication.CandidateLogin);
+			Vacancy vacancy = GetVacancy(createApplication.VacancyId);
 
 			Application application = new Application(DateTime.UtcNow,
-				createApplication.AdditionalInfo, 1, candidate.Id, createApplication.VacancyId);
+				createApplication.AdditionalInfo, 1, candidate.Id, vacancy.Id);
 			_applicationRepo.Add(application);
 		}
 		internal static void CreateRequirement(Requirement requirement)
@@ -113,6 +115,41 @@ namespace RecruitmentServer.Models.DataBase
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);
 
+		internal static FamilyStatus GetFamilyStatus(int familyStatusId)
+		{
+			FamilyStatus familyStatus = _familyStatusRepo.GetOne(familyStatusId);
+
+			return familyStatus
+				?? throw new KeyNotFoundException($"Family status with id {familyStatusId} " +
+				$"was not found.");
+		}
+		internal static BusinessTripOpportunity GetBusinessTripOpportunity(
+			int businessTripOpportunityId)
+		{
+			BusinessTripOpportunity businessTripOpportunity
+				= _businessTripOpportunityRepo.GetOne(businessTripOpportunityId);
+
+			return businessTripOpportunity
+				?? throw new KeyNotFoundException($"Business trip opportunity with id " +
+				$"{businessTripOpportunityId} was not found.");
+		}
+		internal static EducationDegree GetEducationDegree(int educationDegreeId)
+		{
+			EducationDegree educationDegree = _educationDegreeRepo.GetOne(educationDegreeId);
+
+			return educationDegree
+				?? throw new KeyNotFoundException($"Education degree with id {educationDegreeId} " +
+				$"was not found.");
+		}
+		internal static EducationForm GetEducationForm(int educationFormId)
+		{
+			EducationForm educationForm = _educationFormRepo.GetOne(educationFormId);
+
+			return educationForm
+				?? throw new KeyNotFoundException($"Education form with id {educationFormId} " +
+				$"was not found.");
+		}
+
 		internal static FamilyStatus[] GetFamilyStatuses()
 			=> _familyStatusRepo.GetAll().OrderBy(fs => fs.Id).ToArray();
 		internal static BusinessTripOpportunity[] GetBusinessTripOpportunities()
@@ -124,7 +161,13 @@ namespace RecruitmentServer.Models.DataBase
 
 		#region Vacancy
 		internal static Vacancy GetVacancy(int vacancyId)
-			=> _vacancyRepo.GetOne(vacancyId);
+		{
+			Vacancy vacancy = _vacancyRepo.GetOne(vacancyId);
+
+			return vacancy
+				?? throw new KeyNotFoundException($"Vacancy with id {vacancyId} " +
+				$"was not found.");
+		}
 		private static List<Vacancy> GetVacancies(FullSearcher searcher)
 		{
 			var vacancies = _vacancyRepo.GetAll();
@@ -392,17 +435,17 @@ namespace RecruitmentServer.Models.DataBase
 			=> !_candidateRepo.GetAll().Any(c => c.Login == stringDataUnique.Data);
 		internal static bool CheckCandidatePhoneUnique(StringDataUniqueDTO stringDataUnique)
 		{
-			Candidate candidate = GetCandidate(stringDataUnique.CandidateLogin);
+			CandidateLoginDTO candidateLogin = stringDataUnique.CandidateLogin;
 
 			return !_candidateRepo.GetAll().Any(c => c.Phone == stringDataUnique.Data
-				&& candidate.Login != c.Login && candidate.Password != c.Password);
+				&& candidateLogin.Login != c.Login && candidateLogin.Password != c.Password);
 		}
 		internal static bool CheckCandidateEmailUnique(StringDataUniqueDTO stringDataUnique)
 		{
-			Candidate candidate = GetCandidate(stringDataUnique.CandidateLogin);
+			CandidateLoginDTO candidateLogin = stringDataUnique.CandidateLogin;
 
 			return !_candidateRepo.GetAll().Any(c => c.Email == stringDataUnique.Data
-				&& candidate.Login != c.Login && candidate.Password != c.Password);
+				&& candidateLogin.Login != c.Login && candidateLogin.Password != c.Password);
 		}
 		#endregion
 
@@ -471,6 +514,8 @@ namespace RecruitmentServer.Models.DataBase
 		{
 			Candidate candidateToUpdate = GetCandidate(new CandidateLoginDTO(candidate.Login,
 				candidate.Password));
+
+			DatabaseValidator.CheckValidCandidate(candidate);
 			if (candidateToUpdate == null)
 				return candidateToUpdate;
 
@@ -501,6 +546,9 @@ namespace RecruitmentServer.Models.DataBase
 			CandidateChangePasswordDTO candidateChangePassword)
 		{
 			Candidate candidate = GetCandidate(candidateChangePassword.CandidateLogin);
+			DatabaseValidator.CheckValidLoginPassword(candidateChangePassword.CandidateLogin.Login,
+				candidateChangePassword.NewPassword);
+
 			candidate.ChangeLoginPassword(candidate.Login, candidateChangePassword.NewPassword);
 			_candidateRepo.Save(candidate);
 		}
@@ -508,26 +556,27 @@ namespace RecruitmentServer.Models.DataBase
 
 		#region Questionnaire
 		internal static Questionnaire UpdateQuestionnaire(
-			QuestionnaireChangeDTO questionnaireChange)
+			QuestionnaireChangeDTO questionnaire)
 		{
-			Candidate candidate = GetCandidate(questionnaireChange.CandidateLogin);
-
+			Candidate candidate = GetCandidate(questionnaire.CandidateLogin);
 			var questionnaireToUpdate = _questionnaireRepo.GetOne(candidate.QuestionnaireId);
+
+			DatabaseValidator.CheckValidQuestionnaire(questionnaire.Questionnaire);
 			if (questionnaireToUpdate == null)
 				return questionnaireToUpdate;
 
 			_context.Entry(questionnaireToUpdate).CurrentValues.SetValues(
-				questionnaireChange.Questionnaire);
+				questionnaire.Questionnaire);
 
-			if (questionnaireChange.Questionnaire.Health != null)
-				UpdateHealth(questionnaireChange.Questionnaire, questionnaireToUpdate);
+			if (questionnaire.Questionnaire.Health != null)
+				UpdateHealth(questionnaire.Questionnaire, questionnaireToUpdate);
 
-			if (questionnaireChange.Questionnaire.Languages != null)
-				UpdateLanguages(questionnaireChange.Questionnaire.Languages.ToArray(),
+			if (questionnaire.Questionnaire.Languages != null)
+				UpdateLanguages(questionnaire.Questionnaire.Languages.ToArray(),
 					questionnaireToUpdate.Languages.ToArray(), questionnaireToUpdate.Id);
 
-			if (questionnaireChange.Questionnaire.Educations != null)
-				UpdateEducations(questionnaireChange.Questionnaire.Educations.ToArray(),
+			if (questionnaire.Questionnaire.Educations != null)
+				UpdateEducations(questionnaire.Questionnaire.Educations.ToArray(),
 					questionnaireToUpdate.Educations.ToArray(), questionnaireToUpdate.Id);
 
 			_questionnaireRepo.Save(questionnaireToUpdate);

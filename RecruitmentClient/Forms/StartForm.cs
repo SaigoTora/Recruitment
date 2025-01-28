@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Models;
 using RecruitmentLibrary.Serialization;
+using RecruitmentLibrary.Validation;
 using SharedModels.DTOs;
 using SharedModels.Models;
 using UIHelpers.ControlEventHandlers;
@@ -114,7 +115,7 @@ namespace RecruitmentClient.Forms
 		{
 			SetDefaultLabels(_account.Theme);
 
-			if (CheckValidInputData())
+			if (CheckValidData())
 				try
 				{
 					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(labelLogin,
@@ -173,16 +174,16 @@ namespace RecruitmentClient.Forms
 		}
 		#endregion
 
-		private bool CheckValidInputData()
+		private bool CheckValidData()
 		{
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 
 			validator.CheckSymbols(labelLogin, textBoxLogin,
-				_account.Theme, ValidLanguage.ENG, "._-0123456789");
+				_account.Theme, ValidLanguage.English, "._-0123456789");
 			validator.CheckMinLength(labelLogin, textBoxLogin, 4, _account.Theme);
 
 			validator.CheckSymbols(labelPassword, textBoxPassword,
-				_account.Theme, ValidLanguage.ENG, "@-_.*0123456789");
+				_account.Theme, ValidLanguage.English, "@-_.*0123456789");
 			validator.CheckMinLength(labelPassword, textBoxPassword, 8, _account.Theme);
 			validator.CheckMinCountSymbols(labelPassword, textBoxPassword,
 				_account.Theme, 2, "0123456789", "Пароль повинен мати хоча б дві цифри.");
@@ -299,7 +300,7 @@ namespace RecruitmentClient.Forms
 
 			if (!labelPassword2.Visible && !textBoxPassword2.Visible)
 				CheckOldPassword();
-			else if (CheckValidInputData())
+			else if (CheckValidData())
 				await CheckNewPasswordAsync();
 		}
 		private void CheckOldPassword()

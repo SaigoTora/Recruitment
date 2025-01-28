@@ -15,6 +15,7 @@ using UIHelpers.Validation;
 using SharedModels.Models;
 using System.Linq;
 using SharedModels.DTOs;
+using RecruitmentLibrary.Validation;
 
 namespace RecruitmentClient.Forms
 {
@@ -451,12 +452,12 @@ namespace RecruitmentClient.Forms
 
 		private bool CheckValidData()
 		{
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 			validator.CheckSymbols(labelCity, textBoxCity, _account.Theme,
-				ValidLanguage.UA, "’- ");
+				ValidLanguage.Ukrainian, "'- ");
 			validator.CheckMinLength(labelCity, textBoxCity, 2, _account.Theme);
 			validator.CheckSymbols(labelChronicDiseases, richTextBoxChronicDiseases,
-				_account.Theme, ValidLanguage.UA, "’- 0123456789");
+				_account.Theme, ValidLanguage.Ukrainian, "'- 0123456789");
 
 			bool isDataValid = validator.IsDataValid;
 			CheckValidEducations(ref isDataValid);
@@ -469,16 +470,16 @@ namespace RecruitmentClient.Forms
 		{
 			for (int i = 0; i < _educations.Count; i++)
 			{
-				Validator validator = new Validator();
+				UIValidator validator = new UIValidator();
 				validator.CheckSymbols(_educations[i].LabelNameInstitution,
 					_educations[i].TextBoxNameInstitution,
-					_account.Theme, ValidLanguage.UA, "’.\"-№ 0123456789");
+					_account.Theme, ValidLanguage.Ukrainian, "'.\"-№ 0123456789");
 				validator.CheckMinLength(_educations[i].LabelNameInstitution,
 					_educations[i].TextBoxNameInstitution, 2, _account.Theme);
 
 				validator.CheckSymbols(_educations[i].LabelSpecialty,
 					_educations[i].TextBoxSpecialty,
-					_account.Theme, ValidLanguage.UA, "’- ");
+					_account.Theme, ValidLanguage.Ukrainian, "'- ");
 				validator.CheckMinLength(_educations[i].LabelSpecialty,
 					_educations[i].TextBoxSpecialty, 2, _account.Theme);
 

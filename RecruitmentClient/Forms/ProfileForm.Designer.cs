@@ -75,7 +75,7 @@
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(79, 32);
 			this.labelName.TabIndex = 2;
-			this.labelName.Text = "І’мя:";
+			this.labelName.Text = "І'мя:";
 			this.labelName.Click += new System.EventHandler(this.LabelName_Click);
 			// 
 			// labelFatherName

@@ -55,6 +55,8 @@
     <Compile Include="Assignment\AssignmentSolver.cs" />
     <Compile Include="Serialization\Serializator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\ValidLanguage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

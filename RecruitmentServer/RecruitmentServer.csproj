@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="Models\DataBase\BaseRepo.cs" />
     <Compile Include="Models\DataBase\DatabaseInitializer.cs" />
+    <Compile Include="Models\DataBase\DatabaseValidator.cs" />
     <Compile Include="Models\DataBase\IRepo.cs" />
     <Compile Include="Models\DataBase\RecruitmentEntities.cs" />
     <Compile Include="Models\Account.cs" />

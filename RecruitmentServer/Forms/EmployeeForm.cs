@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using RecruitmentLibrary.Validation;
 using RecruitmentServer.Models;
 using RecruitmentServer.Models.DataBase;
 using SharedModels.Models;
@@ -159,7 +159,7 @@ namespace RecruitmentServer.Forms
 
 		private bool CheckValidPosition()
 		{
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 			Label labelPosition = new Label() { Text = "Посада" };
 			validator.CheckMinLength(labelPosition, textBoxPosition, 3, _account.Theme);
 
@@ -170,7 +170,7 @@ namespace RecruitmentServer.Forms
 			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme,
 				labelSalaryTitle);
 
-			Validator validator = new Validator();
+			UIValidator validator = new UIValidator();
 			validator.CheckSymbols(labelSalaryTitle, textBoxSalary, _account.Theme,
 				ValidLanguage.None, "0123456789,");
 			validator.CheckMinLength(labelSalaryTitle, textBoxSalary, 1, _account.Theme);

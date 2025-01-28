@@ -82,8 +82,7 @@
     <Compile Include="Themes\Theme.cs" />
     <Compile Include="Themes\ThemeControlManager.cs" />
     <Compile Include="Validation\ValidationFeedbackManager.cs" />
-    <Compile Include="Validation\Validator.cs" />
-    <Compile Include="Validation\ValidLanguage.cs" />
+    <Compile Include="Validation\UIValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ControlEventHandlers\ControlEventHandlersDiagram.cd" />
@@ -107,6 +106,12 @@
     <Content Include="Resources\Icons\question.ico" />
     <Content Include="Resources\Icons\success.ico" />
     <Content Include="Resources\Icons\warning.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RecruitmentLibrary\RecruitmentLibrary.csproj">
+      <Project>{ccf5b97e-7820-4a5e-996b-aa7aede8261b}</Project>
+      <Name>RecruitmentLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

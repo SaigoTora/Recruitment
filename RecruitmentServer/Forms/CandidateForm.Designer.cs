@@ -529,7 +529,7 @@
 			this.labelHealth.Size = new System.Drawing.Size(147, 35);
 			this.labelHealth.TabIndex = 7;
 			this.labelHealth.Tag = "fixedPosition";
-			this.labelHealth.Text = "Здоров’я";
+			this.labelHealth.Text = "Здоров'я";
 			this.labelHealth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labelFamilyStatus
