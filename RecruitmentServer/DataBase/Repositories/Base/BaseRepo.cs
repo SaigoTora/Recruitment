@@ -4,9 +4,9 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
-using Base;
+using SharedModels.Models.Base;
 
-namespace RecruitmentServer.Models.DataBase
+namespace RecruitmentServer.DataBase.Repositories.Base
 {
 	internal class BaseRepo<T> : IDisposable, IRepo<T> where T : EntityBase
 	{

@@ -8,11 +8,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-using RecruitmentServer.Models.DataBase;
+using RecruitmentServer.DataBase;
 using SharedModels.DTOs;
 using SharedModels.Models;
 
-namespace RecruitmentServer.Models
+namespace RecruitmentServer.Utilities.ServerUtilities
 {
 	internal class Server
 	{

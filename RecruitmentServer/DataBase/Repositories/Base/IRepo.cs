@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RecruitmentServer.Models.DataBase
+namespace RecruitmentServer.DataBase.Repositories.Base
 {
 	internal interface IRepo<T>
 	{

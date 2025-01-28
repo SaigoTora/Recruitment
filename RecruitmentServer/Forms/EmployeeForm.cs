@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using RecruitmentLibrary.Validation;
 using RecruitmentServer.Models;
-using RecruitmentServer.Models.DataBase;
+using RecruitmentServer.DataBase;
 using SharedModels.Models;
 using UIHelpers.Controls;
 using UIHelpers.Forms;

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace RecruitmentServer.Models
+namespace RecruitmentServer.Utilities.ServerUtilities
 {
 	internal class FirewallManager
 	{

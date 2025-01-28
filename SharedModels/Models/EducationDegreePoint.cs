@@ -1,5 +1,5 @@
-using Base;
 using Newtonsoft.Json;
+using SharedModels.Models.Base;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 

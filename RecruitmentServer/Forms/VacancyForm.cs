@@ -9,7 +9,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
 using SharedModels.Models;
-using RecruitmentServer.Models.DataBase;
+using RecruitmentServer.DataBase;
 using System.Linq;
 using RecruitmentLibrary.Validation;
 

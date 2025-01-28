@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-
+using RecruitmentServer.DataBase.Repositories.Base;
+using RecruitmentServer.Models;
 using SharedModels.DTOs;
 using SharedModels.Models;
 using SharedModels.Search;
 
-namespace RecruitmentServer.Models.DataBase
+namespace RecruitmentServer.DataBase
 {
 	internal static class DatabaseManager
 	{

@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Base
+namespace SharedModels.Models.Base
 {
 	[Serializable]
 	public class EntityBase

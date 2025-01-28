@@ -5,10 +5,10 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 
-using Base;
+using SharedModels.Models.Base;
 using SharedModels.Models;
 
-namespace RecruitmentServer.Models.DataBase
+namespace RecruitmentServer.DataBase
 {
 	internal static class DatabaseInitializer
 	{

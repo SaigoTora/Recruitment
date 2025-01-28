@@ -12,7 +12,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using SharedModels.Models;
 using RecruitmentLibrary.Serialization;
-using RecruitmentServer.Models.DataBase;
+using RecruitmentServer.DataBase;
 
 namespace RecruitmentServer.Forms
 {

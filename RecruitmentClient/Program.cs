@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 using RecruitmentClient.Forms;
 using RecruitmentClient.Models;
+using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Serialization;
 using SharedModels.DTOs;

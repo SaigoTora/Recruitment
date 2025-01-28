@@ -10,7 +10,7 @@ using UIHelpers.Forms;
 using UIHelpers.Themes;
 using SharedModels.Models;
 using RecruitmentLibrary.Assignment;
-using RecruitmentServer.Models.DataBase;
+using RecruitmentServer.DataBase;
 
 namespace RecruitmentServer.Forms
 {
