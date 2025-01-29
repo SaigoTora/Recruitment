@@ -72,10 +72,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsUrl"],
 				HandleInterviewsAsync);
 
-			_endpointHandlers.Add(ConfigurationManager.AppSettings["familyStatusesUrl"],
-				HandleFamilyStatusesAsync);
-			_endpointHandlers.Add(ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"],
-				HandleBusinessTripOpportunitiesAsync);
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["staticDataUrl"],
+				HandleStaticDataAsync);
 		}
 		internal void Start()
 		{
@@ -293,18 +291,10 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		#endregion
 
 		#region Static data
-		private async Task HandleFamilyStatusesAsync(HttpListenerContext context)
+		private async Task HandleStaticDataAsync(HttpListenerContext context)
 		{
 			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				await RespondAsync(context, DatabaseManager.GetFamilyStatuses(),
-					HttpStatusCode.OK);
-			else
-				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
-		}
-		private async Task HandleBusinessTripOpportunitiesAsync(HttpListenerContext context)
-		{
-			if (context.Request.HttpMethod == HttpMethod.Get.Method)
-				await RespondAsync(context, DatabaseManager.GetBusinessTripOpportunities(),
+				await RespondAsync(context, DatabaseManager.GetStaticData(),
 					HttpStatusCode.OK);
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);

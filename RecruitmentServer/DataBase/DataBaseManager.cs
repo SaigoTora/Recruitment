@@ -8,6 +8,7 @@ using RecruitmentServer.Models;
 using SharedModels.DTOs;
 using SharedModels.Models;
 using SharedModels.Search;
+using SharedModels.Static;
 
 namespace RecruitmentServer.DataBase
 {
@@ -151,15 +152,6 @@ namespace RecruitmentServer.DataBase
 				?? throw new KeyNotFoundException($"Education form with id {educationFormId} " +
 				$"was not found.");
 		}
-
-		internal static FamilyStatus[] GetFamilyStatuses()
-			=> _familyStatusRepo.GetAll().OrderBy(fs => fs.Id).ToArray();
-		internal static BusinessTripOpportunity[] GetBusinessTripOpportunities()
-			=> _businessTripOpportunityRepo.GetAll().OrderBy(bto => bto.Id).ToArray();
-		internal static EducationDegree[] GetEducationDegrees()
-			=> _educationDegreeRepo.GetAll().OrderBy(ed => ed.Id).ToArray();
-		internal static EducationForm[] GetEducationForms()
-			=> _educationFormRepo.GetAll().OrderBy(ef => ef.Id).ToArray();
 
 		#region Vacancy
 		internal static Vacancy GetVacancy(int vacancyId)
@@ -449,6 +441,20 @@ namespace RecruitmentServer.DataBase
 			return !_candidateRepo.GetAll().Any(c => c.Email == stringDataUnique.Data
 				&& candidateLogin.Login != c.Login && candidateLogin.Password != c.Password);
 		}
+		#endregion
+
+		#region Static data
+		internal static StaticData GetStaticData()
+			=> new StaticData(GetFamilyStatuses(), GetBusinessTripOpportunities());
+
+		private static FamilyStatus[] GetFamilyStatuses()
+			=> _familyStatusRepo.GetAll().OrderBy(fs => fs.Id).ToArray();
+		private static BusinessTripOpportunity[] GetBusinessTripOpportunities()
+			=> _businessTripOpportunityRepo.GetAll().OrderBy(bto => bto.Id).ToArray();
+		private static EducationDegree[] GetEducationDegrees()
+			=> _educationDegreeRepo.GetAll().OrderBy(ed => ed.Id).ToArray();
+		private static EducationForm[] GetEducationForms()
+			=> _educationFormRepo.GetAll().OrderBy(ef => ef.Id).ToArray();
 		#endregion
 
 		internal static List<AssignmentItem> GetAssignmentItems()

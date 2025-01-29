@@ -158,16 +158,12 @@ namespace RecruitmentClient.Forms
 			try
 			{
 				Enabled = false;
-				if (StaticData.IsEmpty)
-				{
-					var familyStatuses = await Program.Client.GetFamilyStatusesAsync();
-					var businessTripOpportunities =
-					await Program.Client.GetBusinessTripOpportunitiesAsync();
-					StaticData.SetData(familyStatuses, businessTripOpportunities);
-				}
-				comboBoxFamilyStatus.Items.AddRange(StaticData.GetFamilyStatuses());
+				if (Program.StaticData == null)
+					Program.StaticData = await Program.Client.GetStaticDataAsync();
+
+				comboBoxFamilyStatus.Items.AddRange(Program.StaticData.GetFamilyStatuses());
 				comboBoxBusinessTripOpportunity.Items.AddRange(
-					StaticData.GetBusinessTripOpportunities());
+					Program.StaticData.GetBusinessTripOpportunities());
 			}
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)

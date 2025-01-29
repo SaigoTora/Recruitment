@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using SharedModels.DTOs;
 using SharedModels.Models;
+using SharedModels.Static;
 
 namespace RecruitmentClient.Utilities.ClientUtilities
 {
@@ -55,10 +56,8 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 		private readonly string _interviewsUrl
 			= ConfigurationManager.AppSettings["interviewsUrl"];
 
-		private readonly string _familyStatusesUrl
-			= ConfigurationManager.AppSettings["familyStatusesUrl"];
-		private readonly string _businessTripOpportunitiesUrl
-			= ConfigurationManager.AppSettings["businessTripOpportunitiesUrl"];
+		private readonly string _staticDataUrl
+			= ConfigurationManager.AppSettings["staticDataUrl"];
 		#endregion
 
 		private readonly List<string> _uniqueLogins = new List<string>();
@@ -199,10 +198,8 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 		#endregion
 
 		#region Static data
-		internal async Task<FamilyStatus[]> GetFamilyStatusesAsync()
-			=> await ReceiveDataAsync<FamilyStatus[]>(_familyStatusesUrl);
-		internal async Task<BusinessTripOpportunity[]> GetBusinessTripOpportunitiesAsync()
-			=> await ReceiveDataAsync<BusinessTripOpportunity[]>(_businessTripOpportunitiesUrl);
+		internal async Task<StaticData> GetStaticDataAsync()
+			=> await ReceiveDataAsync<StaticData>(_staticDataUrl);
 		#endregion
 
 		#region General methods

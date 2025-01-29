@@ -12,6 +12,7 @@ using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Serialization;
 using SharedModels.DTOs;
+using SharedModels.Static;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 
@@ -24,6 +25,7 @@ namespace RecruitmentClient
 		internal static readonly string EncryptKey =
 			ConfigurationManager.AppSettings["encryptKey"];
 		internal static Client Client { get; private set; }
+		internal static StaticData StaticData;
 		internal static readonly UniqueChecker UniqueChecker = new UniqueChecker();
 		private static readonly int _port = int.Parse(ConfigurationManager.AppSettings["port"]);
 		private static Account _account;
