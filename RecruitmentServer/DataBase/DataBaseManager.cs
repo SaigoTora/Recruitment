@@ -24,8 +24,6 @@ namespace RecruitmentServer.DataBase
 		private static readonly BaseRepo<Language> _languageRepo;
 		private static readonly BaseRepo<Questionnaire> _questionnaireRepo;
 		private static readonly BaseRepo<Vacancy> _vacancyRepo;
-		private static readonly BaseRepo<EducationDegreeRequirement>
-			_educationDegreeRequirementRepo;
 		private static readonly BaseRepo<Requirement> _requirementRepo;
 		private static readonly BaseRepo<Point> _pointRepo;
 		private static readonly BaseRepo<InterviewStatus> _interviewStatusRepo;
@@ -35,11 +33,11 @@ namespace RecruitmentServer.DataBase
 		private static readonly BaseRepo<EducationDegree> _educationDegreeRepo;
 		private static readonly BaseRepo<EducationForm> _educationFormRepo;
 		private static readonly BaseRepo<Position> _positionRepo;
-		private static readonly BaseRepo<ApplicationStatus> _applicationStatusRepo;
 
 		static DatabaseManager()
 		{
 			_context = new RecruitmentEntities();
+
 			_employeeRepo = new BaseRepo<Employee>(_context);
 			_interviewRepo = new BaseRepo<Interview>(_context);
 			_applicationRepo = new BaseRepo<Application>(_context);
@@ -48,7 +46,6 @@ namespace RecruitmentServer.DataBase
 			_languageRepo = new BaseRepo<Language>(_context);
 			_questionnaireRepo = new BaseRepo<Questionnaire>(_context);
 			_vacancyRepo = new BaseRepo<Vacancy>(_context);
-			_educationDegreeRequirementRepo = new BaseRepo<EducationDegreeRequirement>(_context);
 			_requirementRepo = new BaseRepo<Requirement>(_context);
 			_pointRepo = new BaseRepo<Point>(_context);
 			_interviewStatusRepo = new BaseRepo<InterviewStatus>(_context);
@@ -58,7 +55,6 @@ namespace RecruitmentServer.DataBase
 			_educationDegreeRepo = new BaseRepo<EducationDegree>(_context);
 			_educationFormRepo = new BaseRepo<EducationForm>(_context);
 			_positionRepo = new BaseRepo<Position>(_context);
-			_applicationStatusRepo = new BaseRepo<ApplicationStatus>(_context);
 
 			DatabaseInitializer.Initialize(_context);
 		}
@@ -445,7 +441,8 @@ namespace RecruitmentServer.DataBase
 
 		#region Static data
 		internal static StaticData GetStaticData()
-			=> new StaticData(GetFamilyStatuses(), GetBusinessTripOpportunities());
+			=> new StaticData(GetFamilyStatuses(), GetBusinessTripOpportunities(),
+				GetEducationDegrees(), GetEducationForms());
 
 		private static FamilyStatus[] GetFamilyStatuses()
 			=> _familyStatusRepo.GetAll().OrderBy(fs => fs.Id).ToArray();
@@ -670,7 +667,6 @@ namespace RecruitmentServer.DataBase
 			_languageRepo?.Dispose();
 			_questionnaireRepo?.Dispose();
 			_vacancyRepo?.Dispose();
-			_educationDegreeRequirementRepo?.Dispose();
 			_requirementRepo?.Dispose();
 			_pointRepo?.Dispose();
 			_interviewStatusRepo?.Dispose();
@@ -680,7 +676,6 @@ namespace RecruitmentServer.DataBase
 			_educationDegreeRepo?.Dispose();
 			_educationFormRepo?.Dispose();
 			_positionRepo?.Dispose();
-			_applicationStatusRepo?.Dispose();
 		}
 	}
 }

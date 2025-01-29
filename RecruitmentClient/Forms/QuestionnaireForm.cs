@@ -15,7 +15,6 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
-using SharedModels.Static;
 
 namespace RecruitmentClient.Forms
 {
@@ -164,6 +163,9 @@ namespace RecruitmentClient.Forms
 				comboBoxFamilyStatus.Items.AddRange(Program.StaticData.GetFamilyStatuses());
 				comboBoxBusinessTripOpportunity.Items.AddRange(
 					Program.StaticData.GetBusinessTripOpportunities());
+				comboBoxEducationForm.Items.AddRange(Program.StaticData.GetEducationForms());
+				comboBoxEducationDegree.Items.AddRange(
+					Program.StaticData.GetEducationDegrees());
 			}
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)

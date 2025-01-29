@@ -400,7 +400,7 @@
             "Армянська",
             "Білоруська",
             "Болгарська",
-            "В'єтнамська",
+            "В\'єтнамська",
             "Вірменська",
             "Грецька",
             "Грузинська",
@@ -584,9 +584,6 @@
 			this.comboBoxEducationForm.FormattingEnabled = true;
 			this.comboBoxEducationForm.IntegralHeight = false;
 			this.comboBoxEducationForm.ItemHeight = 30;
-			this.comboBoxEducationForm.Items.AddRange(new object[] {
-            "Денна",
-            "Заочна"});
 			this.comboBoxEducationForm.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
 			this.comboBoxEducationForm.Location = new System.Drawing.Point(880, 162);
 			this.comboBoxEducationForm.MaxDropDownItems = 15;
@@ -632,12 +629,6 @@
 			this.comboBoxEducationDegree.FormattingEnabled = true;
 			this.comboBoxEducationDegree.IntegralHeight = false;
 			this.comboBoxEducationDegree.ItemHeight = 30;
-			this.comboBoxEducationDegree.Items.AddRange(new object[] {
-            "Молодший бакалавр",
-            "Бакалавр",
-            "Спеціаліст",
-            "Магістр",
-            "Доктор наук"});
 			this.comboBoxEducationDegree.ItemsAppearance.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
 			this.comboBoxEducationDegree.Location = new System.Drawing.Point(311, 162);
 			this.comboBoxEducationDegree.MaxDropDownItems = 15;
