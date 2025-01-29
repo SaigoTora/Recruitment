@@ -94,6 +94,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\FullSearcher.cs" />
     <Compile Include="Search\Searcher.cs" />
+    <Compile Include="Static\StaticData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Utilities\ClientUtilities\LocalNetworkScanner.cs" />
-    <Compile Include="Utilities\ClientUtilities\StaticDataFromDB.cs" />
     <Compile Include="Utilities\ClientUtilities\Client.cs" />
     <Compile Include="Utilities\FormUtilities\UniqueChecker.cs" />
     <Compile Include="Utilities\FormUtilities\EducationFormElements.cs" />

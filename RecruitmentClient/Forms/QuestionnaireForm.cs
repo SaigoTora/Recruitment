@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RecruitmentClient.Models;
-using RecruitmentClient.Utilities.ClientUtilities;
 using RecruitmentClient.Utilities.FormUtilities;
 using RecruitmentLibrary.Validation;
 using SharedModels.DTOs;
@@ -16,6 +15,7 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 using UIHelpers.Validation;
+using SharedModels.Static;
 
 namespace RecruitmentClient.Forms
 {
@@ -60,15 +60,14 @@ namespace RecruitmentClient.Forms
 			_languageCreator = new ControlCreator(panelLanguage, flpLanguages);
 			_educationCreator = new ControlCreator(panelEducation, flpEducations);
 		}
-		private void QuestionnaireForm_Load(object sender, EventArgs e)
+		private async void QuestionnaireForm_Load(object sender, EventArgs e)
 		{
 			SetTheme(_account.Theme);
-			SetComboBoxItems();
+			await SetComboBoxItemsAsync();
 			comboBoxFamilyStatus.SelectedIndex = 1;
 			comboBoxBusinessTripOpportunity.SelectedIndex = 1;
 			numericUpDownYearAdmission.Maximum = DateTime.Today.Year + 1;
 			ResetEducationFields();
-			comboBoxNationality.Focus();
 
 			if (_account.Candidate.Questionnaire == null)
 			{
@@ -82,7 +81,8 @@ namespace RecruitmentClient.Forms
 			else
 				SetFormFields(_account.Candidate.Questionnaire);
 
-
+			comboBoxNationality.Focus();
+			panelMain.AutoScrollPosition = new System.Drawing.Point(0, 0);
 			_oldQuestionnaire = ReadQuestionnaireFromForm();
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonDriverLicenseNo,
 				radioButtonDriverLicenseYes, radioButtonSmokerNo, radioButtonSmokerYes,
@@ -153,15 +153,21 @@ namespace RecruitmentClient.Forms
 					educations[i].EducationFormId - 1;
 			}
 		}
-		private void SetComboBoxItems()
+		private async Task SetComboBoxItemsAsync()
 		{
 			try
 			{
 				Enabled = false;
-				StaticDataFromDB.SetData();
-				comboBoxFamilyStatus.Items.AddRange(StaticDataFromDB.GetFamilyStatuses());
+				if (StaticData.IsEmpty)
+				{
+					var familyStatuses = await Program.Client.GetFamilyStatusesAsync();
+					var businessTripOpportunities =
+					await Program.Client.GetBusinessTripOpportunitiesAsync();
+					StaticData.SetData(familyStatuses, businessTripOpportunities);
+				}
+				comboBoxFamilyStatus.Items.AddRange(StaticData.GetFamilyStatuses());
 				comboBoxBusinessTripOpportunity.Items.AddRange(
-					StaticDataFromDB.GetBusinessTripOpportunities());
+					StaticData.GetBusinessTripOpportunities());
 			}
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)
