@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-using RecruitmentServer.DataBase.Repositories.Base;
+using RecruitmentServer.Database.Repositories.Base;
 using RecruitmentServer.Models;
 using SharedModels.DTOs;
 using SharedModels.Models;
 using SharedModels.Search;
 using SharedModels.Static;
 
-namespace RecruitmentServer.DataBase
+namespace RecruitmentServer.Database
 {
 	internal static class DatabaseManager
 	{
@@ -190,7 +190,8 @@ namespace RecruitmentServer.DataBase
 			switch (searcher.SortOption)
 			{
 				case SortOption.Date:
-					return vacancies.OrderByDescending(v => v.GetLocalDatePublication()).ToList();
+					return vacancies.OrderByDescending(v => v.GetLocalDatePublication())
+						.ToList();
 				case SortOption.AlphabetPosition:
 					return vacancies.OrderBy(v => v.Position.Name).ToList();
 				case SortOption.NumberOfApplications:
@@ -455,26 +456,26 @@ namespace RecruitmentServer.DataBase
 		#endregion
 
 		internal static List<AssignmentItem> GetAssignmentItems()
-		{// Applications will NOT be accepted if the vacancies have at least one interview
-		 // with the status "Candidate invited" or "Candidate awaiting decision"
-			List<AssignmentItem> assignmentItems = new List<AssignmentItem>();
-
-			foreach (AssignmentItem item in _context.Database.SqlQuery(typeof(AssignmentItem),
-				"SELECT Vacancy.id AS VacancyId, View_Application.id_candidate AS CandidateId, " +
-				"Scores " +
-				"FROM Vacancy " +
-				"INNER JOIN View_Application ON View_Application.id_vacancy = Vacancy.id " +
-				"WHERE relevance = 'True' AND View_Application.status = 'В очікуванні' " +
-				"AND (SELECT COUNT(View_Interview.id) " +
-				"FROM View_Interview " +
-				"INNER JOIN Application ON Application.id = View_Interview.id_application " +
-				"WHERE Application.id_vacancy = Vacancy.id " +
-				"AND (View_Interview.status = 'Кандидат запрошений' " +
-				"OR View_Interview.status = 'Кандидат чекає на рішення')) <= 0 " +
-				"ORDER BY Vacancy.id, View_Application.id"))
-			{
-				assignmentItems.Add(item);
-			}
+		{// Select data where vacancies are relevant, applications have the status "Pending",
+		 // and there are no interviews with the status "Candidate invited"
+		 // or "Candidate awaiting decision".
+			var assignmentItems = _context.Vacancies
+				.Where(v => v.Relevance)
+				.SelectMany(v => v.Applications
+					.Where(a => a.ApplicationStatus.Status == "В очікуванні")
+					.Where(a => !_context.Interviews
+						.Any(i => i.Application.VacancyId == v.Id
+							&& (i.InterviewStatus.Status == "Кандидат запрошений"
+							|| i.InterviewStatus.Status == "Кандидат чекає на рішення")))
+					.Select(a => new AssignmentItem()
+					{
+						VacancyId = v.Id,
+						CandidateId = a.CandidateId,
+						Scores = a.Scores
+					}))
+					.OrderBy(ai => ai.VacancyId)
+					.ThenBy(ai => ai.CandidateId)
+					.ToList();
 
 			return assignmentItems;
 		}

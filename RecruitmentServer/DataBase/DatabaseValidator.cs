@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using RecruitmentLibrary.Validation;
 using SharedModels.Models;
 
-namespace RecruitmentServer.DataBase
+namespace RecruitmentServer.Database
 {
 	internal class DatabaseValidator
 	{

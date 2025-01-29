@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.Serialization;
-using RecruitmentServer.DataBase;
+using RecruitmentServer.Database;
 using RecruitmentServer.Models;
 using SharedModels.Models;
 using SharedModels.Search;

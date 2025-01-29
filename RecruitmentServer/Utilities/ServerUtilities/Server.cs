@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-using RecruitmentServer.DataBase;
+using RecruitmentServer.Database;
 using SharedModels.DTOs;
 using SharedModels.Models;
 

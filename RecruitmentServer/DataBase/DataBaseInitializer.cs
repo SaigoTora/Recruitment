@@ -8,7 +8,7 @@ using System.Linq;
 using SharedModels.Models;
 using SharedModels.Models.Base;
 
-namespace RecruitmentServer.DataBase
+namespace RecruitmentServer.Database
 {
 	internal static class DatabaseInitializer
 	{

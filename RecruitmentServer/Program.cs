@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using RecruitmentLibrary.Serialization;
 using RecruitmentServer.Forms;
 using RecruitmentServer.Models;
-using RecruitmentServer.DataBase;
+using RecruitmentServer.Database;
 using RecruitmentServer.Utilities.ServerUtilities;
 using UIHelpers.Forms;
 

@@ -104,13 +104,13 @@
     <Compile Include="Forms\AssignmentForm.Designer.cs">
       <DependentUpon>AssignmentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\Repositories\Base\BaseRepo.cs" />
-    <Compile Include="DataBase\DatabaseInitializer.cs" />
-    <Compile Include="DataBase\DatabaseValidator.cs" />
-    <Compile Include="DataBase\Repositories\Base\IRepo.cs" />
-    <Compile Include="DataBase\RecruitmentEntities.cs" />
+    <Compile Include="Database\Repositories\Base\BaseRepo.cs" />
+    <Compile Include="Database\DatabaseInitializer.cs" />
+    <Compile Include="Database\DatabaseValidator.cs" />
+    <Compile Include="Database\Repositories\Base\IRepo.cs" />
+    <Compile Include="Database\RecruitmentEntities.cs" />
     <Compile Include="Models\Account.cs" />
-    <Compile Include="DataBase\DatabaseManager.cs" />
+    <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Forms\RequirementForm.cs">
       <SubType>Form</SubType>
     </Compile>

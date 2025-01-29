@@ -6,7 +6,7 @@ using System.Linq;
 
 using SharedModels.Models.Base;
 
-namespace RecruitmentServer.DataBase.Repositories.Base
+namespace RecruitmentServer.Database.Repositories.Base
 {
 	internal class BaseRepo<T> : IDisposable, IRepo<T> where T : EntityBase
 	{

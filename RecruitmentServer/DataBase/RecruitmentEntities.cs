@@ -2,7 +2,7 @@ using System.Data.Entity;
 
 using SharedModels.Models;
 
-namespace RecruitmentServer.DataBase
+namespace RecruitmentServer.Database
 {
 	public partial class RecruitmentEntities : DbContext
 	{

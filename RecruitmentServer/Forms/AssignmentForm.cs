@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.Assignment;
-using RecruitmentServer.DataBase;
+using RecruitmentServer.Database;
 using RecruitmentServer.Models;
 using SharedModels.Models;
 using UIHelpers.Controls;
