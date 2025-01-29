@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
+using RecruitmentServer.Database.Repositories;
 using RecruitmentServer.Database.Repositories.Base;
 using RecruitmentServer.Models;
 using SharedModels.DTOs;
@@ -16,14 +17,14 @@ namespace RecruitmentServer.Database
 	{
 		private static readonly RecruitmentEntities _context;
 
-		private static readonly BaseRepo<Employee> _employeeRepo;
-		private static readonly BaseRepo<Interview> _interviewRepo;
-		private static readonly BaseRepo<Application> _applicationRepo;
+		private static readonly EmployeeRepo _employeeRepo;
+		private static readonly InterviewRepo _interviewRepo;
+		private static readonly ApplicationRepo _applicationRepo;
 		private static readonly BaseRepo<Candidate> _candidateRepo;
 		private static readonly BaseRepo<Education> _educationRepo;
 		private static readonly BaseRepo<Language> _languageRepo;
 		private static readonly BaseRepo<Questionnaire> _questionnaireRepo;
-		private static readonly BaseRepo<Vacancy> _vacancyRepo;
+		private static readonly VacancyRepo _vacancyRepo;
 		private static readonly BaseRepo<Requirement> _requirementRepo;
 		private static readonly BaseRepo<Point> _pointRepo;
 		private static readonly BaseRepo<InterviewStatus> _interviewStatusRepo;
@@ -38,14 +39,14 @@ namespace RecruitmentServer.Database
 		{
 			_context = new RecruitmentEntities();
 
-			_employeeRepo = new BaseRepo<Employee>(_context);
-			_interviewRepo = new BaseRepo<Interview>(_context);
-			_applicationRepo = new BaseRepo<Application>(_context);
+			_employeeRepo = new EmployeeRepo(_context);
+			_interviewRepo = new InterviewRepo(_context);
+			_applicationRepo = new ApplicationRepo(_context);
 			_candidateRepo = new BaseRepo<Candidate>(_context);
 			_educationRepo = new BaseRepo<Education>(_context);
 			_languageRepo = new BaseRepo<Language>(_context);
 			_questionnaireRepo = new BaseRepo<Questionnaire>(_context);
-			_vacancyRepo = new BaseRepo<Vacancy>(_context);
+			_vacancyRepo = new VacancyRepo(_context);
 			_requirementRepo = new BaseRepo<Requirement>(_context);
 			_pointRepo = new BaseRepo<Point>(_context);
 			_interviewStatusRepo = new BaseRepo<InterviewStatus>(_context);
@@ -76,11 +77,13 @@ namespace RecruitmentServer.Database
 			=> _vacancyRepo.Add(vacancy);
 		internal static void CreateApplication(CreateApplicationDTO createApplication)
 		{
+			int DEFAULT_STATUS_ID = 1;
+
 			Candidate candidate = GetCandidate(createApplication.CandidateLogin);
 			Vacancy vacancy = GetVacancy(createApplication.VacancyId);
-
 			Application application = new Application(DateTime.UtcNow,
-				createApplication.AdditionalInfo, 1, candidate.Id, vacancy.Id);
+				createApplication.AdditionalInfo, DEFAULT_STATUS_ID, candidate.Id, vacancy.Id);
+
 			_applicationRepo.Add(application);
 		}
 		internal static void CreateRequirement(Requirement requirement)
@@ -110,6 +113,7 @@ namespace RecruitmentServer.Database
 			return candidate
 				?? throw new UnauthorizedAccessException("Invalid login or password.");
 		}
+
 		internal static Requirement GetRequirement(int requirementId)
 			=> _requirementRepo.GetOne(requirementId);
 		internal static Point GetPoint(int pointId) => _pointRepo.GetOne(pointId);
@@ -158,79 +162,21 @@ namespace RecruitmentServer.Database
 				?? throw new KeyNotFoundException($"Vacancy with id {vacancyId} " +
 				$"was not found.");
 		}
-		private static List<Vacancy> GetVacancies(FullSearcher searcher)
-		{
-			var vacancies = _vacancyRepo.GetAll();
-
-			if (searcher == null)
-				return vacancies.OrderByDescending(v => v.GetLocalDatePublication()).ToList();
-
-			if (searcher.Position != null)
-				vacancies = vacancies.
-					Where(v => v.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				vacancies = vacancies.Where(v => v.GetLocalDatePublication() > searcher.MinDate)
-					.ToList();
-
-			if (searcher.MinValue.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Applications.Count >= searcher.MinValue).ToList();
-
-			if (searcher.MaxValue.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Applications.Count <= searcher.MaxValue).ToList();
-
-			if (searcher.IsRelevance.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Relevance == searcher.IsRelevance).ToList();
-
-
-			switch (searcher.SortOption)
-			{
-				case SortOption.Date:
-					return vacancies.OrderByDescending(v => v.GetLocalDatePublication())
-						.ToList();
-				case SortOption.AlphabetPosition:
-					return vacancies.OrderBy(v => v.Position.Name).ToList();
-				case SortOption.NumberOfApplications:
-					return vacancies.OrderByDescending(v => v.Applications.Count).ToList();
-				default: return vacancies.ToList();
-			}
-		}
 		internal static int GetVacanciesCount(FullSearcher searcher)
-			=> GetVacancies(searcher).Count;
+			=> _vacancyRepo.GetFilteredCount(searcher);
 		internal static List<Vacancy> GetVacancies(int index, int count,
 			FullSearcher searcher)
-		{
-			var vacancies = GetVacancies(searcher);
-			return vacancies.GetRange(index, Math.Min(vacancies.Count - index, count));
-		}
+			=> _vacancyRepo.GetFiltered(index, count, searcher);
 		internal static int GetVacanciesCount(AccountSearchSettingsDTO accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
-
-			return GetVacancies(accountSearch.Searcher)
-				.Where(v => v.Relevance && v.Applications.All(a
-					=> candidate.Login != a.Candidate.Login
-					&& candidate.Password != a.Candidate.Password))
-				.Count();
+			return _vacancyRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Vacancy> GetVacancies(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
-
-			var filteredList = GetVacancies(pagedAccountSearch.Searcher)
-				.Where(v => v.Relevance && v.Applications.All(a
-					=> candidate.Login != a.Candidate.Login
-					&& candidate.Password != a.Candidate.Password))
-				.ToList();
-
-			return filteredList.GetRange(pagedAccountSearch.StartIndex,
-				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
-					pagedAccountSearch.Count));
+			return _vacancyRepo.GetFiltered(candidate, pagedAccountSearch);
 		}
 		#endregion
 
@@ -241,184 +187,49 @@ namespace RecruitmentServer.Database
 			=> _applicationRepo.GetAll().
 				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
 
-		private static List<Application> GetApplications(FullSearcher searcher)
-		{
-			var applications = _applicationRepo.GetAll();
-
-			if (searcher == null)
-				return applications.OrderByDescending(a => a.GetLocalDateSubmission()).ToList();
-
-			if (searcher.Position != null)
-				applications = applications.
-					Where(a => a.Vacancy.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				applications = applications.
-					Where(a => a.GetLocalDateSubmission() > searcher.MinDate).ToList();
-
-			if (searcher.MinValue.HasValue)
-				applications = applications.
-					Where(a => a.Scores >= searcher.MinValue).ToList();
-
-			if (searcher.MaxValue.HasValue)
-				applications = applications.
-					Where(a => a.Scores <= searcher.MaxValue).ToList();
-
-			if (searcher.Status != null)
-				applications = applications.
-					Where(a => a.ApplicationStatus.Status == searcher.Status).ToList();
-
-			switch (searcher.SortOption)
-			{
-				case SortOption.Date:
-					return applications.OrderByDescending(a => a.GetLocalDateSubmission())
-						.ToList();
-				case SortOption.AlphabetPosition:
-					return applications.OrderBy(a => a.Vacancy.Position.Name).ToList();
-				case SortOption.NumberOfPoints:
-					return applications.OrderByDescending(a => a.Scores).ToList();
-				default: return applications.ToList();
-			}
-		}
 		internal static int GetApplicationsCount(FullSearcher searcher)
-			=> GetApplications(searcher).Count;
+			=> _applicationRepo.GetFilteredCount(searcher);
 		internal static List<Application> GetApplications(int index, int count,
 			FullSearcher searcher)
-		{
-			var applications = GetApplications(searcher);
-			return applications.GetRange(index, Math.Min(applications.Count - index, count));
-		}
+			=> _applicationRepo.GetFiltered(index, count, searcher);
 		internal static int GetApplicationsCount(AccountSearchSettingsDTO accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
-
-			return GetApplications(accountSearch.Searcher)
-			.Where(a => candidate.Login == a.Candidate.Login
-				&& candidate.Password == a.Candidate.Password)
-			.Count();
+			return _applicationRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Application> GetApplications(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
-
-			var filteredList = GetApplications(pagedAccountSearch.Searcher)
-				.Where(a => candidate.Login == a.Candidate.Login
-					&& candidate.Password == a.Candidate.Password)
-				.ToList();
-
-			return filteredList.GetRange(pagedAccountSearch.StartIndex,
-				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
-					pagedAccountSearch.Count));
+			return _applicationRepo.GetFiltered(candidate, pagedAccountSearch);
 		}
 		#endregion
 
 		#region Interview
-		private static List<Interview> GetInterviews(FullSearcher searcher)
-		{
-			var interviews = _interviewRepo.GetAll();
-
-			if (searcher == null)
-				return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
-
-			if (searcher.Position != null)
-				interviews = interviews.
-					Where(i => i.Application.Vacancy.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				interviews = interviews.
-					Where(i => i.GetLocalDateEvent() > searcher.MinDate).ToList();
-
-			if (searcher.Status != null)
-				interviews = interviews.
-					Where(i => i.InterviewStatus.Status == searcher.Status).ToList();
-
-			switch (searcher.SortOption)
-			{
-				case SortOption.Date:
-					return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
-				case SortOption.AlphabetPosition:
-					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name).ToList();
-				default: return interviews.ToList();
-			}
-		}
 		internal static int GetInterviewsCount(FullSearcher searcher)
-			=> GetInterviews(searcher).Count;
+			=> _interviewRepo.GetFilteredCount(searcher);
 		internal static List<Interview> GetInterviews(int index, int count,
 			FullSearcher searcher)
-		{
-			var interviews = GetInterviews(searcher);
-			return interviews.GetRange(index, Math.Min(interviews.Count - index, count));
-		}
+			=> _interviewRepo.GetFiltered(index, count, searcher);
 		internal static int GetInterviewsCount(AccountSearchSettingsDTO accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
-
-			return GetInterviews(accountSearch.Searcher)
-				.Where(i => candidate.Login == i.Application.Candidate.Login
-					&& candidate.Password == i.Application.Candidate.Password)
-				.Count();
+			return _interviewRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Interview> GetInterviews(
 			PagedAccountSearchSettingsDTO pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
-
-			var filteredList = GetInterviews(pagedAccountSearch.Searcher)
-				.Where(i => candidate.Login == i.Application.Candidate.Login
-					&& candidate.Password == i.Application.Candidate.Password)
-				.ToList();
-
-			return filteredList.GetRange(pagedAccountSearch.StartIndex,
-				Math.Min(filteredList.Count - pagedAccountSearch.StartIndex,
-					pagedAccountSearch.Count));
+			return _interviewRepo.GetFiltered(candidate, pagedAccountSearch);
 		}
 		#endregion
 
 		#region Employee
-		private static List<Employee> GetEmployees(FullSearcher searcher)
-		{
-			var employees = _employeeRepo.GetAll();
-
-			if (searcher == null)
-				return employees.OrderByDescending(e => e.DateEmployment).ToList();
-
-			if (searcher.Position != null)
-				employees = employees.
-					Where(e => e.Interview.Application.Vacancy.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.FullName != null)
-				employees = employees.
-					Where(e => e.GetFullName.ToLower().
-					Contains(searcher.FullName.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				employees = employees.
-					Where(e => e.DateEmployment > searcher.MinDate).ToList();
-
-			switch (searcher.SortOption)
-			{
-				case SortOption.Date:
-					return employees.OrderByDescending(e => e.DateEmployment).ToList();
-				case SortOption.AlphabetPosition:
-					return employees.
-						OrderBy(e => e.Interview.Application.Vacancy.Position.Name).ToList();
-				case SortOption.AlphabetName:
-					return employees.OrderBy(e => e.GetFullName).ToList();
-				default: return employees.ToList();
-			}
-		}
 		internal static int GetEmployeesCount(FullSearcher searcher)
-			=> GetEmployees(searcher).Count;
+			=> _employeeRepo.GetFilteredCount(searcher);
 		internal static List<Employee> GetEmployees(int index, int count,
 			FullSearcher searcher)
-		{
-			var employees = GetEmployees(searcher);
-			return employees.GetRange(index, Math.Min(employees.Count - index, count));
-		}
+			=> _employeeRepo.GetFiltered(index, count, searcher);
 		#endregion
 
 		#region Check unique
@@ -534,7 +345,8 @@ namespace RecruitmentServer.Database
 
 			return candidateToUpdate;
 		}
-		private static void UpdateQuestionnaire(Candidate candidate, Candidate candidateToUpdate)
+		private static void UpdateQuestionnaire(Candidate candidate,
+			Candidate candidateToUpdate)
 		{
 			Questionnaire questionnaireToUpdate =
 				_questionnaireRepo.GetOne(candidate.Questionnaire.Id);
@@ -552,7 +364,8 @@ namespace RecruitmentServer.Database
 			CandidateChangePasswordDTO candidateChangePassword)
 		{
 			Candidate candidate = GetCandidate(candidateChangePassword.CandidateLogin);
-			DatabaseValidator.CheckValidLoginPassword(candidateChangePassword.CandidateLogin.Login,
+			DatabaseValidator.CheckValidLoginPassword(
+				candidateChangePassword.CandidateLogin.Login,
 				candidateChangePassword.NewPassword);
 
 			candidate.ChangeLoginPassword(candidate.Login, candidateChangePassword.NewPassword);
@@ -630,8 +443,8 @@ namespace RecruitmentServer.Database
 				i++)
 			{
 				Education newEducation = educations[i];
-				educationsToUpdate[i].Change(newEducation.NameInstitution, newEducation.Specialty,
-					newEducation.YearAdmission, newEducation.DateEnd,
+				educationsToUpdate[i].Change(newEducation.NameInstitution,
+					newEducation.Specialty, newEducation.YearAdmission, newEducation.DateEnd,
 					newEducation.EducationDegreeId, newEducation.EducationFormId);
 			}
 
@@ -650,10 +463,12 @@ namespace RecruitmentServer.Database
 
 		#region Delete
 		internal static void DeleteVacancy(Vacancy vacancy) => _vacancyRepo.Delete(vacancy);
-		internal static void DeleteEmployee(Employee employee) => _employeeRepo.Delete(employee);
+		internal static void DeleteEmployee(Employee employee)
+			=> _employeeRepo.Delete(employee);
 		internal static void DeleteEducation(Education education)
 			=> _educationRepo.Delete(education);
-		internal static void DeleteLanguage(Language language) => _languageRepo.Delete(language);
+		internal static void DeleteLanguage(Language language)
+			=> _languageRepo.Delete(language);
 		#endregion
 
 		internal static void Dispose()
