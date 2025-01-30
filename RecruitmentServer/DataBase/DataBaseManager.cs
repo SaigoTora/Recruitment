@@ -226,10 +226,10 @@ namespace RecruitmentServer.Database
 		#endregion
 
 		#region Employee
-		internal static int GetEmployeesCount(FullSearcher searcher)
+		internal static int GetEmployeesCount(EmployeeSearcher searcher)
 			=> _employeeRepo.GetFilteredCount(searcher);
 		internal static List<Employee> GetEmployees(int index, int count,
-			FullSearcher searcher)
+			EmployeeSearcher searcher)
 			=> _employeeRepo.GetFiltered(index, count, searcher);
 		#endregion
 

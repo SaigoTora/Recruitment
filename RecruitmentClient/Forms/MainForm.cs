@@ -588,6 +588,7 @@ namespace RecruitmentClient.Forms
 		#region Buttons
 		private void PictureBoxRefresh_Click(object sender, EventArgs e)
 		{
+			ActiveControl = null;
 			SetDefaultSearchValues();
 			SelectLabel(e);
 		}

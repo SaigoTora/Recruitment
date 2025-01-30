@@ -36,8 +36,10 @@ namespace RecruitmentServer.Forms
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
 		private readonly Account _account;
-		private FullSearcher _searcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
+
+		private FullSearcher _searcher;
+		private EmployeeSearcher _employeeSearcher;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
 			_interviewCreator, _employeeCreator;
@@ -121,6 +123,7 @@ namespace RecruitmentServer.Forms
 			if (e != EventArgs.Empty)// If we are not searching
 			{
 				_searcher = null;
+				_employeeSearcher = null;
 				SetDefaultSearchValues();
 			}
 
@@ -261,7 +264,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelEmployee, labelVacancy, labelApplication, labelInterview);
 			_panelsInfo = PanelsInfo.Employee;
-			_totalItemsToDisplay = DatabaseManager.GetEmployeesCount(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetEmployeesCount(_employeeSearcher);
 		}
 		private void SetupEmployeesSearchPanel()
 		{
@@ -391,7 +394,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			List<Employee> employees = DatabaseManager.GetEmployees(_createdPanels.Count,
-				COUNT_ON_PAGE, _searcher);
+				COUNT_ON_PAGE, _employeeSearcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[employees.Count];
 
 			for (int i = 0; i < employees.Count; i++)
@@ -420,7 +423,7 @@ namespace RecruitmentServer.Forms
 			_vacancyCreator.CreateLabel(labelCountV, COUNT_PREFIX +
 				vacancy.Applications.Count.ToString());
 			_vacancyCreator.CreateLabel(labelDatePublicationV, DATE_PREFIX +
-				ConvertDateToString(vacancy.GetLocalDatePublication()));
+				ConvertDateToString(vacancy.GetLocalDatePublication(), true));
 
 			string relevance = vacancy.Relevance ? "Актуальна" : "НЕ актуальна";
 			_vacancyCreator.CreateLabel(labelRelevance, relevance);
@@ -441,7 +444,7 @@ namespace RecruitmentServer.Forms
 			_applicationCreator.CreateLabel(labelScores, SCORES_PREFIX +
 				application.Scores.ToString());
 			_applicationCreator.CreateLabel(labelDateSubmissionA, DATE_PREFIX +
-				ConvertDateToString(application.GetLocalDateSubmission()));
+				ConvertDateToString(application.GetLocalDateSubmission(), true));
 
 			_applicationCreator.CreateLabel(labelStatusA, application.ApplicationStatus.Status);
 			Guna2PictureBox picture = _applicationCreator.CreatePictureBox(
@@ -459,7 +462,7 @@ namespace RecruitmentServer.Forms
 			_interviewCreator.CreateLabel(labelPositionI,
 				interview.Application.Vacancy.Position.Name);
 			_interviewCreator.CreateLabel(labelDateEventI, DATE_PREFIX +
-				ConvertDateToString(interview.GetLocalDateEvent()));
+				ConvertDateToString(interview.GetLocalDateEvent(), true));
 
 			_interviewCreator.CreateLabel(labelStatusI, interview?.InterviewStatus?.Status);
 			Guna2PictureBox picture = _interviewCreator.CreatePictureBox(
@@ -478,14 +481,14 @@ namespace RecruitmentServer.Forms
 			_employeeCreator.CreateLabel(labelFullName, $"{employee.Surname} {employee.Name}" +
 				$" {employee.FatherName}");
 			_employeeCreator.CreateLabel(labelDateEmploymentE, DATE_PREFIX +
-				ConvertDateToString(employee.DateEmployment));
+				ConvertDateToString(employee.DateEmployment, false));
 
 			Guna2GradientButton button = _employeeCreator.CreateButton(buttonEmployee);
 			_buttonEmployeeMap.Add(button, employee);
 			ManageEmployeeButtonEvent(button, true);
 		}
 
-		private string ConvertDateToString(DateTime date)
+		private string ConvertDateToString(DateTime date, bool includeTime)
 		{
 			string result;
 
@@ -500,7 +503,8 @@ namespace RecruitmentServer.Forms
 			else
 				result = date.ToString("d MMMM yyyy");
 
-			result += $" {date:HH:mm}";
+			if (includeTime)
+				result += $" {date:HH:mm}";
 			return result;
 		}
 		private Color GetVacancyStatusColor(bool relevance)
@@ -616,16 +620,9 @@ namespace RecruitmentServer.Forms
 		{
 			var (Min, Max) = GetMinMaxValues();
 			bool? isRelevance = null;
-			string status = null, position = null, fullName = null;
+			string status = null, position = null;
 
-			if (_panelsInfo == PanelsInfo.Employee)
-			{
-				if (comboBoxStatus.SelectedIndex == 0)// Search by position
-					position = textBoxSearch.Text;
-				else// Search by full name
-					fullName = textBoxSearch.Text;
-			}
-			else
+			if (_panelsInfo != PanelsInfo.Employee)
 			{
 				if (_panelsInfo == PanelsInfo.Vacancy && comboBoxStatus.SelectedIndex != 0)
 					isRelevance = comboBoxStatus.SelectedIndex == 2;
@@ -635,7 +632,19 @@ namespace RecruitmentServer.Forms
 			}
 
 			_searcher = new FullSearcher(position, GetDateByComboBoxDate(), Min, Max,
-				isRelevance, status, fullName, GetSortOption());
+				isRelevance, status, GetSortOption());
+			if (_panelsInfo == PanelsInfo.Employee)
+			{
+				string fullName = null;
+
+				if (comboBoxStatus.SelectedIndex == 0)// Search by position
+					position = textBoxSearch.Text;
+				else// Search by full name
+					fullName = textBoxSearch.Text;
+
+				_employeeSearcher = new EmployeeSearcher(position, GetDateByComboBoxDate(),
+					fullName, GetEmployeeSortOption());
+			}
 		}
 
 		private (int? Min, int? Max) GetMinMaxValues()
@@ -664,9 +673,18 @@ namespace RecruitmentServer.Forms
 					sortOption = SortOption.NumberOfApplications;
 				else if (_panelsInfo == PanelsInfo.Application)
 					sortOption = SortOption.NumberOfPoints;
-				else if (_panelsInfo == PanelsInfo.Employee)
-					sortOption = SortOption.AlphabetName;
 			}
+
+			return sortOption;
+		}
+		private EmployeeSortOption GetEmployeeSortOption()
+		{
+			EmployeeSortOption sortOption = EmployeeSortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = EmployeeSortOption.AlphabetPosition;
+			else if (comboBoxSort.SelectedIndex == 2)
+				sortOption = EmployeeSortOption.AlphabetName;
 
 			return sortOption;
 		}
@@ -692,6 +710,7 @@ namespace RecruitmentServer.Forms
 		#region Buttons
 		private void PictureBoxRefresh_Click(object sender, EventArgs e)
 		{
+			ActiveControl = null;
 			SetDefaultSearchValues();
 			SelectLabel(e);
 		}
@@ -814,6 +833,9 @@ namespace RecruitmentServer.Forms
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.Position;
+			if (_panelsInfo == PanelsInfo.Employee)
+				searcherText = _employeeSearcher?.Position;
+
 			TextBoxSearchLeave(textBoxSearch.Text, searcherText);
 		}
 		private void PictureBoxSearch_Click(object sender, EventArgs e)
