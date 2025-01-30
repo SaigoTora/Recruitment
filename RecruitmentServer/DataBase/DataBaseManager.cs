@@ -85,6 +85,7 @@ namespace RecruitmentServer.Database
 				createApplication.AdditionalInfo, DEFAULT_STATUS_ID, candidate.Id, vacancy.Id);
 
 			_applicationRepo.Add(application);
+			_context.Entry(application).Reload();
 		}
 		internal static void CreateRequirement(Requirement requirement)
 			=> _requirementRepo.Add(requirement);
@@ -315,7 +316,9 @@ namespace RecruitmentServer.Database
 		{
 			Interview interviewToUpdate = _interviewRepo.GetOne(interviewId);
 			interviewToUpdate.ChangeStatusId(_interviewStatusRepo.GetOne(statusId));
+
 			_interviewRepo.Save(interviewToUpdate);
+			RefreshVacancy(interviewToUpdate);
 		}
 		internal static void UpdateApplicationStatus(int applicationId, int statusId,
 			string reasonRejection)
@@ -342,6 +345,7 @@ namespace RecruitmentServer.Database
 				UpdateQuestionnaire(candidate, candidateToUpdate);
 
 			_candidateRepo.Save(candidateToUpdate);
+			RefreshCandidate(candidateToUpdate);
 
 			return candidateToUpdate;
 		}
@@ -399,6 +403,8 @@ namespace RecruitmentServer.Database
 					questionnaireToUpdate.Educations.ToArray(), questionnaireToUpdate.Id);
 
 			_questionnaireRepo.Save(questionnaireToUpdate);
+			foreach (Candidate c in questionnaireToUpdate.Candidates)
+				RefreshCandidate(c);
 
 			return questionnaireToUpdate;
 		}
@@ -469,6 +475,24 @@ namespace RecruitmentServer.Database
 			=> _educationRepo.Delete(education);
 		internal static void DeleteLanguage(Language language)
 			=> _languageRepo.Delete(language);
+		#endregion
+
+		#region Refresh
+		private static void RefreshCandidate(Candidate candidate)
+		{
+			foreach (var application in candidate.Applications)
+				_context.Entry(application).Reload();
+
+			var employees = candidate.Applications
+				.SelectMany(a => a.Interviews)
+				.SelectMany(i => i.Employees)
+				.Where(e => e != null);
+
+			foreach (var employee in employees)
+				_context.Entry(employee).Reload();
+		}
+		private static void RefreshVacancy(Interview interview)
+			=> _context.Entry(interview.Application.Vacancy).Reload();
 		#endregion
 
 		internal static void Dispose()

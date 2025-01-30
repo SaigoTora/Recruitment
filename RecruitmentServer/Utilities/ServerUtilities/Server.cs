@@ -39,7 +39,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 				HandleCandidateRegisterAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateLoginUrl"],
 				HandleCandidateLoginAsync);
-			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateChangePasswordUrl"],
+			_endpointHandlers.Add(
+				ConfigurationManager.AppSettings["candidateChangePasswordUrl"],
 				HandleCandidateChangePasswordAsync);
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["candidateUrl"],
 				HandleCandidateAsync);
@@ -310,7 +311,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 				T1 request = await DeserializeFromRequestAsync<T1>(context);
 				T2 responseObject = responseHandler(request);
 
-				string response = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
+				string response = JsonConvert.SerializeObject(responseObject,
+					Formatting.Indented);
 				await SendResponseToClientAsync(context, response, statusCode);
 			}
 			catch (Exception ex)

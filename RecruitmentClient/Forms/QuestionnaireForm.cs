@@ -436,13 +436,15 @@ namespace RecruitmentClient.Forms
 		{
 			List<Language> languages = ReadLanguagesFromForm();
 			List<Education> educations = ReadEducationsFromForm();
+			string chronicDiseases = string.IsNullOrWhiteSpace(richTextBoxChronicDiseases.Text) ?
+				null : richTextBoxChronicDiseases.Text;
 
 			return new Questionnaire(_account.Candidate.Questionnaire.Id,
 				comboBoxNationality.SelectedItem.ToString(), textBoxCity.Text,
 				(int)numericUpDownChildrenAmount.Value, (int)numericUpDownExperience.Value,
 				radioButtonDriverLicenseYes.Checked, (int)numericUpDownReadiness.Value,
 				richTextBoxAdditionalInfo.Text,
-				new Health(richTextBoxChronicDiseases.Text, radioButtonSmokerYes.Checked,
+				new Health(chronicDiseases, radioButtonSmokerYes.Checked,
 				radioButtonDrinkAlcoholYes.Checked), comboBoxFamilyStatus.SelectedIndex + 1,
 				comboBoxBusinessTripOpportunity.SelectedIndex + 1, languages, educations);
 		}

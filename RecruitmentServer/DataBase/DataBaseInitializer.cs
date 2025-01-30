@@ -77,7 +77,6 @@ namespace RecruitmentServer.Database
 			InsertCandidates();
 			InsertApplications();
 			InsertInterviews();
-			UpdateVacancies();
 		}
 
 		#region Seed static data
@@ -278,6 +277,8 @@ namespace RecruitmentServer.Database
 			});
 
 			_context.SaveChanges();
+			foreach (Application application in _context.Applications)
+				_context.Entry(application).Reload();
 		}
 		private static void InsertInterviews()
 		{
@@ -290,6 +291,8 @@ namespace RecruitmentServer.Database
 			});
 
 			_context.SaveChanges();
+			foreach (Vacancy vacancy in _context.Vacancies)
+				_context.Entry(vacancy).Reload();
 		}
 		#endregion
 
@@ -398,13 +401,6 @@ namespace RecruitmentServer.Database
 				new Candidate("Кравченко", "Анастасія", "Петрівна", "nst2001", "A.peg0bW2",
 					"+380687777777", new DateTime(2001, 10, 21), "kravchenko543@gmail.com", 7)
 			});
-			_context.SaveChanges();
-		}
-		private static void UpdateVacancies()
-		{
-			foreach (Employee employee in _context.Employees)
-				employee?.Interview?.Application?.Vacancy.ChangeRelevance(false);
-
 			_context.SaveChanges();
 		}
 		#endregion
