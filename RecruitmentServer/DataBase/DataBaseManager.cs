@@ -188,19 +188,19 @@ namespace RecruitmentServer.Database
 			=> _applicationRepo.GetAll().
 				Find(a => a.VacancyId == vacancyId && a.CandidateId == candidateId);
 
-		internal static int GetApplicationsCount(FullSearcher searcher)
+		internal static int GetApplicationsCount(ApplicationSearcher searcher)
 			=> _applicationRepo.GetFilteredCount(searcher);
 		internal static List<Application> GetApplications(int index, int count,
-			FullSearcher searcher)
+			ApplicationSearcher searcher)
 			=> _applicationRepo.GetFiltered(index, count, searcher);
 		internal static int GetApplicationsCount(
-			AccountSearchSettingsDTO<FullSearcher> accountSearch)
+			AccountSearchSettingsDTO<ApplicationSearcher> accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
 			return _applicationRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Application> GetApplications(
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<ApplicationSearcher> pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
 			return _applicationRepo.GetFiltered(candidate, pagedAccountSearch);

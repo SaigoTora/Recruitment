@@ -171,13 +171,13 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 			=> await SendDataAsync(createApplication, HttpMethod.Post, _applicationsCreateUrl);
 
 		internal async Task<int> GetApplicationsCountAsync(
-			AccountSearchSettingsDTO<FullSearcher> accountSearch)
+			AccountSearchSettingsDTO<ApplicationSearcher> accountSearch)
 		{
 			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
 				_applicationsCountUrl);
 		}
 		internal async Task<List<Application>> GetApplicationsAsync(
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<ApplicationSearcher> pagedAccountSearch)
 		{
 			return await SendAndReceiveDataAsync<List<Application>>(pagedAccountSearch,
 				HttpMethod.Post, _applicationsUrl);

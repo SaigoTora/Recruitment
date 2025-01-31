@@ -250,8 +250,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<FullSearcher>, int>(
-					context, acssDTO => DatabaseManager.GetApplicationsCount(acssDTO),
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<ApplicationSearcher>,
+					int>(context, acssDTO => DatabaseManager.GetApplicationsCount(acssDTO),
 					HttpStatusCode.OK);
 			}
 			else
@@ -261,7 +261,7 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<FullSearcher>,
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<ApplicationSearcher>,
 					List<Application>>(context, pacssDTO => DatabaseManager.GetApplications(pacssDTO),
 					HttpStatusCode.OK);
 			}

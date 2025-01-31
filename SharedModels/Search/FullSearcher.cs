@@ -8,7 +8,6 @@ namespace SharedModels.Search
 		Salary,
 		AlphabetPosition,
 		NumberOfApplications,
-		NumberOfPoints,
 	}
 
 	public class FullSearcher : BaseSearcher

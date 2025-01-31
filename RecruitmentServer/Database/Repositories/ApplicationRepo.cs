@@ -15,16 +15,16 @@ namespace RecruitmentServer.Database.Repositories
 			: base(context)
 		{ }
 
-		internal int GetFilteredCount(FullSearcher searcher)
+		internal int GetFilteredCount(ApplicationSearcher searcher)
 			=> ApplyFilters(searcher).Count;
 		internal List<Application> GetFiltered(int index, int count,
-			FullSearcher searcher)
+			ApplicationSearcher searcher)
 		{
 			var applications = ApplyFilters(searcher);
 			return applications.GetRange(index, Math.Min(applications.Count - index, count));
 		}
 		internal int GetFilteredCount(Candidate candidate,
-			AccountSearchSettingsDTO<FullSearcher> accountSearch)
+			AccountSearchSettingsDTO<ApplicationSearcher> accountSearch)
 		{
 			return ApplyFilters(accountSearch.Searcher)
 			.Where(a => candidate.Login == a.Candidate.Login
@@ -32,7 +32,7 @@ namespace RecruitmentServer.Database.Repositories
 			.Count();
 		}
 		internal List<Application> GetFiltered(Candidate candidate,
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<ApplicationSearcher> pagedAccountSearch)
 		{
 			var filteredList = ApplyFilters(pagedAccountSearch.Searcher)
 				.Where(a => candidate.Login == a.Candidate.Login
@@ -44,7 +44,7 @@ namespace RecruitmentServer.Database.Repositories
 					pagedAccountSearch.Count));
 		}
 
-		private List<Application> ApplyFilters(FullSearcher searcher)
+		private List<Application> ApplyFilters(ApplicationSearcher searcher)
 		{
 			var applications = GetAll();
 
@@ -60,13 +60,13 @@ namespace RecruitmentServer.Database.Repositories
 				applications = applications.
 					Where(a => a.GetLocalDateSubmission() > searcher.MinDate).ToList();
 
-			if (searcher.MinValue.HasValue)
+			if (searcher.MinPoints.HasValue)
 				applications = applications.
-					Where(a => a.Scores >= searcher.MinValue).ToList();
+					Where(a => a.Scores >= searcher.MinPoints).ToList();
 
-			if (searcher.MaxValue.HasValue)
+			if (searcher.MaxPoints.HasValue)
 				applications = applications.
-					Where(a => a.Scores <= searcher.MaxValue).ToList();
+					Where(a => a.Scores <= searcher.MaxPoints).ToList();
 
 			if (searcher.Status != null)
 				applications = applications.
@@ -74,12 +74,12 @@ namespace RecruitmentServer.Database.Repositories
 
 			switch (searcher.SortOption)
 			{
-				case SortOption.Date:
+				case ApplicationSortOption.Date:
 					return applications.OrderByDescending(a => a.GetLocalDateSubmission())
 						.ToList();
-				case SortOption.AlphabetPosition:
+				case ApplicationSortOption.AlphabetPosition:
 					return applications.OrderBy(a => a.Vacancy.Position.Name).ToList();
-				case SortOption.NumberOfPoints:
+				case ApplicationSortOption.NumberOfPoints:
 					return applications.OrderByDescending(a => a.Scores).ToList();
 				default: return applications.ToList();
 			}

@@ -39,8 +39,9 @@ namespace RecruitmentServer.Forms
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
 		private FullSearcher _searcher;
-		private EmployeeSearcher _employeeSearcher;
+		private ApplicationSearcher _applicationSearcher;
 		private InterviewSearcher _interviewSearcher;
+		private EmployeeSearcher _employeeSearcher;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
 			_interviewCreator, _employeeCreator;
@@ -124,8 +125,9 @@ namespace RecruitmentServer.Forms
 			if (e != EventArgs.Empty)// If we are not searching
 			{
 				_searcher = null;
-				_employeeSearcher = null;
+				_applicationSearcher = null;
 				_interviewSearcher = null;
+				_employeeSearcher = null;
 				SetDefaultSearchValues();
 			}
 
@@ -227,7 +229,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelApplication, labelVacancy, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Application;
-			_totalItemsToDisplay = DatabaseManager.GetApplicationsCount(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetApplicationsCount(_applicationSearcher);
 		}
 		private void SetupApplicationsSearchPanel()
 		{
@@ -360,7 +362,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			List<SharedModels.Models.Application> applications = DatabaseManager.GetApplications(
-				_createdPanels.Count, COUNT_ON_PAGE, _searcher);
+				_createdPanels.Count, COUNT_ON_PAGE, _applicationSearcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
 
 			for (int i = 0; i < applications.Count; i++)
@@ -642,6 +644,8 @@ namespace RecruitmentServer.Forms
 				case PanelsInfo.Vacancy:
 					break;
 				case PanelsInfo.Application:
+					_applicationSearcher = new ApplicationSearcher(position, GetDateByComboBoxDate(),
+						Min, Max, status, GetApplicationSortOption());
 					break;
 				case PanelsInfo.Interview:
 					{
@@ -691,9 +695,27 @@ namespace RecruitmentServer.Forms
 			{
 				if (_panelsInfo == PanelsInfo.Vacancy)
 					sortOption = SortOption.NumberOfApplications;
-				else if (_panelsInfo == PanelsInfo.Application)
-					sortOption = SortOption.NumberOfPoints;
 			}
+
+			return sortOption;
+		}
+		private ApplicationSortOption GetApplicationSortOption()
+		{
+			ApplicationSortOption sortOption = ApplicationSortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = ApplicationSortOption.AlphabetPosition;
+			else if (comboBoxSort.SelectedIndex == 2)
+				sortOption = ApplicationSortOption.NumberOfPoints;
+
+			return sortOption;
+		}
+		private InterviewSortOption GetInterviewSortOption()
+		{
+			InterviewSortOption sortOption = InterviewSortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = InterviewSortOption.AlphabetPosition;
 
 			return sortOption;
 		}
@@ -705,15 +727,6 @@ namespace RecruitmentServer.Forms
 				sortOption = EmployeeSortOption.AlphabetPosition;
 			else if (comboBoxSort.SelectedIndex == 2)
 				sortOption = EmployeeSortOption.AlphabetName;
-
-			return sortOption;
-		}
-		private InterviewSortOption GetInterviewSortOption()
-		{
-			InterviewSortOption sortOption = InterviewSortOption.Date;
-
-			if (comboBoxSort.SelectedIndex == 1)
-				sortOption = InterviewSortOption.AlphabetPosition;
 
 			return sortOption;
 		}
@@ -780,7 +793,8 @@ namespace RecruitmentServer.Forms
 		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
 			int defaultIndex = 0)
 		{
-			if (_searcher == null && _interviewSearcher == null && _employeeSearcher == null)
+			if (_searcher == null && _applicationSearcher == null && _interviewSearcher == null
+				&& _employeeSearcher == null)
 			{// Index selected for the first time
 				if (comboBox.SelectedIndex == defaultIndex)
 					return;
@@ -828,11 +842,15 @@ namespace RecruitmentServer.Forms
 		private void TextBoxMinSearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.MinValue.ToString();
+			if (_panelsInfo == PanelsInfo.Application)
+				searcherText = _applicationSearcher?.MinPoints.ToString();
 			TextBoxSearchLeave(textBoxMin.Text, searcherText);
 		}
 		private void TextBoxMaxSearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.MaxValue.ToString();
+			if (_panelsInfo == PanelsInfo.Application)
+				searcherText = _applicationSearcher?.MaxPoints.ToString();
 			TextBoxSearchLeave(textBoxMax.Text, searcherText);
 		}
 		private void TextBoxSearchLeave(string text, string searcherText)
@@ -869,6 +887,7 @@ namespace RecruitmentServer.Forms
 				case PanelsInfo.Vacancy:
 					break;
 				case PanelsInfo.Application:
+					searcherText = _applicationSearcher?.Position;
 					break;
 				case PanelsInfo.Interview:
 					searcherText = _interviewSearcher?.Position;
