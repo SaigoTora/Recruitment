@@ -163,18 +163,18 @@ namespace RecruitmentServer.Database
 				?? throw new KeyNotFoundException($"Vacancy with id {vacancyId} " +
 				$"was not found.");
 		}
-		internal static int GetVacanciesCount(FullSearcher searcher)
+		internal static int GetVacanciesCount(VacancySearcher searcher)
 			=> _vacancyRepo.GetFilteredCount(searcher);
 		internal static List<Vacancy> GetVacancies(int index, int count,
-			FullSearcher searcher)
+			VacancySearcher searcher)
 			=> _vacancyRepo.GetFiltered(index, count, searcher);
-		internal static int GetVacanciesCount(AccountSearchSettingsDTO<FullSearcher> accountSearch)
+		internal static int GetVacanciesCount(AccountSearchSettingsDTO<VacancySearcher> accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
 			return _vacancyRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Vacancy> GetVacancies(
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<VacancySearcher> pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
 			return _vacancyRepo.GetFiltered(candidate, pagedAccountSearch);

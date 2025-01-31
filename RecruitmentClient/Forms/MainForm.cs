@@ -37,7 +37,7 @@ namespace RecruitmentClient.Forms
 			Color.FromArgb(229, 158, 31), Color.FromArgb(191, 34, 51));
 
 		private readonly Account _account;
-		private FullSearcher _searcher;
+		private VacancySearcher _vacancySearcher;
 		private ApplicationSearcher _applicationSearcher;
 		private InterviewSearcher _interviewSearcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
@@ -145,7 +145,7 @@ namespace RecruitmentClient.Forms
 
 			if (e != EventArgs.Empty)// If we are not searching
 			{
-				_searcher = null;
+				_vacancySearcher = null;
 				_applicationSearcher = null;
 				_interviewSearcher = null;
 				SetDefaultSearchValues();
@@ -188,8 +188,8 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetDefaultSearchValues()
 		{
-			textBoxMinSalarySearch.Text = "";
-			textBoxMaxSalarySearch.Text = "";
+			textBoxMinSalary.Text = "";
+			textBoxMaxSalary.Text = "";
 			textBoxPositionSearch.Text = "";
 			comboBoxDate.SelectedIndex = DEFAULT_SEARCH_DATE;
 			comboBoxSort.SelectedIndex = 0;
@@ -232,8 +232,9 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.Add(newSortingElement);
 
 			_panelsInfo = PanelsInfo.Vacancy;
-			AccountSearchSettingsDTO<FullSearcher> accountSearch
-				= new AccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(), _searcher);
+			AccountSearchSettingsDTO<VacancySearcher> accountSearch
+				= new AccountSearchSettingsDTO<VacancySearcher>(_account.GetCandidateLogin(),
+				_vacancySearcher);
 			SetEnabledLabels(false, labelApplication, labelInterview);
 			_totalItemsToDisplay = await Program.Client.GetFreeVacanciesCountAsync(accountSearch);
 			SetEnabledLabels(true, labelApplication, labelInterview);
@@ -278,9 +279,9 @@ namespace RecruitmentClient.Forms
 		private void SetSalarySearchVisible(bool visible)
 		{
 			labelSalarySearch.Visible = visible;
-			textBoxMinSalarySearch.Visible = visible;
+			textBoxMinSalary.Visible = visible;
 			labelSalarySearch2.Visible = visible;
-			textBoxMaxSalarySearch.Visible = visible;
+			textBoxMaxSalary.Visible = visible;
 		}
 		private void ChangePanelSearchHeight(bool expandPanel)
 		{
@@ -328,9 +329,9 @@ namespace RecruitmentClient.Forms
 
 
 			SetEnabledLabels(false, labelApplication, labelInterview);
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch =
-				new PagedAccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(),
-				_searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
+			PagedAccountSearchSettingsDTO<VacancySearcher> pagedAccountSearch =
+				new PagedAccountSearchSettingsDTO<VacancySearcher>(_account.GetCandidateLogin(),
+				_vacancySearcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Vacancy> vacancies = await Program.Client.GetFreeVacanciesAsync(
 				pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
@@ -551,43 +552,53 @@ namespace RecruitmentClient.Forms
 		}
 		private void SetSearcherValues()
 		{
-			int? minSalary = null, maxSalary = null;// Salary
-			if (!string.IsNullOrWhiteSpace(textBoxMinSalarySearch.Text))
-				minSalary = int.Parse(textBoxMinSalarySearch.Text);
-			if (!string.IsNullOrWhiteSpace(textBoxMaxSalarySearch.Text))
-				maxSalary = int.Parse(textBoxMaxSalarySearch.Text);
-			if (minSalary != null && maxSalary != null && minSalary > maxSalary)
-				CustomMessageBox.Show("Мінімальна зарплата не може бути більше максимальної!",
-					_account.Theme, "Помилка пошуку", CustomMessageBoxButtons.OK,
-					CustomMessageBoxIcon.Warning);
+			string position = textBoxPositionSearch.Text;
+			DateTime? minDate = GetDateByComboBoxDate();
+			var (Min, Max) = GetMinMaxValues();
 
-			string position = textBoxPositionSearch.Text;// Position
-
-			SortOption sortOption = SortOption.Date;// Sorting
-			if (comboBoxSort.SelectedIndex == 1)
-				sortOption = SortOption.AlphabetPosition;
-			else if (comboBoxSort.SelectedIndex == 2)
-				sortOption = SortOption.Salary;
-
-			_searcher = new FullSearcher(position, GetDateByComboBoxDate(),
-				minSalary, maxSalary, null, null, sortOption);
 			switch (_panelsInfo)
 			{
-				case PanelsInfo.None:
-					break;
 				case PanelsInfo.Vacancy:
+					_vacancySearcher = new VacancySearcher(position, minDate, Min, Max, null, null,
+						null, GetVacancySortOption());
 					break;
 				case PanelsInfo.Application:
-					_applicationSearcher = new ApplicationSearcher(position, GetDateByComboBoxDate(),
-						null, null, null, GetApplicationSortOption());
+					_applicationSearcher = new ApplicationSearcher(position, minDate, null, null,
+						null, GetApplicationSortOption());
 					break;
 				case PanelsInfo.Interview:
-					_interviewSearcher = new InterviewSearcher(position, GetDateByComboBoxDate(),
-						null, GetInterviewSortOption());
+					_interviewSearcher = new InterviewSearcher(position, minDate, null,
+						GetInterviewSortOption());
 					break;
 				default:
-					break;
+					throw new InvalidOperationException($"Unknown panels info: {_panelsInfo}");
 			}
+		}
+		private (int? Min, int? Max) GetMinMaxValues()
+		{
+			int? min = null, max = null;// Minimum and maximum
+			if (!string.IsNullOrWhiteSpace(textBoxMinSalary.Text))
+				min = int.Parse(textBoxMinSalary.Text);
+			if (!string.IsNullOrWhiteSpace(textBoxMaxSalary.Text))
+				max = int.Parse(textBoxMaxSalary.Text);
+
+			if (min != null && max != null && min > max)
+				CustomMessageBox.Show("Мінімальне значення не може бути більше максимального!",
+					_account.Theme, "Помилка пошуку",
+					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Warning);
+
+			return (min, max);
+		}
+		private VacancySortOption GetVacancySortOption()
+		{
+			VacancySortOption sortOption = VacancySortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = VacancySortOption.AlphabetPosition;
+			else if (comboBoxSort.SelectedIndex == 2)
+				sortOption = VacancySortOption.Salary;
+
+			return sortOption;
 		}
 		private ApplicationSortOption GetApplicationSortOption()
 		{
@@ -661,8 +672,8 @@ namespace RecruitmentClient.Forms
 		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int currentIndex = default;
-			if (_searcher != null)
-				currentIndex = (int)_searcher.SortOption;
+			if (_vacancySearcher != null)
+				currentIndex = (int)_vacancySearcher.SortOption;
 			if (_applicationSearcher != null)
 				currentIndex = (int)_applicationSearcher.SortOption;
 			else if (_interviewSearcher != null)
@@ -676,7 +687,8 @@ namespace RecruitmentClient.Forms
 		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
 			int defaultIndex = 0)
 		{
-			if (_searcher == null && _applicationSearcher == null && _interviewSearcher == null)
+			if (_vacancySearcher == null && _applicationSearcher == null
+				&& _interviewSearcher == null)
 			{// Index selected for the first time
 				if (comboBox.SelectedIndex == defaultIndex)
 					return;
@@ -707,7 +719,7 @@ namespace RecruitmentClient.Forms
 
 		#region Salary
 		private void LabelSalarySearch_Click(object sender, EventArgs e)
-			=> textBoxMinSalarySearch.Focus();
+			=> textBoxMinSalary.Focus();
 		private void TextBoxSalarySearch_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
@@ -724,17 +736,23 @@ namespace RecruitmentClient.Forms
 
 		private void TextBoxMinSalarySearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MinValue.ToString();
+			string searcherText = string.Empty;
+			if (_panelsInfo == PanelsInfo.Vacancy)
+				searcherText = _vacancySearcher?.MinSalary.ToString();
 			if (_panelsInfo == PanelsInfo.Application)
 				searcherText = _applicationSearcher?.MinPoints.ToString();
-			TextBoxSearchLeave(textBoxMinSalarySearch.Text, searcherText);
+
+			TextBoxSearchLeave(textBoxMinSalary.Text, searcherText);
 		}
 		private void TextBoxMaxSalarySearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MaxValue.ToString();
+			string searcherText = string.Empty;
+			if (_panelsInfo == PanelsInfo.Vacancy)
+				searcherText = _vacancySearcher?.MaxSalary.ToString();
 			if (_panelsInfo == PanelsInfo.Application)
 				searcherText = _applicationSearcher?.MaxPoints.ToString();
-			TextBoxSearchLeave(textBoxMaxSalarySearch.Text, searcherText);
+
+			TextBoxSearchLeave(textBoxMaxSalary.Text, searcherText);
 		}
 		private void TextBoxSearchLeave(string text, string searcherText)
 		{
@@ -761,12 +779,11 @@ namespace RecruitmentClient.Forms
 		}
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.Position;
+			string searcherText = string.Empty;
 			switch (_panelsInfo)
 			{
-				case PanelsInfo.None:
-					break;
 				case PanelsInfo.Vacancy:
+					searcherText = _vacancySearcher?.Position;
 					break;
 				case PanelsInfo.Application:
 					searcherText = _applicationSearcher?.Position;
@@ -775,8 +792,9 @@ namespace RecruitmentClient.Forms
 					searcherText = _interviewSearcher?.Position;
 					break;
 				default:
-					break;
+					throw new InvalidOperationException($"Unknown panels info: {_panelsInfo}");
 			}
+
 			TextBoxSearchLeave(textBoxPositionSearch.Text, searcherText);
 		}
 		private void PictureBoxSearch_Click(object sender, EventArgs e)

@@ -23,39 +23,51 @@ namespace RecruitmentServer.Database.Repositories
 			return employees.GetRange(index, Math.Min(employees.Count - index, count));
 		}
 
+		#region Applying filters
 		private List<Employee> ApplyFilters(EmployeeSearcher searcher)
 		{
-			var employees = GetAll();
+			IEnumerable<Employee> employees = GetAll();
 
 			if (searcher == null)
 				return employees.OrderByDescending(e => e.DateEmployment).ToList();
 
-			if (!string.IsNullOrEmpty(searcher.Position))
+			employees = ApplyBaseFilters(employees, searcher);
+
+			if (searcher.FullName != null)
+				employees = employees.Where(e => e.GetFullName.ToLower().
+					Contains(searcher.FullName.ToLower()));
+
+			return ApplySorting(employees, searcher.SortOption).ToList();
+		}
+
+		private IEnumerable<Employee> ApplyBaseFilters(IEnumerable<Employee> employees,
+			BaseSearcher baseSearcher)
+		{
+			if (baseSearcher.Position != null)
 				employees = employees.
 					Where(e => e.Interview.Application.Vacancy.Position.Name.ToLower().
-						Contains(searcher.Position.ToLower())).ToList();
+						Contains(baseSearcher.Position.ToLower()));
 
-			if (!string.IsNullOrEmpty(searcher.FullName))
+			if (baseSearcher.MinDate.HasValue)
 				employees = employees.
-					Where(e => e.GetFullName.ToLower().
-						Contains(searcher.FullName.ToLower())).ToList();
+					Where(e => e.DateEmployment > baseSearcher.MinDate);
 
-			if (searcher.MinDate.HasValue)
-				employees = employees.
-					Where(e => e.DateEmployment > searcher.MinDate).ToList();
-
-			switch (searcher.SortOption)
+			return employees;
+		}
+		private IEnumerable<Employee> ApplySorting(IEnumerable<Employee> employees,
+			EmployeeSortOption sortOption)
+		{
+			switch (sortOption)
 			{
 				case EmployeeSortOption.Date:
-					return employees.OrderByDescending(e => e.DateEmployment).ToList();
+					return employees.OrderByDescending(e => e.DateEmployment);
 				case EmployeeSortOption.AlphabetPosition:
-					return employees
-						.OrderBy(e => e.Interview.Application.Vacancy.Position.Name).ToList();
+					return employees.OrderBy(e => e.Interview.Application.Vacancy.Position.Name);
 				case EmployeeSortOption.AlphabetName:
-					return employees.OrderBy(e => e.GetFullName).ToList();
-
-				default: return employees.ToList();
+					return employees.OrderBy(e => e.GetFullName);
+				default: return employees;
 			}
 		}
+		#endregion
 	}
 }

@@ -153,13 +153,13 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 
 		#region Vacancy
 		internal async Task<int> GetFreeVacanciesCountAsync(
-			AccountSearchSettingsDTO<FullSearcher> accountSearch)
+			AccountSearchSettingsDTO<VacancySearcher> accountSearch)
 		{
 			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
 				_vacanciesCountUrl);
 		}
 		internal async Task<List<Vacancy>> GetFreeVacanciesAsync(
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<VacancySearcher> pagedAccountSearch)
 		{
 			return await SendAndReceiveDataAsync<List<Vacancy>>(pagedAccountSearch,
 				HttpMethod.Post, _vacanciesUrl);

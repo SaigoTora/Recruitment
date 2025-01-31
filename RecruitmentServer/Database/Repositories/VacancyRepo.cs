@@ -15,16 +15,16 @@ namespace RecruitmentServer.Database.Repositories
 			: base(context)
 		{ }
 
-		internal int GetFilteredCount(FullSearcher searcher)
+		internal int GetFilteredCount(VacancySearcher searcher)
 			=> ApplyFilters(searcher).Count;
 		internal List<Vacancy> GetFiltered(int index, int count,
-			FullSearcher searcher)
+			VacancySearcher searcher)
 		{
 			var vacancies = ApplyFilters(searcher);
 			return vacancies.GetRange(index, Math.Min(vacancies.Count - index, count));
 		}
 		internal int GetFilteredCount(Candidate candidate,
-			AccountSearchSettingsDTO<FullSearcher> accountSearch)
+			AccountSearchSettingsDTO<VacancySearcher> accountSearch)
 		{
 			return ApplyFilters(accountSearch.Searcher)
 				.Where(v => v.Relevance && v.Applications.All(a
@@ -33,7 +33,7 @@ namespace RecruitmentServer.Database.Repositories
 				.Count();
 		}
 		internal List<Vacancy> GetFiltered(Candidate candidate,
-			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<VacancySearcher> pagedAccountSearch)
 		{
 			var filteredList = ApplyFilters(pagedAccountSearch.Searcher)
 				.Where(v => v.Relevance && v.Applications.All(a
@@ -46,45 +46,76 @@ namespace RecruitmentServer.Database.Repositories
 					pagedAccountSearch.Count));
 		}
 
-		private List<Vacancy> ApplyFilters(FullSearcher searcher)
+		#region Applying filters
+		private List<Vacancy> ApplyFilters(VacancySearcher searcher)
 		{
-			var vacancies = GetAll();
+			IEnumerable<Vacancy> vacancies = GetAll();
 
 			if (searcher == null)
 				return vacancies.OrderByDescending(v => v.GetLocalDatePublication()).ToList();
 
-			if (searcher.Position != null)
-				vacancies = vacancies.
-					Where(v => v.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				vacancies = vacancies.Where(v => v.GetLocalDatePublication() > searcher.MinDate)
-					.ToList();
-
-			if (searcher.MinValue.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Applications.Count >= searcher.MinValue).ToList();
-
-			if (searcher.MaxValue.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Applications.Count <= searcher.MaxValue).ToList();
+			vacancies = ApplyBaseFilters(vacancies, searcher);
+			vacancies = FilterBySalary(vacancies, searcher.MinSalary,
+				searcher.MaxSalary);
+			vacancies = FilterByApplicationsCount(vacancies, searcher.MinApplicationsCount,
+				searcher.MaxApplicationsCount);
 
 			if (searcher.IsRelevance.HasValue)
-				vacancies = vacancies.
-					Where(v => v.Relevance == searcher.IsRelevance).ToList();
+				vacancies = vacancies.Where(v => v.Relevance == searcher.IsRelevance);
 
-			switch (searcher.SortOption)
+			return ApplySorting(vacancies, searcher.SortOption).ToList();
+		}
+
+		private IEnumerable<Vacancy> ApplyBaseFilters(IEnumerable<Vacancy> vacancies,
+			BaseSearcher baseSearcher)
+		{
+			if (baseSearcher.Position != null)
+				vacancies = vacancies.
+					Where(v => v.Position.Name.ToLower().
+					Contains(baseSearcher.Position.ToLower()));
+
+			if (baseSearcher.MinDate.HasValue)
+				vacancies = vacancies.Where(v => v.GetLocalDatePublication() > baseSearcher.MinDate);
+
+			return vacancies;
+		}
+		private IEnumerable<Vacancy> FilterByApplicationsCount(IEnumerable<Vacancy> vacancies,
+			int? min, int? max)
+		{
+			if (min.HasValue)
+				vacancies = vacancies.Where(v => v.Applications.Count >= min);
+			if (max.HasValue)
+				vacancies = vacancies.Where(v => v.Applications.Count <= max);
+
+			return vacancies;
+		}
+		private IEnumerable<Vacancy> FilterBySalary(IEnumerable<Vacancy> vacancies,
+			int? min, int? max)
+		{
+			if (min.HasValue)
+				vacancies = vacancies.Where(v => v.Salary >= min);
+			if (max.HasValue)
+				vacancies = vacancies.Where(v => v.Salary <= max);
+
+			return vacancies;
+		}
+		private IEnumerable<Vacancy> ApplySorting(IEnumerable<Vacancy> vacancies,
+			VacancySortOption sortOption)
+		{
+			switch (sortOption)
 			{
-				case SortOption.Date:
-					return vacancies.OrderByDescending(v => v.GetLocalDatePublication())
-						.ToList();
-				case SortOption.AlphabetPosition:
-					return vacancies.OrderBy(v => v.Position.Name).ToList();
-				case SortOption.NumberOfApplications:
-					return vacancies.OrderByDescending(v => v.Applications.Count).ToList();
-				default: return vacancies.ToList();
+				case VacancySortOption.Date:
+					return vacancies.OrderByDescending(v => v.GetLocalDatePublication());
+				case VacancySortOption.AlphabetPosition:
+					return vacancies.OrderBy(v => v.Position.Name);
+				case VacancySortOption.Salary:
+					return vacancies.OrderByDescending(v => v.Salary);
+				case VacancySortOption.NumberOfApplications:
+					return vacancies.OrderByDescending(v => v.Applications.Count);
+				default:
+					return vacancies;
 			}
 		}
+		#endregion
 	}
 }

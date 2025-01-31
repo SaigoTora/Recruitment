@@ -38,7 +38,7 @@ namespace RecruitmentServer.Forms
 		private readonly Account _account;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
-		private FullSearcher _searcher;
+		private VacancySearcher _vacancySearcher;
 		private ApplicationSearcher _applicationSearcher;
 		private InterviewSearcher _interviewSearcher;
 		private EmployeeSearcher _employeeSearcher;
@@ -124,7 +124,7 @@ namespace RecruitmentServer.Forms
 
 			if (e != EventArgs.Empty)// If we are not searching
 			{
-				_searcher = null;
+				_vacancySearcher = null;
 				_applicationSearcher = null;
 				_interviewSearcher = null;
 				_employeeSearcher = null;
@@ -209,7 +209,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelVacancy, labelApplication, labelInterview, labelEmployee);
 			_panelsInfo = PanelsInfo.Vacancy;
-			_totalItemsToDisplay = DatabaseManager.GetVacanciesCount(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetVacanciesCount(_vacancySearcher);
 		}
 		private void SetupVacanciesSearchPanel()
 		{
@@ -344,7 +344,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			List<Vacancy> vacancies = DatabaseManager.GetVacancies(_createdPanels.Count,
-				COUNT_ON_PAGE, _searcher);
+				COUNT_ON_PAGE, _vacancySearcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
 
 			for (int i = 0; i < vacancies.Count; i++)
@@ -622,6 +622,7 @@ namespace RecruitmentServer.Forms
 		}
 		private void SetSearcherValues()
 		{
+			DateTime? minDate = GetDateByComboBoxDate();
 			var (Min, Max) = GetMinMaxValues();
 			bool? isRelevance = null;
 			string status = null, position = null;
@@ -635,22 +636,20 @@ namespace RecruitmentServer.Forms
 				position = textBoxSearch.Text;// Position
 			}
 
-			_searcher = new FullSearcher(position, GetDateByComboBoxDate(), Min, Max,
-				isRelevance, status, GetSortOption());
 			switch (_panelsInfo)
 			{
-				case PanelsInfo.None:
-					break;
 				case PanelsInfo.Vacancy:
+					_vacancySearcher = new VacancySearcher(position, minDate, null, null, Min, Max,
+						isRelevance, GetVacancySortOption());
 					break;
 				case PanelsInfo.Application:
-					_applicationSearcher = new ApplicationSearcher(position, GetDateByComboBoxDate(),
-						Min, Max, status, GetApplicationSortOption());
+					_applicationSearcher = new ApplicationSearcher(position, minDate, Min, Max,
+						status, GetApplicationSortOption());
 					break;
 				case PanelsInfo.Interview:
 					{
-						_interviewSearcher = new InterviewSearcher(position, GetDateByComboBoxDate(),
-							status, GetInterviewSortOption());
+						_interviewSearcher = new InterviewSearcher(position, minDate, status,
+							GetInterviewSortOption());
 						break;
 					}
 				case PanelsInfo.Employee:
@@ -662,22 +661,23 @@ namespace RecruitmentServer.Forms
 						else// Search by full name
 							fullName = textBoxSearch.Text;
 
-						_employeeSearcher = new EmployeeSearcher(position, GetDateByComboBoxDate(),
-							fullName, GetEmployeeSortOption());
+						_employeeSearcher = new EmployeeSearcher(position, minDate, fullName,
+							GetEmployeeSortOption());
 						break;
 					}
 				default:
-					break;
+					throw new InvalidOperationException($"Unknown panels info: {_panelsInfo}");
 			}
 		}
 
 		private (int? Min, int? Max) GetMinMaxValues()
 		{
 			int? min = null, max = null;// Minimum and maximum
-			if (textBoxMin.Text != "")
+			if (!string.IsNullOrWhiteSpace(textBoxMin.Text))
 				min = int.Parse(textBoxMin.Text);
-			if (textBoxMax.Text != "")
+			if (!string.IsNullOrWhiteSpace(textBoxMax.Text))
 				max = int.Parse(textBoxMax.Text);
+
 			if (min != null && max != null && min > max)
 				CustomMessageBox.Show("Мінімальне значення не може бути більше максимального!",
 					_account.Theme, "Помилка пошуку",
@@ -685,17 +685,14 @@ namespace RecruitmentServer.Forms
 
 			return (min, max);
 		}
-		private SortOption GetSortOption()
+		private VacancySortOption GetVacancySortOption()
 		{
-			SortOption sortOption = SortOption.Date;
+			VacancySortOption sortOption = VacancySortOption.Date;
 
 			if (comboBoxSort.SelectedIndex == 1)
-				sortOption = SortOption.AlphabetPosition;
+				sortOption = VacancySortOption.AlphabetPosition;
 			else if (comboBoxSort.SelectedIndex == 2)
-			{
-				if (_panelsInfo == PanelsInfo.Vacancy)
-					sortOption = SortOption.NumberOfApplications;
-			}
+				sortOption = VacancySortOption.NumberOfApplications;
 
 			return sortOption;
 		}
@@ -793,8 +790,8 @@ namespace RecruitmentServer.Forms
 		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
 			int defaultIndex = 0)
 		{
-			if (_searcher == null && _applicationSearcher == null && _interviewSearcher == null
-				&& _employeeSearcher == null)
+			if (_vacancySearcher == null && _applicationSearcher == null
+				&& _interviewSearcher == null && _employeeSearcher == null)
 			{// Index selected for the first time
 				if (comboBox.SelectedIndex == defaultIndex)
 					return;
@@ -841,16 +838,22 @@ namespace RecruitmentServer.Forms
 		}
 		private void TextBoxMinSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MinValue.ToString();
+			string searcherText = string.Empty;
+			if (_panelsInfo == PanelsInfo.Vacancy)
+				searcherText = _vacancySearcher?.MinApplicationsCount.ToString();
 			if (_panelsInfo == PanelsInfo.Application)
 				searcherText = _applicationSearcher?.MinPoints.ToString();
+
 			TextBoxSearchLeave(textBoxMin.Text, searcherText);
 		}
 		private void TextBoxMaxSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.MaxValue.ToString();
+			string searcherText = string.Empty;
+			if (_panelsInfo == PanelsInfo.Vacancy)
+				searcherText = _vacancySearcher?.MaxApplicationsCount.ToString();
 			if (_panelsInfo == PanelsInfo.Application)
 				searcherText = _applicationSearcher?.MaxPoints.ToString();
+
 			TextBoxSearchLeave(textBoxMax.Text, searcherText);
 		}
 		private void TextBoxSearchLeave(string text, string searcherText)
@@ -879,12 +882,11 @@ namespace RecruitmentServer.Forms
 		}
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
 		{
-			string searcherText = _searcher?.Position;
+			string searcherText = string.Empty;
 			switch (_panelsInfo)
 			{
-				case PanelsInfo.None:
-					break;
 				case PanelsInfo.Vacancy:
+					searcherText = _vacancySearcher?.Position;
 					break;
 				case PanelsInfo.Application:
 					searcherText = _applicationSearcher?.Position;
@@ -896,9 +898,8 @@ namespace RecruitmentServer.Forms
 					searcherText = _employeeSearcher?.Position;
 					break;
 				default:
-					break;
+					throw new InvalidOperationException($"Unknown panels info: {_panelsInfo}");
 			}
-
 
 			TextBoxSearchLeave(textBoxSearch.Text, searcherText);
 		}

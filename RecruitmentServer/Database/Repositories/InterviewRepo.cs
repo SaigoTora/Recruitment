@@ -44,35 +44,49 @@ namespace RecruitmentServer.Database.Repositories
 					pagedAccountSearch.Count));
 		}
 
+		#region Applying filters
 		private List<Interview> ApplyFilters(InterviewSearcher searcher)
 		{
-			var interviews = GetAll();
+			IEnumerable<Interview> interviews = GetAll();
 
 			if (searcher == null)
 				return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
 
-			if (searcher.Position != null)
-				interviews = interviews.
-					Where(i => i.Application.Vacancy.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				interviews = interviews.
-					Where(i => i.GetLocalDateEvent() > searcher.MinDate).ToList();
+			interviews = ApplyBaseFilters(interviews, searcher);
 
 			if (searcher.Status != null)
 				interviews = interviews.
-					Where(i => i.InterviewStatus.Status == searcher.Status).ToList();
+					Where(i => i.InterviewStatus.Status == searcher.Status);
 
-			switch (searcher.SortOption)
+			return ApplySorting(interviews, searcher.SortOption).ToList();
+		}
+
+		private IEnumerable<Interview> ApplyBaseFilters(IEnumerable<Interview> interviews,
+			BaseSearcher baseSearcher)
+		{
+			if (baseSearcher.Position != null)
+				interviews = interviews.
+					Where(i => i.Application.Vacancy.Position.Name.ToLower().
+					Contains(baseSearcher.Position.ToLower()));
+
+			if (baseSearcher.MinDate.HasValue)
+				interviews = interviews.
+					Where(i => i.GetLocalDateEvent() > baseSearcher.MinDate);
+
+			return interviews;
+		}
+		private IEnumerable<Interview> ApplySorting(IEnumerable<Interview> interviews,
+			InterviewSortOption sortOption)
+		{
+			switch (sortOption)
 			{
 				case InterviewSortOption.Date:
-					return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
+					return interviews.OrderByDescending(i => i.GetLocalDateEvent());
 				case InterviewSortOption.AlphabetPosition:
-					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name)
-						.ToList();
-				default: return interviews.ToList();
+					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name);
+				default: return interviews;
 			}
 		}
+		#endregion
 	}
 }

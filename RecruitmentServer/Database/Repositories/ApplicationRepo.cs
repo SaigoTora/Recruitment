@@ -44,45 +44,64 @@ namespace RecruitmentServer.Database.Repositories
 					pagedAccountSearch.Count));
 		}
 
+		#region Applying filters
 		private List<Application> ApplyFilters(ApplicationSearcher searcher)
 		{
-			var applications = GetAll();
+			IEnumerable<Application> applications = GetAll();
 
 			if (searcher == null)
 				return applications.OrderByDescending(a => a.GetLocalDateSubmission()).ToList();
 
-			if (searcher.Position != null)
-				applications = applications.
-					Where(a => a.Vacancy.Position.Name.ToLower().
-					Contains(searcher.Position.ToLower())).ToList();
-
-			if (searcher.MinDate.HasValue)
-				applications = applications.
-					Where(a => a.GetLocalDateSubmission() > searcher.MinDate).ToList();
-
-			if (searcher.MinPoints.HasValue)
-				applications = applications.
-					Where(a => a.Scores >= searcher.MinPoints).ToList();
-
-			if (searcher.MaxPoints.HasValue)
-				applications = applications.
-					Where(a => a.Scores <= searcher.MaxPoints).ToList();
+			applications = ApplyBaseFilters(applications, searcher);
+			applications = FilterByPoints(applications, searcher.MinPoints, searcher.MaxPoints);
 
 			if (searcher.Status != null)
-				applications = applications.
-					Where(a => a.ApplicationStatus.Status == searcher.Status).ToList();
+				applications = applications.Where(a => a.ApplicationStatus.Status == searcher.Status);
 
-			switch (searcher.SortOption)
+			return ApplySorting(applications, searcher.SortOption).ToList();
+		}
+
+		private IEnumerable<Application> ApplyBaseFilters(IEnumerable<Application> applications,
+			BaseSearcher baseSearcher)
+		{
+			if (baseSearcher.Position != null)
+				applications = applications.
+					Where(a => a.Vacancy.Position.Name.ToLower().
+					Contains(baseSearcher.Position.ToLower()));
+
+			if (baseSearcher.MinDate.HasValue)
+				applications = applications.
+					Where(a => a.GetLocalDateSubmission() > baseSearcher.MinDate);
+
+			return applications;
+		}
+		private IEnumerable<Application> FilterByPoints(IEnumerable<Application> applications,
+			int? min, int? max)
+		{
+			if (min.HasValue)
+				applications = applications.
+					Where(a => a.Scores >= min);
+
+			if (max.HasValue)
+				applications = applications.
+					Where(a => a.Scores <= max);
+
+			return applications;
+		}
+		private IEnumerable<Application> ApplySorting(IEnumerable<Application> applications,
+			ApplicationSortOption sortOption)
+		{
+			switch (sortOption)
 			{
 				case ApplicationSortOption.Date:
-					return applications.OrderByDescending(a => a.GetLocalDateSubmission())
-						.ToList();
+					return applications.OrderByDescending(a => a.GetLocalDateSubmission());
 				case ApplicationSortOption.AlphabetPosition:
-					return applications.OrderBy(a => a.Vacancy.Position.Name).ToList();
+					return applications.OrderBy(a => a.Vacancy.Position.Name);
 				case ApplicationSortOption.NumberOfPoints:
-					return applications.OrderByDescending(a => a.Scores).ToList();
-				default: return applications.ToList();
+					return applications.OrderByDescending(a => a.Scores);
+				default: return applications;
 			}
 		}
+		#endregion
 	}
 }

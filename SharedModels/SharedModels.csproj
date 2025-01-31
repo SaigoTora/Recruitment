@@ -94,9 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\ApplicationSearcher.cs" />
     <Compile Include="Search\EmployeeSearcher.cs" />
-    <Compile Include="Search\FullSearcher.cs" />
     <Compile Include="Search\BaseSearcher.cs" />
     <Compile Include="Search\InterviewSearcher.cs" />
+    <Compile Include="Search\VacancySearcher.cs" />
     <Compile Include="Static\StaticData.cs" />
   </ItemGroup>
   <ItemGroup>

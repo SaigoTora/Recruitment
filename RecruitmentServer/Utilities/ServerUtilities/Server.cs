@@ -214,7 +214,7 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<FullSearcher>, int>(
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<VacancySearcher>, int>(
 					context, acssDTO => DatabaseManager.GetVacanciesCount(acssDTO),
 					HttpStatusCode.OK);
 			}
@@ -225,7 +225,7 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<FullSearcher>,
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<VacancySearcher>,
 					List<Vacancy>>(context, pacssDTO => DatabaseManager.GetVacancies(pacssDTO),
 					HttpStatusCode.OK);
 			}
