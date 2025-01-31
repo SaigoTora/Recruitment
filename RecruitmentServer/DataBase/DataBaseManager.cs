@@ -168,13 +168,13 @@ namespace RecruitmentServer.Database
 		internal static List<Vacancy> GetVacancies(int index, int count,
 			FullSearcher searcher)
 			=> _vacancyRepo.GetFiltered(index, count, searcher);
-		internal static int GetVacanciesCount(AccountSearchSettingsDTO accountSearch)
+		internal static int GetVacanciesCount(AccountSearchSettingsDTO<FullSearcher> accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
 			return _vacancyRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Vacancy> GetVacancies(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
 			return _vacancyRepo.GetFiltered(candidate, pagedAccountSearch);
@@ -193,13 +193,14 @@ namespace RecruitmentServer.Database
 		internal static List<Application> GetApplications(int index, int count,
 			FullSearcher searcher)
 			=> _applicationRepo.GetFiltered(index, count, searcher);
-		internal static int GetApplicationsCount(AccountSearchSettingsDTO accountSearch)
+		internal static int GetApplicationsCount(
+			AccountSearchSettingsDTO<FullSearcher> accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
 			return _applicationRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Application> GetApplications(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
 			return _applicationRepo.GetFiltered(candidate, pagedAccountSearch);
@@ -207,18 +208,19 @@ namespace RecruitmentServer.Database
 		#endregion
 
 		#region Interview
-		internal static int GetInterviewsCount(FullSearcher searcher)
+		internal static int GetInterviewsCount(InterviewSearcher searcher)
 			=> _interviewRepo.GetFilteredCount(searcher);
 		internal static List<Interview> GetInterviews(int index, int count,
-			FullSearcher searcher)
+			InterviewSearcher searcher)
 			=> _interviewRepo.GetFiltered(index, count, searcher);
-		internal static int GetInterviewsCount(AccountSearchSettingsDTO accountSearch)
+		internal static int GetInterviewsCount(
+			AccountSearchSettingsDTO<InterviewSearcher> accountSearch)
 		{
 			Candidate candidate = GetCandidate(accountSearch.CandidateLogin);
 			return _interviewRepo.GetFilteredCount(candidate, accountSearch);
 		}
 		internal static List<Interview> GetInterviews(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<InterviewSearcher> pagedAccountSearch)
 		{
 			Candidate candidate = GetCandidate(pagedAccountSearch.CandidateLogin);
 			return _interviewRepo.GetFiltered(candidate, pagedAccountSearch);

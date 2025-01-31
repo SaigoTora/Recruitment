@@ -15,16 +15,16 @@ namespace RecruitmentServer.Database.Repositories
 			: base(context)
 		{ }
 
-		internal int GetFilteredCount(FullSearcher searcher)
+		internal int GetFilteredCount(InterviewSearcher searcher)
 			=> ApplyFilters(searcher).Count;
 		internal List<Interview> GetFiltered(int index, int count,
-			FullSearcher searcher)
+			InterviewSearcher searcher)
 		{
 			var interviews = ApplyFilters(searcher);
 			return interviews.GetRange(index, Math.Min(interviews.Count - index, count));
 		}
 		internal int GetFilteredCount(Candidate candidate,
-			AccountSearchSettingsDTO accountSearch)
+			AccountSearchSettingsDTO<InterviewSearcher> accountSearch)
 		{
 			return ApplyFilters(accountSearch.Searcher)
 				.Where(i => candidate.Login == i.Application.Candidate.Login
@@ -32,7 +32,7 @@ namespace RecruitmentServer.Database.Repositories
 				.Count();
 		}
 		internal List<Interview> GetFiltered(Candidate candidate,
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<InterviewSearcher> pagedAccountSearch)
 		{
 			var filteredList = ApplyFilters(pagedAccountSearch.Searcher)
 				.Where(i => candidate.Login == i.Application.Candidate.Login
@@ -44,7 +44,7 @@ namespace RecruitmentServer.Database.Repositories
 					pagedAccountSearch.Count));
 		}
 
-		private List<Interview> ApplyFilters(FullSearcher searcher)
+		private List<Interview> ApplyFilters(InterviewSearcher searcher)
 		{
 			var interviews = GetAll();
 
@@ -66,9 +66,9 @@ namespace RecruitmentServer.Database.Repositories
 
 			switch (searcher.SortOption)
 			{
-				case SortOption.Date:
+				case InterviewSortOption.Date:
 					return interviews.OrderByDescending(i => i.GetLocalDateEvent()).ToList();
-				case SortOption.AlphabetPosition:
+				case InterviewSortOption.AlphabetPosition:
 					return interviews.OrderBy(i => i.Application.Vacancy.Position.Name)
 						.ToList();
 				default: return interviews.ToList();

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SharedModels.DTOs;
 using SharedModels.Models;
 using SharedModels.Static;
+using SharedModels.Search;
 
 namespace RecruitmentClient.Utilities.ClientUtilities
 {
@@ -152,13 +153,13 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 
 		#region Vacancy
 		internal async Task<int> GetFreeVacanciesCountAsync(
-			AccountSearchSettingsDTO accountSearch)
+			AccountSearchSettingsDTO<FullSearcher> accountSearch)
 		{
 			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
 				_vacanciesCountUrl);
 		}
 		internal async Task<List<Vacancy>> GetFreeVacanciesAsync(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
 		{
 			return await SendAndReceiveDataAsync<List<Vacancy>>(pagedAccountSearch,
 				HttpMethod.Post, _vacanciesUrl);
@@ -169,13 +170,14 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 		internal async Task CreateApplicationAsync(CreateApplicationDTO createApplication)
 			=> await SendDataAsync(createApplication, HttpMethod.Post, _applicationsCreateUrl);
 
-		internal async Task<int> GetApplicationsCountAsync(AccountSearchSettingsDTO accountSearch)
+		internal async Task<int> GetApplicationsCountAsync(
+			AccountSearchSettingsDTO<FullSearcher> accountSearch)
 		{
 			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
 				_applicationsCountUrl);
 		}
 		internal async Task<List<Application>> GetApplicationsAsync(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
 		{
 			return await SendAndReceiveDataAsync<List<Application>>(pagedAccountSearch,
 				HttpMethod.Post, _applicationsUrl);
@@ -184,13 +186,13 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 
 		#region Interview
 		internal async Task<int> GetInterviewsCountAsync(
-			AccountSearchSettingsDTO accountSearch)
+			AccountSearchSettingsDTO<InterviewSearcher> accountSearch)
 		{
 			return await SendAndReceiveDataAsync<int>(accountSearch, HttpMethod.Post,
 				_interviewsCountUrl);
 		}
 		internal async Task<List<Interview>> GetInterviewsAsync(
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<InterviewSearcher> pagedAccountSearch)
 		{
 			return await SendAndReceiveDataAsync<List<Interview>>(pagedAccountSearch,
 				HttpMethod.Post, _interviewsUrl);

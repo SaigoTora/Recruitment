@@ -5,7 +5,7 @@ using System;
 namespace SharedModels.DTOs
 {
 	[Serializable]
-	public class PagedAccountSearchSettingsDTO : AccountSearchSettingsDTO
+	public class PagedAccountSearchSettingsDTO<T> : AccountSearchSettingsDTO<T> where T : BaseSearcher
 	{
 		[JsonProperty]
 		public int StartIndex { get; private set; }
@@ -14,7 +14,7 @@ namespace SharedModels.DTOs
 
 		[JsonConstructor]
 		public PagedAccountSearchSettingsDTO(CandidateLoginDTO candidateLogin,
-			FullSearcher searcher, int startIndex, int count)
+			T searcher, int startIndex, int count)
 			: base(candidateLogin, searcher)
 		{
 			StartIndex = startIndex;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using RecruitmentServer.Database;
 using SharedModels.DTOs;
 using SharedModels.Models;
+using SharedModels.Search;
 
 namespace RecruitmentServer.Utilities.ServerUtilities
 {
@@ -213,8 +214,9 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetVacanciesCount(acssDTO), HttpStatusCode.OK);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<FullSearcher>, int>(
+					context, acssDTO => DatabaseManager.GetVacanciesCount(acssDTO),
+					HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -223,8 +225,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Vacancy>>(
-					context, pacssDTO => DatabaseManager.GetVacancies(pacssDTO),
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<FullSearcher>,
+					List<Vacancy>>(context, pacssDTO => DatabaseManager.GetVacancies(pacssDTO),
 					HttpStatusCode.OK);
 			}
 			else
@@ -248,8 +250,9 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetApplicationsCount(acssDTO), HttpStatusCode.OK);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<FullSearcher>, int>(
+					context, acssDTO => DatabaseManager.GetApplicationsCount(acssDTO),
+					HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -258,9 +261,9 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO,
-					List<Application>>(context,
-					pacssDTO => DatabaseManager.GetApplications(pacssDTO), HttpStatusCode.OK);
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<FullSearcher>,
+					List<Application>>(context, pacssDTO => DatabaseManager.GetApplications(pacssDTO),
+					HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -272,8 +275,9 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO, int>(context,
-					acssDTO => DatabaseManager.GetInterviewsCount(acssDTO), HttpStatusCode.OK);
+				await HandleRequestAndRespondAsync<AccountSearchSettingsDTO<InterviewSearcher>, int>(
+					context, acssDTO => DatabaseManager.GetInterviewsCount(acssDTO),
+					HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
@@ -282,8 +286,8 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 		{
 			if (context.Request.HttpMethod == HttpMethod.Post.Method)
 			{
-				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO, List<Interview>>(
-					context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO),
+				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<InterviewSearcher>,
+					List<Interview>>(context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO),
 					HttpStatusCode.OK);
 			}
 			else

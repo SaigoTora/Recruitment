@@ -40,6 +40,7 @@ namespace RecruitmentServer.Forms
 
 		private FullSearcher _searcher;
 		private EmployeeSearcher _employeeSearcher;
+		private InterviewSearcher _interviewSearcher;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
 			_interviewCreator, _employeeCreator;
@@ -124,6 +125,7 @@ namespace RecruitmentServer.Forms
 			{
 				_searcher = null;
 				_employeeSearcher = null;
+				_interviewSearcher = null;
 				SetDefaultSearchValues();
 			}
 
@@ -245,7 +247,7 @@ namespace RecruitmentServer.Forms
 
 			SetActiveLabel(labelInterview, labelVacancy, labelApplication, labelEmployee);
 			_panelsInfo = PanelsInfo.Interview;
-			_totalItemsToDisplay = DatabaseManager.GetInterviewsCount(_searcher);
+			_totalItemsToDisplay = DatabaseManager.GetInterviewsCount(_interviewSearcher);
 		}
 		private void SetupInterviewsSearchPanel()
 		{
@@ -376,7 +378,7 @@ namespace RecruitmentServer.Forms
 				return;
 
 			List<Interview> interviews = DatabaseManager.GetInterviews(_createdPanels.Count,
-				COUNT_ON_PAGE, _searcher);
+				COUNT_ON_PAGE, _interviewSearcher);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
 
 			for (int i = 0; i < interviews.Count; i++)
@@ -633,17 +635,35 @@ namespace RecruitmentServer.Forms
 
 			_searcher = new FullSearcher(position, GetDateByComboBoxDate(), Min, Max,
 				isRelevance, status, GetSortOption());
-			if (_panelsInfo == PanelsInfo.Employee)
+			switch (_panelsInfo)
 			{
-				string fullName = null;
+				case PanelsInfo.None:
+					break;
+				case PanelsInfo.Vacancy:
+					break;
+				case PanelsInfo.Application:
+					break;
+				case PanelsInfo.Interview:
+					{
+						_interviewSearcher = new InterviewSearcher(position, GetDateByComboBoxDate(),
+							status, GetInterviewSortOption());
+						break;
+					}
+				case PanelsInfo.Employee:
+					{
+						string fullName = null;
 
-				if (comboBoxStatus.SelectedIndex == 0)// Search by position
-					position = textBoxSearch.Text;
-				else// Search by full name
-					fullName = textBoxSearch.Text;
+						if (comboBoxStatus.SelectedIndex == 0)// Search by position
+							position = textBoxSearch.Text;
+						else// Search by full name
+							fullName = textBoxSearch.Text;
 
-				_employeeSearcher = new EmployeeSearcher(position, GetDateByComboBoxDate(),
-					fullName, GetEmployeeSortOption());
+						_employeeSearcher = new EmployeeSearcher(position, GetDateByComboBoxDate(),
+							fullName, GetEmployeeSortOption());
+						break;
+					}
+				default:
+					break;
 			}
 		}
 
@@ -685,6 +705,15 @@ namespace RecruitmentServer.Forms
 				sortOption = EmployeeSortOption.AlphabetPosition;
 			else if (comboBoxSort.SelectedIndex == 2)
 				sortOption = EmployeeSortOption.AlphabetName;
+
+			return sortOption;
+		}
+		private InterviewSortOption GetInterviewSortOption()
+		{
+			InterviewSortOption sortOption = InterviewSortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = InterviewSortOption.AlphabetPosition;
 
 			return sortOption;
 		}
@@ -751,7 +780,7 @@ namespace RecruitmentServer.Forms
 		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
 			int defaultIndex = 0)
 		{
-			if (_searcher == null)
+			if (_searcher == null && _interviewSearcher == null && _employeeSearcher == null)
 			{// Index selected for the first time
 				if (comboBox.SelectedIndex == defaultIndex)
 					return;
@@ -833,8 +862,24 @@ namespace RecruitmentServer.Forms
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.Position;
-			if (_panelsInfo == PanelsInfo.Employee)
-				searcherText = _employeeSearcher?.Position;
+			switch (_panelsInfo)
+			{
+				case PanelsInfo.None:
+					break;
+				case PanelsInfo.Vacancy:
+					break;
+				case PanelsInfo.Application:
+					break;
+				case PanelsInfo.Interview:
+					searcherText = _interviewSearcher?.Position;
+					break;
+				case PanelsInfo.Employee:
+					searcherText = _employeeSearcher?.Position;
+					break;
+				default:
+					break;
+			}
+
 
 			TextBoxSearchLeave(textBoxSearch.Text, searcherText);
 		}

@@ -38,6 +38,7 @@ namespace RecruitmentClient.Forms
 
 		private readonly Account _account;
 		private FullSearcher _searcher;
+		private InterviewSearcher _interviewSearcher;
 		private PanelsInfo _panelsInfo = PanelsInfo.None;
 
 		private readonly ControlCreator _vacancyCreator, _applicationCreator,
@@ -144,6 +145,7 @@ namespace RecruitmentClient.Forms
 			if (e != EventArgs.Empty)// If we are not searching
 			{
 				_searcher = null;
+				_interviewSearcher = null;
 				SetDefaultSearchValues();
 			}
 
@@ -228,8 +230,8 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.Add(newSortingElement);
 
 			_panelsInfo = PanelsInfo.Vacancy;
-			AccountSearchSettingsDTO accountSearch
-				= new AccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher);
+			AccountSearchSettingsDTO<FullSearcher> accountSearch
+				= new AccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(), _searcher);
 			SetEnabledLabels(false, labelApplication, labelInterview);
 			_totalItemsToDisplay = await Program.Client.GetFreeVacanciesCountAsync(accountSearch);
 			SetEnabledLabels(true, labelApplication, labelInterview);
@@ -245,8 +247,8 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Application;
-			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
-				_account.GetCandidateLogin(), _searcher);
+			AccountSearchSettingsDTO<FullSearcher> accountSearch
+				= new AccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(), _searcher);
 			SetEnabledLabels(false, labelVacancy, labelInterview);
 			_totalItemsToDisplay = await Program.Client.GetApplicationsCountAsync(accountSearch);
 			SetEnabledLabels(true, labelVacancy, labelInterview);
@@ -262,8 +264,9 @@ namespace RecruitmentClient.Forms
 				comboBoxSort.Items.RemoveAt(comboBoxSort.Items.Count - 1);
 
 			_panelsInfo = PanelsInfo.Interview;
-			AccountSearchSettingsDTO accountSearch = new AccountSearchSettingsDTO(
-				_account.GetCandidateLogin(), _searcher);
+			AccountSearchSettingsDTO<InterviewSearcher> accountSearch
+				= new AccountSearchSettingsDTO<InterviewSearcher>(_account.GetCandidateLogin(),
+				_interviewSearcher);
 			SetEnabledLabels(false, labelVacancy, labelApplication);
 			_totalItemsToDisplay = await Program.Client.GetInterviewsCountAsync(accountSearch);
 			SetEnabledLabels(true, labelVacancy, labelApplication);
@@ -322,9 +325,9 @@ namespace RecruitmentClient.Forms
 
 
 			SetEnabledLabels(false, labelApplication, labelInterview);
-			PagedAccountSearchSettingsDTO pagedAccountSearch =
-				new PagedAccountSearchSettingsDTO(_account.GetCandidateLogin(), _searcher,
-				_createdPanels.Count, COUNT_PANELS_ON_PAGE);
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch =
+				new PagedAccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(),
+				_searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Vacancy> vacancies = await Program.Client.GetFreeVacanciesAsync(
 				pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[vacancies.Count];
@@ -345,9 +348,9 @@ namespace RecruitmentClient.Forms
 				return;
 
 			SetEnabledLabels(false, labelVacancy, labelInterview);
-			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.GetCandidateLogin(), _searcher, _createdPanels.Count,
-				COUNT_PANELS_ON_PAGE);
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch
+				= new PagedAccountSearchSettingsDTO<FullSearcher>(_account.GetCandidateLogin(),
+				_searcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<SharedModels.Models.Application> applications =
 				await Program.Client.GetApplicationsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[applications.Count];
@@ -368,9 +371,9 @@ namespace RecruitmentClient.Forms
 				return;
 
 			SetEnabledLabels(false, labelVacancy, labelApplication);
-			PagedAccountSearchSettingsDTO pagedAccountSearch = new PagedAccountSearchSettingsDTO(
-				_account.GetCandidateLogin(), _searcher, _createdPanels.Count,
-				COUNT_PANELS_ON_PAGE);
+			PagedAccountSearchSettingsDTO<InterviewSearcher> pagedAccountSearch
+				= new PagedAccountSearchSettingsDTO<InterviewSearcher>(_account.GetCandidateLogin(),
+				_interviewSearcher, _createdPanels.Count, COUNT_PANELS_ON_PAGE);
 			List<Interview> interviews =
 				await Program.Client.GetInterviewsAsync(pagedAccountSearch);
 			Guna2GradientPanel[] panels = new Guna2GradientPanel[interviews.Count];
@@ -564,7 +567,31 @@ namespace RecruitmentClient.Forms
 				sortOption = SortOption.Salary;
 
 			_searcher = new FullSearcher(position, GetDateByComboBoxDate(),
-				minSalary, maxSalary, null, null, null, sortOption);
+				minSalary, maxSalary, null, null, sortOption);
+			switch (_panelsInfo)
+			{
+				case PanelsInfo.None:
+					break;
+				case PanelsInfo.Vacancy:
+					break;
+				case PanelsInfo.Application:
+					break;
+				case PanelsInfo.Interview:
+					_interviewSearcher = new InterviewSearcher(position, GetDateByComboBoxDate(),
+						null, GetInterviewSortOption());
+					break;
+				default:
+					break;
+			}
+		}
+		private InterviewSortOption GetInterviewSortOption()
+		{
+			InterviewSortOption sortOption = InterviewSortOption.Date;
+
+			if (comboBoxSort.SelectedIndex == 1)
+				sortOption = InterviewSortOption.AlphabetPosition;
+
+			return sortOption;
 		}
 		private DateTime? GetDateByComboBoxDate()
 		{// Method that returns a date or null depending on the comboBoxDate index
@@ -620,7 +647,7 @@ namespace RecruitmentClient.Forms
 		private void ComboBoxSort_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int currentIndex = default;
-			if (_searcher != null)
+			if (_searcher != null && _interviewSearcher != null)
 				currentIndex = (int)_searcher.SortOption;
 
 			ComboBoxSelectedIndexChanged(comboBoxSort, ref currentIndex);
@@ -631,7 +658,7 @@ namespace RecruitmentClient.Forms
 		private void ComboBoxSelectedIndexChanged(ComboBox comboBox, ref int currentIndex,
 			int defaultIndex = 0)
 		{
-			if (_searcher == null)
+			if (_searcher == null && _interviewSearcher == null)
 			{// Index selected for the first time
 				if (comboBox.SelectedIndex == defaultIndex)
 					return;
@@ -713,6 +740,20 @@ namespace RecruitmentClient.Forms
 		private void TextBoxPositionSearch_Leave(object sender, EventArgs e)
 		{
 			string searcherText = _searcher?.Position;
+			switch (_panelsInfo)
+			{
+				case PanelsInfo.None:
+					break;
+				case PanelsInfo.Vacancy:
+					break;
+				case PanelsInfo.Application:
+					break;
+				case PanelsInfo.Interview:
+					searcherText = _interviewSearcher?.Position;
+					break;
+				default:
+					break;
+			}
 			TextBoxSearchLeave(textBoxPositionSearch.Text, searcherText);
 		}
 		private void PictureBoxSearch_Click(object sender, EventArgs e)

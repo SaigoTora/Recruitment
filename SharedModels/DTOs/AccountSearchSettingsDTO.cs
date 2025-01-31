@@ -5,15 +5,15 @@ using System;
 namespace SharedModels.DTOs
 {
 	[Serializable]
-	public class AccountSearchSettingsDTO
+	public class AccountSearchSettingsDTO<T> where T : BaseSearcher
 	{
 		[JsonProperty]
 		public CandidateLoginDTO CandidateLogin { get; private set; }
 		[JsonProperty]
-		public FullSearcher Searcher { get; private set; }
+		public T Searcher { get; private set; }
 
 		[JsonConstructor]
-		public AccountSearchSettingsDTO(CandidateLoginDTO candidateLogin, FullSearcher searcher)
+		public AccountSearchSettingsDTO(CandidateLoginDTO candidateLogin, T searcher)
 		{
 			CandidateLogin = candidateLogin;
 			Searcher = searcher;

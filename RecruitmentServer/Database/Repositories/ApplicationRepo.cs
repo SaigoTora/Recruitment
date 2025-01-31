@@ -24,7 +24,7 @@ namespace RecruitmentServer.Database.Repositories
 			return applications.GetRange(index, Math.Min(applications.Count - index, count));
 		}
 		internal int GetFilteredCount(Candidate candidate,
-			AccountSearchSettingsDTO accountSearch)
+			AccountSearchSettingsDTO<FullSearcher> accountSearch)
 		{
 			return ApplyFilters(accountSearch.Searcher)
 			.Where(a => candidate.Login == a.Candidate.Login
@@ -32,7 +32,7 @@ namespace RecruitmentServer.Database.Repositories
 			.Count();
 		}
 		internal List<Application> GetFiltered(Candidate candidate,
-			PagedAccountSearchSettingsDTO pagedAccountSearch)
+			PagedAccountSearchSettingsDTO<FullSearcher> pagedAccountSearch)
 		{
 			var filteredList = ApplyFilters(pagedAccountSearch.Searcher)
 				.Where(a => candidate.Login == a.Candidate.Login
