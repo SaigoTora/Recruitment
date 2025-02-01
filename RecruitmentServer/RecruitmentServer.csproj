@@ -121,12 +121,12 @@
     <Compile Include="Forms\RequirementForm.Designer.cs">
       <DependentUpon>RequirementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\ServerUtilities\FirewallManager.cs" />
     <Compile Include="RecruitmentDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RecruitmentDB.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ServerUtilities\FirewallManager.cs" />
     <Compile Include="Forms\PointsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,7 +278,6 @@
       <DependentUpon>RecruitmentDB.mdf</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

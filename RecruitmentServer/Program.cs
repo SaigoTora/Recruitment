@@ -6,9 +6,9 @@ using System.Security.Principal;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.Serialization;
+using RecruitmentServer.Database;
 using RecruitmentServer.Forms;
 using RecruitmentServer.Models;
-using RecruitmentServer.Database;
 using RecruitmentServer.Utilities.ServerUtilities;
 using UIHelpers.Forms;
 
@@ -37,12 +37,25 @@ namespace RecruitmentServer
 
 			if (!IsRunningAsAdministrator())
 				RestartAsAdmin(account);
-			Server = new Server(_port);
-			Server.Start();
-			Application.Run(new MainForm(account));
 
-			Server.Stop();
-			DatabaseManager.Dispose();
+			DatabaseManager.Initialize();
+			Server = new Server(_port);
+			try
+			{
+				Server.Start();
+				Application.Run(new MainForm(account));
+			}
+			catch (System.Net.HttpListenerException)
+			{
+				CustomMessageBox.Show("Не вдалося запустити сервер. " +
+					"Можливо, за цією адресою вже працює інший сервер.", account.Theme,
+					"Помилка сервера", CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+			}
+			finally
+			{
+				Server.Stop();
+				DatabaseManager.Dispose();
+			}
 		}
 
 		private static bool IsRunningAsAdministrator()

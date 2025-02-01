@@ -30,6 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.panelUp = new System.Windows.Forms.Panel();
+			this.buttonCareer = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonProfile = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.pictureBoxLine = new System.Windows.Forms.PictureBox();
 			this.pictureBoxTheme = new System.Windows.Forms.PictureBox();
@@ -94,6 +95,7 @@
 			// panelUp
 			// 
 			this.panelUp.BackColor = System.Drawing.Color.Transparent;
+			this.panelUp.Controls.Add(this.buttonCareer);
 			this.panelUp.Controls.Add(this.buttonProfile);
 			this.panelUp.Controls.Add(this.pictureBoxLine);
 			this.panelUp.Controls.Add(this.pictureBoxTheme);
@@ -105,6 +107,37 @@
 			this.panelUp.Size = new System.Drawing.Size(1367, 105);
 			this.panelUp.TabIndex = 0;
 			this.panelUp.Tag = "";
+			// 
+			// buttonCareer
+			// 
+			this.buttonCareer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonCareer.Animated = true;
+			this.buttonCareer.BackColor = System.Drawing.Color.Transparent;
+			this.buttonCareer.BorderRadius = 7;
+			this.buttonCareer.BorderThickness = 1;
+			this.buttonCareer.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonCareer.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonCareer.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonCareer.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonCareer.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonCareer.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonCareer.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(70)))), ((int)(((byte)(180)))));
+			this.buttonCareer.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(120)))), ((int)(((byte)(220)))));
+			this.buttonCareer.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonCareer.ForeColor = System.Drawing.Color.Black;
+			this.buttonCareer.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonCareer.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(120)))), ((int)(((byte)(220)))));
+			this.buttonCareer.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+			this.buttonCareer.Location = new System.Drawing.Point(935, 47);
+			this.buttonCareer.Name = "buttonCareer";
+			this.buttonCareer.PressedColor = System.Drawing.Color.White;
+			this.buttonCareer.PressedDepth = 20;
+			this.buttonCareer.Size = new System.Drawing.Size(200, 36);
+			this.buttonCareer.TabIndex = 5;
+			this.buttonCareer.TabStop = false;
+			this.buttonCareer.Tag = "fixedPosition";
+			this.buttonCareer.Text = "Кар\'єра";
+			this.buttonCareer.Click += new System.EventHandler(this.ButtonCareer_Click);
 			// 
 			// buttonProfile
 			// 
@@ -170,7 +203,7 @@
 			this.pictureBoxPasswordChange.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxPasswordChange.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxPasswordChange.Image = global::RecruitmentClient.Properties.Resources.keyB;
-			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(1105, 50);
+			this.pictureBoxPasswordChange.Location = new System.Drawing.Point(885, 50);
 			this.pictureBoxPasswordChange.Name = "pictureBoxPasswordChange";
 			this.pictureBoxPasswordChange.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxPasswordChange.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -185,7 +218,7 @@
 			this.pictureBoxExit.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxExit.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pictureBoxExit.Image = global::RecruitmentClient.Properties.Resources.exit;
-			this.pictureBoxExit.Location = new System.Drawing.Point(1060, 50);
+			this.pictureBoxExit.Location = new System.Drawing.Point(840, 50);
 			this.pictureBoxExit.Name = "pictureBoxExit";
 			this.pictureBoxExit.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -667,7 +700,7 @@
 			this.textBoxPositionSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxPositionSearch_KeyDown);
 			this.textBoxPositionSearch.Leave += new System.EventHandler(this.TextBoxPositionSearch_Leave);
 			// 
-			// textBoxMaxSalarySearch
+			// textBoxMaxSalary
 			// 
 			this.textBoxMaxSalary.Animated = true;
 			this.textBoxMaxSalary.AutoScroll = true;
@@ -687,7 +720,7 @@
 			this.textBoxMaxSalary.Location = new System.Drawing.Point(502, 60);
 			this.textBoxMaxSalary.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxMaxSalary.MaxLength = 6;
-			this.textBoxMaxSalary.Name = "textBoxMaxSalarySearch";
+			this.textBoxMaxSalary.Name = "textBoxMaxSalary";
 			this.textBoxMaxSalary.PasswordChar = '\0';
 			this.textBoxMaxSalary.PlaceholderForeColor = System.Drawing.Color.DarkGray;
 			this.textBoxMaxSalary.PlaceholderText = "";
@@ -701,7 +734,7 @@
 			this.textBoxMaxSalary.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSalarySearch_KeyPress);
 			this.textBoxMaxSalary.Leave += new System.EventHandler(this.TextBoxMaxSalarySearch_Leave);
 			// 
-			// textBoxMinSalarySearch
+			// textBoxMinSalary
 			// 
 			this.textBoxMinSalary.Animated = true;
 			this.textBoxMinSalary.AutoScroll = true;
@@ -721,7 +754,7 @@
 			this.textBoxMinSalary.Location = new System.Drawing.Point(345, 60);
 			this.textBoxMinSalary.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxMinSalary.MaxLength = 6;
-			this.textBoxMinSalary.Name = "textBoxMinSalarySearch";
+			this.textBoxMinSalary.Name = "textBoxMinSalary";
 			this.textBoxMinSalary.PasswordChar = '\0';
 			this.textBoxMinSalary.PlaceholderForeColor = System.Drawing.Color.DarkGray;
 			this.textBoxMinSalary.PlaceholderText = "";
@@ -965,6 +998,7 @@
 		private Guna.UI2.WinForms.Guna2GradientPanel panelInterview;
 		private Guna.UI2.WinForms.Guna2PictureBox pictureBoxApplicationStatus;
 		private Guna.UI2.WinForms.Guna2PictureBox pictureBoxInterviewStatus;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonCareer;
 	}
 }
 

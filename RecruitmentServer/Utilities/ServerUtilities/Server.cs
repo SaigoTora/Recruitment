@@ -74,6 +74,9 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["interviewsUrl"],
 				HandleInterviewsAsync);
 
+			_endpointHandlers.Add(ConfigurationManager.AppSettings["employeesUrl"],
+				HandleEmployeesAsync);
+
 			_endpointHandlers.Add(ConfigurationManager.AppSettings["staticDataUrl"],
 				HandleStaticDataAsync);
 		}
@@ -289,6 +292,19 @@ namespace RecruitmentServer.Utilities.ServerUtilities
 				await HandleRequestAndRespondAsync<PagedAccountSearchSettingsDTO<InterviewSearcher>,
 					List<Interview>>(context, pacssDTO => DatabaseManager.GetInterviews(pacssDTO),
 					HttpStatusCode.OK);
+			}
+			else
+				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);
+		}
+		#endregion
+
+		#region Employee
+		private async Task HandleEmployeesAsync(HttpListenerContext context)
+		{
+			if (context.Request.HttpMethod == HttpMethod.Post.Method)
+			{
+				await HandleRequestAndRespondAsync<CandidateLoginDTO, List<Employee>>(context,
+					cl => DatabaseManager.GetEmployees(cl), HttpStatusCode.OK);
 			}
 			else
 				RespondWithStatus(context, HttpStatusCode.MethodNotAllowed);

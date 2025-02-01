@@ -15,27 +15,27 @@ namespace RecruitmentServer.Database
 {
 	internal static class DatabaseManager
 	{
-		private static readonly RecruitmentEntities _context;
+		private static RecruitmentEntities _context;
 
-		private static readonly EmployeeRepo _employeeRepo;
-		private static readonly InterviewRepo _interviewRepo;
-		private static readonly ApplicationRepo _applicationRepo;
-		private static readonly BaseRepo<Candidate> _candidateRepo;
-		private static readonly BaseRepo<Education> _educationRepo;
-		private static readonly BaseRepo<Language> _languageRepo;
-		private static readonly BaseRepo<Questionnaire> _questionnaireRepo;
-		private static readonly VacancyRepo _vacancyRepo;
-		private static readonly BaseRepo<Requirement> _requirementRepo;
-		private static readonly BaseRepo<Point> _pointRepo;
-		private static readonly BaseRepo<InterviewStatus> _interviewStatusRepo;
-		private static readonly BaseRepo<FamilyStatus> _familyStatusRepo;
-		private static readonly BaseRepo<BusinessTripOpportunity> _businessTripOpportunityRepo;
-		private static readonly BaseRepo<Health> _healthRepo;
-		private static readonly BaseRepo<EducationDegree> _educationDegreeRepo;
-		private static readonly BaseRepo<EducationForm> _educationFormRepo;
-		private static readonly BaseRepo<Position> _positionRepo;
+		private static EmployeeRepo _employeeRepo;
+		private static InterviewRepo _interviewRepo;
+		private static ApplicationRepo _applicationRepo;
+		private static BaseRepo<Candidate> _candidateRepo;
+		private static BaseRepo<Education> _educationRepo;
+		private static BaseRepo<Language> _languageRepo;
+		private static BaseRepo<Questionnaire> _questionnaireRepo;
+		private static VacancyRepo _vacancyRepo;
+		private static BaseRepo<Requirement> _requirementRepo;
+		private static BaseRepo<Point> _pointRepo;
+		private static BaseRepo<InterviewStatus> _interviewStatusRepo;
+		private static BaseRepo<FamilyStatus> _familyStatusRepo;
+		private static BaseRepo<BusinessTripOpportunity> _businessTripOpportunityRepo;
+		private static BaseRepo<Health> _healthRepo;
+		private static BaseRepo<EducationDegree> _educationDegreeRepo;
+		private static BaseRepo<EducationForm> _educationFormRepo;
+		private static BaseRepo<Position> _positionRepo;
 
-		static DatabaseManager()
+		internal static void Initialize()
 		{
 			_context = new RecruitmentEntities();
 
@@ -233,6 +233,10 @@ namespace RecruitmentServer.Database
 		internal static List<Employee> GetEmployees(int index, int count,
 			EmployeeSearcher searcher)
 			=> _employeeRepo.GetFiltered(index, count, searcher);
+		internal static List<Employee> GetEmployees(CandidateLoginDTO candidateLogin)
+			=> _employeeRepo.GetAll().Where(e =>
+			e.Interview.Application.Candidate.Login == candidateLogin.Login
+			&& e.Interview.Application.Candidate.Password == candidateLogin.Password).ToList();
 		#endregion
 
 		#region Check unique

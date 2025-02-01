@@ -15,6 +15,7 @@ using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using System.Text;
 
 namespace RecruitmentClient.Forms
 {
@@ -31,6 +32,7 @@ namespace RecruitmentClient.Forms
 		private const int COUNT_PANELS_ON_PAGE = 10;
 		private const int DEFAULT_SEARCH_DATE = 5;
 		private const int SCROLL_PADDING = 6;
+		const string CURRENCY = "грн.";
 
 		private readonly (Color Accepted, Color Waiting, Color Invited, Color Rejected)
 			_statusColor = (Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97),
@@ -114,6 +116,25 @@ namespace RecruitmentClient.Forms
 			sf.FormClosed += (s, args) =>
 			{ Enabled = true; };
 		}
+		private async void ButtonCareer_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				buttonCareer.Enabled = false;
+				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(_account.Candidate.Login,
+					_account.Candidate.Password);
+				List<Employee> employees = await Program.Client.GetEmployeesAsync(candidateLogin);
+				string text = GetEmployeesTextInfo(employees);
+
+				CustomMessageBox.Show(text, _account.Theme, "Кар'єра", CustomMessageBoxButtons.OK,
+					CustomMessageBoxIcon.Information, 500);
+			}
+			catch (Exception ex) when (ex is TaskCanceledException
+				|| ex is System.Net.Http.HttpRequestException)
+			{ Program.HandleNetworkError(); }
+			finally
+			{ buttonCareer.Enabled = true; }
+		}
 		private void ButtonProfile_Click(object sender, EventArgs e)
 		{
 			Enabled = false;
@@ -127,6 +148,26 @@ namespace RecruitmentClient.Forms
 			};
 		}
 
+		private string GetEmployeesTextInfo(List<Employee> employees)
+		{
+			if (employees == null || employees.Count == 0)
+				return "Наразі ви не працюєте ні на одній з посад.";
+			else if (employees.Count == 1)
+			{
+				return $"Ви працюєте на посаді: \"{employees[0].PositionName}\".\n" +
+					   $"Ваша зарплата: {employees[0].Salary:0.##} {CURRENCY}";
+			}
+			else
+			{
+				var sb = new StringBuilder("Ви працюєте на таких посадах:\n");
+				for (int i = 0; i < employees.Count; i++)
+				{
+					sb.AppendLine($"{i + 1}. Посада: \"{employees[i].PositionName}\". " +
+								  $"Зарплата: {employees[i].Salary:0.##} {CURRENCY}");
+				}
+				return sb.ToString().TrimEnd();
+			}
+		}
 		private void SelectLabel(EventArgs e)
 		{
 			if (_panelsInfo == PanelsInfo.Vacancy)
@@ -402,7 +443,6 @@ namespace RecruitmentClient.Forms
 
 		private void CreateVacancy(Vacancy vacancy)
 		{
-			const string CURRENCY = "грн.";
 			const string DATE_PREFIX = "Опубліковано: ";
 
 			_vacancyCreator.CreateLabel(labelPositionV, vacancy.Position.Name);
@@ -521,7 +561,6 @@ namespace RecruitmentClient.Forms
 			else
 				button.Click -= ButtonReasonRejection_Click;
 		}
-
 
 		private void ButtonVacancy_Click(object sender, EventArgs e)
 		{

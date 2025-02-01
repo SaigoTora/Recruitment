@@ -265,9 +265,9 @@ name nvarchar(64) NOT NULL,-- Ім'я
 father_name nvarchar(64) NULL,-- По-батькові
 position_name nvarchar(64) NOT NULL,-- Посада
 city nvarchar(64) NOT NULL,-- Місто/село проживання
-phone nvarchar(16) UNIQUE NOT NULL default 'None' check(len(phone) >= 13),-- Номер телефону(мінімум 13 символів)
+phone nvarchar(16) NOT NULL default 'None' check(len(phone) >= 13),-- Номер телефону(мінімум 13 символів)
 birthday date NOT NULL default '2024-01-01' check(birthday < GETDATE()),-- Дата народження(пізніше ніж в день створення співробітника)
-email nvarchar(64) UNIQUE NOT NULL default 'None' check (email LIKE '%_@__%.__%'),-- E-mail [1;∞)@[2;∞).[2;∞), де запис [n;m) - кількість символів
+email nvarchar(64) NOT NULL default 'None' check (email LIKE '%_@__%.__%'),-- E-mail [1;∞)@[2;∞).[2;∞), де запис [n;m) - кількість символів
 salary money NOT NULL default 0 check(salary >= 0),-- Зарплата(більше або дорівнює 0)
 date_employment date NOT NULL, -- Дата працевлаштування
 id_interview int UNIQUE NULL,-- Код співбесіди

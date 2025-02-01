@@ -56,6 +56,8 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 			= ConfigurationManager.AppSettings["interviewsCountUrl"];
 		private readonly string _interviewsUrl
 			= ConfigurationManager.AppSettings["interviewsUrl"];
+		private readonly string _employeesUrl
+			= ConfigurationManager.AppSettings["employeesUrl"];
 
 		private readonly string _staticDataUrl
 			= ConfigurationManager.AppSettings["staticDataUrl"];
@@ -196,6 +198,14 @@ namespace RecruitmentClient.Utilities.ClientUtilities
 		{
 			return await SendAndReceiveDataAsync<List<Interview>>(pagedAccountSearch,
 				HttpMethod.Post, _interviewsUrl);
+		}
+		#endregion
+
+		#region Employee
+		internal async Task<List<Employee>> GetEmployeesAsync(CandidateLoginDTO candidateLogin)
+		{
+			return await SendAndReceiveDataAsync<List<Employee>>(candidateLogin,
+				HttpMethod.Post, _employeesUrl);
 		}
 		#endregion
 

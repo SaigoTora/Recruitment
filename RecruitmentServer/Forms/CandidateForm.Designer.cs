@@ -227,11 +227,11 @@
 			// 
 			this.labelLanguageHelp.AutoSize = true;
 			this.labelLanguageHelp.BackColor = System.Drawing.Color.Transparent;
-			this.labelLanguageHelp.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelLanguageHelp.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelLanguageHelp.ForeColor = System.Drawing.Color.Black;
-			this.labelLanguageHelp.Location = new System.Drawing.Point(615, 773);
+			this.labelLanguageHelp.Location = new System.Drawing.Point(702, 395);
 			this.labelLanguageHelp.Name = "labelLanguageHelp";
-			this.labelLanguageHelp.Size = new System.Drawing.Size(448, 18);
+			this.labelLanguageHelp.Size = new System.Drawing.Size(361, 16);
 			this.labelLanguageHelp.TabIndex = 13;
 			this.labelLanguageHelp.Tag = "fixedPosition";
 			this.labelLanguageHelp.Text = "(рівень знань може приймати значення від 1 до 10)";
@@ -529,7 +529,7 @@
 			this.labelHealth.Size = new System.Drawing.Size(147, 35);
 			this.labelHealth.TabIndex = 7;
 			this.labelHealth.Tag = "fixedPosition";
-			this.labelHealth.Text = "Здоров'я";
+			this.labelHealth.Text = "Здоров\'я";
 			this.labelHealth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labelFamilyStatus

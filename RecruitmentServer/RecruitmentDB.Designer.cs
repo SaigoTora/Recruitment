@@ -100,7 +100,7 @@ namespace RecruitmentServer {
         
         private global::System.Data.DataRelation relationFK__Education__id_re__6D0D32F4;
         
-        private global::System.Data.DataRelation relationFK__Employee__id_int__37703C52;
+        private global::System.Data.DataRelation relationFK__Employee__id_int__3587F3E0;
         
         private global::System.Data.DataRelation relationFK__Interview__id_ap__29221CFB;
         
@@ -871,7 +871,7 @@ namespace RecruitmentServer {
             this.relationFK__Education__id_po__5AEE82B9 = this.Relations["FK__Education__id_po__5AEE82B9"];
             this.relationFK__Education__id_ed__6E01572D = this.Relations["FK__Education__id_ed__6E01572D"];
             this.relationFK__Education__id_re__6D0D32F4 = this.Relations["FK__Education__id_re__6D0D32F4"];
-            this.relationFK__Employee__id_int__37703C52 = this.Relations["FK__Employee__id_int__37703C52"];
+            this.relationFK__Employee__id_int__3587F3E0 = this.Relations["FK__Employee__id_int__3587F3E0"];
             this.relationFK__Interview__id_ap__29221CFB = this.Relations["FK__Interview__id_ap__29221CFB"];
             this.relationFK__Interview__id_in__2A164134 = this.Relations["FK__Interview__id_in__2A164134"];
             this.relationFK__Language__id_que__09A971A2 = this.Relations["FK__Language__id_que__09A971A2"];
@@ -989,10 +989,10 @@ namespace RecruitmentServer {
                         this.tableRequirement.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableEducationDegree_Requirement.id_requirementColumn}, false);
             this.Relations.Add(this.relationFK__Education__id_re__6D0D32F4);
-            this.relationFK__Employee__id_int__37703C52 = new global::System.Data.DataRelation("FK__Employee__id_int__37703C52", new global::System.Data.DataColumn[] {
+            this.relationFK__Employee__id_int__3587F3E0 = new global::System.Data.DataRelation("FK__Employee__id_int__3587F3E0", new global::System.Data.DataColumn[] {
                         this.tableInterview.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableEmployee.id_interviewColumn}, false);
-            this.Relations.Add(this.relationFK__Employee__id_int__37703C52);
+            this.Relations.Add(this.relationFK__Employee__id_int__3587F3E0);
             this.relationFK__Interview__id_ap__29221CFB = new global::System.Data.DataRelation("FK__Interview__id_ap__29221CFB", new global::System.Data.DataColumn[] {
                         this.tableApplication.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableInterview.id_applicationColumn}, false);
@@ -4409,7 +4409,7 @@ namespace RecruitmentServer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public EmployeeRow AddEmployeeRow(string surname, string name, string father_name, string position_name, string city, string phone, System.DateTime birthday, string email, decimal salary, System.DateTime date_employment, InterviewRow parentInterviewRowByFK__Employee__id_int__37703C52) {
+            public EmployeeRow AddEmployeeRow(string surname, string name, string father_name, string position_name, string city, string phone, System.DateTime birthday, string email, decimal salary, System.DateTime date_employment, InterviewRow parentInterviewRowByFK__Employee__id_int__3587F3E0) {
                 EmployeeRow rowEmployeeRow = ((EmployeeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4424,8 +4424,8 @@ namespace RecruitmentServer {
                         salary,
                         date_employment,
                         null};
-                if ((parentInterviewRowByFK__Employee__id_int__37703C52 != null)) {
-                    columnValuesArray[11] = parentInterviewRowByFK__Employee__id_int__37703C52[0];
+                if ((parentInterviewRowByFK__Employee__id_int__3587F3E0 != null)) {
+                    columnValuesArray[11] = parentInterviewRowByFK__Employee__id_int__3587F3E0[0];
                 }
                 rowEmployeeRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEmployeeRow);
@@ -12348,10 +12348,10 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public InterviewRow InterviewRow {
                 get {
-                    return ((InterviewRow)(this.GetParentRow(this.Table.ParentRelations["FK__Employee__id_int__37703C52"])));
+                    return ((InterviewRow)(this.GetParentRow(this.Table.ParentRelations["FK__Employee__id_int__3587F3E0"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK__Employee__id_int__37703C52"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK__Employee__id_int__3587F3E0"]);
                 }
             }
             
@@ -12598,11 +12598,11 @@ namespace RecruitmentServer {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public EmployeeRow[] GetEmployeeRows() {
-                if ((this.Table.ChildRelations["FK__Employee__id_int__37703C52"] == null)) {
+                if ((this.Table.ChildRelations["FK__Employee__id_int__3587F3E0"] == null)) {
                     return new EmployeeRow[0];
                 }
                 else {
-                    return ((EmployeeRow[])(base.GetChildRows(this.Table.ChildRelations["FK__Employee__id_int__37703C52"])));
+                    return ((EmployeeRow[])(base.GetChildRows(this.Table.ChildRelations["FK__Employee__id_int__3587F3E0"])));
                 }
             }
         }
