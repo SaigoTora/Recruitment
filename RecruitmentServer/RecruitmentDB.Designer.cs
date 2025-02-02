@@ -7613,8 +7613,6 @@ namespace RecruitmentServer {
                 this.columnid.ReadOnly = true;
                 this.columnid.Unique = true;
                 this.columncity.MaxLength = 64;
-                this.columnage_min.AllowDBNull = false;
-                this.columnage_max.AllowDBNull = false;
                 this.columnexp_min.AllowDBNull = false;
                 this.columndiploma.AllowDBNull = false;
                 this.columnno_chronic_diseases.AllowDBNull = false;
@@ -10814,8 +10812,6 @@ namespace RecruitmentServer {
                 this.columndrink_alcohol.AllowDBNull = false;
                 this.columnid_business_trip_opportunity.AllowDBNull = false;
                 this.columncity.MaxLength = 64;
-                this.columnage_min.AllowDBNull = false;
-                this.columnage_max.AllowDBNull = false;
                 this.columnexp_min.AllowDBNull = false;
                 this.columndiploma.AllowDBNull = false;
                 this.columnno_chronic_diseases.AllowDBNull = false;
@@ -13267,7 +13263,12 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public byte age_min {
                 get {
-                    return ((byte)(this[this.tableRequirement.age_minColumn]));
+                    try {
+                        return ((byte)(this[this.tableRequirement.age_minColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'age_min\' in table \'Requirement\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableRequirement.age_minColumn] = value;
@@ -13278,7 +13279,12 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public byte age_max {
                 get {
-                    return ((byte)(this[this.tableRequirement.age_maxColumn]));
+                    try {
+                        return ((byte)(this[this.tableRequirement.age_maxColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'age_max\' in table \'Requirement\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableRequirement.age_maxColumn] = value;
@@ -13388,6 +13394,30 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetcityNull() {
                 this[this.tableRequirement.cityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isage_minNull() {
+                return this.IsNull(this.tableRequirement.age_minColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setage_minNull() {
+                this[this.tableRequirement.age_minColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isage_maxNull() {
+                return this.IsNull(this.tableRequirement.age_maxColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setage_maxNull() {
+                this[this.tableRequirement.age_maxColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14715,7 +14745,12 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public byte age_min {
                 get {
-                    return ((byte)(this[this.tableView_Requirement.age_minColumn]));
+                    try {
+                        return ((byte)(this[this.tableView_Requirement.age_minColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'age_min\' in table \'View_Requirement\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableView_Requirement.age_minColumn] = value;
@@ -14726,7 +14761,12 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public byte age_max {
                 get {
-                    return ((byte)(this[this.tableView_Requirement.age_maxColumn]));
+                    try {
+                        return ((byte)(this[this.tableView_Requirement.age_maxColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'age_max\' in table \'View_Requirement\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableView_Requirement.age_maxColumn] = value;
@@ -14860,6 +14900,30 @@ namespace RecruitmentServer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetcityNull() {
                 this[this.tableView_Requirement.cityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isage_minNull() {
+                return this.IsNull(this.tableView_Requirement.age_minColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setage_minNull() {
+                this[this.tableView_Requirement.age_minColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isage_maxNull() {
+                return this.IsNull(this.tableView_Requirement.age_maxColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setage_maxNull() {
+                this[this.tableView_Requirement.age_maxColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -22845,12 +22909,14 @@ SELECT id, nationality, city, children_amount, experience, driver_license, readi
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Requirement] WHERE (([id] = @Original_id) AND ((@IsNull_city = 1 AND [city] IS NULL) OR ([city] = @Original_city)) AND ([age_min] = @Original_age_min) AND ([age_max] = @Original_age_max) AND ([exp_min] = @Original_exp_min) AND ([diploma] = @Original_diploma) AND ([no_chronic_diseases] = @Original_no_chronic_diseases) AND ([driver_license] = @Original_driver_license) AND ([no_smoker] = @Original_no_smoker) AND ([no_drink_alcohol] = @Original_no_drink_alcohol) AND ([business_trip_opportunity] = @Original_business_trip_opportunity) AND ((@IsNull_student = 1 AND [student] IS NULL) OR ([student] = @Original_student)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Requirement] WHERE (([id] = @Original_id) AND ((@IsNull_city = 1 AND [city] IS NULL) OR ([city] = @Original_city)) AND ((@IsNull_age_min = 1 AND [age_min] IS NULL) OR ([age_min] = @Original_age_min)) AND ((@IsNull_age_max = 1 AND [age_max] IS NULL) OR ([age_max] = @Original_age_max)) AND ([exp_min] = @Original_exp_min) AND ([diploma] = @Original_diploma) AND ([no_chronic_diseases] = @Original_no_chronic_diseases) AND ([driver_license] = @Original_driver_license) AND ([no_smoker] = @Original_no_smoker) AND ([no_drink_alcohol] = @Original_no_drink_alcohol) AND ([business_trip_opportunity] = @Original_business_trip_opportunity) AND ((@IsNull_student = 1 AND [student] IS NULL) OR ([student] = @Original_student)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_city", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "city", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_city", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "city", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_age_min", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_min", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_age_min", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_min", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_age_max", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_max", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_age_max", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_max", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_exp_min", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "exp_min", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_diploma", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "diploma", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -22879,7 +22945,7 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@student", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "student", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Requirement] SET [city] = @city, [age_min] = @age_min, [age_max] = @age_max, [exp_min] = @exp_min, [diploma] = @diploma, [no_chronic_diseases] = @no_chronic_diseases, [driver_license] = @driver_license, [no_smoker] = @no_smoker, [no_drink_alcohol] = @no_drink_alcohol, [business_trip_opportunity] = @business_trip_opportunity, [student] = @student WHERE (([id] = @Original_id) AND ((@IsNull_city = 1 AND [city] IS NULL) OR ([city] = @Original_city)) AND ([age_min] = @Original_age_min) AND ([age_max] = @Original_age_max) AND ([exp_min] = @Original_exp_min) AND ([diploma] = @Original_diploma) AND ([no_chronic_diseases] = @Original_no_chronic_diseases) AND ([driver_license] = @Original_driver_license) AND ([no_smoker] = @Original_no_smoker) AND ([no_drink_alcohol] = @Original_no_drink_alcohol) AND ([business_trip_opportunity] = @Original_business_trip_opportunity) AND ((@IsNull_student = 1 AND [student] IS NULL) OR ([student] = @Original_student)));
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Requirement] SET [city] = @city, [age_min] = @age_min, [age_max] = @age_max, [exp_min] = @exp_min, [diploma] = @diploma, [no_chronic_diseases] = @no_chronic_diseases, [driver_license] = @driver_license, [no_smoker] = @no_smoker, [no_drink_alcohol] = @no_drink_alcohol, [business_trip_opportunity] = @business_trip_opportunity, [student] = @student WHERE (([id] = @Original_id) AND ((@IsNull_city = 1 AND [city] IS NULL) OR ([city] = @Original_city)) AND ((@IsNull_age_min = 1 AND [age_min] IS NULL) OR ([age_min] = @Original_age_min)) AND ((@IsNull_age_max = 1 AND [age_max] IS NULL) OR ([age_max] = @Original_age_max)) AND ([exp_min] = @Original_exp_min) AND ([diploma] = @Original_diploma) AND ([no_chronic_diseases] = @Original_no_chronic_diseases) AND ([driver_license] = @Original_driver_license) AND ([no_smoker] = @Original_no_smoker) AND ([no_drink_alcohol] = @Original_no_drink_alcohol) AND ([business_trip_opportunity] = @Original_business_trip_opportunity) AND ((@IsNull_student = 1 AND [student] IS NULL) OR ([student] = @Original_student)));
 SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver_license, no_smoker, no_drink_alcohol, business_trip_opportunity, student FROM Requirement WHERE (id = @id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@city", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "city", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -22896,7 +22962,9 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_city", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "city", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_city", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "city", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_age_min", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_min", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_age_min", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_min", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_age_max", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_max", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_age_max", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "age_max", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_exp_min", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "exp_min", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_diploma", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "diploma", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -22986,7 +23054,7 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_id, string Original_city, byte Original_age_min, byte Original_age_max, int Original_exp_min, bool Original_diploma, bool Original_no_chronic_diseases, bool Original_driver_license, bool Original_no_smoker, bool Original_no_drink_alcohol, bool Original_business_trip_opportunity, global::System.Nullable<bool> Original_student) {
+        public virtual int Delete(int Original_id, string Original_city, global::System.Nullable<byte> Original_age_min, global::System.Nullable<byte> Original_age_max, int Original_exp_min, bool Original_diploma, bool Original_no_chronic_diseases, bool Original_driver_license, bool Original_no_smoker, bool Original_no_drink_alcohol, bool Original_business_trip_opportunity, global::System.Nullable<bool> Original_student) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_id));
             if ((Original_city == null)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
@@ -22996,22 +23064,36 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_city));
             }
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(Original_age_min));
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(Original_age_max));
-            this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_exp_min));
-            this.Adapter.DeleteCommand.Parameters[6].Value = ((bool)(Original_diploma));
-            this.Adapter.DeleteCommand.Parameters[7].Value = ((bool)(Original_no_chronic_diseases));
-            this.Adapter.DeleteCommand.Parameters[8].Value = ((bool)(Original_driver_license));
-            this.Adapter.DeleteCommand.Parameters[9].Value = ((bool)(Original_no_smoker));
-            this.Adapter.DeleteCommand.Parameters[10].Value = ((bool)(Original_no_drink_alcohol));
-            this.Adapter.DeleteCommand.Parameters[11].Value = ((bool)(Original_business_trip_opportunity));
-            if ((Original_student.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((bool)(Original_student.Value));
+            if ((Original_age_min.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(Original_age_min.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[13].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((Original_age_max.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((byte)(Original_age_max.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.DeleteCommand.Parameters[7].Value = ((int)(Original_exp_min));
+            this.Adapter.DeleteCommand.Parameters[8].Value = ((bool)(Original_diploma));
+            this.Adapter.DeleteCommand.Parameters[9].Value = ((bool)(Original_no_chronic_diseases));
+            this.Adapter.DeleteCommand.Parameters[10].Value = ((bool)(Original_driver_license));
+            this.Adapter.DeleteCommand.Parameters[11].Value = ((bool)(Original_no_smoker));
+            this.Adapter.DeleteCommand.Parameters[12].Value = ((bool)(Original_no_drink_alcohol));
+            this.Adapter.DeleteCommand.Parameters[13].Value = ((bool)(Original_business_trip_opportunity));
+            if ((Original_student.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((bool)(Original_student.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -23033,15 +23115,25 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string city, byte age_min, byte age_max, int exp_min, bool diploma, bool no_chronic_diseases, bool driver_license, bool no_smoker, bool no_drink_alcohol, bool business_trip_opportunity, global::System.Nullable<bool> student) {
+        public virtual int Insert(string city, global::System.Nullable<byte> age_min, global::System.Nullable<byte> age_max, int exp_min, bool diploma, bool no_chronic_diseases, bool driver_license, bool no_smoker, bool no_drink_alcohol, bool business_trip_opportunity, global::System.Nullable<bool> student) {
             if ((city == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(city));
             }
-            this.Adapter.InsertCommand.Parameters[1].Value = ((byte)(age_min));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(age_max));
+            if ((age_min.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((byte)(age_min.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((age_max.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(age_max.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(exp_min));
             this.Adapter.InsertCommand.Parameters[4].Value = ((bool)(diploma));
             this.Adapter.InsertCommand.Parameters[5].Value = ((bool)(no_chronic_diseases));
@@ -23077,8 +23169,8 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(
                     string city, 
-                    byte age_min, 
-                    byte age_max, 
+                    global::System.Nullable<byte> age_min, 
+                    global::System.Nullable<byte> age_max, 
                     int exp_min, 
                     bool diploma, 
                     bool no_chronic_diseases, 
@@ -23089,8 +23181,8 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
                     global::System.Nullable<bool> student, 
                     int Original_id, 
                     string Original_city, 
-                    byte Original_age_min, 
-                    byte Original_age_max, 
+                    global::System.Nullable<byte> Original_age_min, 
+                    global::System.Nullable<byte> Original_age_max, 
                     int Original_exp_min, 
                     bool Original_diploma, 
                     bool Original_no_chronic_diseases, 
@@ -23106,8 +23198,18 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
             else {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(city));
             }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((byte)(age_min));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(age_max));
+            if ((age_min.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((byte)(age_min.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((age_max.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(age_max.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(exp_min));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((bool)(diploma));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((bool)(no_chronic_diseases));
@@ -23130,24 +23232,38 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
                 this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_city));
             }
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((byte)(Original_age_min));
-            this.Adapter.UpdateCommand.Parameters[15].Value = ((byte)(Original_age_max));
-            this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(Original_exp_min));
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((bool)(Original_diploma));
-            this.Adapter.UpdateCommand.Parameters[18].Value = ((bool)(Original_no_chronic_diseases));
-            this.Adapter.UpdateCommand.Parameters[19].Value = ((bool)(Original_driver_license));
-            this.Adapter.UpdateCommand.Parameters[20].Value = ((bool)(Original_no_smoker));
-            this.Adapter.UpdateCommand.Parameters[21].Value = ((bool)(Original_no_drink_alcohol));
-            this.Adapter.UpdateCommand.Parameters[22].Value = ((bool)(Original_business_trip_opportunity));
-            if ((Original_student.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((bool)(Original_student.Value));
+            if ((Original_age_min.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((byte)(Original_age_min.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(id));
+            if ((Original_age_max.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((byte)(Original_age_max.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(Original_exp_min));
+            this.Adapter.UpdateCommand.Parameters[19].Value = ((bool)(Original_diploma));
+            this.Adapter.UpdateCommand.Parameters[20].Value = ((bool)(Original_no_chronic_diseases));
+            this.Adapter.UpdateCommand.Parameters[21].Value = ((bool)(Original_driver_license));
+            this.Adapter.UpdateCommand.Parameters[22].Value = ((bool)(Original_no_smoker));
+            this.Adapter.UpdateCommand.Parameters[23].Value = ((bool)(Original_no_drink_alcohol));
+            this.Adapter.UpdateCommand.Parameters[24].Value = ((bool)(Original_business_trip_opportunity));
+            if ((Original_student.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((bool)(Original_student.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[27].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23170,8 +23286,8 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(
                     string city, 
-                    byte age_min, 
-                    byte age_max, 
+                    global::System.Nullable<byte> age_min, 
+                    global::System.Nullable<byte> age_max, 
                     int exp_min, 
                     bool diploma, 
                     bool no_chronic_diseases, 
@@ -23182,8 +23298,8 @@ SELECT id, city, age_min, age_max, exp_min, diploma, no_chronic_diseases, driver
                     global::System.Nullable<bool> student, 
                     int Original_id, 
                     string Original_city, 
-                    byte Original_age_min, 
-                    byte Original_age_max, 
+                    global::System.Nullable<byte> Original_age_min, 
+                    global::System.Nullable<byte> Original_age_max, 
                     int Original_exp_min, 
                     bool Original_diploma, 
                     bool Original_no_chronic_diseases, 

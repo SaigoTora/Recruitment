@@ -169,14 +169,14 @@ namespace RecruitmentServer.Forms
 				_vacancy.Requirement.EducationDegreeRequirements.Select(
 					edr => edr.EducationDegree.Degree.ToLower()));
 
-			if (educationDegrees != null && educationDegrees != string.Empty)
+			if (!string.IsNullOrEmpty(educationDegrees))
 			{
 				if (requirement != string.Empty)
 					requirement += "\n\n";
 				requirement += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
 			}
 			if (requirement == string.Empty)
-				requirement = "Вимог немає.";
+				requirement = "Вимоги відсутні.";
 
 			CustomMessageBox.Show(requirement, _account.Theme, "Вимоги",
 				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);

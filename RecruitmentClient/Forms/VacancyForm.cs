@@ -55,14 +55,15 @@ namespace RecruitmentClient.Forms
 				_vacancy.Requirement.EducationDegreeRequirements.Select(
 					edr => edr.EducationDegree.Degree.ToLower()));
 
-			if (educationDegrees != null)
+			if (!string.IsNullOrEmpty(educationDegrees))
 			{
 				if (_requirements != string.Empty)
 					_requirements += "\n\n";
 				_requirements += $"Необхідно мати один " +
 					$"із ступенів освіти: {educationDegrees}.";
 			}
-			buttonRequirements.Visible = _requirements != string.Empty;
+			if (_requirements == string.Empty)
+				_requirements = "Вимоги відсутні.";
 		}
 		private void SetupInformation(string text,
 			Label labelTitle, RichTextBox richTextBox)
@@ -81,7 +82,7 @@ namespace RecruitmentClient.Forms
 		private void ButtonRequirements_Click(object sender, EventArgs e)
 		{
 			CustomMessageBox.Show(_requirements, _account.Theme, "Вимоги",
-				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information, 550);
+				CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Information);
 		}
 		private async void ButtonSend_Click(object sender, EventArgs e)
 		{
@@ -102,7 +103,7 @@ namespace RecruitmentClient.Forms
 				CustomMessageBox.Show("Заявка була відправлена успішно!\n" +
 					"Будь ласка, регулярно переглядайте вкладки заявок та співбесід.",
 					_account.Theme, "Успішно", CustomMessageBoxButtons.OK,
-					CustomMessageBoxIcon.Information);
+					CustomMessageBoxIcon.Information, 500);
 			}
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)

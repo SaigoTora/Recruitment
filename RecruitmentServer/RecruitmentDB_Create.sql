@@ -130,8 +130,8 @@ CREATE Table Requirement-- 11. Вимоги
 (
 id int NOT NULL IDENTITY(1,1) Primary Key,-- Код
 city nvarchar(64) NULL,-- Місто/село проживання
-age_min tinyint NOT NULL default 14 check(age_min >= 14),-- Мінімальний вік(більший або рівний 14)
-age_max tinyint NOT NULL default 14 check(age_max >= 14),-- Максимальний вік
+age_min tinyint NULL default 14 check(age_min >= 14),-- Мінімальний вік(більший або рівний 14)
+age_max tinyint NULL default 14 check(age_max >= 14),-- Максимальний вік
 exp_min int NOT NULL default 0 check(exp_min >= 0),-- Мінімальний досвід роботи(в місяцях, більший або рівний 0)
 diploma bit NOT NULL default 0,-- Має диплом
 no_chronic_diseases bit NOT NULL default 0,-- Немає хронічних захворювань(Ні або Так)
@@ -573,8 +573,8 @@ INNER JOIN View_Requirement ON Application.id = View_Requirement.id
 WHERE Application.id IN (SELECT id FROM inserted)
 AND (
 city IS NOT NULL AND city_candidate != city-- Місто/село проживання
-OR dbo.GetAge(birthday) < age_min-- Мінімальний вік
-OR dbo.GetAge(birthday) > age_max-- Максимальний вік
+OR age_min IS NOT NULL AND dbo.GetAge(birthday) < age_min-- Мінімальний вік
+OR age_max IS NOT NULL AND dbo.GetAge(birthday) > age_max-- Максимальний вік
 OR experience < exp_min-- Мінімальний досвід роботи
 OR diploma = 'True' AND education_count < 1-- Диплом
 OR no_chronic_diseases = 'True' AND chronic_diseases IS NOT NULL-- Хронічні захворювання

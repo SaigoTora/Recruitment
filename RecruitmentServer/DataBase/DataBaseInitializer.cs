@@ -401,6 +401,7 @@ namespace RecruitmentServer.Database
 				new Candidate("Кравченко", "Анастасія", "Петрівна", "nst2001", "A.peg0bW2",
 					"+380687777777", new DateTime(2001, 10, 21), "kravchenko543@gmail.com", 7)
 			});
+
 			_context.SaveChanges();
 		}
 		#endregion

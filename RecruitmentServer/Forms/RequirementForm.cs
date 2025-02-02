@@ -37,10 +37,7 @@ namespace RecruitmentServer.Forms
 			if (_requirement.City != null)// If the requirements were specified
 				SetFormFields(_requirement);
 			else
-			{
 				listBoxDegrees.SelectedItems.Clear();
-				numericUpDownAgeMax.Value = numericUpDownAgeMax.Maximum;
-			}
 
 			_checkBoxEventHandlers.SubscribeToHoverShadow(checkBoxDiplomaAll);
 			_radionButtonEventHandlers.SubscribeToHoverShadow(radioButtonNoChronicDiseasesNo,
@@ -56,8 +53,10 @@ namespace RecruitmentServer.Forms
 		private void SetFormFields(Requirement requirement)
 		{
 			textBoxCity.Text = requirement.City;
-			numericUpDownAgeMin.Value = requirement.AgeMin;
-			numericUpDownAgeMax.Value = requirement.AgeMax;
+			if (requirement.AgeMin.HasValue)
+				textBoxAgeMin.Text = requirement.AgeMin.Value.ToString();
+			if (requirement.AgeMax.HasValue)
+				textBoxAgeMax.Text = requirement.AgeMax.Value.ToString();
 			numericUpDownExpMin.Value = requirement.ExpMin;
 			SelectDegrees();
 			radioButtonNoChronicDiseasesYes.Checked = requirement.NoChronicDiseases;
@@ -128,8 +127,10 @@ namespace RecruitmentServer.Forms
 					degreeReqs.Add(new EducationDegreeRequirement(_requirement.Id,
 						int.Parse(selectedItem[0].ToString())));
 
-				_requirement.Change(textBoxCity.Text, (byte)numericUpDownAgeMin.Value,
-					(byte)numericUpDownAgeMax.Value, (int)numericUpDownExpMin.Value,
+				var (ageMin, ageMax) = GetAgeMinMax();
+
+				_requirement.Change(textBoxCity.Text, ageMin, ageMax,
+					(int)numericUpDownExpMin.Value,
 					checkBoxDiplomaAll.Checked, radioButtonNoChronicDiseasesYes.Checked,
 					radioButtonDriverLicenseYes.Checked, radioButtonNoSmokerYes.Checked,
 					radioButtonNoDrinkAlcoholYes.Checked, radioButtonBusinessTripYes.Checked,
@@ -139,17 +140,36 @@ namespace RecruitmentServer.Forms
 		}
 		private bool CheckValidData()
 		{
+			const byte MIN_AGE = 14, MAX_AGE = 100;
+			bool isDataValid = true;
+			var (ageMin, ageMax) = GetAgeMinMax();
+
 			ValidationFeedbackManager.ResetLabelsToDefault(_account.Theme, labelCity,
 				labelAge);
 
-			bool isDataValid = true;
-			if (numericUpDownAgeMin.Value > numericUpDownAgeMax.Value)
-			{
+			if (ageMin.HasValue && (ageMin < MIN_AGE || ageMin > MAX_AGE))
+				ValidationFeedbackManager.HighlightInvalidLabel(labelAge, "Мінімальний вік має "
+					+ $"бути від {MIN_AGE} до {MAX_AGE} років!", _account.Theme, ref isDataValid);
+			if (isDataValid && ageMax.HasValue && (ageMax < MIN_AGE || ageMax > MAX_AGE))
+				ValidationFeedbackManager.HighlightInvalidLabel(labelAge, "Максимальний вік має "
+					+ $"бути від {MIN_AGE} до {MAX_AGE} років!", _account.Theme, ref isDataValid);
+
+			if (isDataValid && ageMin.HasValue && ageMax.HasValue && ageMin > ageMax)
 				ValidationFeedbackManager.HighlightInvalidLabel(labelAge, "Мінімальний вік "
 					+ "не може перевищувати максимальний!", _account.Theme, ref isDataValid);
-			}
 
 			return isDataValid;
+		}
+
+		private (byte?, byte?) GetAgeMinMax()
+		{
+			byte? ageMin = null, ageMax = null;
+			if (!string.IsNullOrWhiteSpace(textBoxAgeMin.Text))
+				ageMin = byte.Parse(textBoxAgeMin.Text);
+			if (!string.IsNullOrWhiteSpace(textBoxAgeMax.Text))
+				ageMax = byte.Parse(textBoxAgeMax.Text);
+
+			return (ageMin, ageMax);
 		}
 
 		#region TextBox event handlers
@@ -161,15 +181,20 @@ namespace RecruitmentServer.Forms
 				SelectNextControl(ActiveControl, true, true, true, false);
 			}
 		}
+		private void TextBoxMinMaxAge_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+				e.Handled = true;
+		}
 		#endregion
 
 		#region Label focus event handlers
 		private void LabelCity_Click(object sender, EventArgs e)
 			=> textBoxCity.Focus();
 		private void LabelAgeMin_Click(object sender, EventArgs e)
-			=> numericUpDownAgeMin.Focus();
+			=> textBoxAgeMin.Focus();
 		private void LabelAgeMax_Click(object sender, EventArgs e)
-			=> numericUpDownAgeMax.Focus();
+			=> textBoxAgeMax.Focus();
 		private void LabelExpMin_Click(object sender, EventArgs e)
 			=> numericUpDownExpMin.Focus();
 		private void LabelEducationDegree_Click(object sender, EventArgs e)
@@ -218,5 +243,6 @@ namespace RecruitmentServer.Forms
 			_checkBoxEventHandlers.UnsubscribeAll();
 			_radionButtonEventHandlers.UnsubscribeAll();
 		}
+
 	}
 }

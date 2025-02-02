@@ -31,9 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RequirementForm));
 			this.labelCity = new System.Windows.Forms.Label();
-			this.numericUpDownAgeMin = new System.Windows.Forms.NumericUpDown();
 			this.labelAge = new System.Windows.Forms.Label();
-			this.numericUpDownAgeMax = new System.Windows.Forms.NumericUpDown();
 			this.labelAgeMax = new System.Windows.Forms.Label();
 			this.numericUpDownExpMin = new System.Windows.Forms.NumericUpDown();
 			this.labelExpMin = new System.Windows.Forms.Label();
@@ -87,8 +85,8 @@
 			this.radioButtonStudentYes = new Guna.UI2.WinForms.Guna2CustomRadioButton();
 			this.radioButtonStudentNo = new Guna.UI2.WinForms.Guna2CustomRadioButton();
 			this.labelAgeMin = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMin)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMax)).BeginInit();
+			this.textBoxAgeMax = new Guna.UI2.WinForms.Guna2TextBox();
+			this.textBoxAgeMin = new Guna.UI2.WinForms.Guna2TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownExpMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.educationDegreeBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).BeginInit();
@@ -114,31 +112,6 @@
 			this.labelCity.Text = "Населений пункт проживання:";
 			this.labelCity.Click += new System.EventHandler(this.LabelCity_Click);
 			// 
-			// numericUpDownAgeMin
-			// 
-			this.numericUpDownAgeMin.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numericUpDownAgeMin.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownAgeMin.Location = new System.Drawing.Point(170, 83);
-			this.numericUpDownAgeMin.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-			this.numericUpDownAgeMin.Minimum = new decimal(new int[] {
-            14,
-            0,
-            0,
-            0});
-			this.numericUpDownAgeMin.Name = "numericUpDownAgeMin";
-			this.numericUpDownAgeMin.Size = new System.Drawing.Size(60, 36);
-			this.numericUpDownAgeMin.TabIndex = 5;
-			this.numericUpDownAgeMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numericUpDownAgeMin.Value = new decimal(new int[] {
-            14,
-            0,
-            0,
-            0});
-			// 
 			// labelAge
 			// 
 			this.labelAge.AutoSize = true;
@@ -153,31 +126,6 @@
 			this.labelAge.Text = "Вік:";
 			this.labelAge.Click += new System.EventHandler(this.LabelAgeMin_Click);
 			// 
-			// numericUpDownAgeMax
-			// 
-			this.numericUpDownAgeMax.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numericUpDownAgeMax.ForeColor = System.Drawing.Color.Black;
-			this.numericUpDownAgeMax.Location = new System.Drawing.Point(303, 83);
-			this.numericUpDownAgeMax.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-			this.numericUpDownAgeMax.Minimum = new decimal(new int[] {
-            14,
-            0,
-            0,
-            0});
-			this.numericUpDownAgeMax.Name = "numericUpDownAgeMax";
-			this.numericUpDownAgeMax.Size = new System.Drawing.Size(60, 36);
-			this.numericUpDownAgeMax.TabIndex = 7;
-			this.numericUpDownAgeMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numericUpDownAgeMax.Value = new decimal(new int[] {
-            14,
-            0,
-            0,
-            0});
-			// 
 			// labelAgeMax
 			// 
 			this.labelAgeMax.AutoSize = true;
@@ -185,7 +133,7 @@
 			this.labelAgeMax.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelAgeMax.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAgeMax.ForeColor = System.Drawing.Color.Black;
-			this.labelAgeMax.Location = new System.Drawing.Point(250, 85);
+			this.labelAgeMax.Location = new System.Drawing.Point(270, 85);
 			this.labelAgeMax.Name = "labelAgeMax";
 			this.labelAgeMax.Size = new System.Drawing.Size(47, 32);
 			this.labelAgeMax.TabIndex = 6;
@@ -406,7 +354,7 @@
 			this.textBoxCity.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
 			this.textBoxCity.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
 			this.textBoxCity.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.textBoxCity.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxCity.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxCity.ForeColor = System.Drawing.Color.Black;
 			this.textBoxCity.HoverState.BorderColor = System.Drawing.Color.Black;
 			this.textBoxCity.Location = new System.Drawing.Point(464, 23);
@@ -1100,11 +1048,79 @@
 			this.labelAgeMin.Text = "від";
 			this.labelAgeMin.Click += new System.EventHandler(this.LabelAgeMin_Click);
 			// 
+			// textBoxAgeMax
+			// 
+			this.textBoxAgeMax.Animated = true;
+			this.textBoxAgeMax.AutoScroll = true;
+			this.textBoxAgeMax.BackColor = System.Drawing.Color.Transparent;
+			this.textBoxAgeMax.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.textBoxAgeMax.BorderRadius = 10;
+			this.textBoxAgeMax.BorderThickness = 2;
+			this.textBoxAgeMax.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBoxAgeMax.DefaultText = "";
+			this.textBoxAgeMax.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.textBoxAgeMax.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.textBoxAgeMax.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxAgeMax.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxAgeMax.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxAgeMax.ForeColor = System.Drawing.Color.Black;
+			this.textBoxAgeMax.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.textBoxAgeMax.Location = new System.Drawing.Point(326, 83);
+			this.textBoxAgeMax.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+			this.textBoxAgeMax.MaxLength = 3;
+			this.textBoxAgeMax.Name = "textBoxAgeMax";
+			this.textBoxAgeMax.PasswordChar = '\0';
+			this.textBoxAgeMax.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.textBoxAgeMax.PlaceholderText = "";
+			this.textBoxAgeMax.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxAgeMax.SelectedText = "";
+			this.textBoxAgeMax.Size = new System.Drawing.Size(65, 36);
+			this.textBoxAgeMax.TabIndex = 7;
+			this.textBoxAgeMax.Tag = "";
+			this.textBoxAgeMax.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxAgeMax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+			this.textBoxAgeMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxMinMaxAge_KeyPress);
+			// 
+			// textBoxAgeMin
+			// 
+			this.textBoxAgeMin.Animated = true;
+			this.textBoxAgeMin.AutoScroll = true;
+			this.textBoxAgeMin.BackColor = System.Drawing.Color.Transparent;
+			this.textBoxAgeMin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+			this.textBoxAgeMin.BorderRadius = 10;
+			this.textBoxAgeMin.BorderThickness = 2;
+			this.textBoxAgeMin.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBoxAgeMin.DefaultText = "";
+			this.textBoxAgeMin.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.textBoxAgeMin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.textBoxAgeMin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxAgeMin.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.textBoxAgeMin.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxAgeMin.ForeColor = System.Drawing.Color.Black;
+			this.textBoxAgeMin.HoverState.BorderColor = System.Drawing.Color.Black;
+			this.textBoxAgeMin.Location = new System.Drawing.Point(173, 83);
+			this.textBoxAgeMin.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+			this.textBoxAgeMin.MaxLength = 3;
+			this.textBoxAgeMin.Name = "textBoxAgeMin";
+			this.textBoxAgeMin.PasswordChar = '\0';
+			this.textBoxAgeMin.PlaceholderForeColor = System.Drawing.Color.DarkGray;
+			this.textBoxAgeMin.PlaceholderText = "";
+			this.textBoxAgeMin.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxAgeMin.SelectedText = "";
+			this.textBoxAgeMin.Size = new System.Drawing.Size(65, 36);
+			this.textBoxAgeMin.TabIndex = 5;
+			this.textBoxAgeMin.Tag = "";
+			this.textBoxAgeMin.TextOffset = new System.Drawing.Point(1, 0);
+			this.textBoxAgeMin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+			this.textBoxAgeMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxMinMaxAge_KeyPress);
+			// 
 			// RequirementForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1150, 720);
+			this.Controls.Add(this.textBoxAgeMax);
+			this.Controls.Add(this.textBoxAgeMin);
 			this.Controls.Add(this.labelAgeMin);
 			this.Controls.Add(this.groupBoxStudent);
 			this.Controls.Add(this.groupBoxBusinessTrip);
@@ -1128,9 +1144,7 @@
 			this.Controls.Add(this.labelCandidateMustHave);
 			this.Controls.Add(this.numericUpDownExpMin);
 			this.Controls.Add(this.labelExpMin);
-			this.Controls.Add(this.numericUpDownAgeMax);
 			this.Controls.Add(this.labelAgeMax);
-			this.Controls.Add(this.numericUpDownAgeMin);
 			this.Controls.Add(this.labelAge);
 			this.Controls.Add(this.labelCity);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1138,8 +1152,6 @@
 			this.Text = "Вимоги";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RequirementForm_FormClosed);
 			this.Load += new System.EventHandler(this.RequirementForm_Load);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMin)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownAgeMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownExpMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.educationDegreeBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.recruitmentDBDataSet)).EndInit();
@@ -1162,9 +1174,7 @@
 
         #endregion
         private System.Windows.Forms.Label labelCity;
-        private System.Windows.Forms.NumericUpDown numericUpDownAgeMin;
         private System.Windows.Forms.Label labelAge;
-        private System.Windows.Forms.NumericUpDown numericUpDownAgeMax;
         private System.Windows.Forms.Label labelAgeMax;
         private System.Windows.Forms.NumericUpDown numericUpDownExpMin;
         private System.Windows.Forms.Label labelExpMin;
@@ -1218,5 +1228,7 @@
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonStudentYes;
 		private Guna.UI2.WinForms.Guna2CustomRadioButton radioButtonStudentNo;
 		private System.Windows.Forms.Label labelAgeMin;
+		private Guna.UI2.WinForms.Guna2TextBox textBoxAgeMax;
+		private Guna.UI2.WinForms.Guna2TextBox textBoxAgeMin;
 	}
 }

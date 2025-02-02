@@ -245,7 +245,6 @@
 			this.buttonRequirements.TabIndex = 10;
 			this.buttonRequirements.TabStop = false;
 			this.buttonRequirements.Text = "Вимоги";
-			this.buttonRequirements.Visible = false;
 			this.buttonRequirements.Click += new System.EventHandler(this.ButtonRequirements_Click);
 			// 
 			// richTextBoxPosition

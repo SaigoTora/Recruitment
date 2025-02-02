@@ -17,10 +17,10 @@ namespace SharedModels.Models
 		public string City { get; private set; }
 		[Column("age_min")]
 		[JsonProperty]
-		public byte AgeMin { get; private set; }
+		public byte? AgeMin { get; private set; }
 		[Column("age_max")]
 		[JsonProperty]
-		public byte AgeMax { get; private set; }
+		public byte? AgeMax { get; private set; }
 		[Column("exp_min")]
 		[JsonProperty]
 		public int ExpMin { get; private set; }
@@ -53,7 +53,7 @@ namespace SharedModels.Models
 			= new HashSet<Vacancy>();
 
 		public Requirement() { }
-		public Requirement(string city, byte ageMin, byte ageMax, int expMin,
+		public Requirement(string city, byte? ageMin, byte? ageMax, int expMin,
 			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
 			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student)
 		{
@@ -70,7 +70,7 @@ namespace SharedModels.Models
 			Student = student;
 		}
 
-		public void Change(string city, byte ageMin, byte ageMax, int expMin,
+		public void Change(string city, byte? ageMin, byte? ageMax, int expMin,
 			bool diploma, bool noChronicDiseases, bool driverLicense, bool noSmoker,
 			bool noDrinkAlcohol, bool businessTripOpportunity, bool? student,
 			ICollection<EducationDegreeRequirement> educationDegreeRequirements)
@@ -93,38 +93,65 @@ namespace SharedModels.Models
 
 		public override string ToString()
 		{
-			string res = string.Empty;
+			string requirements = string.Empty;
 			int number = 1;
 
 			if (!string.IsNullOrWhiteSpace(City))
-				res += $"{number++}. Місце проживання: {City}.\n";
-			if (AgeMin == AgeMax)
-				res += $"{number++}. Вік: {AgeMin} р.\n";
-			else
-				res += $"{number++}. Вік: від {AgeMin} до {AgeMax}.\n";
+				requirements += $"{number++}. Місце проживання: {City}.\n";
+			requirements += GetAgeRequirements(ref number);
 			if (ExpMin != 0)
-				res += $"{number++}. Мінімальний досвід роботи: {ExpMin} міс.\n";
-			if (Diploma)
-				res += $"{number++}. Наявність диплому.\n";
-			if (NoChronicDiseases)
-				res += $"{number++}. Відсутність хронічних захворювань.\n";
+				requirements += $"{number++}. Мінімальний досвід роботи: {ExpMin} міс.\n";
 			if (DriverLicense)
-				res += $"{number++}. Наявність посвідчення водія.\n";
-			if (NoSmoker)
-				res += $"{number++}. Кандидат НЕ повинен бути курцем.\n";
-			if (NoDrinkAlcohol)
-				res += $"{number++}. Кандидат НЕ повинен вживати алкогольні напої.\n";
+				requirements += $"{number++}. Наявність посвідчення водія.\n";
 			if (BusinessTripOpportunity)
-				res += $"{number++}. Можливість відряджень.\n";
-
-			if (Student != null && Student.Value)
-				res += $"{number++}. Кандидат повинен бути студентом.\n";
-			if (Student != null && !Student.Value)
-				res += $"{number++}. Кандидат НЕ повинен студентом.\n";
+				requirements += $"{number++}. Можливість відряджень.\n";
+			requirements += GetHealthRequirements(ref number);
+			requirements += GetEducationRequirements(ref number);
 
 			if (number == 2)
-				res = res.Remove(0, 3);
-			return res.TrimEnd('\n');
+				requirements = requirements.Remove(0, 3);
+			return requirements.TrimEnd('\n');
+		}
+		private string GetAgeRequirements(ref int number)
+		{
+			string requirements = string.Empty;
+			if (AgeMin.HasValue && AgeMax.HasValue)
+			{
+				if (AgeMin == AgeMax)
+					requirements += $"{number++}. Вік: {AgeMin} р.\n";
+				else
+					requirements += $"{number++}. Вік: від {AgeMin} р. до {AgeMax} р.\n";
+			}
+			else if (AgeMin.HasValue)
+				requirements += $"{number++}. Вік: від {AgeMin} р.\n";
+			else if (AgeMax.HasValue)
+				requirements += $"{number++}. Вік: до {AgeMax} р.\n";
+
+			return requirements;
+		}
+		private string GetHealthRequirements(ref int number)
+		{
+			string requirements = string.Empty;
+			if (NoChronicDiseases)
+				requirements += $"{number++}. Відсутність хронічних захворювань.\n";
+			if (NoSmoker)
+				requirements += $"{number++}. Кандидат НЕ повинен бути курцем.\n";
+			if (NoDrinkAlcohol)
+				requirements += $"{number++}. Кандидат НЕ повинен вживати алкогольні напої.\n";
+
+			return requirements;
+		}
+		private string GetEducationRequirements(ref int number)
+		{
+			string requirements = string.Empty;
+			if (Diploma)
+				requirements += $"{number++}. Наявність диплому.\n";
+			if (Student.HasValue && Student.Value)
+				requirements += $"{number++}. Кандидат повинен бути студентом.\n";
+			if (Student.HasValue && !Student.Value)
+				requirements += $"{number++}. Кандидат НЕ повинен студентом.\n";
+
+			return requirements;
 		}
 	}
 }
