@@ -57,7 +57,7 @@ namespace RecruitmentServer.Database
 			// If the attribute exists, we take its name, otherwise we use the class name
 			var tableName = tableAttributes?.FirstOrDefault()?.Name ?? entityType.Name;
 			// Reset autoincrement for table
-			_context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT ('{tableName}', RESEED, 0)");
+			_context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT ('{tableName}', RESEED, 1)");
 		}
 
 		#region Seed Database

@@ -1,14 +1,14 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RecruitmentLibrary.Assignment;
+using System.Linq;
 
 namespace AssignmentSolverTests
 {
+	[TestClass]
 	public class Tests
 	{
-		[SetUp]
-		public void Setup()
-		{ }
 
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm1()
 		{
 			// Arrange
@@ -49,12 +49,12 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [3, 0, 1, 4, 2];
+			int[] expect = { 3, 0, 1, 4, 2 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm2()
 		{
 			// Arrange
@@ -74,12 +74,12 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [1, -1, 0];
+			int[] expect = { 1, -1, 0 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm3()
 		{
 			// Arrange
@@ -105,12 +105,12 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [2, 0, 1];
+			int[] expect = { 2, 0, 1 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm4()
 		{
 			// Arrange
@@ -133,12 +133,12 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [0, 1, 2];
+			int[] expect = { 0, 1, 2 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm5()
 		{
 			// Arrange
@@ -174,12 +174,12 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [0, 2, 3, -1, 1];
+			int[] expect = { 0, 2, 3, -1, 1 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
-		[Test]
+		[TestMethod]
 		public void TestHungarianAlgorithm6()
 		{
 			// Arrange
@@ -205,10 +205,10 @@ namespace AssignmentSolverTests
 			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
 
 			// Assert
-			int[] expect = [0, 3, 2];
+			int[] expect = { 0, 3, 2 };
 			bool condition = result.SequenceEqual(expect);
 
-			Assert.That(condition);
+			Assert.IsTrue(condition);
 		}
 	}
 }
