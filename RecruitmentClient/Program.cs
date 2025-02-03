@@ -46,27 +46,8 @@ namespace RecruitmentClient
 
 			if (_account == null && Serializator.SerializationFileExists(SerializePath))
 				HandleAccountFileError();
-
 			else if (_account != null)
-			{
-				try
-				{
-					CandidateLoginDTO candidateLogin = new CandidateLoginDTO(
-						_account.Candidate.Login, _account.Candidate.Password);
-					_account.Candidate = null;
-					Task.Run(async () =>
-					{
-						_account.Candidate =
-							await Client.LoginCandidateAsync(candidateLogin);
-					}).Wait();
-					Application.Run(new MainForm(_account));
-				}
-				catch (AggregateException)
-				{ HandleAccountFileError(); }
-				catch (Exception ex) when (ex is TaskCanceledException
-				|| ex is System.Net.Http.HttpRequestException)
-				{ HandleNetworkError(); }
-			}
+				PerformLogin();
 			else
 				Application.Run(new StartForm());
 		}
@@ -81,15 +62,40 @@ namespace RecruitmentClient
 
 			Application.Exit();
 		}
+		private static void PerformLogin()
+		{
+			try
+			{
+				Cursor.Current = Cursors.WaitCursor;
+				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(
+					_account.Candidate.Login, _account.Candidate.Password);
+				_account.Candidate = null;
+				Task.Run(async () =>
+				{
+					_account.Candidate =
+						await Client.LoginCandidateAsync(candidateLogin);
+				}).Wait();
+				Application.Run(new MainForm(_account));
+			}
+			catch (AggregateException)
+			{ HandleAccountFileError(); }
+			catch (Exception ex) when (ex is TaskCanceledException
+			|| ex is System.Net.Http.HttpRequestException)
+			{ HandleNetworkError(); }
+			finally
+			{ Cursor.Current = Cursors.Default; }
+		}
 		private static bool FindServer()
 		{
 			Theme theme = _account == null ? default : _account.Theme;
 			LocalNetworkScanner scanner = new LocalNetworkScanner(_port);
 			List<IPAddress> address = null;
+			Cursor.Current = Cursors.WaitCursor;
 			Task.Run(async () =>
 			{
 				address = await scanner.ScanLocalNetworkAsync();
 			}).Wait();
+			Cursor.Current = Cursors.Default;
 
 			if (address == null || address.Count <= 0)
 			{

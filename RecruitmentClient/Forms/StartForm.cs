@@ -119,6 +119,7 @@ namespace RecruitmentClient.Forms
 			if (CheckValidInputData())
 				try
 				{
+					Cursor = Cursors.WaitCursor;
 					buttonBack.Enabled = false;
 					buttonRegisterContinue.Enabled = false;
 					bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(
@@ -137,6 +138,7 @@ namespace RecruitmentClient.Forms
 				{ Program.HandleNetworkError(); }
 				finally
 				{
+					Cursor = Cursors.Default;
 					buttonRegisterContinue.Enabled = true;
 					buttonBack.Enabled = true;
 				}
@@ -221,6 +223,7 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				labelRegisterStart.Enabled = false;
 				buttonLogin.Enabled = false;
 				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(textBoxLogin.Text,
@@ -246,6 +249,7 @@ namespace RecruitmentClient.Forms
 			}
 			finally
 			{
+				Cursor = Cursors.Default;
 				labelRegisterStart.Enabled = true;
 				buttonLogin.Enabled = true;
 			}
@@ -362,6 +366,7 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				var candidateChangePassword = new CandidateChangePasswordDTO(
 					_account.GetCandidateLogin(), textBoxPassword.Text);
 
@@ -373,6 +378,8 @@ namespace RecruitmentClient.Forms
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is HttpRequestException)
 			{ Program.HandleNetworkError(); }
+			finally
+			{ Cursor = Cursors.Default; }
 		}
 		#endregion
 

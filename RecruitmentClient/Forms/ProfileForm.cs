@@ -198,6 +198,7 @@ namespace RecruitmentClient.Forms
 			if (CheckValidData())
 				try
 				{
+					Cursor = Cursors.WaitCursor;
 					buttonApply.Enabled = false;
 					bool isDataUnique = await CheckDataUniqueAsync();
 					if (!isDataUnique)
@@ -224,12 +225,16 @@ namespace RecruitmentClient.Forms
 					|| ex is System.Net.Http.HttpRequestException)
 				{ Program.HandleNetworkError(); }
 				finally
-				{ buttonApply.Enabled = true; }
+				{
+					Cursor = Cursors.Default;
+					buttonApply.Enabled = true;
+				}
 		}
 		private async Task CreateCandidateAsync()
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				bool isLoginUnique = await Program.UniqueChecker.CheckLoginUniqueAsync(new Label()
 				{ Text = "Логін" }, _account.Candidate.Login, _account.Theme);
 				if (!isLoginUnique)
@@ -244,6 +249,8 @@ namespace RecruitmentClient.Forms
 				Program.HandleNetworkError();
 				return;
 			}
+			finally
+			{ Cursor = Cursors.Default; }
 
 			if (_startForm.NeedToRemember)
 				Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
@@ -265,6 +272,7 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				_account.Candidate = await Program.Client.UpdateCandidateAsync(_account.Candidate);
 				if (Serializator.SerializationFileExists(Program.SerializePath))
 					Serializator.Serialize(_account, Program.SerializePath, Program.EncryptKey);
@@ -272,6 +280,8 @@ namespace RecruitmentClient.Forms
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)
 			{ Program.HandleNetworkError(); }
+			finally
+			{ Cursor = Cursors.Default; }
 		}
 
 		public void SetTheme(Theme theme)

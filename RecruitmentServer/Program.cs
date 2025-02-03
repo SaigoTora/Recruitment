@@ -38,11 +38,13 @@ namespace RecruitmentServer
 			if (!IsRunningAsAdministrator())
 				RestartAsAdmin(account);
 
+			Cursor.Current = Cursors.WaitCursor;
 			DatabaseManager.Initialize();
 			Server = new Server(_port);
 			try
 			{
 				Server.Start();
+				Cursor.Current = Cursors.Default;
 				Application.Run(new MainForm(account));
 			}
 			catch (System.Net.HttpListenerException)

@@ -120,6 +120,7 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				buttonCareer.Enabled = false;
 				CandidateLoginDTO candidateLogin = new CandidateLoginDTO(_account.Candidate.Login,
 					_account.Candidate.Password);
@@ -133,7 +134,10 @@ namespace RecruitmentClient.Forms
 				|| ex is System.Net.Http.HttpRequestException)
 			{ Program.HandleNetworkError(); }
 			finally
-			{ buttonCareer.Enabled = true; }
+			{
+				Cursor = Cursors.Default;
+				buttonCareer.Enabled = true;
+			}
 		}
 		private void ButtonProfile_Click(object sender, EventArgs e)
 		{
@@ -194,11 +198,14 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				await CreateAndSetupFirstPanelsAsync(label);
 			}
 			catch (Exception ex) when (ex is TaskCanceledException
 				|| ex is System.Net.Http.HttpRequestException)
 			{ Program.HandleNetworkError(); }
+			finally
+			{ Cursor = Cursors.Default; }
 			labelEmpty.Visible = _totalItemsToDisplay == 0;
 		}
 		private void ClearContentPanel()
@@ -847,6 +854,7 @@ namespace RecruitmentClient.Forms
 			if (flpContent.VerticalScroll.Value + flpContent.Height
 				>= flpContent.VerticalScroll.Maximum)
 			{// The end of the panel is reached vertically
+				Cursor = Cursors.WaitCursor;
 				flpContent.VerticalScroll.Enabled = false;
 				try
 				{
@@ -861,7 +869,10 @@ namespace RecruitmentClient.Forms
 					|| ex is System.Net.Http.HttpRequestException)
 				{ Program.HandleNetworkError(); }
 				finally
-				{ flpContent.VerticalScroll.Enabled = true; }
+				{
+					Cursor = Cursors.Default;
+					flpContent.VerticalScroll.Enabled = true;
+				}
 			}
 		}
 		private void FlpContent_MouseWheel(object sender, MouseEventArgs e)

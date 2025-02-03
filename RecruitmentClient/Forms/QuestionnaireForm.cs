@@ -156,6 +156,7 @@ namespace RecruitmentClient.Forms
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				Enabled = false;
 				if (Program.StaticData == null)
 					Program.StaticData = await Program.Client.GetStaticDataAsync();
@@ -174,7 +175,10 @@ namespace RecruitmentClient.Forms
 				return;
 			}
 			finally
-			{ Enabled = true; }
+			{
+				Cursor = Cursors.Default;
+				Enabled = true;
+			}
 		}
 		private void ResetEducationFields()
 		{
@@ -398,6 +402,7 @@ namespace RecruitmentClient.Forms
 					{
 						if (!_account.Candidate.Questionnaire.Equals(_oldQuestionnaire))
 						{
+							Cursor = Cursors.WaitCursor;
 							buttonApply.Enabled = false;
 							QuestionnaireChangeDTO questionnaireChange
 								= new QuestionnaireChangeDTO(_account.GetCandidateLogin(),
@@ -414,7 +419,10 @@ namespace RecruitmentClient.Forms
 						return;
 					}
 					finally
-					{ buttonApply.Enabled = true; }
+					{
+						Cursor = Cursors.Default;
+						buttonApply.Enabled = true;
+					}
 				}
 
 				FormClosing -= QuestionnaireForm_FormClosing;

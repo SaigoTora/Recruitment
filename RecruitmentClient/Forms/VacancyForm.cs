@@ -91,6 +91,7 @@ namespace RecruitmentClient.Forms
 
 			try
 			{
+				Cursor = Cursors.WaitCursor;
 				richTextBoxClientAdditionalInfo.ReadOnly = true;
 				buttonRequirements.Enabled = false;
 				buttonSend.Enabled = false;
@@ -110,6 +111,7 @@ namespace RecruitmentClient.Forms
 			{ Program.HandleNetworkError(); }
 			finally
 			{
+				Cursor = Cursors.Default;
 				richTextBoxClientAdditionalInfo.ReadOnly = false;
 				buttonRequirements.Enabled = true;
 				buttonSend.Enabled = true;

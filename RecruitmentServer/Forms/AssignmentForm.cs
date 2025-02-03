@@ -45,12 +45,14 @@ namespace RecruitmentServer.Forms
 		}
 		private void AssignmentForm_Load(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			_allItems = DatabaseManager.GetAssignmentItems().ToArray();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
 			int[] results = AssignmentSolver.HungarianAlgorithm(matrix, true);
 			SetResultItems(results);
 
+			Cursor = Cursors.Default;
 			CreateFormResultItems();
 			SetTheme(_account.Theme);
 		}
