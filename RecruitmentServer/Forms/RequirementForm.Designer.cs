@@ -264,7 +264,7 @@
 			this.labelEducationDegree.Name = "labelEducationDegree";
 			this.labelEducationDegree.Size = new System.Drawing.Size(409, 32);
 			this.labelEducationDegree.TabIndex = 10;
-			this.labelEducationDegree.Text = "Мати ступінь/ступені освіти:";
+			this.labelEducationDegree.Text = "Мати рівень/рівні освіти:";
 			this.labelEducationDegree.Click += new System.EventHandler(this.LabelEducationDegree_Click);
 			// 
 			// listBoxDegrees

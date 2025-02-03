@@ -58,10 +58,10 @@ form nvarchar(32) UNIQUE NOT NULL,-- Форма
 );
 go
 
-CREATE Table Education_Degree-- 4. Ступені освіти
+CREATE Table Education_Degree-- 4. Рівні освіти
 (
 id int NOT NULL IDENTITY(1,1) Primary Key,-- Код
-degree nvarchar(32) UNIQUE NOT NULL,-- Ступінь
+degree nvarchar(32) UNIQUE NOT NULL,-- Рівень
 );
 go
 
@@ -115,12 +115,12 @@ business_trip_opportunity int NOT NULL default 0 check (business_trip_opportunit
 );
 go
 
-CREATE Table EducationDegree_Point--10. СтупеніОсвіти_Бали(проміжна)
+CREATE Table EducationDegree_Point-- 10. РівніОсвіти_Бали(проміжна)
 (
 id int NOT NULL IDENTITY(1,1) Primary Key,-- Код
-points int NOT NULL default 0 check (points >= 0 AND points <= 10),-- Кількість балів за ступінь освіти[0;10]
+points int NOT NULL default 0 check (points >= 0 AND points <= 10),-- Кількість балів за рівень освіти[0;10]
 id_point int NOT NULL,-- Код таблиці з балами
-id_education_degree int NOT NULL,--Код ступеня освіти
+id_education_degree int NOT NULL,-- Код рівня освіти
 Foreign key(id_point) References Point(id) ON DELETE CASCADE,-- Зовнішні ключі
 Foreign key(id_education_degree) References Education_Degree(id),
 );
@@ -143,11 +143,11 @@ student bit NULL default 0,-- Є студентом
 );-- Для всіх полів де може бути 'False' або 'True', окрім student, відповідь False означає те, що вимога не використовуватиметься, а у student - NULL
 go
 
-CREATE Table EducationDegree_Requirement-- 12. СтупеніОсвіти_Вимоги(проміжна)
+CREATE Table EducationDegree_Requirement-- 12. РівніОсвіти_Вимоги(проміжна)
 (
 id int NOT NULL IDENTITY(1,1) Primary Key,-- Код
 id_requirement int NOT NULL,-- Код вимоги
-id_education_degree int NOT NULL,--Код ступеня освіти
+id_education_degree int NOT NULL,-- Код рівня освіти
 Foreign key(id_requirement) References Requirement(id) ON DELETE CASCADE,-- Зовнішні ключі
 Foreign key(id_education_degree) References Education_Degree(id),
 );
@@ -206,7 +206,7 @@ specialty nvarchar(64) NOT NULL,-- Спеціальність
 year_admission int NOT NULL default 1950 check(year_admission >= 1950),-- Рік вступу
 date_end date NOT NULL default '1951-01-01' check(YEAR(date_end) >= 1951),-- Дата закінчення
 id_questionnaire int NOT NULL,-- Код анкети
-id_education_degree int NOT NULL,-- Код ступеня освіти
+id_education_degree int NOT NULL,-- Код рівня освіти
 id_education_form int NOT NULL,-- Код форми навчання
 Foreign key(id_questionnaire) References Questionnaire(id) ON DELETE CASCADE,-- Зовнішні ключі
 Foreign key(id_education_degree) References Education_Degree(id),
@@ -513,35 +513,35 @@ INNER JOIN Vacancy ON id_vacancy = Vacancy.id
 WHERE id_interview_status = @id_interview_status_accept)
 go
 
-CREATE TRIGGER Interview_Delete_Trigger--8. Співбесіди
+CREATE TRIGGER Interview_Delete_Trigger-- 8. Співбесіди
 ON Interview
 FOR DELETE
 AS-- Якщо видаляється співбесіда, то також видаляється і заявка
 DELETE FROM Application WHERE id IN (SELECT id_application FROM deleted)
 go
 
-CREATE TRIGGER Employee_Delete_Trigger--9. Співробітники
+CREATE TRIGGER Employee_Delete_Trigger-- 9. Співробітники
 ON Employee
 FOR DELETE
 AS-- Якщо видаляється співробітник, то також видаляється і співбесіда
 DELETE FROM Interview WHERE id IN (SELECT id_interview FROM deleted)
 go
 
-CREATE TRIGGER Questionnaire_Delete_Trigger--10. Анкети
+CREATE TRIGGER Questionnaire_Delete_Trigger-- 10. Анкети
 ON Questionnaire
 FOR DELETE
 AS-- Якщо видаляється анкета, то також видаляється і здоров'я
 DELETE FROM Health WHERE id IN (SELECT id_health FROM deleted)
 go
 
-CREATE TRIGGER Candidate_Delete_Trigger--11. Кандидати
+CREATE TRIGGER Candidate_Delete_Trigger-- 11. Кандидати
 ON Candidate
 FOR DELETE
 AS-- Якщо видаляється кандидат, то також видаляється і анкета
 DELETE FROM Questionnaire WHERE id IN (SELECT id_questionnaire FROM deleted)
 go
 
-CREATE TRIGGER Vacancy_Delete_Trigger--12. Вакансії
+CREATE TRIGGER Vacancy_Delete_Trigger-- 12. Вакансії
 ON Vacancy
 FOR DELETE
 AS-- Якщо видаляється вакансія, то також видаляється: посада, вимоги і таблиця з балами
@@ -582,7 +582,7 @@ OR driver_license = 'True' AND has_driver_license = 'False'-- Посвідчен
 OR no_smoker = 'True' AND smoker = 'True'-- Курець
 OR no_drink_alcohol = 'True' AND drink_alcohol = 'True'-- Вживає алкоголь
 OR business_trip_opportunity = 'True' AND id_business_trip_opportunity = @id_no_business_trip_opportunity-- Не має можливостей відряджень
-OR student = 'True' AND-- потрібен студент
+OR student = 'True' AND-- Потрібен студент
 (SELECT COUNT(Education.id) FROM Education
 WHERE Education.id_questionnaire = View_Requirement.questionnaire_id AND
 (YEAR(GETDATE()) < year_admission OR GETDATE() > date_end)) > 0
@@ -590,7 +590,7 @@ OR student = 'False' AND-- НЕ потрібен студент
 (SELECT COUNT(Education.id) FROM Education
 WHERE Education.id_questionnaire = View_Requirement.questionnaire_id AND
 (YEAR(GETDATE()) >= year_admission AND GETDATE() <= date_end)) > 0
-OR ((SELECT COUNT(edr.id) FROM EducationDegree_Requirement edr-- Ступені освіти
+OR ((SELECT COUNT(edr.id) FROM EducationDegree_Requirement edr-- Рівні освіти
 WHERE edr.id_requirement = View_Requirement.requirement_id) > 0-- Якщо є вимоги
 AND (SELECT COUNT(edr.id) FROM EducationDegree_Requirement edr-- Та освіта не відповідає вимогам
 INNER JOIN Education ON edr.id_education_degree = Education.id_education_degree
@@ -667,7 +667,7 @@ WHERE id_vacancy IN
 INNER JOIN Vacancy ON deleted.id = Vacancy.id_requirement)
 go
 
-CREATE TRIGGER EducationDegreePoint_Insert_Update_Trigger-- 16. СтупеніОсвіти_Бали
+CREATE TRIGGER EducationDegreePoint_Insert_Update_Trigger-- 16. РівніОсвіти_Бали
 ON EducationDegree_Point
 AFTER INSERT,UPDATE
 AS
@@ -678,7 +678,7 @@ INNER JOIN Point ON inserted.id_point = Point.id
 INNER JOIN Vacancy ON Point.id = Vacancy.id_point)
 go
 
-CREATE TRIGGER EducationDegreePoint_Delete_Trigger-- 17. СтупеніОсвіти_Бали
+CREATE TRIGGER EducationDegreePoint_Delete_Trigger-- 17. РівніОсвіти_Бали
 ON EducationDegree_Point
 AFTER DELETE
 AS
@@ -689,7 +689,7 @@ INNER JOIN Point ON deleted.id_point = Point.id
 INNER JOIN Vacancy ON Point.id = Vacancy.id_point)
 go
 
-CREATE TRIGGER EducationDegree_Requirement_Insert_Update_Trigger-- 18. СтупеніОсвіти_Вимоги
+CREATE TRIGGER EducationDegree_Requirement_Insert_Update_Trigger-- 18. РівніОсвіти_Вимоги
 ON EducationDegree_Requirement
 AFTER INSERT,UPDATE
 AS
@@ -700,7 +700,7 @@ INNER JOIN Requirement ON inserted.id_requirement = Requirement.id
 INNER JOIN Vacancy ON Requirement.id = Vacancy.id_requirement)
 go
 
-CREATE TRIGGER EducationDegree_Requirement_Delete_Trigger-- 19. СтупеніОсвіти_Вимоги
+CREATE TRIGGER EducationDegree_Requirement_Delete_Trigger-- 19. РівніОсвіти_Вимоги
 ON EducationDegree_Requirement
 AFTER DELETE
 AS

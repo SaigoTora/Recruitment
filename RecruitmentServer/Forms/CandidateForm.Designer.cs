@@ -347,7 +347,7 @@
 			this.labelEducationDegree.Size = new System.Drawing.Size(600, 32);
 			this.labelEducationDegree.TabIndex = 3;
 			this.labelEducationDegree.Tag = "fixedPosition";
-			this.labelEducationDegree.Text = "Ступінь освіти";
+			this.labelEducationDegree.Text = "Рівень освіти";
 			// 
 			// labelNameInstitution
 			// 

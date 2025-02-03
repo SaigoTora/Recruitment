@@ -845,7 +845,7 @@
 			this.labelEducationDegree.Size = new System.Drawing.Size(223, 32);
 			this.labelEducationDegree.TabIndex = 5;
 			this.labelEducationDegree.Tag = "fixedPosition";
-			this.labelEducationDegree.Text = "Ступінь освіти:";
+			this.labelEducationDegree.Text = "Рівень освіти:";
 			this.labelEducationDegree.Click += new System.EventHandler(this.LabelEducationDegree_Click);
 			// 
 			// labelChronicDiseasesInfo

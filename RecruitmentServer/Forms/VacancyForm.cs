@@ -173,7 +173,7 @@ namespace RecruitmentServer.Forms
 			{
 				if (requirement != string.Empty)
 					requirement += "\n\n";
-				requirement += $"Необхідно мати один із ступенів освіти: {educationDegrees}.";
+				requirement += $"Необхідно мати один із рівнів освіти: {educationDegrees}.";
 			}
 			if (requirement == string.Empty)
 				requirement = "Вимоги відсутні.";

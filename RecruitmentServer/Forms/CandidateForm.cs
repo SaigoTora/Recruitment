@@ -126,7 +126,7 @@ namespace RecruitmentServer.Forms
 					educations[i].NameInstitution);
 				_educationCreator.CreateLabel(labelSpecialty, "Спецальність: " +
 					educations[i].Specialty);
-				_educationCreator.CreateLabel(labelEducationDegree, "Ступінь освіти: " +
+				_educationCreator.CreateLabel(labelEducationDegree, "Рівень освіти: " +
 					educations[i].EducationDegree.Degree);
 				_educationCreator.CreateLabel(labelYearAdmission, "Рік вступу: " +
 					educations[i].YearAdmission);

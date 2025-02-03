@@ -57,7 +57,18 @@ namespace RecruitmentServer.Database
 			// If the attribute exists, we take its name, otherwise we use the class name
 			var tableName = tableAttributes?.FirstOrDefault()?.Name ?? entityType.Name;
 			// Reset autoincrement for table
-			_context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT ('{tableName}', RESEED, 1)");
+			int value = GetCurrentIdentity(tableName) != 1
+				? 0
+				: 1;
+			_context.Database.ExecuteSqlCommand($"DBCC CHECKIDENT ('{tableName}', RESEED, " +
+				$"{value})");
+		}
+		private static decimal GetCurrentIdentity(string tableName)
+		{
+			var query = $"SELECT IDENT_CURRENT('{tableName}')";
+
+			var result = _context.Database.SqlQuery<decimal>(query).FirstOrDefault();
+			return result;
 		}
 
 		#region Seed Database
@@ -119,7 +130,7 @@ namespace RecruitmentServer.Database
 				new EducationDegree("Бакалавр"),
 				new EducationDegree("Спеціаліст"),
 				new EducationDegree("Магістр"),
-				new EducationDegree("Доктор наук")
+				new EducationDegree("Доктор філософії")
 			});
 
 			_context.SaveChanges();

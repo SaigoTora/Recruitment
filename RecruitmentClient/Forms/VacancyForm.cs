@@ -60,7 +60,7 @@ namespace RecruitmentClient.Forms
 				if (_requirements != string.Empty)
 					_requirements += "\n\n";
 				_requirements += $"Необхідно мати один " +
-					$"із ступенів освіти: {educationDegrees}.";
+					$"із рівнів освіти: {educationDegrees}.";
 			}
 			if (_requirements == string.Empty)
 				_requirements = "Вимоги відсутні.";
