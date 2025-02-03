@@ -33,6 +33,8 @@ namespace UIHelpers.Controls
 				Margin = sample.Margin,
 				Location = sample.Location,
 				Size = sample.Size,
+				MinimumSize = sample.MinimumSize,
+				MaximumSize = sample.MaximumSize,
 				BackColor = sample.BackColor,
 				ForeColor = sample.ForeColor,
 				Font = sample.Font,

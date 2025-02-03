@@ -13,6 +13,7 @@ using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
+using System.Runtime.InteropServices;
 
 namespace RecruitmentServer.Forms
 {
@@ -27,9 +28,9 @@ namespace RecruitmentServer.Forms
 
 	internal partial class MainForm : BaseForm, IThemeChange
 	{
-		private const int COUNT_ON_PAGE = 3;
+		private const int COUNT_ON_PAGE = 10;
 		private const int DEFAULT_SEARCH_DATE = 5;
-		private const int SCROLL_PADDING = 6;
+		private const int SCROLL_PADDING = 17;
 
 		private readonly (Color Accepted, Color Waiting, Color Invited, Color Rejected)
 			_statusColor = (Color.FromArgb(0, 109, 91), Color.FromArgb(255, 185, 97),
@@ -86,11 +87,11 @@ namespace RecruitmentServer.Forms
 			_currentComboBoxStatusIndex = comboBoxStatus.SelectedIndex;
 			_currentComboBoxSortIndex = comboBoxSort.SelectedIndex;
 
+			SetTheme(_account.Theme);
 			_labelEventHandlers.SubscribeToHoverUnderline(labelVacancy, labelApplication,
 				labelInterview, labelEmployee);
 			_pictureBoxEventHandlers.SubscribeToHover(pictureBoxRefresh,
 				pictureBoxDown, pictureBoxUp, pictureBoxTheme);
-			SetTheme(_account.Theme);
 		}
 
 		private void ButtonAssignment_Click(object sender, EventArgs e)
@@ -933,12 +934,32 @@ namespace RecruitmentServer.Forms
 			if (e.Delta < 0 && flpContent.VerticalScroll.Value > 0)
 				FlpContent_Scroll(sender, EventArgs.Empty as ScrollEventArgs);
 		}
+
 		private void FlpContent_Resize(object sender, EventArgs e)
 		{
 			foreach (Control control in flpContent.Controls)
 				if (control is Guna2GradientPanel)
 					control.Width = flpContent.ClientSize.Width -
 						control.Margin.Horizontal - SCROLL_PADDING;
+		}
+		#endregion
+
+		#region Disable horizontal scroll bar in flpContent
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
+		private enum ScrollBarDirection
+		{
+			SB_HORZ = 0,
+			SB_VERT = 1,
+			SB_CTL = 2,
+			SB_BOTH = 3
+		}
+
+		protected override void WndProc(ref Message m)
+		{
+			ShowScrollBar(flpContent.Handle, (int)ScrollBarDirection.SB_HORZ, false);
+			base.WndProc(ref m);
 		}
 		#endregion
 

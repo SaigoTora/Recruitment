@@ -767,7 +767,6 @@
 			// 
 			// labelMinMax2
 			// 
-			this.labelMinMax2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelMinMax2.AutoSize = true;
 			this.labelMinMax2.Font = new System.Drawing.Font("Georgia", 20.25F);
 			this.labelMinMax2.ForeColor = System.Drawing.Color.Black;
@@ -781,7 +780,6 @@
 			// 
 			// labelMinMax
 			// 
-			this.labelMinMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelMinMax.AutoEllipsis = true;
 			this.labelMinMax.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelMinMax.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -939,7 +937,7 @@
 			this.textBoxSearch.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxSearch.ForeColor = System.Drawing.Color.Black;
 			this.textBoxSearch.HoverState.BorderColor = System.Drawing.Color.Black;
-			this.textBoxSearch.Location = new System.Drawing.Point(819, 9);
+			this.textBoxSearch.Location = new System.Drawing.Point(819, 10);
 			this.textBoxSearch.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.textBoxSearch.MaxLength = 64;
 			this.textBoxSearch.Name = "textBoxSearch";
@@ -1051,7 +1049,7 @@
 			this.pictureBoxSearch.BackColor = System.Drawing.Color.Transparent;
 			this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Default;
 			this.pictureBoxSearch.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch.Image")));
-			this.pictureBoxSearch.Location = new System.Drawing.Point(1100, 10);
+			this.pictureBoxSearch.Location = new System.Drawing.Point(1100, 11);
 			this.pictureBoxSearch.Name = "pictureBoxSearch";
 			this.pictureBoxSearch.Size = new System.Drawing.Size(30, 30);
 			this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
