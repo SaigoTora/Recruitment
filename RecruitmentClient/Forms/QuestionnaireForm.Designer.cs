@@ -840,9 +840,9 @@
 			this.labelEducationDegree.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labelEducationDegree.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEducationDegree.ForeColor = System.Drawing.Color.Black;
-			this.labelEducationDegree.Location = new System.Drawing.Point(82, 164);
+			this.labelEducationDegree.Location = new System.Drawing.Point(99, 164);
 			this.labelEducationDegree.Name = "labelEducationDegree";
-			this.labelEducationDegree.Size = new System.Drawing.Size(223, 32);
+			this.labelEducationDegree.Size = new System.Drawing.Size(206, 32);
 			this.labelEducationDegree.TabIndex = 5;
 			this.labelEducationDegree.Tag = "fixedPosition";
 			this.labelEducationDegree.Text = "Рівень освіти:";

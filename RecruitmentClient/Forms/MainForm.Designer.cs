@@ -322,7 +322,7 @@
 			this.panelVacancy.Location = new System.Drawing.Point(0, 5);
 			this.panelVacancy.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelVacancy.Name = "panelVacancy";
-			this.panelVacancy.Size = new System.Drawing.Size(1134, 110);
+			this.panelVacancy.Size = new System.Drawing.Size(1134, 168);
 			this.panelVacancy.TabIndex = 0;
 			this.panelVacancy.Visible = false;
 			// 
@@ -346,7 +346,7 @@
 			this.buttonVacancy.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonVacancy.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonVacancy.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonVacancy.Location = new System.Drawing.Point(25, 130);
+			this.buttonVacancy.Location = new System.Drawing.Point(25, 120);
 			this.buttonVacancy.Name = "buttonVacancy";
 			this.buttonVacancy.PressedColor = System.Drawing.Color.White;
 			this.buttonVacancy.PressedDepth = 20;
@@ -362,7 +362,7 @@
 			this.labelDatePublicationV.BackColor = System.Drawing.Color.Transparent;
 			this.labelDatePublicationV.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDatePublicationV.ForeColor = System.Drawing.Color.Black;
-			this.labelDatePublicationV.Location = new System.Drawing.Point(2118, 150);
+			this.labelDatePublicationV.Location = new System.Drawing.Point(2118, 208);
 			this.labelDatePublicationV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelDatePublicationV.Name = "labelDatePublicationV";
 			this.labelDatePublicationV.Size = new System.Drawing.Size(525, 25);
@@ -411,7 +411,7 @@
 			this.labelPositionDescriptionV.Location = new System.Drawing.Point(482, 3);
 			this.labelPositionDescriptionV.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelPositionDescriptionV.Name = "labelPositionDescriptionV";
-			this.labelPositionDescriptionV.Size = new System.Drawing.Size(635, 67);
+			this.labelPositionDescriptionV.Size = new System.Drawing.Size(635, 125);
 			this.labelPositionDescriptionV.TabIndex = 1;
 			this.labelPositionDescriptionV.Tag = "fixedPosition";
 			this.labelPositionDescriptionV.Text = resources.GetString("labelPositionDescriptionV.Text");
@@ -430,7 +430,7 @@
 			this.panelApplication.FillColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelApplication.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelApplication.ForeColor = System.Drawing.Color.Black;
-			this.panelApplication.Location = new System.Drawing.Point(0, 125);
+			this.panelApplication.Location = new System.Drawing.Point(0, 183);
 			this.panelApplication.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelApplication.Name = "panelApplication";
 			this.panelApplication.Size = new System.Drawing.Size(1134, 107);
@@ -537,7 +537,7 @@
 			this.panelInterview.FillColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelInterview.FillColor2 = System.Drawing.SystemColors.ControlDarkDark;
 			this.panelInterview.ForeColor = System.Drawing.Color.Black;
-			this.panelInterview.Location = new System.Drawing.Point(0, 242);
+			this.panelInterview.Location = new System.Drawing.Point(0, 300);
 			this.panelInterview.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
 			this.panelInterview.Name = "panelInterview";
 			this.panelInterview.Size = new System.Drawing.Size(1134, 107);
@@ -608,7 +608,7 @@
 			this.labelEmpty.BackColor = System.Drawing.Color.Transparent;
 			this.labelEmpty.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEmpty.ForeColor = System.Drawing.Color.Black;
-			this.labelEmpty.Location = new System.Drawing.Point(2, 354);
+			this.labelEmpty.Location = new System.Drawing.Point(2, 412);
 			this.labelEmpty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelEmpty.Name = "labelEmpty";
 			this.labelEmpty.Padding = new System.Windows.Forms.Padding(12);
