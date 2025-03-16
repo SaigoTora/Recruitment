@@ -49,7 +49,7 @@ namespace RecruitmentServer.Forms
 			_allItems = DatabaseManager.GetAssignmentItems().ToArray();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
-			int[] results = AssignmentSolver.HungarianAlgorithm(matrix, true);
+			int[] results = HungarianAssignmentSolver.Solve(matrix, true);
 			SetResultItems(results);
 
 			Cursor = Cursors.Default;

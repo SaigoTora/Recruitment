@@ -5,11 +5,10 @@ using System.Linq;
 namespace AssignmentSolverTests
 {
 	[TestClass]
-	public class Tests
+	public class HungarianAssignmentSolverTests
 	{
-
 		[TestMethod]
-		public void TestHungarianAlgorithm1()
+		public void TestHungarianAlgorithm_Scenario1()
 		{
 			// Arrange
 			int[,] matrix = new int[5, 5];
@@ -46,7 +45,7 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 3, 0, 1, 4, 2 };
@@ -55,7 +54,7 @@ namespace AssignmentSolverTests
 			Assert.IsTrue(condition);
 		}
 		[TestMethod]
-		public void TestHungarianAlgorithm2()
+		public void TestHungarianAlgorithm_Scenario2()
 		{
 			// Arrange
 			int[,] matrix = new int[3, 2];
@@ -71,7 +70,7 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 1, -1, 0 };
@@ -80,7 +79,7 @@ namespace AssignmentSolverTests
 			Assert.IsTrue(condition);
 		}
 		[TestMethod]
-		public void TestHungarianAlgorithm3()
+		public void TestHungarianAlgorithm_Scenario3()
 		{
 			// Arrange
 			int[,] matrix = new int[3, 4];
@@ -102,7 +101,7 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 2, 0, 1 };
@@ -111,7 +110,7 @@ namespace AssignmentSolverTests
 			Assert.IsTrue(condition);
 		}
 		[TestMethod]
-		public void TestHungarianAlgorithm4()
+		public void TestHungarianAlgorithm_Scenario4()
 		{
 			// Arrange
 			int[,] matrix = new int[3, 3];
@@ -130,7 +129,7 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 1, 2 };
@@ -139,7 +138,7 @@ namespace AssignmentSolverTests
 			Assert.IsTrue(condition);
 		}
 		[TestMethod]
-		public void TestHungarianAlgorithm5()
+		public void TestHungarianAlgorithm_Scenario5()
 		{
 			// Arrange
 			int[,] matrix = new int[5, 4];
@@ -171,7 +170,7 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 2, 3, -1, 1 };
@@ -180,7 +179,7 @@ namespace AssignmentSolverTests
 			Assert.IsTrue(condition);
 		}
 		[TestMethod]
-		public void TestHungarianAlgorithm6()
+		public void TestHungarianAlgorithm_Scenario6()
 		{
 			// Arrange
 			int[,] matrix = new int[3, 4];
@@ -202,7 +201,7 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AssignmentSolver.HungarianAlgorithm(matrix, findMax);
+			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 3, 2 };

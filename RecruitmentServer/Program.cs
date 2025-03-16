@@ -36,7 +36,8 @@ namespace RecruitmentServer
 				?? new Account();
 
 			if (!IsRunningAsAdministrator())
-				RestartAsAdmin(account);
+				if (!RestartAsAdmin(account))
+					return;
 
 			Cursor.Current = Cursors.WaitCursor;
 			DatabaseManager.Initialize();
@@ -66,7 +67,7 @@ namespace RecruitmentServer
 			WindowsPrincipal principal = new WindowsPrincipal(identity);
 			return principal.IsInRole(WindowsBuiltInRole.Administrator);
 		}
-		private static void RestartAsAdmin(Account account)
+		private static bool RestartAsAdmin(Account account)
 		{
 			try
 			{
@@ -80,7 +81,10 @@ namespace RecruitmentServer
 				CustomMessageBox.Show("Без запуску програми від імені адміністратора ви " +
 					"не зможете запустити програму.", account.Theme, "Error",
 					CustomMessageBoxButtons.OK, CustomMessageBoxIcon.Error);
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

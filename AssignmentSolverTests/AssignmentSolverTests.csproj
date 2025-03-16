@@ -49,7 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssignmentSolverTests.cs" />
+    <Compile Include="AuctionAssignmentSolverTests.cs" />
+    <Compile Include="HungarianAssignmentSolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

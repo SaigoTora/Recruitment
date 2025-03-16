@@ -2,7 +2,7 @@
 
 namespace RecruitmentLibrary.Assignment
 {
-	public class AssignmentSolver
+	public class HungarianAssignmentSolver
 	{
 		private readonly struct Location
 		{
@@ -16,13 +16,12 @@ namespace RecruitmentLibrary.Assignment
 			}
 		}
 
-		public static int[] HungarianAlgorithm(int[,] costs, bool findMax)
+		public static int[] Solve(int[,] costs, bool findMax)
 		{
 			if (costs == null)
 				throw new ArgumentNullException(nameof(costs));
 
-			int n = costs.GetLength(0);// Initial matrix dimensions
-			int m = costs.GetLength(1);
+			int n = costs.GetLength(0), m = costs.GetLength(1);// Initial matrix dimensions
 			if (costs.GetLength(0) != costs.GetLength(1))
 				costs = CreateSquareMatrix(costs);
 
