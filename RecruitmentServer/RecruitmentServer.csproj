@@ -95,6 +95,12 @@
     <Compile Include="Database\Repositories\EmployeeRepo.cs" />
     <Compile Include="Database\Repositories\InterviewRepo.cs" />
     <Compile Include="Database\Repositories\VacancyRepo.cs" />
+    <Compile Include="Forms\AssignmentSolver\AssignmentSolverMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AssignmentSolver\AssignmentSolverMenuForm.Designer.cs">
+      <DependentUpon>AssignmentSolverMenuForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AssignmentItem.cs" />
     <Compile Include="Forms\InterviewForm.cs">
       <SubType>Form</SubType>
@@ -102,11 +108,11 @@
     <Compile Include="Forms\InterviewForm.Designer.cs">
       <DependentUpon>InterviewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AssignmentForm.cs">
+    <Compile Include="Forms\AssignmentSolver\AssignmentSolverForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AssignmentForm.Designer.cs">
-      <DependentUpon>AssignmentForm.cs</DependentUpon>
+    <Compile Include="Forms\AssignmentSolver\AssignmentSolverForm.Designer.cs">
+      <DependentUpon>AssignmentSolverForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Database\Repositories\Base\BaseRepo.cs" />
     <Compile Include="Database\DatabaseInitializer.cs" />
@@ -166,6 +172,9 @@
     <Compile Include="Forms\EmployeeForm.Designer.cs">
       <DependentUpon>EmployeeForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AssignmentSolver\AssignmentSolverMenuForm.resx">
+      <DependentUpon>AssignmentSolverMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\InterviewForm.resx">
       <DependentUpon>InterviewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -181,8 +190,8 @@
     <EmbeddedResource Include="Forms\CandidateForm.resx">
       <DependentUpon>CandidateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AssignmentForm.resx">
-      <DependentUpon>AssignmentForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AssignmentSolver\AssignmentSolverForm.resx">
+      <DependentUpon>AssignmentSolverForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VacancyForm.resx">
       <DependentUpon>VacancyForm.cs</DependentUpon>

@@ -8,6 +8,8 @@ namespace AssignmentSolverTests
 	[TestClass]
 	public class AuctionAssignmentSolverTests
 	{
+		private AuctionAssignmentSolver _auctionAssignmentSolver;
+
 		[TestMethod]
 		public void TestAuctionAlgorithm_Scenario1()
 		{
@@ -46,7 +48,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 3, 0, 1, 4, 2 };
@@ -71,7 +74,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 1, -1, 0 };
@@ -102,7 +106,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] firstExpect = { 2, 0, 1 };
@@ -132,7 +137,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 1, 2 };
@@ -173,7 +179,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 2, 3, -1, 1 };
@@ -204,7 +211,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = AuctionAssignmentSolver.Solve(matrix, findMax);
+			_auctionAssignmentSolver = new AuctionAssignmentSolver();
+			int[] result = _auctionAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 3, 2 };

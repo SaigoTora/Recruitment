@@ -1,34 +1,34 @@
-﻿namespace RecruitmentServer.Forms
+﻿namespace RecruitmentServer.Forms.AssignmentSolver
 {
-    partial class AssignmentForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class AssignmentSolverForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssignmentForm));
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssignmentSolverForm));
 			this.flpContent = new System.Windows.Forms.FlowLayoutPanel();
 			this.panelAssignment = new Guna.UI2.WinForms.Guna2GradientPanel();
 			this.buttonVacancy = new Guna.UI2.WinForms.Guna2GradientButton();
@@ -60,8 +60,8 @@
 			// 
 			// panelAssignment
 			// 
-			this.panelAssignment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelAssignment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.panelAssignment.BackColor = System.Drawing.Color.Transparent;
 			this.panelAssignment.BorderRadius = 40;
 			this.panelAssignment.Controls.Add(this.buttonVacancy);
@@ -258,15 +258,15 @@
 			this.panelAssignment.ResumeLayout(false);
 			this.ResumeLayout(false);
 
-        }
+		}
 
-        #endregion
-        private System.Windows.Forms.FlowLayoutPanel flpContent;
-        private System.Windows.Forms.Label labelCandidate;
-        private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelVacancy;
-        private System.Windows.Forms.Label labelScores;
-        private System.Windows.Forms.Label labelEmpty;
+		#endregion
+		private System.Windows.Forms.FlowLayoutPanel flpContent;
+		private System.Windows.Forms.Label labelCandidate;
+		private System.Windows.Forms.Label labelTitle;
+		private System.Windows.Forms.Label labelVacancy;
+		private System.Windows.Forms.Label labelScores;
+		private System.Windows.Forms.Label labelEmpty;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonCandidate;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonVacancy;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonApplication;

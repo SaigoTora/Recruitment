@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using RecruitmentLibrary.Serialization;
@@ -13,7 +14,7 @@ using UIHelpers.ControlEventHandlers;
 using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
-using System.Runtime.InteropServices;
+using RecruitmentServer.Forms.AssignmentSolver;
 
 namespace RecruitmentServer.Forms
 {
@@ -96,8 +97,13 @@ namespace RecruitmentServer.Forms
 
 		private void ButtonAssignment_Click(object sender, EventArgs e)
 		{
-			AssignmentForm assignmentForm = new AssignmentForm(_account, SelectLabel);
-			assignmentForm.ShowDialog();
+			AssignmentSolverMenuForm assignmentSolverMenuForm
+				= new AssignmentSolverMenuForm(_account, SelectLabel);
+			assignmentSolverMenuForm.Show();
+			assignmentSolverMenuForm.FormClosed += (s, args) =>
+			{ Visible = true; };
+			Visible = false;
+
 		}
 		private void ButtonAddVacancy_Click(object sender, EventArgs e)
 		{

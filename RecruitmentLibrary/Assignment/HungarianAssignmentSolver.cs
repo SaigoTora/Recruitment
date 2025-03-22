@@ -2,7 +2,7 @@
 
 namespace RecruitmentLibrary.Assignment
 {
-	public class HungarianAssignmentSolver
+	public class HungarianAssignmentSolver : IAssignmentSolver
 	{
 		private readonly struct Location
 		{
@@ -16,7 +16,7 @@ namespace RecruitmentLibrary.Assignment
 			}
 		}
 
-		public static int[] Solve(int[,] costs, bool findMax)
+		public int[] Solve(int[,] costs, bool findMax)
 		{
 			if (costs == null)
 				throw new ArgumentNullException(nameof(costs));
@@ -117,7 +117,7 @@ namespace RecruitmentLibrary.Assignment
 			return agentsTasks;
 		}
 
-		private static int[,] CreateSquareMatrix(int[,] matrix)
+		private int[,] CreateSquareMatrix(int[,] matrix)
 		{
 			if (matrix.GetLength(0) == matrix.GetLength(1))
 				return matrix;
@@ -147,7 +147,7 @@ namespace RecruitmentLibrary.Assignment
 			}
 			return buf;
 		}
-		private static int RunStep1(byte[,] masks, bool[] colsCovered)
+		private int RunStep1(byte[,] masks, bool[] colsCovered)
 		{// Method that fills the colsCovered array and returns the next step number (2 or -1)
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -173,7 +173,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return 2;
 		}
-		private static int RunStep2(int[,] costs, byte[,] masks, bool[] rowsCovered,
+		private int RunStep2(int[,] costs, byte[,] masks, bool[] rowsCovered,
 			bool[] colsCovered, ref Location pathStart)
 		{// Method that modifies the colsCovered and rowsCovered arrays
 		 // and also returns the next step number (4 or 3)
@@ -207,7 +207,7 @@ namespace RecruitmentLibrary.Assignment
 				}
 			}
 		}
-		private static int RunStep3(byte[,] masks, bool[] rowsCovered,
+		private int RunStep3(byte[,] masks, bool[] rowsCovered,
 			bool[] colsCovered, Location[] path, Location pathStart)
 		{// Method that modifies the path array and also returns the next step number(1)
 			if (masks == null)
@@ -243,7 +243,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return 1;
 		}
-		private static int RunStep4(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
+		private int RunStep4(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
 		{// Method that changes the data in costs and returns the next step number(2)
 			if (costs == null)
 				throw new ArgumentNullException(nameof(costs));
@@ -269,7 +269,7 @@ namespace RecruitmentLibrary.Assignment
 			return 2;
 		}
 
-		private static int FindMinimum(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
+		private int FindMinimum(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
 		{// Method that finds the minimum value among NOT crossed out elements
 			if (costs == null)
 				throw new ArgumentNullException(nameof(costs));
@@ -287,7 +287,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return minValue;
 		}
-		private static int FindIndexInRow(byte[,] masks, int row)
+		private int FindIndexInRow(byte[,] masks, int row)
 		{// The method returns the column index if there is a unit in a particular row
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -298,7 +298,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return -1;// If not found
 		}
-		private static int FindIndexInColumn(byte[,] masks, int col)
+		private int FindIndexInColumn(byte[,] masks, int col)
 		{// The method returns the row index if there is a unit in a certain column
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -309,7 +309,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return -1;// If not found
 		}
-		private static int FindPrimeInRow(byte[,] masks, int row)
+		private int FindPrimeInRow(byte[,] masks, int row)
 		{// The method returns the column index if there is a two in a given row
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -320,7 +320,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return -1;// If not found
 		}
-		private static Location FindZero(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
+		private Location FindZero(int[,] costs, bool[] rowsCovered, bool[] colsCovered)
 		{// The method returns the position of the first uncrossed zero
 			if (costs == null)
 				throw new ArgumentNullException(nameof(costs));
@@ -337,7 +337,7 @@ namespace RecruitmentLibrary.Assignment
 			// If zero was not found
 			return new Location(-1, -1);
 		}
-		private static void ConvertPath(byte[,] masks, Location[] path, int pathLength)
+		private void ConvertPath(byte[,] masks, Location[] path, int pathLength)
 		{// A method that modifies the data in the masks matrix
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -358,7 +358,7 @@ namespace RecruitmentLibrary.Assignment
 					masks[row, column] = 1;
 			}
 		}
-		private static void ClearPrimes(byte[,] masks)
+		private void ClearPrimes(byte[,] masks)
 		{// Method that writes 0 for elements with value 2
 			if (masks == null)
 				throw new ArgumentNullException(nameof(masks));
@@ -368,7 +368,7 @@ namespace RecruitmentLibrary.Assignment
 					if (masks[i, j] == 2)
 						masks[i, j] = 0;
 		}
-		private static void ClearCovers(bool[] rowsCovered, bool[] colsCovered)
+		private void ClearCovers(bool[] rowsCovered, bool[] colsCovered)
 		{// Method that writes false for boolean arrays
 			if (rowsCovered == null)
 				throw new ArgumentNullException(nameof(rowsCovered));

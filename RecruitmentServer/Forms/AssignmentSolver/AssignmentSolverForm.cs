@@ -12,11 +12,12 @@ using UIHelpers.Controls;
 using UIHelpers.Forms;
 using UIHelpers.Themes;
 
-namespace RecruitmentServer.Forms
+namespace RecruitmentServer.Forms.AssignmentSolver
 {
-	internal partial class AssignmentForm : BaseForm, IThemeChange
+	internal partial class AssignmentSolverForm : BaseForm, IThemeChange
 	{
 		private readonly Account _account;
+		private readonly IAssignmentSolver _assignmentSolver;
 		private AssignmentItem[] _allItems;
 		private List<int> _vacancyIds = new List<int>();
 		private List<int> _candidateIds = new List<int>();
@@ -33,12 +34,14 @@ namespace RecruitmentServer.Forms
 		private readonly Dictionary<Guna2GradientButton, Vacancy>
 			_buttonVacancyMap = new Dictionary<Guna2GradientButton, Vacancy>();
 
-		internal AssignmentForm(Account account, Action<EventArgs> refreshMainForm)
+		internal AssignmentSolverForm(Account account, Action<EventArgs> refreshMainForm,
+			IAssignmentSolver assignmentSolver)
 		{
 			InitializeComponent();
 
 			customTitleBar = new CustomTitleBar(this, "Призначення", maximizeBox: false);
 			_account = account;
+			_assignmentSolver = assignmentSolver;
 			_refreshMainForm = refreshMainForm;
 			_assignmentCreator = new ControlCreator(panelAssignment, flpContent, false);
 
@@ -49,7 +52,7 @@ namespace RecruitmentServer.Forms
 			_allItems = DatabaseManager.GetAssignmentItems().ToArray();
 
 			int[,] matrix = ConvertAssignmentItemsToMatrix();
-			int[] results = HungarianAssignmentSolver.Solve(matrix, true);
+			int[] results = _assignmentSolver.Solve(matrix, true);
 			SetResultItems(results);
 
 			Cursor = Cursors.Default;

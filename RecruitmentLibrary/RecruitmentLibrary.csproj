@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Assignment\HungarianAssignmentSolver.cs" />
     <Compile Include="Assignment\AuctionAssignmentSolver.cs" />
+    <Compile Include="Assignment\IAssignmentSolver.cs" />
     <Compile Include="Serialization\Serializator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\Validator.cs" />

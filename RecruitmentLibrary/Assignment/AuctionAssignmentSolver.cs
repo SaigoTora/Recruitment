@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace RecruitmentLibrary.Assignment
 {
-	public static class AuctionAssignmentSolver
+	public class AuctionAssignmentSolver : IAssignmentSolver
 	{
-		private static int[] _agentsTasks;
-		private static double[] _prices;
+		private int[] _agentsTasks;
+		private double[] _prices;
 
-		public static int[] Solve(int[,] costs, bool findMax)
+		public int[] Solve(int[,] costs, bool findMax)
 		{
 			int n = costs.GetLength(0), m = costs.GetLength(1);
 			int minDimension = Math.Min(n, m);
@@ -28,7 +28,7 @@ namespace RecruitmentLibrary.Assignment
 			return RunAuctionIteration(costs, n, findMax, minDimension, hasMoreRows);
 		}
 
-		private static int[,] CreateSquareMatrix(int[,] matrix)
+		private int[,] CreateSquareMatrix(int[,] matrix)
 		{
 			int n = matrix.GetLength(0), m = matrix.GetLength(1);
 			if (n == m)
@@ -49,7 +49,7 @@ namespace RecruitmentLibrary.Assignment
 			return result;
 		}
 
-		private static int[] RunAuctionIteration(int[,] costs, int n, bool findMax,
+		private int[] RunAuctionIteration(int[,] costs, int n, bool findMax,
 			int minDimension, bool? hasMoreRows)
 		{
 			double epsilon = 1.0 / (n + 1);
@@ -77,7 +77,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return GenerateAgentsTasks(n, minDimension, hasMoreRows);
 		}
-		private static (int bestTask, double bestValue, double secondBestValue) GetBestTasks(
+		private (int bestTask, double bestValue, double secondBestValue) GetBestTasks(
 			int[,] costs, int n, int agent, bool findMax)
 		{
 			int bestTask = -1;
@@ -99,7 +99,7 @@ namespace RecruitmentLibrary.Assignment
 
 			return (bestTask, bestValue, secondBestValue);
 		}
-		private static void SetPricesAndAgentsTasks(int n, int agent, int bestTask, double bid)
+		private void SetPricesAndAgentsTasks(int n, int agent, int bestTask, double bid)
 		{
 			_prices[bestTask] += bid;
 
@@ -112,7 +112,7 @@ namespace RecruitmentLibrary.Assignment
 
 			_agentsTasks[agent] = bestTask;
 		}
-		private static int[] GenerateAgentsTasks(int n, int minDimension, bool? hasMoreRows)
+		private int[] GenerateAgentsTasks(int n, int minDimension, bool? hasMoreRows)
 		{
 			if (hasMoreRows.HasValue)
 			{

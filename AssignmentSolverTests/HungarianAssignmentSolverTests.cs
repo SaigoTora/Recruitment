@@ -7,6 +7,8 @@ namespace AssignmentSolverTests
 	[TestClass]
 	public class HungarianAssignmentSolverTests
 	{
+		private HungarianAssignmentSolver _hungarianAssignmentSolver;
+
 		[TestMethod]
 		public void TestHungarianAlgorithm_Scenario1()
 		{
@@ -45,7 +47,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 3, 0, 1, 4, 2 };
@@ -70,7 +73,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 1, -1, 0 };
@@ -101,7 +105,8 @@ namespace AssignmentSolverTests
 			bool findMax = true;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 2, 0, 1 };
@@ -129,7 +134,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 1, 2 };
@@ -170,7 +176,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 2, 3, -1, 1 };
@@ -201,7 +208,8 @@ namespace AssignmentSolverTests
 			bool findMax = false;
 
 			// Act
-			int[] result = HungarianAssignmentSolver.Solve(matrix, findMax);
+			_hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			int[] result = _hungarianAssignmentSolver.Solve(matrix, findMax);
 
 			// Assert
 			int[] expect = { 0, 3, 2 };
