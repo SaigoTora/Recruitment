@@ -32,11 +32,18 @@ namespace RecruitmentServer.Forms.AssignmentSolver
 			=> OpenAssignmentSolverForm(new HungarianAssignmentSolver());
 		private void ButtonAuctionSolver_Click(object sender, EventArgs e)
 			=> OpenAssignmentSolverForm(new AuctionAssignmentSolver());
+		private void ButtonTest_Click(object sender, EventArgs e)
+		{
+			AssignmentSolversEfficiencyForm assignmentSolversEfficiencyForm =
+				new AssignmentSolversEfficiencyForm(_account);
+			assignmentSolversEfficiencyForm.ShowDialog();
+		}
 
 		private void OpenAssignmentSolverForm(IAssignmentSolver assignmentSolver)
 		{
 			AssignmentSolverForm assignmentSolverForm = new AssignmentSolverForm(_account, _refreshMainForm, assignmentSolver);
 			assignmentSolverForm.ShowDialog();
 		}
+
 	}
 }

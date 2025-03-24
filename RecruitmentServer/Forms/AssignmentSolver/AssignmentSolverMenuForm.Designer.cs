@@ -32,6 +32,8 @@
 			this.labelTitle = new System.Windows.Forms.Label();
 			this.buttonHungarianSolver = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.buttonAuctionSolver = new Guna.UI2.WinForms.Guna2GradientButton();
+			this.label1 = new System.Windows.Forms.Label();
+			this.buttonTest = new Guna.UI2.WinForms.Guna2GradientButton();
 			this.SuspendLayout();
 			// 
 			// labelTitle
@@ -50,7 +52,6 @@
 			// 
 			// buttonHungarianSolver
 			// 
-			this.buttonHungarianSolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.buttonHungarianSolver.Animated = true;
 			this.buttonHungarianSolver.BackColor = System.Drawing.Color.Transparent;
 			this.buttonHungarianSolver.BorderRadius = 7;
@@ -80,7 +81,6 @@
 			// 
 			// buttonAuctionSolver
 			// 
-			this.buttonAuctionSolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.buttonAuctionSolver.Animated = true;
 			this.buttonAuctionSolver.BackColor = System.Drawing.Color.Transparent;
 			this.buttonAuctionSolver.BorderRadius = 7;
@@ -108,12 +108,57 @@
 			this.buttonAuctionSolver.Text = "Алгоритм аукціону";
 			this.buttonAuctionSolver.Click += new System.EventHandler(this.ButtonAuctionSolver_Click);
 			// 
+			// label1
+			// 
+			this.label1.AutoEllipsis = true;
+			this.label1.BackColor = System.Drawing.Color.Transparent;
+			this.label1.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.Black;
+			this.label1.Location = new System.Drawing.Point(11, 230);
+			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(778, 70);
+			this.label1.TabIndex = 3;
+			this.label1.Text = "Або протестуйте ефективність методів вирішення задачі про призначення:";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// buttonTest
+			// 
+			this.buttonTest.Animated = true;
+			this.buttonTest.BackColor = System.Drawing.Color.Transparent;
+			this.buttonTest.BorderRadius = 7;
+			this.buttonTest.BorderThickness = 1;
+			this.buttonTest.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.buttonTest.DisabledState.BorderColor = System.Drawing.Color.Black;
+			this.buttonTest.DisabledState.CustomBorderColor = System.Drawing.Color.Black;
+			this.buttonTest.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonTest.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.buttonTest.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
+			this.buttonTest.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(200)))), ((int)(((byte)(30)))));
+			this.buttonTest.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(210)))), ((int)(((byte)(60)))));
+			this.buttonTest.Font = new System.Drawing.Font("Consolas", 15.75F);
+			this.buttonTest.ForeColor = System.Drawing.Color.Black;
+			this.buttonTest.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
+			this.buttonTest.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(215)))), ((int)(((byte)(80)))));
+			this.buttonTest.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(100)))));
+			this.buttonTest.Location = new System.Drawing.Point(275, 331);
+			this.buttonTest.Name = "buttonTest";
+			this.buttonTest.PressedColor = System.Drawing.Color.White;
+			this.buttonTest.PressedDepth = 20;
+			this.buttonTest.Size = new System.Drawing.Size(250, 40);
+			this.buttonTest.TabIndex = 4;
+			this.buttonTest.TabStop = false;
+			this.buttonTest.Text = "Тестувати";
+			this.buttonTest.Click += new System.EventHandler(this.ButtonTest_Click);
+			// 
 			// AssignmentSolverMenuForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Gainsboro;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(800, 430);
+			this.Controls.Add(this.buttonTest);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.buttonAuctionSolver);
 			this.Controls.Add(this.buttonHungarianSolver);
 			this.Controls.Add(this.labelTitle);
@@ -130,5 +175,7 @@
 		private System.Windows.Forms.Label labelTitle;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonHungarianSolver;
 		private Guna.UI2.WinForms.Guna2GradientButton buttonAuctionSolver;
+		private System.Windows.Forms.Label label1;
+		private Guna.UI2.WinForms.Guna2GradientButton buttonTest;
 	}
 }
