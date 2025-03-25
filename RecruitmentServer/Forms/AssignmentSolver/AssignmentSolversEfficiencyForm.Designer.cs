@@ -51,6 +51,10 @@
 			this.labelHungarianResult = new System.Windows.Forms.Label();
 			this.labelResults = new System.Windows.Forms.Label();
 			this.labelAuctionResult = new System.Windows.Forms.Label();
+			this.labelHungarianTime = new System.Windows.Forms.Label();
+			this.labelHungarianMemory = new System.Windows.Forms.Label();
+			this.labelAuctionMemory = new System.Windows.Forms.Label();
+			this.labelAuctionTime = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.NUDCandidateCount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDVacancyCount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NUDMaxPoints)).BeginInit();
@@ -78,12 +82,12 @@
 			this.buttonStart.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.BackwardDiagonal;
 			this.buttonStart.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(243)))), ((int)(((byte)(103)))));
 			this.buttonStart.HoverState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(185)))), ((int)(((byte)(92)))));
-			this.buttonStart.Location = new System.Drawing.Point(1023, 388);
+			this.buttonStart.Location = new System.Drawing.Point(1023, 538);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.PressedColor = System.Drawing.Color.White;
 			this.buttonStart.PressedDepth = 20;
 			this.buttonStart.Size = new System.Drawing.Size(175, 40);
-			this.buttonStart.TabIndex = 13;
+			this.buttonStart.TabIndex = 17;
 			this.buttonStart.TabStop = false;
 			this.buttonStart.Text = "Запуск";
 			this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
@@ -127,6 +131,7 @@
             0,
             0,
             0});
+			this.NUDCandidateCount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NUD_KeyDown);
 			// 
 			// NUDVacancyCount
 			// 
@@ -152,6 +157,7 @@
             0,
             0,
             0});
+			this.NUDVacancyCount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NUD_KeyDown);
 			// 
 			// labelVacancyCount
 			// 
@@ -192,6 +198,7 @@
             0,
             0,
             0});
+			this.NUDMaxPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NUD_KeyDown);
 			// 
 			// labelMaxPoints
 			// 
@@ -434,7 +441,7 @@
 			this.labelHungarianResult.BackColor = System.Drawing.Color.Transparent;
 			this.labelHungarianResult.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelHungarianResult.ForeColor = System.Drawing.Color.Black;
-			this.labelHungarianResult.Location = new System.Drawing.Point(12, 325);
+			this.labelHungarianResult.Location = new System.Drawing.Point(12, 335);
 			this.labelHungarianResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelHungarianResult.Name = "labelHungarianResult";
 			this.labelHungarianResult.Size = new System.Drawing.Size(306, 32);
@@ -446,14 +453,14 @@
 			this.labelResults.AutoSize = true;
 			this.labelResults.BackColor = System.Drawing.Color.Transparent;
 			this.labelResults.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.labelResults.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelResults.Font = new System.Drawing.Font("Verdana", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelResults.ForeColor = System.Drawing.Color.Black;
-			this.labelResults.Location = new System.Drawing.Point(12, 265);
+			this.labelResults.Location = new System.Drawing.Point(335, 265);
 			this.labelResults.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelResults.Name = "labelResults";
-			this.labelResults.Size = new System.Drawing.Size(179, 32);
+			this.labelResults.Size = new System.Drawing.Size(203, 35);
 			this.labelResults.TabIndex = 10;
-			this.labelResults.Text = "Результати:";
+			this.labelResults.Text = "Результати";
 			// 
 			// labelAuctionResult
 			// 
@@ -461,18 +468,74 @@
 			this.labelAuctionResult.BackColor = System.Drawing.Color.Transparent;
 			this.labelAuctionResult.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelAuctionResult.ForeColor = System.Drawing.Color.Black;
-			this.labelAuctionResult.Location = new System.Drawing.Point(12, 370);
+			this.labelAuctionResult.Location = new System.Drawing.Point(575, 335);
 			this.labelAuctionResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.labelAuctionResult.Name = "labelAuctionResult";
 			this.labelAuctionResult.Size = new System.Drawing.Size(287, 32);
-			this.labelAuctionResult.TabIndex = 12;
+			this.labelAuctionResult.TabIndex = 14;
 			this.labelAuctionResult.Text = "Алгоритм аукціону:";
+			// 
+			// labelHungarianTime
+			// 
+			this.labelHungarianTime.AutoSize = true;
+			this.labelHungarianTime.BackColor = System.Drawing.Color.Transparent;
+			this.labelHungarianTime.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelHungarianTime.ForeColor = System.Drawing.Color.Black;
+			this.labelHungarianTime.Location = new System.Drawing.Point(13, 395);
+			this.labelHungarianTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.labelHungarianTime.Name = "labelHungarianTime";
+			this.labelHungarianTime.Size = new System.Drawing.Size(183, 25);
+			this.labelHungarianTime.TabIndex = 12;
+			this.labelHungarianTime.Text = "Час виконання:";
+			// 
+			// labelHungarianMemory
+			// 
+			this.labelHungarianMemory.AutoSize = true;
+			this.labelHungarianMemory.BackColor = System.Drawing.Color.Transparent;
+			this.labelHungarianMemory.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelHungarianMemory.ForeColor = System.Drawing.Color.Black;
+			this.labelHungarianMemory.Location = new System.Drawing.Point(13, 430);
+			this.labelHungarianMemory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.labelHungarianMemory.Name = "labelHungarianMemory";
+			this.labelHungarianMemory.Size = new System.Drawing.Size(243, 25);
+			this.labelHungarianMemory.TabIndex = 13;
+			this.labelHungarianMemory.Text = "Використано пам\'яті:";
+			// 
+			// labelAuctionMemory
+			// 
+			this.labelAuctionMemory.AutoSize = true;
+			this.labelAuctionMemory.BackColor = System.Drawing.Color.Transparent;
+			this.labelAuctionMemory.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelAuctionMemory.ForeColor = System.Drawing.Color.Black;
+			this.labelAuctionMemory.Location = new System.Drawing.Point(575, 430);
+			this.labelAuctionMemory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.labelAuctionMemory.Name = "labelAuctionMemory";
+			this.labelAuctionMemory.Size = new System.Drawing.Size(243, 25);
+			this.labelAuctionMemory.TabIndex = 16;
+			this.labelAuctionMemory.Text = "Використано пам\'яті:";
+			// 
+			// labelAuctionTime
+			// 
+			this.labelAuctionTime.AutoSize = true;
+			this.labelAuctionTime.BackColor = System.Drawing.Color.Transparent;
+			this.labelAuctionTime.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelAuctionTime.ForeColor = System.Drawing.Color.Black;
+			this.labelAuctionTime.Location = new System.Drawing.Point(575, 395);
+			this.labelAuctionTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.labelAuctionTime.Name = "labelAuctionTime";
+			this.labelAuctionTime.Size = new System.Drawing.Size(183, 25);
+			this.labelAuctionTime.TabIndex = 15;
+			this.labelAuctionTime.Text = "Час виконання:";
 			// 
 			// AssignmentSolversEfficiencyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1215, 450);
+			this.ClientSize = new System.Drawing.Size(1215, 600);
+			this.Controls.Add(this.labelAuctionMemory);
+			this.Controls.Add(this.labelAuctionTime);
+			this.Controls.Add(this.labelHungarianMemory);
+			this.Controls.Add(this.labelHungarianTime);
 			this.Controls.Add(this.labelAuctionResult);
 			this.Controls.Add(this.labelResults);
 			this.Controls.Add(this.labelHungarianResult);
@@ -527,5 +590,9 @@
 		private System.Windows.Forms.Label labelHungarianResult;
 		private System.Windows.Forms.Label labelResults;
 		private System.Windows.Forms.Label labelAuctionResult;
+		private System.Windows.Forms.Label labelHungarianTime;
+		private System.Windows.Forms.Label labelHungarianMemory;
+		private System.Windows.Forms.Label labelAuctionMemory;
+		private System.Windows.Forms.Label labelAuctionTime;
 	}
 }

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 using RecruitmentLibrary.Assignment;
 using RecruitmentServer.Models;
 using UIHelpers.Controls;
@@ -15,6 +15,8 @@ namespace RecruitmentServer.Forms.AssignmentSolver
 	{
 		private readonly Account _account;
 		private readonly Random _random = new Random();
+		private int[,] matrix;
+		private bool findMax;
 
 		internal AssignmentSolversEfficiencyForm(Account account)
 		{
@@ -33,60 +35,66 @@ namespace RecruitmentServer.Forms.AssignmentSolver
 		{
 			ClearResultLabels();
 			buttonStart.Enabled = false;
-			int[,] matrix = new int[(int)NUDCandidateCount.Value, (int)NUDVacancyCount.Value];
+			Cursor = Cursors.WaitCursor;
+			matrix = new int[(int)NUDCandidateCount.Value, (int)NUDVacancyCount.Value];
 			int minPoints = radioButtonAllSubmittedYes.Checked ? 0 : -1;
 			int maxPoints = (int)NUDMaxPoints.Value;
 			bool findMax = radioButtonFindMaxYes.Checked;
 
 			await Task.Run(() =>
 			{
-				FillMatrix(matrix, minPoints, maxPoints);
-				TestMethods(matrix, findMax);
+				FillMatrix(minPoints, maxPoints);
+				TestMethods();
 			});
+			Cursor = Cursors.Default;
+			buttonStart.Enabled = true;
 		}
 		private void ClearResultLabels()
 		{
-			labelResults.Text = string.Empty;
-			labelHungarianResult.Text = string.Empty;
-			labelAuctionResult.Text = string.Empty;
+			labelResults.Visible = false;
+			labelHungarianResult.Visible = false;
+			labelAuctionResult.Visible = false;
+			labelHungarianTime.Text = string.Empty;
+			labelHungarianMemory.Text = string.Empty;
+			labelAuctionTime.Text = string.Empty;
+			labelAuctionMemory.Text = string.Empty;
 
 			labelHungarianResult.ForeColor = labelResults.ForeColor;
 			labelAuctionResult.ForeColor = labelResults.ForeColor;
 		}
-		private void FillMatrix(int[,] matrix, int minValue, int maxValue)
+		private void FillMatrix(int minValue, int maxValue)
 		{
 			for (int i = 0; i < matrix.GetLength(0); i++)
 				for (int j = 0; j < matrix.GetLength(1); j++)
 					matrix[i, j] = _random.Next(minValue, maxValue + 1);
 		}
-		private void TestMethods(int[,] matrix, bool findMax)
+		private void TestMethods()
 		{
 			HungarianAssignmentSolver hungarianAssignmentSolver = new HungarianAssignmentSolver();
+			TestMethod(hungarianAssignmentSolver, labelHungarianResult, labelHungarianTime,
+				labelHungarianMemory);
+
 			AuctionAssignmentSolver auctionAssignmentSolver = new AuctionAssignmentSolver();
+			TestMethod(auctionAssignmentSolver, labelAuctionResult, labelAuctionTime,
+				labelAuctionMemory);
+		}
+		private void TestMethod(IAssignmentSolver assignmentSolver, Label labelResultTitle,
+			Label labelTime, Label labelMemory)
+		{
+			long memoryBefore = GC.GetTotalMemory(true), memoryAfter;
+
 			var sw = new Stopwatch();
 			sw.Start();
-			hungarianAssignmentSolver.Solve(matrix, findMax);
+			assignmentSolver.Solve(matrix, findMax);
 			sw.Stop();
-			labelResults.Text = "Результати:";
-			labelHungarianResult.Text = $"Угорський алгоритм: {GetFormattedTime(sw.Elapsed)}";
-			long hungarianTicks = sw.Elapsed.Ticks;
 
-			sw.Restart();
-			auctionAssignmentSolver.Solve(matrix, findMax);
-			sw.Stop();
-			labelAuctionResult.Text = $"Алгоритм аукціону: {GetFormattedTime(sw.Elapsed)}";
-			long auctionTicks = sw.Elapsed.Ticks;
-			if (hungarianTicks < auctionTicks)
-			{
-				labelHungarianResult.ForeColor = Color.Green;
-				labelAuctionResult.ForeColor = Color.Red;
-			}
-			else
-			{
-				labelHungarianResult.ForeColor = Color.Red;
-				labelAuctionResult.ForeColor = Color.Green;
-			}
-			buttonStart.Enabled = true;
+			memoryAfter = GC.GetTotalMemory(false);
+			long memoryUsed = memoryAfter - memoryBefore;
+			labelResults.Visible = true;
+			labelResultTitle.Visible = true;
+
+			labelTime.Text = $"Час виконання: {GetFormattedTime(sw.Elapsed)}";
+			labelMemory.Text = $"Використано пам'яті: {GetFormattedMemory(memoryUsed)}";
 		}
 		private string GetFormattedTime(TimeSpan time)
 		{
@@ -96,6 +104,30 @@ namespace RecruitmentServer.Forms.AssignmentSolver
 				return $"{time:mm\\:ss\\:ff} (Часові тіки: {ticks})";
 			else
 				return $"{time:mm\\:ss\\:ff}";
+		}
+		private string GetFormattedMemory(long memory)
+		{
+			string memoryResult;
+			if (memory > 1024)
+			{
+				if (memory / 1024 > 1024)
+					memoryResult = $"{(memory / 1024 / 1024).ToString("N0").Replace(',', ' ')} МБ.";
+				else
+					memoryResult = $"{(memory / 1024).ToString("N0").Replace(',', ' ')} КБ.";
+			}
+			else
+				memoryResult = $"{memory.ToString("N0").Replace(',', ' ')} Б.";
+
+			return memoryResult;
+		}
+
+		private void NUD_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+				SelectNextControl(ActiveControl, true, true, true, false);
+			}
 		}
 
 		#region Label focus event handlers
